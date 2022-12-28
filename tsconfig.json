@@ -15,11 +15,10 @@
     "noEmit": false,
     "jsx": "react-jsx",
     "baseUrl": ".",
-    "paths": {
-      "@/*": ["src/*"]
-    }
+    "incremental": true,
+    "isolatedModules": true
   },
   "files": ["svg.d.ts"],
-  "include": ["src"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
   "exclude": ["build", "node_modules"]
 }
