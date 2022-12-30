@@ -35,6 +35,8 @@
     "husky": "^8.0.2",
     "lint-staged": "^13.1.0",
     "prettier": "^2.8.1",
+    "react-error-boundary": "^3.1.4",
+    "react-query": "^3.39.2",
     "styled-components": "^5.3.6"
   },
   "lint-staged": {

@@ -30,6 +30,7 @@
     "jest": true
   },
   "rules": {
+    // "prettier/prettier": ["error", { "endOfLine": "LF" }],
     "react-hooks/rules-of-hooks": "error",
     "react-hooks/exhaustive-deps": "warn",
     "simple-import-sort/imports": "warn",
