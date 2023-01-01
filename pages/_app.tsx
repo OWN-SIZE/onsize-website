@@ -15,13 +15,16 @@ export default function App({ Component, pageProps }: AppProps) {
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <AsyncBoundary>
-        <GlobalStyle />
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
-      </AsyncBoundary>
-    </QueryClientProvider>
+    <>
+      <GlobalStyle />
+      <QueryClientProvider client={queryClient}>
+        <AsyncBoundary>
+          <GlobalStyle />
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </AsyncBoundary>
+      </QueryClientProvider>
+    </>
   );
 }

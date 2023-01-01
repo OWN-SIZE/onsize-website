@@ -18,6 +18,7 @@ const GlobalStyle = createGlobalStyle`
     html {
         font-size: 62.5%;
     }
+    
 
     a {
     color: inherit;
