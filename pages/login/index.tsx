@@ -1,5 +1,5 @@
 import React from 'react';
-import { GoogleLoginImg } from 'assets/img/asset';
+import { GoogleLoginImg } from 'assets/img';
 import Image from 'next/image';
 import styled from 'styled-components';
 
