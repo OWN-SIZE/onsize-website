@@ -13,10 +13,10 @@ function Header() {
           <Styled.InfoButton>
             <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
           </Styled.InfoButton>
-          <Styled.Profile></Styled.Profile>
+          <Styled.Profile onClick={() => router.push('/mypage')}></Styled.Profile>
         </Styled.RightSection>
       </Styled.TopSection>
-      <Styled.MySizeButton>My Size</Styled.MySizeButton>
+      <Styled.MySizeButton onClick={() => router.push('/mysize')}>My Size</Styled.MySizeButton>
     </Styled.Root>
   );
 }
