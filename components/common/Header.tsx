@@ -1,3 +1,5 @@
+import { InfoIcon } from 'assets/icon';
+import Image from 'next/image';
 import styled from 'styled-components';
 
 function Header() {
@@ -6,7 +8,9 @@ function Header() {
       <Styled.TopSection>
         <Styled.LogoImg />
         <Styled.RightSection>
-          <Styled.InfoButton></Styled.InfoButton>
+          <Styled.InfoButton>
+            <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
+          </Styled.InfoButton>
           <Styled.Profile></Styled.Profile>
         </Styled.RightSection>
       </Styled.TopSection>
@@ -51,13 +55,14 @@ const Styled = {
 
     margin-right: 16rem;
     margin-top: 4rem;
-
-    border: solid 1px black;
   `,
 
   InfoButton: styled.button`
     width: 5rem;
     height: 5rem;
+
+    background: none;
+    border: none;
 
     cursor: pointer;
   `,
@@ -66,6 +71,7 @@ const Styled = {
     width: 6rem;
     height: 6rem;
     border-radius: 4.7rem;
+
     border: none;
 
     cursor: pointer;
