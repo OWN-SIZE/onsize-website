@@ -5,7 +5,7 @@ import styled from 'styled-components';
 
 function Login() {
   return (
-    <Styled.Wrapper>
+    <Styled.Root>
       <Styled.GreetingImg />
       <Styled.LoginButton>
         <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
@@ -15,14 +15,14 @@ function Login() {
         <br />
         서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
       </Styled.Message>
-    </Styled.Wrapper>
+    </Styled.Root>
   );
 }
 
 export default Login;
 
 const Styled = {
-  Wrapper: styled.section`
+  Root: styled.section`
     display: flex;
     justify-content: center;
     align-items: center;
