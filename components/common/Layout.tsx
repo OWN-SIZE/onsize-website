@@ -1,4 +1,7 @@
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
+
+import Header from './Header';
 
 interface LayoutProps {
   children: React.ReactNode;
@@ -6,7 +9,14 @@ interface LayoutProps {
 
 function Layout(props: LayoutProps) {
   const { children } = props;
-  return <Root>{children}</Root>;
+  const router = useRouter();
+
+  return (
+    <Root>
+      {router.asPath === ('/home' || '/category' || '/mypage') ? <Header /> : null}
+      {children}
+    </Root>
+  );
 }
 
 export default Layout;

@@ -1,12 +1,14 @@
 import { InfoIcon } from 'assets/icon';
 import Image from 'next/image';
+import router from 'next/router';
 import styled from 'styled-components';
+import theme from 'styles/theme';
 
 function Header() {
   return (
     <Styled.Root>
       <Styled.TopSection>
-        <Styled.LogoImg />
+        <Styled.LogoImg onClick={() => router.push('/home')} />
         <Styled.RightSection>
           <Styled.InfoButton>
             <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
@@ -26,9 +28,11 @@ const Styled = {
     width: 100%;
     height: 26.6rem;
 
-    background-color: #b4b4b4;
+    background-color: #d9d9d9;
 
     text-align: center;
+
+    /* margin-bottom: 7rem; */
   `,
 
   TopSection: styled.div`
@@ -39,7 +43,7 @@ const Styled = {
   LogoImg: styled.div`
     width: 6rem;
     height: 6rem;
-    background-color: gray;
+    background-color: #8e8e8e;
 
     margin-left: 16rem;
     margin-top: 3rem;
@@ -73,6 +77,7 @@ const Styled = {
     border-radius: 4.7rem;
 
     border: none;
+    background-color: #c2c2c2;
 
     cursor: pointer;
   `,
@@ -86,7 +91,10 @@ const Styled = {
 
     margin-top: 12rem;
 
-    font-size: 4rem;
+    ${theme.fonts.button1};
+    color: ${theme.colors.gray350};
+
+    box-shadow: 0 0 1rem 0.8rem rgba(0, 0, 0, 0.05);
 
     cursor: pointer;
   `,
