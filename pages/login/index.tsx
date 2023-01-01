@@ -2,6 +2,7 @@ import React from 'react';
 import { GoogleLoginImg } from 'assets/img';
 import Image from 'next/image';
 import styled from 'styled-components';
+import theme from 'styles/theme';
 
 function Login() {
   return (
@@ -46,10 +47,8 @@ const Styled = {
   `,
   Message: styled.h1`
     margin-top: 6.2rem;
-    font-weight: 600;
-    font-size: 1.8rem;
-    line-height: 2.5rem;
     text-align: center;
-    color: #667080;
+    ${theme.fonts.subtitle1}
+    color: ${theme.colors.gray350}
   `,
 };
