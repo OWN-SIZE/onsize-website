@@ -1,10 +1,9 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
 import type { AppProps } from 'next/app';
+import GlobalStyle from 'styles/GlobalStyle';
 
 import { AsyncBoundary } from 'components/common/AsyncBoundary';
 import Layout from 'components/common/Layout';
-
-import '../styles/globals.css';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -18,6 +17,7 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncBoundary>
+        <GlobalStyle />
         <Layout>
           <Component {...pageProps} />
         </Layout>
