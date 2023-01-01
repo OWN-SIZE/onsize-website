@@ -32,7 +32,7 @@ const Styled = {
 
     text-align: center;
 
-    /* margin-bottom: 7rem; */
+    margin-bottom: 10.5rem;
   `,
 
   TopSection: styled.div`
