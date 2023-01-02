@@ -23,8 +23,10 @@ const Styled = {
   Root: styled.div`
     display: flex;
 
+    width: 140.8rem;
+
     height: 6.1rem;
-    margin: 0 16rem;
+    margin: 0 auto;
     border-bottom: 0.3rem solid ${theme.colors.gray200};
   `,
   Menu: styled.button<{ isClicked: boolean }>`
