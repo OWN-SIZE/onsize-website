@@ -1,3 +1,5 @@
+import Layout from 'components/common/Layout';
+
 export default function index() {
-  return <div></div>;
+  return <Layout>Home</Layout>;
 }

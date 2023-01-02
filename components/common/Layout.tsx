@@ -1,19 +1,21 @@
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 
 import Header from './Header';
+import MenuBar from './MenuBar';
 
 interface LayoutProps {
   children: React.ReactNode;
+  noHeader?: boolean;
+  noMenuBar?: boolean;
 }
 
 function Layout(props: LayoutProps) {
-  const { children } = props;
-  const router = useRouter();
+  const { children, noHeader, noMenuBar } = props;
 
   return (
     <Root>
-      {router.asPath === ('/home' || '/category' || '/mypage') ? <Header /> : null}
+      {!noHeader && <Header />}
+      {!noMenuBar && <MenuBar />}
       {children}
     </Root>
   );
