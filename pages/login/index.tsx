@@ -1,28 +1,31 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg } from 'assets/img';
+//import { useLoginMutation } from 'hooks/queries/user';
 import Image from 'next/image';
-import { signIn, useSession } from 'next-auth/react';
+import { useRecoilState } from 'recoil';
+import { accessTokenState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
 
 function Login() {
-  const { data: a } = useSession();
-  //const { accessToken } = data;
-
-  useEffect(() => {
-    if (a) {
-      console.log(a);
-      //console.log(async () => await getToken({}));
-    }
-  }, [a]);
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const login = useGoogleLogin({
+    onSuccess: (response) => {
+      // recoil에 토큰들 저장하기
+      setAccessToken(response.access_token);
+      // 서버에 액세스 토큰 넘기기
+      // useLoginMutation(accessToken);
+    },
+  });
 
   return (
-    <Layout>
+    <Layout noHeader noMenuBar>
       <Styled.Root>
         <Styled.GreetingImg />
-        <Styled.LoginButton onClick={() => signIn('google')}>
+        <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
         </Styled.LoginButton>
         <Styled.Message>
