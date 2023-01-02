@@ -1,12 +1,24 @@
 import styled from 'styled-components';
 
+import Header from './Header';
+import MenuBar from './MenuBar';
+
 interface LayoutProps {
   children: React.ReactNode;
+  noHeader?: boolean;
+  noMenuBar?: boolean;
 }
 
 function Layout(props: LayoutProps) {
-  const { children } = props;
-  return <Root>{children}</Root>;
+  const { children, noHeader, noMenuBar } = props;
+
+  return (
+    <Root>
+      {!noHeader && <Header />}
+      {!noMenuBar && <MenuBar />}
+      {children}
+    </Root>
+  );
 }
 
 export default Layout;
