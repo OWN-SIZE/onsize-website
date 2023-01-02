@@ -24,7 +24,7 @@ const Styled = {
   `,
 
   Greeting: styled.h1`
-    ${theme.fonts.title4}
+    ${theme.fonts.title4};
   `,
 
   Button: styled.button`
