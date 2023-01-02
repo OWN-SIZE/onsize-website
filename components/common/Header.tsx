@@ -1,6 +1,6 @@
 import { InfoIcon } from 'assets/icon';
 import Image from 'next/image';
-import router from 'next/router';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -8,15 +8,24 @@ function Header() {
   return (
     <Styled.Root>
       <Styled.TopSection>
-        <Styled.LogoImg onClick={() => router.push('/home')} />
+        <Link href="/home">
+          <Styled.LogoImg />
+        </Link>
+
         <Styled.RightSection>
           <Styled.InfoButton>
             <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
           </Styled.InfoButton>
-          <Styled.Profile onClick={() => router.push('/mypage')}></Styled.Profile>
+
+          <Link href="/mypage">
+            <Styled.Profile></Styled.Profile>
+          </Link>
         </Styled.RightSection>
       </Styled.TopSection>
-      <Styled.MySizeButton onClick={() => router.push('/mysize')}>My Size</Styled.MySizeButton>
+
+      <Link href="/mysize">
+        <Styled.MySizeButton>My Size</Styled.MySizeButton>
+      </Link>
     </Styled.Root>
   );
 }
