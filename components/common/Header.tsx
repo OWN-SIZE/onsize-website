@@ -7,25 +7,27 @@ import theme from 'styles/theme';
 function Header() {
   return (
     <Styled.Root>
-      <Styled.TopSection>
-        <Link href="/home">
-          <Styled.LogoImg />
-        </Link>
-
-        <Styled.RightSection>
-          <Styled.InfoButton>
-            <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
-          </Styled.InfoButton>
-
-          <Link href="/mypage">
-            <Styled.Profile></Styled.Profile>
+      <Styled.Container>
+        <Styled.TopSection>
+          <Link href="/home">
+            <Styled.LogoImg />
           </Link>
-        </Styled.RightSection>
-      </Styled.TopSection>
 
-      <Link href="/mysize">
-        <Styled.MySizeButton>My Size</Styled.MySizeButton>
-      </Link>
+          <Styled.RightSection>
+            <Styled.InfoButton>
+              <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
+            </Styled.InfoButton>
+
+            <Link href="/mypage">
+              <Styled.Profile></Styled.Profile>
+            </Link>
+          </Styled.RightSection>
+        </Styled.TopSection>
+
+        <Link href="/mysize">
+          <Styled.MySizeButton>My Size</Styled.MySizeButton>
+        </Link>
+      </Styled.Container>
     </Styled.Root>
   );
 }
@@ -44,6 +46,12 @@ const Styled = {
     margin-bottom: 10.5rem;
   `,
 
+  Container: styled.div`
+    width: 140.8rem;
+
+    margin: 0 auto;
+  `,
+
   TopSection: styled.div`
     display: flex;
     justify-content: space-between;
@@ -54,7 +62,6 @@ const Styled = {
     height: 6rem;
     background-color: #8e8e8e;
 
-    margin-left: 16rem;
     margin-top: 3rem;
   `,
 
@@ -66,7 +73,6 @@ const Styled = {
     width: 13.2rem;
     height: 7rem;
 
-    margin-right: 16rem;
     margin-top: 4rem;
   `,
 
