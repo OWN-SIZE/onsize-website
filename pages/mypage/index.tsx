@@ -1,7 +1,11 @@
-import Header from 'components/common/Header';
+import Layout from 'components/common/Layout';
 
 function MyPage() {
-  return <div>MyPage</div>;
+  return (
+    <Layout>
+      <div>Hello</div>
+    </Layout>
+  );
 }
 
 export default MyPage;
