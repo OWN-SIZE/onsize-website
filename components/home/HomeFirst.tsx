@@ -4,15 +4,15 @@ import theme from 'styles/theme';
 
 export default function HomeFirst() {
   return (
-    <Styled.Wrapper>
+    <Styled.Container>
       <Styled.Greeting>온사이즈를 시작하러 가볼까요?</Styled.Greeting>
       <Styled.Button>튜토리얼 확인하기</Styled.Button>
-    </Styled.Wrapper>
+    </Styled.Container>
   );
 }
 
 const Styled = {
-  Wrapper: styled.div`
+  Container: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;
