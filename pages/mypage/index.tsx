@@ -15,7 +15,7 @@ function MyPage() {
             width={82}
             height={82}
             placeholder="blur"
-            blurDataURL='assets/icon/profileDefault.svg'
+            blurDataURL="assets/icon/profileDefault.svg"
           />
           <Styled.UserInformation>
             고다빈 <div>aaaaaaa@gmail.com</div>
