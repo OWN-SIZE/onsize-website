@@ -9,7 +9,7 @@ function Login() {
     <Styled.Root>
       <Styled.GreetingImg />
       <Styled.LoginButton>
-        <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
+        <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" placeholder="blur" />
       </Styled.LoginButton>
       <Styled.Message>
         로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
