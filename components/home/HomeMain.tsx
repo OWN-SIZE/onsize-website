@@ -78,10 +78,13 @@ const Styled = {
 
     margin-top: 1.6rem;
 
+    color: ${theme.colors.gray550};
     ${theme.fonts.title3};
   `,
   Memo: styled.h2`
     margin-top: 1.2rem;
+
+    color: ${theme.colors.gray550};
     ${theme.fonts.caption};
   `,
   BrandSection: styled.footer`
@@ -90,7 +93,7 @@ const Styled = {
 
     margin-top: 4rem;
 
-    width: 12.1rem;
+    width: 12.9rem;
     height: 5rem;
   `,
   BrandLogo: styled.div`
@@ -104,6 +107,7 @@ const Styled = {
     background-color: ${theme.colors.gray200};
   `,
   BrandName: styled.h1`
-    font-size: 14px; // font 수정 필요
+    ${theme.fonts.title5Semibold};
+    color: ${theme.colors.gray400};
   `,
 };
