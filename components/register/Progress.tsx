@@ -21,6 +21,7 @@ export default Progress;
 const Styled = {
   ProgressConatiner: styled.div`
     width: 100%;
+    margin-top: 16.2rem;
   `,
   StepsOl: styled.ol`
     display: flex;

@@ -1,35 +1,47 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
 import Progress from 'components/register/Progress';
 
+type OptionType = '상/하의' | '상의' | '하의';
+
 function Register() {
+  const optionList: OptionType[] = ['상/하의', '상의', '하의'];
+  const [selectedOption, setSelectedOption] = useState<OptionType>();
+
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
-        <Styled.MessageConatiner>
+        <Styled.LeftConatiner>
           <h1>Log In</h1>
           <h2>
             기존에 구매한 옷 중 가장 잘 맞는 제품의 사이즈를 찾아 입력해주세요.
             <br />
             입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
           </h2>
-        </Styled.MessageConatiner>
-        <Styled.FormContainer>
+        </Styled.LeftConatiner>
+        <Styled.RightContainer>
           <Progress />
-          <h1>어떤 의류의 사이즈를 추천받고 싶으신가요?</h1>
-          <Styled.SizeOptionButtons>
-            {['상/하의', '상의', '하의'].map((option, index) => (
-              <Styled.SizeOptionButton type="button" key={index}>
-                <Styled.ButtonIcon />
-                <p>{option}</p>
-              </Styled.SizeOptionButton>
-            ))}
-          </Styled.SizeOptionButtons>
-          <Styled.NextButton isActive>다음</Styled.NextButton>
-        </Styled.FormContainer>
+          <Styled.FormContainer>
+            <h1>어떤 의류의 사이즈를 추천받고 싶으신가요?</h1>
+            <Styled.SizeOptionButtons>
+              {optionList.map((option, index) => (
+                <Styled.SizeOptionButton
+                  onClick={() => setSelectedOption(option)}
+                  isSelected={selectedOption === option ? true : false}
+                  type="button"
+                  key={index}
+                >
+                  <Styled.ButtonIcon />
+                  <p>{option}</p>
+                </Styled.SizeOptionButton>
+              ))}
+            </Styled.SizeOptionButtons>
+          </Styled.FormContainer>
+          <Styled.NextButton isActive={selectedOption && true}>다음</Styled.NextButton>
+        </Styled.RightContainer>
       </Styled.Root>
     </Layout>
   );
@@ -43,7 +55,7 @@ const Styled = {
     width: 100vw;
     height: 100vh;
   `,
-  MessageConatiner: styled.article`
+  LeftConatiner: styled.article`
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -61,16 +73,21 @@ const Styled = {
       ${theme.fonts.body4};
     }
   `,
-  FormContainer: styled.article`
+  RightContainer: styled.article`
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
-    padding: 8.6rem;
+    padding: 0 8.6rem;
     width: 100%;
     background-color: #f5f5f5;
+  `,
+  FormContainer: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5.3rem;
+    margin-bottom: 20.3rem;
     > h1 {
-      margin-top: 5.3rem;
       color: ${theme.colors.gray550};
       ${theme.fonts.title4};
     }
@@ -81,15 +98,15 @@ const Styled = {
     grid-gap: 0 3.2rem;
     margin-top: 16.4rem;
   `,
-  SizeOptionButton: styled.button<{ isActive?: boolean }>`
+  SizeOptionButton: styled.button<{ isSelected?: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 23.2rem;
     height: 23.2rem;
-    ${({ isActive }) =>
-      isActive
+    ${({ isSelected }) =>
+      isSelected
         ? css`
             border: 2px solid #fbf26c;
             box-shadow: 0px 0px 10px rgba(251, 242, 108, 0.5);
@@ -116,7 +133,7 @@ const Styled = {
   NextButton: styled.button<{ isActive?: boolean }>`
     width: 46.2rem;
     height: 6.3rem;
-    margin-top: 20.3rem;
+    bottom: 9.8rem;
     background: transparent;
     ${({ isActive }) =>
       isActive
