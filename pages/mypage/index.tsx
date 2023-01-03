@@ -2,7 +2,7 @@ import Layout from 'components/common/Layout';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import profileDefault from 'assets/icon/profileDefault.png';
+import profileDefault from 'assets/icon/profileDefault.svg';
 
 function MyPage() {
   return (
@@ -15,6 +15,7 @@ function MyPage() {
             width={82}
             height={82}
             placeholder="blur"
+            blurDataURL='assets/icon/profileDefault.svg'
           />
           <Styled.UserInformation>
             고다빈 <div>aaaaaaa@gmail.com</div>
@@ -28,10 +29,10 @@ function MyPage() {
           <p>피드백 및 버그 제보</p>
           <p>개인 정보 보호 정책</p>
         </Styled.InformationContainer>
-        <Styled.UserStateManagementContainer>
-          <button className='withdrawal'>탈퇴하기</button>
-          <button className='signOut'>로그아웃</button>
-        </Styled.UserStateManagementContainer>
+        <Styled.UserLeaveContainer>
+          <button className="withdrawal">탈퇴하기</button>
+          <button className="signOut">로그아웃</button>
+        </Styled.UserLeaveContainer>
       </Styled.Root>
     </Layout>
   );
@@ -104,7 +105,7 @@ const Styled = {
       margin-bottom: 3rem;
     }
   `,
-  UserStateManagementContainer: styled.div`
+  UserLeaveContainer: styled.div`
     margin: 0 auto;
     width: 69.2rem;
     height: 7.1rem;
