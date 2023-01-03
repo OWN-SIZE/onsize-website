@@ -1,5 +1,5 @@
 import React from 'react';
-import { OptionType } from 'pages/register';
+import { OptionType } from 'pages/register/[...params]';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 

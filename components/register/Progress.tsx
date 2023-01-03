@@ -1,16 +1,29 @@
 import React from 'react';
+import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
+type StepType = '의류 선택' | '상의' | '하의';
+
 function Progress() {
+  const { query } = useRouter();
+  const stepList: StepType[] = ['의류 선택', '상의', '하의'];
+  const [progress] = query.params || ['1'];
+
   return (
     <Styled.ProgressConatiner>
       <Styled.StepsOl>
-        {['의류 선택', '상의 입력', '하의 입력'].map((step, index) => (
-          <Styled.StepLi key={index}>
-            <Styled.StepMarker isActive>{index + 1}</Styled.StepMarker> {step}
-          </Styled.StepLi>
-        ))}
+        {progress &&
+          stepList.map((step, index) => (
+            <Styled.StepLi key={index}>
+              <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
+              {step === '의류 선택'
+                ? step
+                : query.selectedOption === '상/하의' || query.selectedOption === step
+                ? `${step}입력`
+                : `${step}입력 (선택)`}
+            </Styled.StepLi>
+          ))}
       </Styled.StepsOl>
       <Styled.ProgressBar value={0} />
     </Styled.ProgressConatiner>

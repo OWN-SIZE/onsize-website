@@ -9,10 +9,12 @@ import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
 export type OptionType = '상/하의' | '상의' | '하의';
+export type ProgressType = 1 | 2 | 3;
 
 function Register() {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<OptionType>();
+
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
@@ -26,20 +28,22 @@ function Register() {
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress />
-          {!Object.keys(router.query).length && (
+          {router.query.params?.includes('1') && (
+            // 빈 query이면 사이즈 종류 선택 화면
             <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
           )}
           <Styled.NextButton
             isActive={selectedOption && true}
+            disabled={!selectedOption && true}
             onClick={() =>
               router.push(
                 {
-                  pathname: `/register`,
+                  pathname: `/register/2`,
                   query: {
                     selectedOption,
                   },
                 },
-                `/register`
+                `/register/2`
               )
             }
           >
@@ -50,6 +54,7 @@ function Register() {
     </Layout>
   );
 }
+
 export default Register;
 
 const Styled = {
