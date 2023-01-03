@@ -11,7 +11,7 @@ interface ButtonProps {
 export default function SizeOption({ selectedOption, setSelectedOption }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
   return (
-    <Styled.FormContainer>
+    <Styled.Root>
       <h1>어떤 의류의 사이즈를 추천받고 싶으신가요?</h1>
       <Styled.SizeOptionButtons>
         {optionList.map((option, index) => (
@@ -26,12 +26,12 @@ export default function SizeOption({ selectedOption, setSelectedOption }: Button
           </Styled.SizeOptionButton>
         ))}
       </Styled.SizeOptionButtons>
-    </Styled.FormContainer>
+    </Styled.Root>
   );
 }
 
 const Styled = {
-  FormContainer: styled.div`
+  Root: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

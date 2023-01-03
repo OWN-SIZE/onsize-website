@@ -26,7 +26,7 @@ function Progress() {
   const [progress] = query.params || ['1'];
 
   return (
-    <Styled.ProgressConatiner>
+    <Styled.Root>
       <Styled.StepsOl>
         {query.selectedOption
           ? Object.values(stepMapper[query.selectedOption]).map((step, index) => (
@@ -43,13 +43,13 @@ function Progress() {
             ))}
       </Styled.StepsOl>
       <Styled.ProgressBar value={0} />
-    </Styled.ProgressConatiner>
+    </Styled.Root>
   );
 }
 export default Progress;
 
 const Styled = {
-  ProgressConatiner: styled.div`
+  Root: styled.div`
     width: 100%;
     margin-top: 16.2rem;
   `,

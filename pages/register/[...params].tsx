@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
+import SizeForm from 'components/common/SizeForm';
 import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
@@ -47,10 +48,9 @@ function Register() {
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress />
-          {router.query.params?.includes('1') && (
-            // 빈 query이면 사이즈 종류 선택 화면
-            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-          )}
+          {param === 1 && <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}
+          {param === 2 && <SizeForm isHeader formType="상의" />}
+          {param === 3 && <SizeForm isHeader formType="하의" />}
           <Styled.NextButton isActive={selectedOption && true} onClick={onClickSize}>
             다음
           </Styled.NextButton>
@@ -96,6 +96,7 @@ const Styled = {
     background-color: #f5f5f5;
   `,
   NextButton: styled.button<{ isActive?: boolean }>`
+    position: fixed;
     width: 46.2rem;
     height: 6.3rem;
     bottom: 9.8rem;
