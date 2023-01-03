@@ -4,27 +4,24 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 export default function HomeMain() {
+  const product = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
+    <Styled.Card key={item} className={item === 4 || item === 8 ? 'noMargin' : `${item}`}>
+      <Styled.ThumbNail />
+      <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
+      <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
+      <Styled.BrandSection>
+        <Styled.BrandLogo />
+        <Styled.BrandName>쇼핑몰명</Styled.BrandName>
+      </Styled.BrandSection>
+    </Styled.Card>
+  ));
   return (
     <Styled.Container>
       <Styled.CountSection>
         <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" />
         <Styled.Count>4</Styled.Count>
       </Styled.CountSection>
-      <Styled.Closet>
-        {[1, 2, 3, 4, 5, 6, 7, 8].map((item) => (
-          <Styled.Card key={item} className={item === 4 || item === 8 ? 'noMargin' : `${item}`}>
-            <Styled.ThumbNail />
-            <Styled.Title>제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목제목</Styled.Title>
-            <Styled.Memo>
-              메모메모메모메모메메모메모메메모메모메메모메모메메모메모메메모메모메모메메모메모메모메모메모
-            </Styled.Memo>
-            <Styled.BrandSection>
-              <Styled.BrandLogo />
-              <Styled.BrandName>쇼핑몰명</Styled.BrandName>
-            </Styled.BrandSection>
-          </Styled.Card>
-        ))}
-      </Styled.Closet>
+      <Styled.Closet>{product}</Styled.Closet>
     </Styled.Container>
   );
 }
@@ -52,6 +49,7 @@ const Styled = {
     display: flex;
     flex-wrap: wrap;
 
+    justify-content: space-between;
     margin-top: 5rem;
 
     & .noMargin {
@@ -62,7 +60,6 @@ const Styled = {
     width: 33.2rem;
     height: 58rem;
 
-    margin-right: 2.6rem;
     margin-bottom: 8rem;
   `,
   ThumbNail: styled.div`
@@ -82,6 +79,8 @@ const Styled = {
     ${theme.fonts.title3};
   `,
   Memo: styled.h2`
+    height: 6.4rem;
+
     margin-top: 1.2rem;
 
     color: ${theme.colors.gray550};
