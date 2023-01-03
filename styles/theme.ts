@@ -44,6 +44,7 @@ const fonts = {
   title4: FONT({ weight: 700, size: 2.6, lineHeight: 3.5 }),
   subtitle1: FONT({ weight: 500, size: 3, lineHeight: 5 }),
   title4Semibold: FONT({ weight: 600, size: 2, lineHeight: 2.7 }),
+  title5Semibold: FONT({ weight: 600, size: 1.8, lineHeight: 2.5 }),
   body1: FONT({ weight: 400, size: 1.8, lineHeight: 3 }),
   body2: FONT({ weight: 400, size: 1.4, lineHeight: 1.9 }),
   body3: FONT({ weight: 500, size: 2.4, lineHeight: 3.3 }),
