@@ -22,7 +22,9 @@ function Register() {
   }, [router]);
 
   const onClickSize = () => {
-    if (selectedOption && param !== 3) {
+    if (param === 3) {
+      // 서버에 데이터 넘기고 home으로 이동
+    } else if (selectedOption) {
       router.push(
         {
           pathname: `/register/${param + 1}`,
