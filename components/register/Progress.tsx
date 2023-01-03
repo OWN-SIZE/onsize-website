@@ -3,27 +3,44 @@ import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
-type StepType = '의류 선택' | '상의' | '하의';
+const stepMapper = {
+  '상/하의': {
+    step1: '의류 선택',
+    step2: '상의 입력',
+    step3: '하의 입력',
+  },
+  상의: {
+    step1: '의류 선택',
+    step2: '상의 입력',
+    step3: '하의 입력 (선택)',
+  },
+  하의: {
+    step1: '의류 선택',
+    step2: '상의 입력 (선택)',
+    step3: '하의 입력',
+  },
+};
 
 function Progress() {
   const { query } = useRouter();
-  const stepList: StepType[] = ['의류 선택', '상의', '하의'];
   const [progress] = query.params || ['1'];
-
+  console.log(Object.values(stepMapper['상/하의']));
   return (
     <Styled.ProgressConatiner>
       <Styled.StepsOl>
-        {progress &&
-          stepList.map((step, index) => (
-            <Styled.StepLi key={index}>
-              <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
-              {step === '의류 선택'
-                ? step
-                : query.selectedOption === '상/하의' || query.selectedOption === step
-                ? `${step}입력`
-                : `${step}입력 (선택)`}
-            </Styled.StepLi>
-          ))}
+        {query.selectedOption
+          ? Object.values(stepMapper[query.selectedOption]).map((step, index) => (
+              <Styled.StepLi key={index}>
+                <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
+                {step}
+              </Styled.StepLi>
+            ))
+          : Object.values(stepMapper['상/하의']).map((step, index) => (
+              <Styled.StepLi key={index}>
+                <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
+                {step}
+              </Styled.StepLi>
+            ))}
       </Styled.StepsOl>
       <Styled.ProgressBar value={0} />
     </Styled.ProgressConatiner>

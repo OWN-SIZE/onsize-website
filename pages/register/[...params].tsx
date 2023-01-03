@@ -15,6 +15,19 @@ function Register() {
   const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<OptionType>();
 
+  const onClickSize = () => {
+    selectedOption &&
+      router.push(
+        {
+          pathname: `/register/2`,
+          query: {
+            selectedOption,
+          },
+        },
+        `/register/2`
+      );
+  };
+
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
@@ -34,18 +47,8 @@ function Register() {
           )}
           <Styled.NextButton
             isActive={selectedOption && true}
-            disabled={!selectedOption && true}
-            onClick={() =>
-              router.push(
-                {
-                  pathname: `/register/2`,
-                  query: {
-                    selectedOption,
-                  },
-                },
-                `/register/2`
-              )
-            }
+            //disabled={!selectedOption && true}
+            onClick={onClickSize}
           >
             다음
           </Styled.NextButton>
