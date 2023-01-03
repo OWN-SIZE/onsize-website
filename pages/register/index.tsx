@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
@@ -28,7 +28,7 @@ function Register() {
               </Styled.SizeOptionButton>
             ))}
           </Styled.SizeOptionButtons>
-          <Styled.NextButton>다음</Styled.NextButton>
+          <Styled.NextButton isActive>다음</Styled.NextButton>
         </Styled.FormContainer>
       </Styled.Root>
     </Layout>
@@ -81,15 +81,24 @@ const Styled = {
     grid-gap: 0 3.2rem;
     margin-top: 16.4rem;
   `,
-  SizeOptionButton: styled.button`
+  SizeOptionButton: styled.button<{ isActive?: boolean }>`
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     width: 23.2rem;
     height: 23.2rem;
-    border: 0.1rem solid #f6f6f6;
-    box-shadow: 0 0 1rem 0.8rem rgba(0, 0, 0, 0.05);
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            border: 2px solid #fbf26c;
+            box-shadow: 0px 0px 10px rgba(251, 242, 108, 0.5);
+          `
+        : css`
+            border: 0.1rem solid #f6f6f6;
+            box-shadow: 0 0 1rem 0.8rem rgba(0, 0, 0, 0.05);
+          `};
+
     border-radius: 1rem;
     background-color: ${theme.colors.gray100};
     cursor: pointer;
@@ -104,14 +113,22 @@ const Styled = {
     height: 11.2rem;
     background-color: #d9d9d9;
   `,
-  NextButton: styled.button`
+  NextButton: styled.button<{ isActive?: boolean }>`
     width: 46.2rem;
     height: 6.3rem;
     margin-top: 20.3rem;
     background: transparent;
-    border: 0.2rem solid ${theme.colors.black};
+    ${({ isActive }) =>
+      isActive
+        ? css`
+            color: ${theme.colors.gray000};
+            background: ${theme.colors.black};
+          `
+        : css`
+            border: 0.2rem solid ${theme.colors.black};
+            color: ${theme.colors.gray550};
+          `}
     border-radius: 3rem;
-    color: ${theme.colors.gray550};
     ${theme.fonts.title3};
   `,
 };

@@ -32,7 +32,7 @@ const Styled = {
     color: ${theme.colors.gray550};
     ${theme.fonts.title4}
   `,
-  StepMarker: styled.div<{ isActive: boolean }>`
+  StepMarker: styled.div<{ isActive?: boolean }>`
     display: flex;
     justify-content: center;
     align-items: center;
