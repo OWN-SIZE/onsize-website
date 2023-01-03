@@ -3,12 +3,12 @@ import { OptionType } from 'pages/register';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
-interface OptionProps {
-  selectedOption: OptionType;
-  setSelectedOption: (prevState: OptionType) => void;
+interface ButtonProps {
+  selectedOption?: OptionType;
+  setSelectedOption: (prev: OptionType) => void;
 }
 
-export default function SizeOption({ selectedOption, setSelectedOption }: OptionProps) {
+export default function SizeOption({ selectedOption, setSelectedOption }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
   return (
     <Styled.FormContainer>

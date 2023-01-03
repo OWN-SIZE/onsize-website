@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
@@ -6,11 +7,12 @@ import Layout from 'components/common/Layout';
 import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
+// 버튼 컴포넌트 전달을 위한 타입
 export type OptionType = '상/하의' | '상의' | '하의';
 
 function Register() {
+  const router = useRouter();
   const [selectedOption, setSelectedOption] = useState<OptionType>();
-
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
@@ -24,8 +26,25 @@ function Register() {
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress />
-          {selectedOption && <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}
-          <Styled.NextButton isActive={selectedOption && true}>다음</Styled.NextButton>
+          {!Object.keys(router.query).length && (
+            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+          )}
+          <Styled.NextButton
+            isActive={selectedOption && true}
+            onClick={() =>
+              router.push(
+                {
+                  pathname: `/register`,
+                  query: {
+                    selectedOption,
+                  },
+                },
+                `/register`
+              )
+            }
+          >
+            다음
+          </Styled.NextButton>
         </Styled.RightContainer>
       </Styled.Root>
     </Layout>
