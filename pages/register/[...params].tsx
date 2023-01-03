@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
@@ -13,19 +13,25 @@ export type ProgressType = 1 | 2 | 3;
 
 function Register() {
   const router = useRouter();
+  const [param, setParam] = useState(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>();
 
+  useEffect(() => {
+    router.query.params && setParam(parseInt(router.query.params[0]));
+  }, [router]);
+
   const onClickSize = () => {
-    selectedOption &&
+    if (selectedOption && param !== 3) {
       router.push(
         {
-          pathname: `/register/2`,
+          pathname: `/register/${param + 1}`,
           query: {
             selectedOption,
           },
         },
-        `/register/2`
+        `/register/${param + 1}`
       );
+    }
   };
 
   return (
@@ -45,11 +51,7 @@ function Register() {
             // 빈 query이면 사이즈 종류 선택 화면
             <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
           )}
-          <Styled.NextButton
-            isActive={selectedOption && true}
-            //disabled={!selectedOption && true}
-            onClick={onClickSize}
-          >
+          <Styled.NextButton isActive={selectedOption && true} onClick={onClickSize}>
             다음
           </Styled.NextButton>
         </Styled.RightContainer>

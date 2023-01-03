@@ -24,7 +24,7 @@ const stepMapper = {
 function Progress() {
   const { query } = useRouter();
   const [progress] = query.params || ['1'];
-  console.log(Object.values(stepMapper['상/하의']));
+
   return (
     <Styled.ProgressConatiner>
       <Styled.StepsOl>
