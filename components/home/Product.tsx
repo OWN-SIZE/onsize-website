@@ -10,7 +10,7 @@ interface closetData {
   id: string;
   image: string;
   productName: string;
-  size: string;
+  size: string | null;
   memo: string;
   mallName: string;
   isRecommend: boolean;
@@ -18,7 +18,6 @@ interface closetData {
   link: string;
 }
 export default function Product() {
-  // 사이즈표 show 여부 로직 필요
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const data: closetData = {
     id: '62daeb7e82b56574bf940e54',
@@ -44,12 +43,16 @@ export default function Product() {
   return (
     <Styled.Card>
       <Styled.HoverHideContainer className={imgHovered === data.id ? 'hide' : ''}>
-        <Image src={SizeIcon} id="sizeIcon" className={imgHovered === data.id ? 'hide' : ''} alt="사이즈 표시" />
+        {data.size && (
+          <>
+            <Image src={SizeIcon} id="sizeIcon" className={imgHovered === data.id ? 'hide' : ''} alt="사이즈 표시" />
 
-        <Styled.SizeContainer className={imgHovered === data.id ? 'hide' : ''}>
-          <span>9090</span>
-          {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
-        </Styled.SizeContainer>
+            <Styled.SizeContainer className={imgHovered === data.id ? 'hide' : ''}>
+              <span>{data.size}</span>
+              {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
+            </Styled.SizeContainer>
+          </>
+        )}
 
         {data.isPin && (
           <Image
