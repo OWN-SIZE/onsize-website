@@ -32,6 +32,8 @@ function Product() {
     isPin: true,
     link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
   };
+
+  //이미지(상품) 호버 타겟
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   return (

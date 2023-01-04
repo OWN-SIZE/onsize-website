@@ -20,6 +20,7 @@ interface HoverIconProps {
   setImgHoveredTarget: Dispatch<SetStateAction<string>>;
   width: string;
   height: string;
+  noAddCategory?: boolean;
 }
 
 interface closetData {
@@ -36,7 +37,7 @@ interface closetData {
 
 function HoverIcon(props: HoverIconProps) {
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
-  const { data, imgHoveredTarget, setImgHoveredTarget, width, height } = props;
+  const { data, imgHoveredTarget, setImgHoveredTarget, width, height, noAddCategory } = props;
   const handleImgMousehover = (e: React.MouseEvent) => {
     setImgHoveredTarget(e.currentTarget.id);
   };
@@ -63,10 +64,12 @@ function HoverIcon(props: HoverIconProps) {
     >
       <Styled.ThumbNailImg width={width} height={height} />
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
-        <button>
-          카테고리 추가
-          <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
-        </button>
+        {!noAddCategory && (
+          <button>
+            카테고리 추가
+            <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
+          </button>
+        )}
         <div>
           {data.isPin ? (
             <Styled.IconCotainer
