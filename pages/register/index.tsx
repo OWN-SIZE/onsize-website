@@ -98,23 +98,4 @@ const Styled = {
     width: 100%;
     background-color: #f5f5f5;
   `,
-  // NextButton: styled.button<{ isActive?: boolean }>`
-  //   position: fixed;
-  //   width: 46.2rem;
-  //   height: 6.3rem;
-  //   bottom: 9.8rem;
-  //   background: transparent;
-  //   ${({ isActive }) =>
-  //     isActive
-  //       ? css`
-  //           color: ${theme.colors.gray000};
-  //           background: ${theme.colors.black};
-  //         `
-  //       : css`
-  //           border: 0.2rem solid ${theme.colors.black};
-  //           color: ${theme.colors.gray550};
-  //         `}
-  //   border-radius: 3rem;
-  //   ${theme.fonts.title3};
-  // `,
 };
