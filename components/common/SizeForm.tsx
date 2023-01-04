@@ -1,7 +1,7 @@
 import React from 'react';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
-import { OptionType } from 'pages/register/[...params]';
+import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -9,6 +9,12 @@ interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
 }
+
+const formTypeMapper = {
+  '상/하의': '상의',
+  상의: '상의',
+  하의: '하의',
+};
 
 export default function SizeForm({ noHeader, formType }: FormProps) {
   const TopSizeForm = () => {
@@ -99,12 +105,6 @@ export default function SizeForm({ noHeader, formType }: FormProps) {
         </Styled.InputContainer>
       </Styled.Form>
     );
-  };
-
-  const formTypeMapper = {
-    '상/하의': '상의',
-    상의: '상의',
-    하의: '하의',
   };
 
   return (

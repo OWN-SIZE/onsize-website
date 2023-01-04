@@ -1,6 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
-import { OptionType } from 'pages/register/[...params]';
+import { OptionType } from 'pages/register';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
@@ -22,23 +22,25 @@ const stepMapper = {
   },
 };
 
-function Progress() {
-  const { query } = useRouter();
-  const [progress] = query.params || ['1'];
+interface ProgressProps {
+  progress: number;
+  selectedOption: OptionType;
+}
 
+function Progress({ progress, selectedOption }: ProgressProps) {
   return (
     <Styled.Root>
       <Styled.StepsOl>
-        {query.selectedOption
-          ? Object.values(stepMapper[query.selectedOption]).map((step, index) => (
+        {selectedOption && progress >= 2
+          ? Object.values(stepMapper[selectedOption]).map((step, index) => (
               <Styled.StepLi key={index}>
-                <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
+                <Styled.StepMarker isActive={progress >= index + 1 && true}>{index + 1}</Styled.StepMarker>
                 {step}
               </Styled.StepLi>
             ))
           : Object.values(stepMapper['상/하의']).map((step, index) => (
               <Styled.StepLi key={index}>
-                <Styled.StepMarker isActive={parseInt(progress) >= index + 1 && true}>{index + 1}</Styled.StepMarker>
+                <Styled.StepMarker isActive={progress >= index + 1 && true}>{index + 1}</Styled.StepMarker>
                 {step}
               </Styled.StepLi>
             ))}

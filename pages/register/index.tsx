@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import { useRouter } from 'next/router';
+import React, { useState } from 'react';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
@@ -19,27 +18,14 @@ const nextFormMapper = {
 };
 
 function Register() {
-  const router = useRouter();
-  const [param, setParam] = useState(1);
+  const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>();
 
-  useEffect(() => {
-    router.query.params && setParam(parseInt(router.query.params[0]));
-  }, [router]);
-
   const onClickSize = () => {
-    if (param === 3) {
+    if (progress === 3) {
       // 서버에 데이터 넘기고 home으로 이동
     } else if (selectedOption) {
-      router.push(
-        {
-          pathname: `/register/${param + 1}`,
-          query: {
-            selectedOption,
-          },
-        },
-        `/register/${param + 1}`
-      );
+      setProgress((prev) => prev + 1);
     }
   };
 
@@ -55,10 +41,10 @@ function Register() {
           </h2>
         </Styled.LeftConatiner>
         <Styled.RightContainer>
-          <Progress />
-          {param === 1 ? (
+          <Progress progress={progress} selectedOption={selectedOption} />
+          {progress === 1 ? (
             <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
-          ) : param === 2 ? (
+          ) : progress === 2 ? (
             <SizeForm formType={selectedOption} />
           ) : (
             <SizeForm formType={nextFormMapper[selectedOption]} />
