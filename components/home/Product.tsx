@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AddCategoryIcon, PinIcon, RecommendedIcon, SizeIcon } from 'assets/icon';
+import { PinIcon, RecommendedIcon, SizeIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -34,13 +34,6 @@ function Product() {
   };
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
-  const handleMousehover = (e: React.MouseEvent) => {
-    setImgHoveredTarget(e.currentTarget.id);
-  };
-
-  const handleMouseLeave = () => {
-    setImgHoveredTarget('');
-  };
   return (
     <Styled.Card>
       <Styled.HoverHideContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
@@ -69,16 +62,13 @@ function Product() {
           />
         )}
       </Styled.HoverHideContainer>
-      <Styled.ThumbNail onMouseEnter={handleMousehover} onMouseLeave={handleMouseLeave} id={data.id}>
-        <Styled.ThumbNailImg />
-        <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'}>
-          <button>
-            카테고리 추가
-            <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
-          </button>
-          <HoverIcon isPin={data.isPin} itemId={data.id} />
-        </Styled.HoverThumbNail>
-      </Styled.ThumbNail>
+      <HoverIcon
+        data={data}
+        imgHoveredTarget={imgHoveredTarget}
+        setImgHoveredTarget={setImgHoveredTarget}
+        width="33.2"
+        height="33.2"
+      />
       <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
       <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
       <Styled.BrandSection>
@@ -134,28 +124,7 @@ const Styled = {
       color: ${theme.colors.gray000};
     }
   `,
-  ThumbNail: styled.div`
-    position: relative;
 
-    margin-top: 0.3rem;
-
-    width: 33.2rem;
-    height: 33.2rem;
-
-    & > img {
-      position: absolute;
-      top: 2.4rem;
-      right: 2.6rem;
-    }
-  `,
-  ThumbNailImg: styled.div`
-    width: 33.2rem;
-    height: 33.2rem;
-
-    border-radius: 1rem;
-
-    background-color: ${theme.colors.gray250};
-  `,
   Title: styled.h1`
     height: 6.4rem;
 
@@ -194,56 +163,5 @@ const Styled = {
   BrandName: styled.h1`
     ${theme.fonts.title5Semibold};
     color: ${theme.colors.gray400};
-  `,
-
-  /* hover시 스타일링 */
-  HoverThumbNail: styled.div`
-    &.hide {
-      display: none;
-    }
-
-    &.show {
-      position: absolute;
-      top: 0;
-
-      width: 33.2rem;
-      height: 33.2rem;
-      border-radius: 1rem;
-
-      background-color: ${theme.colors.card_hover};
-
-      & > button {
-        position: absolute;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-
-        width: 14.2rem;
-        height: 2.7rem;
-
-        top: 2rem;
-        left: 2.6rem;
-
-        border: none;
-        background: none;
-
-        ${theme.fonts.title3};
-        color: ${theme.colors.gray000};
-
-        cursor: pointer;
-      }
-
-      & > div {
-        position: absolute;
-        bottom: 1.6rem;
-        right: 2.6rem;
-
-        display: flex;
-        justify-content: space-between;
-
-        width: 13.6rem;
-        height: 4rem;
-      }
-    }
   `,
 };
