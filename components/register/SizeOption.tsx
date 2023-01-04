@@ -3,13 +3,17 @@ import { OptionType } from 'pages/register';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
+import NextButton from './NextButton';
+
 interface ButtonProps {
   selectedOption?: OptionType;
   setSelectedOption: (prev: OptionType) => void;
+  isNext: boolean;
   setIsNext: (prev: boolean) => void;
+  onClickNext: () => void;
 }
 
-export default function SizeOption({ selectedOption, setSelectedOption, setIsNext }: ButtonProps) {
+export default function SizeOption({ selectedOption, setSelectedOption, isNext, setIsNext, onClickNext }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
   return (
     <Styled.Root>
@@ -30,6 +34,7 @@ export default function SizeOption({ selectedOption, setSelectedOption, setIsNex
           </Styled.SizeOptionButton>
         ))}
       </Styled.SizeOptionButtons>
+      <NextButton isActive={isNext} onClick={onClickNext} />
     </Styled.Root>
   );
 }

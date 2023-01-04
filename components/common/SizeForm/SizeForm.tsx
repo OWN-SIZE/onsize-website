@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { use, useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
@@ -6,11 +6,12 @@ import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import TopSizeForm from './TopSizeForm';
+import NextButton from 'components/register/NextButton';
 
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
+  isNext: boolean;
   setIsNext: (prev: boolean) => void;
 }
 
@@ -20,7 +21,19 @@ const formTypeMapper = {
   하의: '하의',
 };
 
-export default function SizeForm({ noHeader, formType, setIsNext }: FormProps) {
+const topScopeMapper = {
+  총장: { min: 30, max: 180 },
+  '어깨 너비': { min: 25, max: 80 },
+};
+
+const chestScopeMapper = {
+  단면: { min: 30, max: 100 },
+  둘레: { min: 25, max: 80 },
+};
+
+type switcherType = '단면' | '둘레';
+
+export default function SizeForm({ noHeader, formType, isNext, setIsNext }: FormProps) {
   const BottomSizeForm = () => {
     return (
       <Styled.Form>
@@ -72,6 +85,8 @@ export default function SizeForm({ noHeader, formType, setIsNext }: FormProps) {
       </Styled.Form>
     );
   };
+  const switchList: switcherType[] = ['단면', '둘레'];
+  const [switcher, setSwitcher] = useState<switcherType>('단면');
 
   const {
     register,
@@ -80,67 +95,85 @@ export default function SizeForm({ noHeader, formType, setIsNext }: FormProps) {
     handleSubmit,
     formState: { errors },
     setError,
-  } = useForm({ mode: 'onBlur' });
+  } = useForm();
+
   const onValid = (data: any) => {
-    // 모든 유효성이 true이면 호출
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
     console.log(data);
-    // if (!errors) {
-    //   setIsNext(true);
-    // }
   };
 
   useEffect(() => {
     // required 에러가 없을 경우 setIsNext true
-    // watch((value, { name, type }) => console.log(value, name, type));
+    watch((formObject) => {
+      if (!Object.values(formObject).includes('')) {
+        setIsNext(true);
+      }
+    });
   }, [watch]);
 
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
+      {/* {errors.topLength && errors.topLength?.message} */}
       {formType === '하의' ? (
         <BottomSizeForm />
       ) : (
-        <Styled.Form onBlur={handleSubmit(onValid)}>
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
+          {Object.entries(topScopeMapper).map(([key, { min, max }], index) => (
+            <Styled.InputContainer key={index}>
+              <label>{key}</label>
+              <span>
+                <Styled.Input
+                  type="number"
+                  {...register(key, {
+                    required: true,
+                    validate: (value) =>
+                      value < min || value > max
+                        ? `${key}은 최소 ${min}부터 최대 ${max}까지 입력할 수 있습니다.`
+                        : true,
+                  })}
+                  onBlur={(e) => setValue(key, parseFloat(e.target.value).toFixed(1))}
+                />
+                cm
+              </span>
+            </Styled.InputContainer>
+          ))}
+          <Styled.RadioContainer>
+            {switchList.map((text, index) => (
+              <Styled.Radio
+                key={index}
+                onClick={() => {
+                  setSwitcher(text);
+                }}
+              >
+                <Image
+                  src={text === switcher ? RadioClickedIcon : RadioIcon}
+                  alt="라디오버튼 아이콘"
+                  width={22}
+                  height={22}
+                />
+                <label>{text}</label>
+              </Styled.Radio>
+            ))}
+          </Styled.RadioContainer>
           <Styled.InputContainer>
-            {/* {errors.topLength && errors.topLength?.message} */}
-            총장
+            <label>가슴 {switcher}</label>
             <span>
               <Styled.Input
                 type="number"
-                {...register('topLength', {
+                {...register('가슴', {
                   required: true,
                   validate: (value) =>
-                    value < 80 || value > 130 ? '총장은 최소 30부터 최대 180까지 입력할 수 있습니다.' : true,
+                    value < chestScopeMapper[switcher].min || value > chestScopeMapper[switcher].max
+                      ? `가슴 ${switcher}은 최소 ${chestScopeMapper[switcher].min}부터 최대 ${chestScopeMapper[switcher].max}까지 입력할 수 있습니다.`
+                      : true,
                 })}
-                onBlur={(e) => setValue('topLength', parseFloat(e.target.value).toFixed(1))}
+                onBlur={(e) => setValue('가슴', parseFloat(e.target.value).toFixed(1))}
               />
-              <label>cm</label>
+              cm
             </span>
           </Styled.InputContainer>
-          <Styled.InputContainer>
-            어깨너비
-            <span>
-              <Styled.Input type="number" />
-              <label>cm</label>
-            </span>
-          </Styled.InputContainer>
-          <Styled.RadioContainer>
-            <Styled.Radio>
-              <Image src={RadioClickedIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-              <label>단면</label>
-            </Styled.Radio>
-            <Styled.Radio>
-              <Image src={RadioIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-              <label>둘레</label>
-            </Styled.Radio>
-          </Styled.RadioContainer>
-          <Styled.InputContainer>
-            가슴 단면
-            <span>
-              <Styled.Input type="text" />
-              <label>cm</label>
-            </span>
-          </Styled.InputContainer>
+          <NextButton isActive={isNext} />
         </Styled.Form>
       )}
     </Styled.Root>
@@ -170,10 +203,7 @@ const Styled = {
     justify-content: space-between;
     margin-top: 2.6rem;
     color: ${theme.colors.gray550};
-    ${theme.fonts.caption1}
-    > span {
-      display: flex;
-    }
+    ${theme.fonts.caption1};
     &:nth-child(1),
     &:nth-child(4) {
       margin-top: 0;

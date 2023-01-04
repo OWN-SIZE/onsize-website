@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import styled, { css } from 'styled-components';
+import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
@@ -45,15 +45,18 @@ function Register() {
         <Styled.RightContainer>
           <Progress progress={progress} selectedOption={selectedOption} />
           {progress === 1 ? (
-            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} setIsNext={setIsNext} />
+            <SizeOption
+              selectedOption={selectedOption}
+              setSelectedOption={setSelectedOption}
+              isNext={isNext}
+              setIsNext={setIsNext}
+              onClickNext={onClickSize}
+            />
           ) : progress === 2 ? (
-            <SizeForm formType={selectedOption} setIsNext={setIsNext} />
+            <SizeForm formType={selectedOption} isNext={isNext} setIsNext={setIsNext} />
           ) : (
-            <SizeForm formType={nextFormMapper[selectedOption]} setIsNext={setIsNext} />
+            <SizeForm formType={nextFormMapper[selectedOption]} isNext={isNext} setIsNext={setIsNext} />
           )}
-          <Styled.NextButton isActive={isNext} onClick={onClickSize}>
-            다음
-          </Styled.NextButton>
         </Styled.RightContainer>
       </Styled.Root>
     </Layout>
@@ -95,23 +98,23 @@ const Styled = {
     width: 100%;
     background-color: #f5f5f5;
   `,
-  NextButton: styled.button<{ isActive?: boolean }>`
-    position: fixed;
-    width: 46.2rem;
-    height: 6.3rem;
-    bottom: 9.8rem;
-    background: transparent;
-    ${({ isActive }) =>
-      isActive
-        ? css`
-            color: ${theme.colors.gray000};
-            background: ${theme.colors.black};
-          `
-        : css`
-            border: 0.2rem solid ${theme.colors.black};
-            color: ${theme.colors.gray550};
-          `}
-    border-radius: 3rem;
-    ${theme.fonts.title3};
-  `,
+  // NextButton: styled.button<{ isActive?: boolean }>`
+  //   position: fixed;
+  //   width: 46.2rem;
+  //   height: 6.3rem;
+  //   bottom: 9.8rem;
+  //   background: transparent;
+  //   ${({ isActive }) =>
+  //     isActive
+  //       ? css`
+  //           color: ${theme.colors.gray000};
+  //           background: ${theme.colors.black};
+  //         `
+  //       : css`
+  //           border: 0.2rem solid ${theme.colors.black};
+  //           color: ${theme.colors.gray550};
+  //         `}
+  //   border-radius: 3rem;
+  //   ${theme.fonts.title3};
+  // `,
 };
