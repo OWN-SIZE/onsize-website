@@ -18,6 +18,9 @@ const colors = {
   gray500: '#2f2f2f',
   gray600: '#222222',
   black: '#1E2025',
+
+  card_hover: 'rgba(47, 47, 47, 0.4)',
+  icon_hover: 'rgba(235, 235, 235, 0.5);',
 } as const;
 
 interface Font {
@@ -53,6 +56,7 @@ const fonts = {
   caption1: FONT({ weight: 600, size: 1.8, lineHeight: 2.5 }),
   tooltip: FONT({ weight: 400, size: 1.2, lineHeight: 1.8, letterSpacing: 6 }),
   button1: FONT({ weight: 800, size: 4, lineHeight: 5.4 }),
+  sizetag: FONT({ weight: 700, size: 1.6, lineHeight: 2.2 }),
 } as const;
 
 const theme = {
