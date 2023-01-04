@@ -3,7 +3,7 @@ import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 import Layout from 'components/common/Layout';
-import SizeForm from 'components/common/SizeForm';
+import SizeForm from 'components/common/SizeForm/SizeForm';
 import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 

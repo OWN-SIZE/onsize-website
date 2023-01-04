@@ -1,9 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+
+import TopSizeForm from './TopSizeForm';
 
 interface FormProps {
   noHeader?: boolean;
@@ -17,44 +19,6 @@ const formTypeMapper = {
 };
 
 export default function SizeForm({ noHeader, formType }: FormProps) {
-  const TopSizeForm = () => {
-    return (
-      <Styled.Form>
-        <Styled.InputContainer>
-          총장
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.InputContainer>
-          어깨너비
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.RadioContainer>
-          <Styled.Radio>
-            <Image src={RadioClickedIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-            <label>단면</label>
-          </Styled.Radio>
-          <Styled.Radio>
-            <Image src={RadioIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-            <label>둘레</label>
-          </Styled.Radio>
-        </Styled.RadioContainer>
-        <Styled.InputContainer>
-          가슴 단면
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-      </Styled.Form>
-    );
-  };
-
   const BottomSizeForm = () => {
     return (
       <Styled.Form>
