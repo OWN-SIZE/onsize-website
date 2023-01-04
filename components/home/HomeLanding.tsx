@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import HomeFirst from './HomeFirst';
 import HomeMain from './HomeMain';
 
-export default function HomeLanding() {
+function HomeLanding() {
   return (
     <Styled.Root>
       {/* <HomeFirst /> */}
@@ -11,6 +11,8 @@ export default function HomeLanding() {
     </Styled.Root>
   );
 }
+
+export default HomeLanding;
 
 const Styled = {
   Root: styled.div`

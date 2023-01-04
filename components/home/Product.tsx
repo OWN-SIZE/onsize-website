@@ -17,7 +17,8 @@ interface closetData {
   isPin: boolean;
   link: string;
 }
-export default function Product() {
+
+function Product() {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const data: closetData = {
     id: '62daeb7e82b56574bf940e54',
@@ -31,23 +32,28 @@ export default function Product() {
     isPin: true,
     link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
   };
-  const [imgHovered, setImgHovered] = useState('');
+  const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   const handleMousehover = (e: React.MouseEvent) => {
-    setImgHovered(e.currentTarget.id);
+    setImgHoveredTarget(e.currentTarget.id);
   };
 
   const handleMouseLeave = () => {
-    setImgHovered('');
+    setImgHoveredTarget('');
   };
   return (
     <Styled.Card>
-      <Styled.HoverHideContainer className={imgHovered === data.id ? 'hide' : ''}>
+      <Styled.HoverHideContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
         {data.size && (
           <>
-            <Image src={SizeIcon} id="sizeIcon" className={imgHovered === data.id ? 'hide' : ''} alt="사이즈 표시" />
+            <Image
+              src={SizeIcon}
+              id="sizeIcon"
+              className={imgHoveredTarget === data.id ? 'hide' : ''}
+              alt="사이즈 표시"
+            />
 
-            <Styled.SizeContainer className={imgHovered === data.id ? 'hide' : ''}>
+            <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
               <span>{data.size}</span>
               {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
             </Styled.SizeContainer>
@@ -58,14 +64,14 @@ export default function Product() {
           <Image
             src={PinIcon}
             id="pinIcon"
-            className={imgHovered === data.id ? 'hide' : ''}
+            className={imgHoveredTarget === data.id ? 'hide' : ''}
             alt="고정된 상품 핀 아이콘"
           />
         )}
       </Styled.HoverHideContainer>
       <Styled.ThumbNail onMouseEnter={handleMousehover} onMouseLeave={handleMouseLeave} id={data.id}>
         <Styled.ThumbNailImg />
-        <Styled.HoverThumbNail className={imgHovered === data.id ? 'show' : 'hide'}>
+        <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'}>
           <button>
             카테고리 추가
             <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
@@ -82,6 +88,8 @@ export default function Product() {
     </Styled.Card>
   );
 }
+
+export default Product;
 
 const Styled = {
   Card: styled.article`

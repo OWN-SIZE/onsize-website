@@ -17,25 +17,25 @@ interface HoverIconProps {
   itemId: string;
 }
 
-export default function HoverIcon(props: HoverIconProps) {
-  const [iconHovered, setIconHovered] = useState('');
+function HoverIcon(props: HoverIconProps) {
+  const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const { isPin, itemId } = props;
   const handleMousehover = (e: React.MouseEvent) => {
-    setIconHovered(e.currentTarget.id);
+    setIconHoveredTarget(e.currentTarget.id);
   };
 
   const handleMouseLeave = () => {
-    setIconHovered('');
+    setIconHoveredTarget('');
   };
 
   return (
-    <div>
+    <Styled.Root>
       {isPin ? (
         <Styled.IconCotainer id={`${itemId}Pin`} onMouseEnter={handleMousehover} onMouseLeave={handleMouseLeave}>
           <Image src={PinButtonFillIcon} alt="고정 해제 버튼 아이콘" />
           <Image
             src={HoveredPinFillIcon}
-            className={iconHovered === `${itemId}Pin` ? 'show' : 'hide'}
+            className={iconHoveredTarget === `${itemId}Pin` ? 'show' : 'hide'}
             alt="호버된 고정 해제 버튼 아이콘"
           />
         </Styled.IconCotainer>
@@ -44,7 +44,7 @@ export default function HoverIcon(props: HoverIconProps) {
           <Image src={PinButonIcon} alt="고정 버튼 아이콘" />
           <Image
             src={HoveredPinIcon}
-            className={iconHovered === `${itemId}Pin` ? 'show' : 'hide'}
+            className={iconHoveredTarget === `${itemId}Pin` ? 'show' : 'hide'}
             alt="호버된 고정 버튼 아이콘"
           />
         </Styled.IconCotainer>
@@ -53,7 +53,7 @@ export default function HoverIcon(props: HoverIconProps) {
         <Image src={EditIcon} alt="편집 버튼 아이콘" />
         <Image
           src={HoveredEditIcon}
-          className={iconHovered === `${itemId}Edit` ? 'show' : 'hide'}
+          className={iconHoveredTarget === `${itemId}Edit` ? 'show' : 'hide'}
           alt="호버된 편집 버튼 아이콘"
         />
       </Styled.IconCotainer>
@@ -61,15 +61,18 @@ export default function HoverIcon(props: HoverIconProps) {
         <Image src={DeleteIcon} alt="삭제 버튼 아이콘" />
         <Image
           src={HoveredDeleteIcon}
-          className={iconHovered === `${itemId}Delete` ? 'show' : 'hide'}
+          className={iconHoveredTarget === `${itemId}Delete` ? 'show' : 'hide'}
           alt="호버된 삭제 버튼 아이콘"
         />
       </Styled.IconCotainer>
-    </div>
+    </Styled.Root>
   );
 }
 
+export default HoverIcon;
+
 const Styled = {
+  Root: styled.div``,
   IconCotainer: styled.div`
     position: relative;
     width: 4rem;

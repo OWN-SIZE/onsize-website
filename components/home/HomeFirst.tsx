@@ -2,17 +2,19 @@ import React from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-export default function HomeFirst() {
+function HomeFirst() {
   return (
-    <Styled.Container>
+    <Styled.Root>
       <Styled.Greeting>온사이즈를 시작하러 가볼까요?</Styled.Greeting>
       <Styled.Button>튜토리얼 확인하기</Styled.Button>
-    </Styled.Container>
+    </Styled.Root>
   );
 }
 
+export default HomeFirst;
+
 const Styled = {
-  Container: styled.div`
+  Root: styled.div`
     display: flex;
     flex-direction: column;
     align-items: center;

@@ -5,7 +5,7 @@ import theme from 'styles/theme';
 
 import Product from './Product';
 
-export default function HomeMain() {
+function HomeMain() {
   const product = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => <Product key={item} />);
   return (
     <Styled.Container>
@@ -17,6 +17,8 @@ export default function HomeMain() {
     </Styled.Container>
   );
 }
+
+export default HomeMain;
 
 // 시맨틱 태그 다시 확인
 const Styled = {
