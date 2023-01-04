@@ -5,11 +5,23 @@ import theme from 'styles/theme';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import { useCallback, useState } from 'react';
 import HistoryModal from './historyModal';
+import Modal from 'components/common/Modal';
 
 function MyPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+
   const onClickHistoryModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsHistoryModalOpen(!isHistoryModalOpen);
+  };
+  const onClickLeaveModal = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
+  };
+  const onClickWithdraw = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
+  };
+  const onClickCancel = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
   };
 
   return (
@@ -38,12 +50,14 @@ function MyPage() {
             <p>개인 정보 보호 정책</p>
           </Styled.InformationContainer>
           <Styled.UserLeaveContainer>
-            <button className="withdrawal">탈퇴하기</button>
+            <button className="withdrawal" onClick={onClickLeaveModal}>
+              탈퇴하기
+            </button>
             <button className="signOut">로그아웃</button>
           </Styled.UserLeaveContainer>
         </Styled.MySizeContainer>
       </Styled.Root>
-      {isModalOpen && (
+      {isHistoryModalOpen && (
         <HistoryModal onClickHistoryModal={onClickHistoryModal}>
           <Styled.HistoryModalLink>
             <h5>L</h5>
@@ -86,6 +100,23 @@ function MyPage() {
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
         </HistoryModal>
+      )}
+      {isLeaveModalOpen && (
+        <Modal
+          onClickModal={onClickLeaveModal}
+          onClickButton1={onClickCancel}
+          onClickButton2={onClickWithdraw}
+          title="탈퇴"
+          button1Text="아니오"
+          button2Text="예"
+          width={53}
+        >
+          <Styled.LeaveModalContent>
+            온사이즈를 탈퇴하시겠습니까?
+            <br />
+            추천받은 사이즈와 저장된 의류는 모두 삭제돼요
+          </Styled.LeaveModalContent>
+        </Modal>
       )}
     </Layout>
   );
@@ -202,5 +233,12 @@ const Styled = {
       ${theme.fonts.body2};
       color: ${theme.colors.gray550};
     }
+  `,
+  LeaveModalContent: styled.div`
+    ${theme.fonts.caption};
+    color: ${theme.colors.gray550};
+    text-align: center;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
   `,
 };

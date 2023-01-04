@@ -18,6 +18,7 @@ const colors = {
   gray500: '#2f2f2f',
   gray600: '#222222',
   black: '#1E2025',
+  card_hover: '#2F2F2F',
 } as const;
 
 interface Font {
