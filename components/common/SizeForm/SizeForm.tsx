@@ -21,70 +21,42 @@ const formTypeMapper = {
   하의: '하의',
 };
 
+// 상의 총장, 어깨너비
 const topScopeMapper = {
   총장: { min: 30, max: 180 },
   '어깨 너비': { min: 25, max: 80 },
 };
 
+// 가슴
 const chestScopeMapper = {
   단면: { min: 30, max: 100 },
   둘레: { min: 25, max: 80 },
 };
 
+// 하의 총장, 밑위
+const bottomScopeMappper = {
+  총장: { min: 80, max: 130 },
+  밑위: { min: 20, max: 60 },
+};
+
+const bottomSwitchMapper = {
+  허리: {
+    단면: { min: 20, max: 60 },
+    둘레: { min: 40, max: 120 },
+  },
+  허벅지: {
+    단면: { min: 20, max: 60 },
+    둘레: { min: 40, max: 120 },
+  },
+  밑단: {
+    단면: { min: 10, max: 80 },
+    둘레: { min: 20, max: 160 },
+  },
+};
+
 type switcherType = '단면' | '둘레';
 
 export default function SizeForm({ noHeader, formType, isNext, setIsNext }: FormProps) {
-  const BottomSizeForm = () => {
-    return (
-      <Styled.Form>
-        <Styled.InputContainer>
-          총장
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.InputContainer>
-          밑위
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.RadioContainer>
-          <Styled.Radio>
-            <Image src={RadioClickedIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-            <label>단면</label>
-          </Styled.Radio>
-          <Styled.Radio>
-            <Image src={RadioIcon} alt="라디오버튼 아이콘" width={22} height={22} />
-            <label>둘레</label>
-          </Styled.Radio>
-        </Styled.RadioContainer>
-        <Styled.InputContainer>
-          허리 단면
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.InputContainer>
-          허벅지 단면
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-        <Styled.InputContainer>
-          밑단 단면
-          <span>
-            <Styled.Input type="text" />
-            <label>cm</label>
-          </span>
-        </Styled.InputContainer>
-      </Styled.Form>
-    );
-  };
   const switchList: switcherType[] = ['단면', '둘레'];
   const [switcher, setSwitcher] = useState<switcherType>('단면');
 
@@ -103,7 +75,7 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
   };
 
   useEffect(() => {
-    // required 에러가 없을 경우 setIsNext true
+    // input이 비어있지 않은 경우 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
         setIsNext(true);
@@ -116,11 +88,71 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
       {/* {errors.topLength && errors.topLength?.message} */}
       {formType === '하의' ? (
-        <BottomSizeForm />
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
+          {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
+            <Styled.InputContainer key={key}>
+              <label>{key}</label>
+              <span>
+                <Styled.Input
+                  type="number"
+                  {...register(key, {
+                    required: true,
+                    validate: (value) =>
+                      value < min || value > max
+                        ? `${key}은 최소 ${min}부터 최대 ${max}까지 입력할 수 있습니다.`
+                        : true,
+                  })}
+                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
+                />
+                cm
+              </span>
+            </Styled.InputContainer>
+          ))}
+          <Styled.RadioContainer>
+            {switchList.map((text, index) => (
+              <Styled.Radio
+                key={index}
+                onClick={() => {
+                  setSwitcher(text);
+                }}
+              >
+                <Image
+                  src={text === switcher ? RadioClickedIcon : RadioIcon}
+                  alt="라디오버튼 아이콘"
+                  width={22}
+                  height={22}
+                />
+                <label>{text}</label>
+              </Styled.Radio>
+            ))}
+          </Styled.RadioContainer>
+          {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
+            <Styled.InputContainer key={key}>
+              <label>
+                {key} {switcher}
+              </label>
+              <span>
+                <Styled.Input
+                  type="number"
+                  {...register(key, {
+                    required: true,
+                    validate: (value) =>
+                      value < scope[switcher].min || value > scope[switcher].max
+                        ? `${key} ${switcher}은 최소 ${scope[switcher].min}부터 최대 ${chestScopeMapper[switcher].max}까지 입력할 수 있습니다.`
+                        : true,
+                  })}
+                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
+                />
+                cm
+              </span>
+            </Styled.InputContainer>
+          ))}
+          <NextButton isActive={isNext} />
+        </Styled.Form>
       ) : (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
-          {Object.entries(topScopeMapper).map(([key, { min, max }], index) => (
-            <Styled.InputContainer key={index}>
+          {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
+            <Styled.InputContainer key={key}>
               <label>{key}</label>
               <span>
                 <Styled.Input
