@@ -9,8 +9,14 @@ import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
-export type OptionType = '상/하의' | '상의' | '하의';
+export type OptionType = '상/하의' | '상의' | '하의' | undefined;
 export type ProgressType = 1 | 2 | 3;
+
+const nextFormMapper = {
+  '상/하의': '하의',
+  상의: '하의',
+  하의: '상의',
+};
 
 function Register() {
   const router = useRouter();
@@ -50,9 +56,13 @@ function Register() {
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress />
-          {param === 1 && <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />}
-          {param === 2 && <SizeForm isHeader formType="상의" />}
-          {param === 3 && <SizeForm isHeader formType="하의" />}
+          {param === 1 ? (
+            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+          ) : param === 2 ? (
+            <SizeForm formType={selectedOption} />
+          ) : (
+            <SizeForm formType={nextFormMapper[selectedOption]} />
+          )}
           <Styled.NextButton isActive={selectedOption && true} onClick={onClickSize}>
             다음
           </Styled.NextButton>

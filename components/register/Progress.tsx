@@ -1,5 +1,6 @@
 import React from 'react';
 import { useRouter } from 'next/router';
+import { OptionType } from 'pages/register/[...params]';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
@@ -16,8 +17,8 @@ const stepMapper = {
   },
   하의: {
     step1: '의류 선택',
-    step2: '상의 입력 (선택)',
-    step3: '하의 입력',
+    step2: '하의 입력',
+    step3: '상의 입력 (선택)',
   },
 };
 

@@ -1,15 +1,16 @@
 import React from 'react';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
+import { OptionType } from 'pages/register/[...params]';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 interface FormProps {
-  isHeader?: boolean;
-  formType?: '상의' | '하의';
+  noHeader?: boolean;
+  formType: OptionType;
 }
 
-export default function SizeForm({ isHeader, formType }: FormProps) {
+export default function SizeForm({ noHeader, formType }: FormProps) {
   const TopSizeForm = () => {
     return (
       <Styled.Form>
@@ -21,7 +22,7 @@ export default function SizeForm({ isHeader, formType }: FormProps) {
           </span>
         </Styled.InputContainer>
         <Styled.InputContainer>
-          밑위
+          어깨너비
           <span>
             <Styled.Input type="text" />
             <label>cm</label>
@@ -100,11 +101,16 @@ export default function SizeForm({ isHeader, formType }: FormProps) {
     );
   };
 
+  const formTypeMapper = {
+    '상/하의': '상의',
+    상의: '상의',
+    하의: '하의',
+  };
+
   return (
     <Styled.Root>
-      {isHeader && formType === '상의' && <Styled.Header>상의 사이즈를 입력해주세요</Styled.Header>}
-      {isHeader && formType === '하의' && <Styled.Header>하의 사이즈를 입력해주세요</Styled.Header>}
-      {formType === '상의' ? <TopSizeForm /> : <BottomSizeForm />}
+      {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
+      {formType === '하의' ? <BottomSizeForm /> : <TopSizeForm />}
     </Styled.Root>
   );
 }
