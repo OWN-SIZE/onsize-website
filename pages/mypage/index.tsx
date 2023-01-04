@@ -70,7 +70,7 @@ function MyPage() {
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
           <Styled.HistoryModalLink>
-            <h5>XL</h5>
+            <h5>L</h5>
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
           <Styled.HistoryModalLink>
@@ -78,23 +78,11 @@ function MyPage() {
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
           <Styled.HistoryModalLink>
-            <h5>XL</h5>
+            <h5>S</h5>
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
           <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
+            <h5>M</h5>
             <p>www.onsize.com</p>
           </Styled.HistoryModalLink>
         </HistoryModal>
