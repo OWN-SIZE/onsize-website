@@ -1,4 +1,6 @@
 import React from 'react';
+import { BottomImg, TopBottomImg, TopImg } from 'assets/img';
+import Image from 'next/image';
 import { OptionType } from 'pages/register';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
@@ -12,6 +14,12 @@ interface ButtonProps {
   setIsNext: (prev: boolean) => void;
   onClickNext: () => void;
 }
+
+const optionImgMapper = {
+  '상/하의': TopBottomImg,
+  상의: TopImg,
+  하의: BottomImg,
+};
 
 export default function SizeOption({ selectedOption, setSelectedOption, isNext, setIsNext, onClickNext }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
@@ -29,7 +37,7 @@ export default function SizeOption({ selectedOption, setSelectedOption, isNext, 
             type="button"
             key={index}
           >
-            <Styled.ButtonIcon />
+            <Image src={optionImgMapper[option]} alt={`${option} 이미지`} placeholder="blur" />
             <p>{option}</p>
           </Styled.SizeOptionButton>
         ))}
@@ -83,10 +91,5 @@ const Styled = {
       color: ${theme.colors.gray550};
       ${theme.fonts.title4Semibold}
     }
-  `,
-  ButtonIcon: styled.img`
-    width: 11.2rem;
-    height: 11.2rem;
-    background-color: #d9d9d9;
   `,
 };

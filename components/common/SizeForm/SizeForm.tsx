@@ -168,7 +168,7 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
                       ? `가슴 ${switcher}은 최소 ${chestScopeMapper[switcher].min}부터 최대 ${chestScopeMapper[switcher].max}까지 입력할 수 있습니다.`
                       : true,
                 })}
-                onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
+                onBlur={(e) => e.currentTarget.value && setValue('가슴', parseFloat(e.currentTarget.value).toFixed(1))}
               />
               cm
             </span>
