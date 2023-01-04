@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
 import { OptionType } from 'pages/register';
@@ -10,6 +11,7 @@ import TopSizeForm from './TopSizeForm';
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
+  setIsNext: (prev: boolean) => void;
 }
 
 const formTypeMapper = {
@@ -18,7 +20,7 @@ const formTypeMapper = {
   하의: '하의',
 };
 
-export default function SizeForm({ noHeader, formType }: FormProps) {
+export default function SizeForm({ noHeader, formType, setIsNext }: FormProps) {
   const BottomSizeForm = () => {
     return (
       <Styled.Form>
@@ -71,10 +73,76 @@ export default function SizeForm({ noHeader, formType }: FormProps) {
     );
   };
 
+  const {
+    register,
+    setValue,
+    watch,
+    handleSubmit,
+    formState: { errors },
+    setError,
+  } = useForm({ mode: 'onBlur' });
+  const onValid = (data: any) => {
+    // 모든 유효성이 true이면 호출
+    console.log(data);
+    // if (!errors) {
+    //   setIsNext(true);
+    // }
+  };
+
+  useEffect(() => {
+    // required 에러가 없을 경우 setIsNext true
+    // watch((value, { name, type }) => console.log(value, name, type));
+  }, [watch]);
+
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
-      {formType === '하의' ? <BottomSizeForm /> : <TopSizeForm />}
+      {formType === '하의' ? (
+        <BottomSizeForm />
+      ) : (
+        <Styled.Form onBlur={handleSubmit(onValid)}>
+          <Styled.InputContainer>
+            {/* {errors.topLength && errors.topLength?.message} */}
+            총장
+            <span>
+              <Styled.Input
+                type="number"
+                {...register('topLength', {
+                  required: true,
+                  validate: (value) =>
+                    value < 80 || value > 130 ? '총장은 최소 30부터 최대 180까지 입력할 수 있습니다.' : true,
+                })}
+                onBlur={(e) => setValue('topLength', parseFloat(e.target.value).toFixed(1))}
+              />
+              <label>cm</label>
+            </span>
+          </Styled.InputContainer>
+          <Styled.InputContainer>
+            어깨너비
+            <span>
+              <Styled.Input type="number" />
+              <label>cm</label>
+            </span>
+          </Styled.InputContainer>
+          <Styled.RadioContainer>
+            <Styled.Radio>
+              <Image src={RadioClickedIcon} alt="라디오버튼 아이콘" width={22} height={22} />
+              <label>단면</label>
+            </Styled.Radio>
+            <Styled.Radio>
+              <Image src={RadioIcon} alt="라디오버튼 아이콘" width={22} height={22} />
+              <label>둘레</label>
+            </Styled.Radio>
+          </Styled.RadioContainer>
+          <Styled.InputContainer>
+            가슴 단면
+            <span>
+              <Styled.Input type="text" />
+              <label>cm</label>
+            </span>
+          </Styled.InputContainer>
+        </Styled.Form>
+      )}
     </Styled.Root>
   );
 }

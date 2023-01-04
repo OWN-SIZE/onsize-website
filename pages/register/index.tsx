@@ -20,12 +20,14 @@ const nextFormMapper = {
 function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>();
+  const [isNext, setIsNext] = useState<boolean>(false);
 
   const onClickSize = () => {
     if (progress === 3) {
       // 서버에 데이터 넘기고 home으로 이동
-    } else if (selectedOption) {
+    } else if (isNext) {
       setProgress((prev) => prev + 1);
+      setIsNext(false);
     }
   };
 
@@ -43,13 +45,13 @@ function Register() {
         <Styled.RightContainer>
           <Progress progress={progress} selectedOption={selectedOption} />
           {progress === 1 ? (
-            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} />
+            <SizeOption selectedOption={selectedOption} setSelectedOption={setSelectedOption} setIsNext={setIsNext} />
           ) : progress === 2 ? (
-            <SizeForm formType={selectedOption} />
+            <SizeForm formType={selectedOption} setIsNext={setIsNext} />
           ) : (
-            <SizeForm formType={nextFormMapper[selectedOption]} />
+            <SizeForm formType={nextFormMapper[selectedOption]} setIsNext={setIsNext} />
           )}
-          <Styled.NextButton isActive={selectedOption && true} onClick={onClickSize}>
+          <Styled.NextButton isActive={isNext} onClick={onClickSize}>
             다음
           </Styled.NextButton>
         </Styled.RightContainer>

@@ -6,9 +6,10 @@ import theme from 'styles/theme';
 interface ButtonProps {
   selectedOption?: OptionType;
   setSelectedOption: (prev: OptionType) => void;
+  setIsNext: (prev: boolean) => void;
 }
 
-export default function SizeOption({ selectedOption, setSelectedOption }: ButtonProps) {
+export default function SizeOption({ selectedOption, setSelectedOption, setIsNext }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
   return (
     <Styled.Root>
@@ -16,7 +17,10 @@ export default function SizeOption({ selectedOption, setSelectedOption }: Button
       <Styled.SizeOptionButtons>
         {optionList.map((option, index) => (
           <Styled.SizeOptionButton
-            onClick={() => setSelectedOption(option)}
+            onClick={() => {
+              setSelectedOption(option);
+              setIsNext(true);
+            }}
             isSelected={selectedOption === option ? true : false}
             type="button"
             key={index}
