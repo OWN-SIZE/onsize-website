@@ -1,11 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
-    "lib": [
-      "dom",
-      "dom.iterable",
-      "esnext"
-    ],
+    "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -19,19 +15,16 @@
     "noEmit": false,
     "jsx": "preserve",
     "baseUrl": ".",
+    "paths": {
+      "@/components/*": ["components/*"],
+      "@/pages/*": ["pages/*"],
+      "@/apis/*": ["apis/*"],
+      "@/hooks/*": ["hooks/*"]
+    },
     "incremental": true,
     "isolatedModules": true
   },
-  "files": [
-    "svg.d.ts"
-  ],
-  "include": [
-    "next-env.d.ts",
-    "**/*.ts",
-    "**/*.tsx"
-  ],
-  "exclude": [
-    "build",
-    "node_modules"
-  ]
+  "files": ["svg.d.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "exclude": ["build", "node_modules"]
 }

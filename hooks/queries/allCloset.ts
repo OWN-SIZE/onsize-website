@@ -1,5 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteAllClosetProduct, fetchAllCloset, updateAllClosetProduct } from 'apis/allCloset';
+
+import { deleteAllClosetProduct, fetchAllCloset, updateAllClosetProduct } from '@/apis/allCloset';
 
 const QUERY_KEY = {
   allCloset: 'allCloset',
