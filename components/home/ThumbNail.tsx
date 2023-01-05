@@ -18,23 +18,19 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 interface HoverIconProps {
-  data: closetData;
+  data: ThumbNailData;
   width: string;
   height: string;
   noSizeTag?: boolean;
   noAddCategory?: boolean;
 }
 
-interface closetData {
+interface ThumbNailData {
   id: string;
-  image: string;
-  productName: string;
-  size: string | null;
-  memo: string;
-  mallName: string;
-  isRecommend: boolean;
+  image?: string;
+  size?: string | null;
+  isRecommend?: boolean;
   isPin: boolean;
-  link: string;
 }
 
 function ThumbNail(props: HoverIconProps) {
@@ -94,7 +90,9 @@ function ThumbNail(props: HoverIconProps) {
           />
         )}
       </Styled.HoverHideContainer>
+
       <Styled.ThumbNailImg width={width} height={height} />
+
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
         {!noAddCategory && (
           <button>
@@ -102,6 +100,7 @@ function ThumbNail(props: HoverIconProps) {
             <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
           </button>
         )}
+
         <div>
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} alt="고정 해제 버튼 아이콘" />

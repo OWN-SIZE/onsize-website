@@ -19,12 +19,28 @@ interface closetData {
   link: string;
 }
 
+interface ThumbNailData {
+  id: string;
+  image?: string;
+  size?: string | null;
+  isRecommend?: boolean;
+  isPin: boolean;
+}
+
 function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const { data } = props;
+
+  const ThumbNailData: ThumbNailData = {
+    id: data.id,
+    image: data.image,
+    size: data.size,
+    isRecommend: data.isRecommend,
+    isPin: data.isPin,
+  };
   return (
     <Styled.Card>
-      <ThumbNail data={data} width="33.2" height="33.2" />
+      <ThumbNail data={ThumbNailData} width="33.2" height="33.2" />
       <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
       <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
       <Styled.BrandSection>
