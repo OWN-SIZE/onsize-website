@@ -10,8 +10,8 @@ import NextButton from './NextButton';
 interface ButtonProps {
   selectedOption?: OptionType;
   setSelectedOption: (prev: OptionType) => void;
-  isNext: boolean;
-  setIsNext: (prev: boolean) => void;
+  isNextActive: boolean;
+  setIsNextActive: (prev: boolean) => void;
   onClickNext: () => void;
 }
 
@@ -21,7 +21,13 @@ const optionImgMapper = {
   하의: BottomImg,
 };
 
-export default function SizeOption({ selectedOption, setSelectedOption, isNext, setIsNext, onClickNext }: ButtonProps) {
+export default function SizeOption({
+  selectedOption,
+  setSelectedOption,
+  isNextActive,
+  setIsNextActive,
+  onClickNext,
+}: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
   return (
     <Styled.Root>
@@ -31,7 +37,7 @@ export default function SizeOption({ selectedOption, setSelectedOption, isNext, 
           <Styled.SizeOptionButton
             onClick={() => {
               setSelectedOption(option);
-              setIsNext(true);
+              setIsNextActive(true);
             }}
             isSelected={selectedOption === option ? true : false}
             type="button"
@@ -42,7 +48,7 @@ export default function SizeOption({ selectedOption, setSelectedOption, isNext, 
           </Styled.SizeOptionButton>
         ))}
       </Styled.SizeOptionButtons>
-      <NextButton isActive={isNext} onClick={onClickNext} />
+      <NextButton isActive={isNextActive} onClick={onClickNext} />
     </Styled.Root>
   );
 }

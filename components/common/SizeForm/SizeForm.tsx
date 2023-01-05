@@ -11,8 +11,8 @@ import NextButton from 'components/register/NextButton';
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
-  isNext: boolean;
-  setIsNext: (prev: boolean) => void;
+  isNextActive: boolean;
+  setIsNextActive: (prev: boolean) => void;
 }
 
 const formTypeMapper = {
@@ -56,7 +56,7 @@ const bottomSwitchMapper = {
 
 type switcherType = '단면' | '둘레';
 
-export default function SizeForm({ noHeader, formType, isNext, setIsNext }: FormProps) {
+export default function SizeForm({ noHeader, formType, isNextActive, setIsNextActive }: FormProps) {
   const switchList: switcherType[] = ['단면', '둘레'];
   const [switcher, setSwitcher] = useState<switcherType>('단면');
 
@@ -78,7 +78,7 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
     // input이 비어있지 않은 경우 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
-        setIsNext(true);
+        setIsNextActive(true);
       }
     });
   }, [watch]);
@@ -147,7 +147,7 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
               </span>
             </Styled.InputContainer>
           ))}
-          <NextButton isActive={isNext} />
+          <NextButton isActive={isNextActive} />
         </Styled.Form>
       ) : (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
@@ -205,7 +205,7 @@ export default function SizeForm({ noHeader, formType, isNext, setIsNext }: Form
               cm
             </span>
           </Styled.InputContainer>
-          <NextButton isActive={isNext} />
+          <NextButton isActive={isNextActive} />
         </Styled.Form>
       )}
     </Styled.Root>
