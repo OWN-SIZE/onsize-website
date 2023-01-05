@@ -1,22 +1,40 @@
 import React from 'react';
+import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg } from 'assets/img';
+//import { useLoginMutation } from 'hooks/queries/user';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { accessTokenState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import Layout from 'components/common/Layout';
+
 function Login() {
+  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const login = useGoogleLogin({
+    onSuccess: (response) => {
+      // recoil에 토큰들 저장하기
+      setAccessToken(response.access_token);
+      // 서버에 액세스 토큰 넘기기
+      // useLoginMutation(accessToken);
+    },
+  });
+
   return (
-    <Styled.Root>
-      <Styled.GreetingImg />
-      <Styled.LoginButton>
-        <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
-      </Styled.LoginButton>
-      <Styled.Message>
-        로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
-        <br />
-        서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
-      </Styled.Message>
-    </Styled.Root>
+    <Layout noHeader noMenuBar>
+      <Styled.Root>
+        <Styled.GreetingImg />
+        <Styled.LoginButton onClick={() => login()}>
+          <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
+        </Styled.LoginButton>
+        <Styled.Message>
+          로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
+          <br />
+          서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
+        </Styled.Message>
+      </Styled.Root>
+    </Layout>
   );
 }
 
@@ -39,7 +57,7 @@ const Styled = {
   `,
   LoginButton: styled.button`
     width: 69.2rem;
-    height: 7rem;
+    height: 7.2rem;
     margin-top: 8rem;
     border: 0;
     background: transparent;
