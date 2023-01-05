@@ -104,11 +104,11 @@ function MyPage() {
       {isLeaveModalOpen && (
         <Modal
           onClickModal={onClickLeaveModal}
-          onClickButton1={onClickCancel}
-          onClickButton2={onClickWithdraw}
+          onClickLeftButton={onClickCancel}
+          onClickRightButton={onClickWithdraw}
           title="탈퇴"
-          button1Text="아니오"
-          button2Text="예"
+          LeftButtonText="아니오"
+          RightButtonText="예"
           width={53}
         >
           <Styled.LeaveModalContent>
