@@ -15,10 +15,16 @@ interface ButtonProps {
   onClickNext: () => void;
 }
 
-const optionImgMapper = {
-  '상/하의': TopBottomImg,
-  상의: TopImg,
-  하의: BottomImg,
+interface iOptionImgMapper {
+  '상/하의': string;
+  상의: string;
+  하의: string;
+}
+
+const optionImgMapper: iOptionImgMapper = {
+  '상/하의': `${TopBottomImg}`,
+  상의: `${TopImg}`,
+  하의: `${BottomImg}`,
 };
 
 export default function SizeOption(props: ButtonProps) {
@@ -41,7 +47,7 @@ export default function SizeOption(props: ButtonProps) {
             type="button"
             key={index}
           >
-            <Image src={optionImgMapper[option]} alt={`${option} 이미지`} placeholder="blur" />
+            <Image src={option ? optionImgMapper[option] : TopBottomImg} alt={`${option} 이미지`} placeholder="blur" />
             <p>{option}</p>
           </Styled.SizeOptionButton>
         ))}
