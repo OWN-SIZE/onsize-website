@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { useState } from 'react';
 import {
   AddCategoryIcon,
   DeleteIcon,
@@ -9,6 +9,9 @@ import {
   HoveredPinIcon,
   PinButonIcon,
   PinButtonFillIcon,
+  PinIcon,
+  RecommendedIcon,
+  SizeIcon,
 } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -16,10 +19,9 @@ import theme from 'styles/theme';
 
 interface HoverIconProps {
   data: closetData;
-  imgHoveredTarget: string;
-  setImgHoveredTarget: Dispatch<SetStateAction<string>>;
   width: string;
   height: string;
+  noSizeTag?: boolean;
   noAddCategory?: boolean;
 }
 
@@ -35,9 +37,13 @@ interface closetData {
   link: string;
 }
 
-function HoverIcon(props: HoverIconProps) {
+function ThumbNail(props: HoverIconProps) {
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
-  const { data, imgHoveredTarget, setImgHoveredTarget, width, height, noAddCategory } = props;
+  const { data, width, height, noSizeTag, noAddCategory } = props;
+
+  //이미지(상품) 호버 타겟
+  const [imgHoveredTarget, setImgHoveredTarget] = useState('');
+
   const handleImgMousehover = (e: React.MouseEvent) => {
     setImgHoveredTarget(e.currentTarget.id);
   };
@@ -62,6 +68,32 @@ function HoverIcon(props: HoverIconProps) {
       width={width}
       height={height}
     >
+      <Styled.HoverHideContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
+        {!noSizeTag && data.size && (
+          <>
+            <Image
+              src={SizeIcon}
+              id="sizeIcon"
+              className={imgHoveredTarget === data.id ? 'hide' : ''}
+              alt="사이즈 표시"
+            />
+
+            <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
+              <span>{data.size}</span>
+              {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
+            </Styled.SizeContainer>
+          </>
+        )}
+
+        {data.isPin && (
+          <Image
+            src={PinIcon}
+            id="pinIcon"
+            className={imgHoveredTarget === data.id ? 'hide' : ''}
+            alt="고정된 상품 핀 아이콘"
+          />
+        )}
+      </Styled.HoverHideContainer>
       <Styled.ThumbNailImg width={width} height={height} />
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
         {!noAddCategory && (
@@ -71,56 +103,29 @@ function HoverIcon(props: HoverIconProps) {
           </button>
         )}
         <div>
-          {data.isPin ? (
-            <Styled.IconCotainer
-              id={`${data.id}Pin`}
-              onMouseEnter={handleIconMousehover}
-              onMouseLeave={handleIconMouseLeave}
-            >
-              <Image src={PinButtonFillIcon} alt="고정 해제 버튼 아이콘" />
-              <Image
-                src={HoveredPinFillIcon}
-                className={iconHoveredTarget === `${data.id}Pin` ? 'show' : 'hide'}
-                alt="호버된 고정 해제 버튼 아이콘"
-              />
-            </Styled.IconCotainer>
-          ) : (
-            <Styled.IconCotainer
-              id={`${data.id}Pin`}
-              onMouseEnter={handleIconMousehover}
-              onMouseLeave={handleIconMouseLeave}
-            >
-              <Image src={PinButonIcon} alt="고정 버튼 아이콘" />
-              <Image
-                src={HoveredPinIcon}
-                className={iconHoveredTarget === `${data.id}Pin` ? 'show' : 'hide'}
-                alt="호버된 고정 버튼 아이콘"
-              />
-            </Styled.IconCotainer>
-          )}
+          <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
+            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} alt="고정 해제 버튼 아이콘" />
+            <Image
+              src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
+              className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
+              alt="호버된 고정 해제 버튼 아이콘"
+            />
+          </Styled.IconCotainer>
 
-          <Styled.IconCotainer
-            id={`${data.id}Edit`}
-            onMouseEnter={handleIconMousehover}
-            onMouseLeave={handleIconMouseLeave}
-          >
+          <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={EditIcon} alt="편집 버튼 아이콘" />
             <Image
               src={HoveredEditIcon}
-              className={iconHoveredTarget === `${data.id}Edit` ? 'show' : 'hide'}
+              className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
               alt="호버된 편집 버튼 아이콘"
             />
           </Styled.IconCotainer>
 
-          <Styled.IconCotainer
-            id={`${data.id}Delete`}
-            onMouseEnter={handleIconMousehover}
-            onMouseLeave={handleIconMouseLeave}
-          >
+          <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={DeleteIcon} alt="삭제 버튼 아이콘" />
             <Image
               src={HoveredDeleteIcon}
-              className={iconHoveredTarget === `${data.id}Delete` ? 'show' : 'hide'}
+              className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
               alt="호버된 삭제 버튼 아이콘"
             />
           </Styled.IconCotainer>
@@ -130,7 +135,7 @@ function HoverIcon(props: HoverIconProps) {
   );
 }
 
-export default HoverIcon;
+export default ThumbNail;
 
 const Styled = {
   Root: styled.div<{ width: string; height: string }>`
@@ -145,6 +150,25 @@ const Styled = {
       position: absolute;
       top: 2.4rem;
       right: 2.6rem;
+    }
+    & > .hide {
+      visibility: hidden;
+    }
+  `,
+  HoverHideContainer: styled.div`
+    & > img,
+    div {
+      position: absolute;
+      z-index: 2;
+
+      &#sizeIcon {
+        left: 2.9rem;
+      }
+
+      &#pinIcon {
+        right: 2.6rem;
+        top: 2.4rem;
+      }
     }
   `,
   IconCotainer: styled.div`
@@ -172,6 +196,21 @@ const Styled = {
     border-radius: 1rem;
 
     background-color: ${theme.colors.gray250};
+  `,
+  SizeContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    left: 2.9rem;
+
+    width: 7rem;
+    height: 3.6rem;
+
+    & > span {
+      margin-right: 0.2rem;
+      ${theme.fonts.sizetag};
+      color: ${theme.colors.gray000};
+    }
   `,
   /* hover시 스타일링 */
   HoverThumbNail: styled.div<{ width: string; height: string }>`
@@ -207,6 +246,11 @@ const Styled = {
         color: ${theme.colors.gray000};
 
         cursor: pointer;
+
+        & > img {
+          width: 1.6rem;
+          height: 0.9rem;
+        }
       }
 
       & > div {

@@ -1,10 +1,11 @@
-import { useState } from 'react';
-import { PinIcon, RecommendedIcon, SizeIcon } from 'assets/icon';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import HoverIcon from './HoverIcon';
+import ThumbNail from './ThumbNail';
+
+interface ProductProps {
+  data: closetData;
+}
 
 interface closetData {
   id: string;
@@ -18,59 +19,12 @@ interface closetData {
   link: string;
 }
 
-function Product() {
+function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
-  const data: closetData = {
-    id: '62daeb7e82b56574bf940e54',
-    image:
-      'https://norefund-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8D%E1%85%A1%E1%86%AF.png',
-    productName: '아끼는옷',
-    size: 'XL',
-    memo: '어쩌구저쩌구',
-    mallName: '무신사',
-    isRecommend: false,
-    isPin: true,
-    link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
-  };
-
-  //이미지(상품) 호버 타겟
-  const [imgHoveredTarget, setImgHoveredTarget] = useState('');
-
+  const { data } = props;
   return (
     <Styled.Card>
-      <Styled.HoverHideContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
-        {data.size && (
-          <>
-            <Image
-              src={SizeIcon}
-              id="sizeIcon"
-              className={imgHoveredTarget === data.id ? 'hide' : ''}
-              alt="사이즈 표시"
-            />
-
-            <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
-              <span>{data.size}</span>
-              {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
-            </Styled.SizeContainer>
-          </>
-        )}
-
-        {data.isPin && (
-          <Image
-            src={PinIcon}
-            id="pinIcon"
-            className={imgHoveredTarget === data.id ? 'hide' : ''}
-            alt="고정된 상품 핀 아이콘"
-          />
-        )}
-      </Styled.HoverHideContainer>
-      <HoverIcon
-        data={data}
-        imgHoveredTarget={imgHoveredTarget}
-        setImgHoveredTarget={setImgHoveredTarget}
-        width="33.2"
-        height="33.2"
-      />
+      <ThumbNail data={data} width="33.2" height="33.2" />
       <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
       <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
       <Styled.BrandSection>
@@ -85,15 +39,10 @@ export default Product;
 
 const Styled = {
   Card: styled.article`
-    position: relative;
     width: 33.2rem;
     height: 58.3rem;
 
     margin-bottom: 8rem;
-
-    & > .hide {
-      visibility: hidden;
-    }
   `,
   HoverHideContainer: styled.div`
     & > img,

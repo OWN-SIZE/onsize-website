@@ -5,8 +5,58 @@ import theme from 'styles/theme';
 
 import Product from './Product';
 
+interface closetData {
+  id: string;
+  image: string;
+  productName: string;
+  size: string | null;
+  memo: string;
+  mallName: string;
+  isRecommend: boolean;
+  isPin: boolean;
+  link: string;
+}
+
 function HomeMain() {
-  const product = [1, 2, 3, 4, 5, 6, 7, 8].map((item) => <Product key={item} />);
+  const data: closetData[] = [
+    {
+      id: '62daeb7e82b56574bf940e54',
+      image:
+        'https://norefund-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8D%E1%85%A1%E1%86%AF.png',
+      productName: '아끼는옷',
+      size: 'XL',
+      memo: '어쩌구저쩌구',
+      mallName: '무신사',
+      isRecommend: true,
+      isPin: true,
+      link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
+    },
+    {
+      id: '62daeb7e82b56574bf940e55',
+      image:
+        'https://norefund-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8D%E1%85%A1%E1%86%AF.png',
+      productName: '선물할옷',
+      size: 'L',
+      memo: '살까말까',
+      mallName: '무신사',
+      isRecommend: false,
+      isPin: true,
+      link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
+    },
+    {
+      id: '62daeb7e82b56574bf940e56',
+      image:
+        'https://norefund-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8D%E1%85%A1%E1%86%AF.png',
+      productName: '후드티',
+      size: 'XL',
+      memo: '색 이쁨',
+      mallName: '무신사',
+      isRecommend: true,
+      isPin: true,
+      link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
+    },
+  ];
+  const product = data.map((item) => <Product key={item.id} data={item} />);
   return (
     <Styled.Container>
       <Styled.CountSection>
