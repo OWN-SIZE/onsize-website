@@ -29,17 +29,20 @@ export default function SizeOption({
   onClickNext,
 }: ButtonProps) {
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
+
+  const onClickOption = (option: OptionType) => {
+    setSelectedOption(option);
+    setIsNextActive(true);
+  };
+
   return (
     <Styled.Root>
       <h1>어떤 의류의 사이즈를 추천받고 싶으신가요?</h1>
       <Styled.SizeOptionButtons>
         {optionList.map((option, index) => (
           <Styled.SizeOptionButton
-            onClick={() => {
-              setSelectedOption(option);
-              setIsNextActive(true);
-            }}
-            isSelected={selectedOption === option ? true : false}
+            onClick={() => onClickOption(option)}
+            isSelected={selectedOption === option}
             type="button"
             key={index}
           >
