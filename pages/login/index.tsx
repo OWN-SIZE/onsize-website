@@ -66,7 +66,7 @@ const Styled = {
   Message: styled.h1`
     margin-top: 6.2rem;
     text-align: center;
-    color: #667080;
-    ${theme.fonts.caption1}
+    color: ${theme.colors.gray300};
+    ${theme.fonts.caption1};
   `,
 };
