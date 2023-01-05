@@ -15,16 +15,17 @@ interface ButtonProps {
   onClickNext: () => void;
 }
 
+// 타입 오류 방지를 위해 추가하였으나 이미지 오류 발생
 interface iOptionImgMapper {
   '상/하의': string;
   상의: string;
   하의: string;
 }
 
-const optionImgMapper: iOptionImgMapper = {
-  '상/하의': `${TopBottomImg}`,
-  상의: `${TopImg}`,
-  하의: `${BottomImg}`,
+const optionImgMapper = {
+  '상/하의': TopBottomImg,
+  상의: TopImg,
+  하의: BottomImg,
 };
 
 export default function SizeOption(props: ButtonProps) {
@@ -47,14 +48,7 @@ export default function SizeOption(props: ButtonProps) {
             type="button"
             key={index}
           >
-            {/* <Image
-              width={10}
-              height={10}
-              blurDataURL={'assets/img/bottom.png'}
-              src={option ? optionImgMapper[option] : TopBottomImg}
-              alt={`${option} 이미지`}
-              placeholder="blur"
-            /> */}
+            <Image src={optionImgMapper[option]} alt={`${option} 이미지`} placeholder="blur" />
             <p>{option}</p>
           </Styled.SizeOptionButton>
         ))}
