@@ -37,6 +37,8 @@ export default Product;
 
 const Styled = {
   Card: styled.article`
+    position: relative;
+
     width: 33.2rem;
     height: 58.3rem;
 

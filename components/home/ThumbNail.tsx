@@ -153,6 +153,7 @@ const Styled = {
       z-index: 2;
 
       &#sizeIcon {
+        top: -0.3rem;
         left: 2.9rem;
       }
 
@@ -196,12 +197,17 @@ const Styled = {
   `,
   SizeContainer: styled.div`
     display: flex;
+    position: absolute;
     justify-content: center;
     align-items: center;
+
+    top: -0.3rem;
     left: 2.9rem;
 
     width: 7rem;
     height: 3.6rem;
+
+    z-index: 2;
 
     & > span {
       margin-right: 0.2rem;
