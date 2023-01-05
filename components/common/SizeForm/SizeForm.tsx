@@ -54,11 +54,11 @@ const bottomSwitchMapper = {
   },
 };
 
-type switcherType = '단면' | '둘레';
+type measureType = '단면' | '둘레';
 
 export default function SizeForm({ noHeader, formType, isNextActive, setIsNextActive }: FormProps) {
-  const switchList: switcherType[] = ['단면', '둘레'];
-  const [switcher, setSwitcher] = useState<switcherType>('단면');
+  const switchList: measureType[] = ['단면', '둘레'];
+  const [measure, setMeasure] = useState<measureType>('단면');
 
   const {
     register,
@@ -113,11 +113,11 @@ export default function SizeForm({ noHeader, formType, isNextActive, setIsNextAc
               <Styled.Radio
                 key={index}
                 onClick={() => {
-                  setSwitcher(text);
+                  setMeasure(text);
                 }}
               >
                 <Image
-                  src={text === switcher ? RadioClickedIcon : RadioIcon}
+                  src={text === measure ? RadioClickedIcon : RadioIcon}
                   alt="라디오버튼 아이콘"
                   width={22}
                   height={22}
@@ -129,7 +129,7 @@ export default function SizeForm({ noHeader, formType, isNextActive, setIsNextAc
           {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
             <Styled.InputContainer key={key}>
               <label>
-                {key} {switcher}
+                {key} {measure}
               </label>
               <span>
                 <Styled.Input
@@ -137,8 +137,8 @@ export default function SizeForm({ noHeader, formType, isNextActive, setIsNextAc
                   {...register(key, {
                     required: true,
                     validate: (value) =>
-                      value < scope[switcher].min || value > scope[switcher].max
-                        ? `${key} ${switcher}은 최소 ${scope[switcher].min}부터 최대 ${chestScopeMapper[switcher].max}까지 입력할 수 있습니다.`
+                      value < scope[measure].min || value > scope[measure].max
+                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${chestScopeMapper[measure].max}까지 입력할 수 있습니다.`
                         : true,
                   })}
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
@@ -175,11 +175,11 @@ export default function SizeForm({ noHeader, formType, isNextActive, setIsNextAc
               <Styled.Radio
                 key={index}
                 onClick={() => {
-                  setSwitcher(text);
+                  setMeasure(text);
                 }}
               >
                 <Image
-                  src={text === switcher ? RadioClickedIcon : RadioIcon}
+                  src={text === measure ? RadioClickedIcon : RadioIcon}
                   alt="라디오버튼 아이콘"
                   width={22}
                   height={22}
@@ -189,15 +189,15 @@ export default function SizeForm({ noHeader, formType, isNextActive, setIsNextAc
             ))}
           </Styled.RadioContainer>
           <Styled.InputContainer>
-            <label>가슴 {switcher}</label>
+            <label>가슴 {measure}</label>
             <span>
               <Styled.Input
                 type="number"
                 {...register('가슴', {
                   required: true,
                   validate: (value) =>
-                    value < chestScopeMapper[switcher].min || value > chestScopeMapper[switcher].max
-                      ? `가슴 ${switcher}은 최소 ${chestScopeMapper[switcher].min}부터 최대 ${chestScopeMapper[switcher].max}까지 입력할 수 있습니다.`
+                    value < chestScopeMapper[measure].min || value > chestScopeMapper[measure].max
+                      ? `가슴 ${measure}은 최소 ${chestScopeMapper[measure].min}부터 최대 ${chestScopeMapper[measure].max}까지 입력할 수 있습니다.`
                       : true,
                 })}
                 onBlur={(e) => e.currentTarget.value && setValue('가슴', parseFloat(e.currentTarget.value).toFixed(1))}
