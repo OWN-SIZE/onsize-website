@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import NextButton from 'components/register/NextButton';
+
 import Alert from './Alert';
 
 interface FormProps {
@@ -210,7 +211,7 @@ export default function SizeForm(props: FormProps) {
         </Styled.Form>
       )}
       {/* {errors.topLength && errors.topLength?.message} */}
-      <Alert message="메시지" isAlert />
+      <Alert message="메시지" />
     </Styled.Root>
   );
 }
