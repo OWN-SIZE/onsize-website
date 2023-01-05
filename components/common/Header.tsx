@@ -42,8 +42,7 @@ const Styled = {
     background-color: #d9d9d9;
 
     text-align: center;
-
-    margin-bottom: 10.5rem;
+    z-index: 1;
   `,
 
   Container: styled.div`

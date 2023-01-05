@@ -1,40 +1,93 @@
+import Layout from 'components/common/Layout';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { useCallback, useState } from 'react';
+import HistoryModal from './historyModal';
 
-import Layout from 'components/common/Layout';
 
 function MyPage() {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const onClickHistoryModal = () => {
+    setIsModalOpen(!isModalOpen);
+  };
+
   return (
     <Layout noMenuBar>
       <Styled.Root>
-        <Styled.UserInformationContainer>
-          <Image
-            src={profileDefault}
-            alt="사용자 지정 프로필 이미지가 없는 경우의 디폴트 프로필 이미지"
-            width={82}
-            height={82}
-            placeholder="blur"
-            blurDataURL="assets/icon/profileDefault.svg"
-          />
-          <Styled.UserInformation>
-            고다빈 <div>aaaaaaa@gmail.com</div>
-          </Styled.UserInformation>
-        </Styled.UserInformationContainer>
-        <Styled.History>
-          지금까지 사이즈 추천을 <span>00번</span> 받았어요
-        </Styled.History>
-        <Styled.InformationContainer>
-          <h1>정보</h1>
-          <p>피드백 및 버그 제보</p>
-          <p>개인 정보 보호 정책</p>
-        </Styled.InformationContainer>
-        <Styled.UserLeaveContainer>
-          <button className="withdrawal">탈퇴하기</button>
-          <button className="signOut">로그아웃</button>
-        </Styled.UserLeaveContainer>
+        <Styled.MySizeContainer>
+          <Styled.UserInformationContainer>
+            <Image
+              src={profileDefault}
+              alt="사용자 지정 프로필 이미지가 없는 경우의 디폴트 프로필 이미지"
+              width={82}
+              height={82}
+              placeholder="blur"
+              blurDataURL="assets/icon/profileDefault.svg"
+            />
+            <Styled.UserInformation>
+              고다빈 <div>aaaaaaa@gmail.com</div>
+            </Styled.UserInformation>
+          </Styled.UserInformationContainer>
+          <Styled.History>
+            지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>00번</button> 받았어요
+          </Styled.History>
+          <Styled.InformationContainer>
+            <h1>정보</h1>
+            <p>피드백 및 버그 제보</p>
+            <p>개인 정보 보호 정책</p>
+          </Styled.InformationContainer>
+          <Styled.UserLeaveContainer>
+            <button className="withdrawal">탈퇴하기</button>
+            <button className="signOut">로그아웃</button>
+          </Styled.UserLeaveContainer>
+        </Styled.MySizeContainer>
       </Styled.Root>
+      {isModalOpen && (
+        <HistoryModal onClickHistoryModal={onClickHistoryModal}>
+          <Styled.HistoryModalLink>
+            <h5>L</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>XL</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>S</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>M</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>XL</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>XL</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>L</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>XL</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>S</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+          <Styled.HistoryModalLink>
+            <h5>M</h5>
+            <p>www.onsize.com</p>
+          </Styled.HistoryModalLink>
+        </HistoryModal>
+      )}
     </Layout>
   );
 }
@@ -42,9 +95,15 @@ function MyPage() {
 export default MyPage;
 
 const Styled = {
-  Root: styled.section`
+  Root: styled.div`
+    width: 100vw;
+    height: 100vh;
+    background-color: ${theme.colors.lightGrey};
+  `,
+  MySizeContainer: styled.div`
     width: 81.1rem;
     margin: 0 auto;
+    margin-top: 10.5rem;
     background-color: ${theme.colors.lightGrey};
   `,
   UserInformationContainer: styled.div`
@@ -77,13 +136,12 @@ const Styled = {
     display: flex;
     justify-content: center;
     align-items: center;
-    & > span {
+    & > button {
       ${theme.fonts.body5};
       color: ${theme.colors.yellow};
       width: 5.8rem;
       height: 4.2rem;
       margin: 0 0.6rem;
-      padding-top: 0.8rem;
       background-color: ${theme.colors.black};
       border-radius: 2.1rem;
       text-align: center;
@@ -125,6 +183,25 @@ const Styled = {
       height: 7.1rem;
       background-color: ${theme.colors.gray150};
       border-radius: 3.6rem;
+    }
+  `,
+  HistoryModalLink: styled.div`
+    display: flex;
+    justify-content: center;
+    width: 26.2rem;
+    margin-top: 1.2rem;
+    padding-bottom: 1.2rem;
+    border-bottom: 0.1rem solid ${theme.colors.gray150};
+
+    & > h5 {
+      ${theme.fonts.card2};
+      color: ${theme.colors.gray550};
+      width: 9rem;
+      margin-left: 4.4rem;
+    }
+    & > p {
+      ${theme.fonts.body2};
+      color: ${theme.colors.gray550};
     }
   `,
 };
