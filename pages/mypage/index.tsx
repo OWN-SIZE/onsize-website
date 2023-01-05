@@ -5,12 +5,24 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import { useCallback, useState } from 'react';
 import HistoryModal from './historyModal';
+import Modal from 'components/common/Modal';
 
 
 function MyPage() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
+  const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+
   const onClickHistoryModal = () => {
-    setIsModalOpen(!isModalOpen);
+    setIsHistoryModalOpen(!isHistoryModalOpen);
+  };
+  const onClickLeaveModal = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
+  };
+  const onClickWithdraw = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
+  };
+  const onClickCancel = () => {
+    setIsLeaveModalOpen(!isLeaveModalOpen);
   };
 
   return (
@@ -39,12 +51,14 @@ function MyPage() {
             <p>개인 정보 보호 정책</p>
           </Styled.InformationContainer>
           <Styled.UserLeaveContainer>
-            <button className="withdrawal">탈퇴하기</button>
+            <button className="withdrawal" onClick={onClickLeaveModal}>
+              탈퇴하기
+            </button>
             <button className="signOut">로그아웃</button>
           </Styled.UserLeaveContainer>
         </Styled.MySizeContainer>
       </Styled.Root>
-      {isModalOpen && (
+      {isHistoryModalOpen && (
         <HistoryModal onClickHistoryModal={onClickHistoryModal}>
           <Styled.HistoryModalLink>
             <h5>L</h5>
@@ -88,6 +102,23 @@ function MyPage() {
           </Styled.HistoryModalLink>
         </HistoryModal>
       )}
+      {isLeaveModalOpen && (
+        <Modal
+          onClickModal={onClickLeaveModal}
+          onClickLeftButton={onClickCancel}
+          onClickRightButton={onClickWithdraw}
+          title="탈퇴"
+          LeftButtonText="아니오"
+          RightButtonText="예"
+          width={53}
+        >
+          <Styled.LeaveModalContent>
+            온사이즈를 탈퇴하시겠습니까?
+            <br />
+            추천받은 사이즈와 저장된 의류는 모두 삭제돼요
+          </Styled.LeaveModalContent>
+        </Modal>
+      )}
     </Layout>
   );
 }
@@ -119,13 +150,13 @@ const Styled = {
     color: ${theme.colors.gray550};
     margin-left: 2.6rem;
     & > div {
-      ${theme.fonts.body4}
+      ${theme.fonts.body7}
       color: ${theme.colors.gray550};
       margin-top: 1.2rem;
     }
   `,
   History: styled.div`
-    ${theme.fonts.body4}
+    ${theme.fonts.body7}
     color: ${theme.colors.gray550};
     background-color: ${theme.colors.gray000};
     width: 69.2rem;
@@ -159,7 +190,7 @@ const Styled = {
       margin-bottom: 2rem;
     }
     & > p {
-      ${theme.fonts.body4};
+      ${theme.fonts.body7};
       color: ${theme.colors.gray550};
       margin-bottom: 3rem;
     }
@@ -203,5 +234,12 @@ const Styled = {
       ${theme.fonts.body2};
       color: ${theme.colors.gray550};
     }
+  `,
+  LeaveModalContent: styled.div`
+    ${theme.fonts.caption};
+    color: ${theme.colors.gray550};
+    text-align: center;
+    margin-top: 1.2rem;
+    margin-bottom: 1.2rem;
   `,
 };
