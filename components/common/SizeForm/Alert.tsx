@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -10,6 +10,18 @@ interface AlertProps {
 
 function Alert(props: AlertProps) {
   const { message, isActive, setIsActive } = props;
+
+  const disableClick = () => {
+    //(document.activeElement as HTMLElement).blur();
+    document.getElementById('__next')?.classList.add('non-clickable');
+  };
+  const enableClick = () => {
+    document.getElementById('__next')?.classList.remove('non-clickable');
+  };
+  useEffect(() => {
+    disableClick();
+    return () => enableClick();
+  }, []);
 
   return (
     <Styled.Root isAlert={isActive}>
@@ -28,9 +40,11 @@ const Styled = {
     display: ${({ isAlert }) => (isAlert ? 'flex' : 'none')};
     position: fixed;
     top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     flex-direction: column;
-    min-width: 44rem;
-    min-height: 15.2rem;
+    width: 44rem;
+    height: 15.2rem;
     padding: 2.8rem 2.6rem;
     padding-bottom: 1.7rem;
     background: #ffffff;

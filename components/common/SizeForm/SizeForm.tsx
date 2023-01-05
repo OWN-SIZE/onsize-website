@@ -8,6 +8,8 @@ import theme from 'styles/theme';
 
 import NextButton from 'components/register/NextButton';
 
+import ModalPortal from '../modal/ModalPortal';
+
 import Alert from './Alert';
 
 interface FormProps {
@@ -70,7 +72,6 @@ export default function SizeForm(props: FormProps) {
     watch,
     handleSubmit,
     formState: { errors },
-    setError,
   } = useForm();
 
   const onValid = (data: any) => {
@@ -80,13 +81,17 @@ export default function SizeForm(props: FormProps) {
   };
 
   useEffect(() => {
-    // input이 비어있지 않은 경우 다음 버튼 활성화
+    // input이 하나라도 비어있지 않은 경우 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
         setIsNextActive(true);
       }
     });
   }, [watch]);
+
+  const onClickNextButton = () => {
+    setIsAlertActive(true);
+  };
 
   return (
     <Styled.Root>
@@ -99,6 +104,7 @@ export default function SizeForm(props: FormProps) {
               <span>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
@@ -138,6 +144,7 @@ export default function SizeForm(props: FormProps) {
               <span>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
@@ -151,7 +158,7 @@ export default function SizeForm(props: FormProps) {
               </span>
             </Styled.InputContainer>
           ))}
-          <NextButton isActive={isNextActive} onClick={() => setIsAlertActive(true)} />
+          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       ) : (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
@@ -161,6 +168,7 @@ export default function SizeForm(props: FormProps) {
               <span>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
@@ -197,6 +205,7 @@ export default function SizeForm(props: FormProps) {
             <span>
               <Styled.Input
                 type="number"
+                step="0.1"
                 {...register('가슴', {
                   required: true,
                   validate: (value) =>
@@ -209,14 +218,18 @@ export default function SizeForm(props: FormProps) {
               cm
             </span>
           </Styled.InputContainer>
-          <NextButton isActive={isNextActive} onClick={() => setIsAlertActive(true)} />
+          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       )}
-      <Alert
-        isActive={isAlertActive}
-        setIsActive={setIsAlertActive}
-        message={`${Object.values({ ...errors }).shift()?.message}`}
-      />
+      {isAlertActive && (
+        <ModalPortal>
+          <Alert
+            isActive={isAlertActive}
+            setIsActive={setIsAlertActive}
+            message={`${Object.values({ ...errors }).shift()?.message}`}
+          />
+        </ModalPortal>
+      )}
     </Styled.Root>
   );
 }

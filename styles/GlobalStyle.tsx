@@ -25,6 +25,9 @@ const GlobalStyle = createGlobalStyle`
     text-decoration: none;
     }
 
+    .non-clickable {
+        pointer-events: none;
+    }
 `;
 
 export default GlobalStyle;
