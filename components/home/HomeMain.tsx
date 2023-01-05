@@ -40,7 +40,7 @@ function HomeMain() {
       memo: '살까말까',
       mallName: '무신사',
       isRecommend: false,
-      isPin: true,
+      isPin: false,
       link: 'https://www.musinsa.com/app/goods/2194649?loc=goods_rank',
     },
     {

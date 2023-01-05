@@ -1,30 +1,11 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { closetData, ThumbNailData } from 'types/common';
 
 import ThumbNail from './ThumbNail';
 
 interface ProductProps {
   data: closetData;
-}
-
-interface closetData {
-  id: string;
-  image: string;
-  productName: string;
-  size: string | null;
-  memo: string;
-  mallName: string;
-  isRecommend: boolean;
-  isPin: boolean;
-  link: string;
-}
-
-interface ThumbNailData {
-  id: string;
-  image?: string;
-  size?: string | null;
-  isRecommend?: boolean;
-  isPin: boolean;
 }
 
 function Product(props: ProductProps) {
@@ -38,9 +19,10 @@ function Product(props: ProductProps) {
     isRecommend: data.isRecommend,
     isPin: data.isPin,
   };
+
   return (
     <Styled.Card>
-      <ThumbNail data={ThumbNailData} width="33.2" height="33.2" />
+      <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
       <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
       <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
       <Styled.BrandSection>
@@ -59,6 +41,7 @@ const Styled = {
     height: 58.3rem;
 
     margin-bottom: 8rem;
+    padding-top: 0.3rem;
   `,
   HoverHideContainer: styled.div`
     & > img,

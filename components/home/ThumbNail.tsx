@@ -16,26 +16,20 @@ import {
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { ThumbNailData } from 'types/common';
 
-interface HoverIconProps {
+interface ThumbNailProps {
   data: ThumbNailData;
   width: string;
   height: string;
   noSizeTag?: boolean;
   noAddCategory?: boolean;
+  page: string;
 }
 
-interface ThumbNailData {
-  id: string;
-  image?: string;
-  size?: string | null;
-  isRecommend?: boolean;
-  isPin: boolean;
-}
-
-function ThumbNail(props: HoverIconProps) {
+function ThumbNail(props: ThumbNailProps) {
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
-  const { data, width, height, noSizeTag, noAddCategory } = props;
+  const { data, width, height, noSizeTag, noAddCategory, page } = props;
 
   //이미지(상품) 호버 타겟
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
@@ -91,7 +85,7 @@ function ThumbNail(props: HoverIconProps) {
         )}
       </Styled.HoverHideContainer>
 
-      <Styled.ThumbNailImg width={width} height={height} />
+      <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
 
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
         {!noAddCategory && (
@@ -139,8 +133,6 @@ export default ThumbNail;
 const Styled = {
   Root: styled.div<{ width: string; height: string }>`
     position: relative;
-
-    margin-top: 0.3rem;
 
     width: ${({ width }) => `${width}rem`};
     height: ${({ height }) => `${height}rem`};
@@ -194,7 +186,13 @@ const Styled = {
 
     border-radius: 1rem;
 
-    background-color: ${theme.colors.gray250};
+    &.closet {
+      background-color: ${theme.colors.gray250};
+    }
+
+    &.category {
+      background-color: pink;
+    }
   `,
   SizeContainer: styled.div`
     display: flex;
