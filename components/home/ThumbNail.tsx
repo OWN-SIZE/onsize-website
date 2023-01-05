@@ -28,10 +28,8 @@ interface ThumbNailProps {
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const { data, width, height, noSizeTag, noAddCategory, page } = props;
-
-  //이미지(상품) 호버 타겟
+  const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   const handleImgMousehover = (e: React.MouseEvent) => {
