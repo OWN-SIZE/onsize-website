@@ -149,13 +149,13 @@ const Styled = {
     color: ${theme.colors.gray550};
     margin-left: 2.6rem;
     & > div {
-      ${theme.fonts.body4}
+      ${theme.fonts.body7}
       color: ${theme.colors.gray550};
       margin-top: 1.2rem;
     }
   `,
   History: styled.div`
-    ${theme.fonts.body4}
+    ${theme.fonts.body7}
     color: ${theme.colors.gray550};
     background-color: ${theme.colors.gray000};
     width: 69.2rem;
@@ -189,7 +189,7 @@ const Styled = {
       margin-bottom: 2rem;
     }
     & > p {
-      ${theme.fonts.body4};
+      ${theme.fonts.body7};
       color: ${theme.colors.gray550};
       margin-bottom: 3rem;
     }
