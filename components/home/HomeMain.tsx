@@ -93,7 +93,6 @@ const Styled = {
     display: flex;
     flex-wrap: wrap;
 
-    justify-content: space-between;
     margin-top: 5rem;
   `,
 };

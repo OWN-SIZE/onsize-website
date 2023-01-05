@@ -44,6 +44,10 @@ const Styled = {
 
     margin-bottom: 8rem;
     padding-top: 0.3rem;
+
+    &:not(:nth-child(4n)) {
+      margin-right: 2.6rem;
+    }
   `,
   HoverHideContainer: styled.div`
     & > img,
