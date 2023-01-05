@@ -1,8 +1,9 @@
-import Layout from 'components/common/Layout';
+import profileDefault from 'assets/icon/profileDefault.svg';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import profileDefault from 'assets/icon/profileDefault.svg';
+
+import Layout from 'components/common/Layout';
 
 function MyPage() {
   return (
