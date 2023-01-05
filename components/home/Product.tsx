@@ -21,7 +21,7 @@ function Product(props: ProductProps) {
   };
 
   return (
-    <Styled.Card>
+    <Styled.Root>
       <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
       <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
       <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
@@ -29,14 +29,14 @@ function Product(props: ProductProps) {
         <Styled.BrandLogo />
         <Styled.BrandName>쇼핑몰명</Styled.BrandName>
       </Styled.BrandSection>
-    </Styled.Card>
+    </Styled.Root>
   );
 }
 
 export default Product;
 
 const Styled = {
-  Card: styled.article`
+  Root: styled.article`
     position: relative;
 
     width: 33.2rem;
