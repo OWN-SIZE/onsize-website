@@ -60,8 +60,9 @@ type MeasureType = '단면' | '둘레';
 
 export default function SizeForm(props: FormProps) {
   const { noHeader, formType, isNextActive, setIsNextActive } = props;
-  const switchList: MeasureType[] = ['단면', '둘레'];
+  const measureList: MeasureType[] = ['단면', '둘레'];
   const [measure, setMeasure] = useState<MeasureType>('단면');
+  const [isAlertActive, setIsAlertActive] = useState(false);
 
   const {
     register,
@@ -74,6 +75,7 @@ export default function SizeForm(props: FormProps) {
 
   const onValid = (data: any) => {
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    setIsAlertActive(false);
     console.log(data);
   };
 
@@ -111,7 +113,7 @@ export default function SizeForm(props: FormProps) {
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
-            {switchList.map((text, index) => (
+            {measureList.map((text, index) => (
               <Styled.Radio
                 key={index}
                 onClick={() => {
@@ -140,7 +142,7 @@ export default function SizeForm(props: FormProps) {
                     required: true,
                     validate: (value) =>
                       value < scope[measure].min || value > scope[measure].max
-                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${chestScopeMapper[measure].max}까지 입력할 수 있습니다.`
+                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${scope[measure].max}까지 입력할 수 있습니다.`
                         : true,
                   })}
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
@@ -149,7 +151,7 @@ export default function SizeForm(props: FormProps) {
               </span>
             </Styled.InputContainer>
           ))}
-          <NextButton isActive={isNextActive} />
+          <NextButton isActive={isNextActive} onClick={() => setIsAlertActive(true)} />
         </Styled.Form>
       ) : (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
@@ -173,7 +175,7 @@ export default function SizeForm(props: FormProps) {
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
-            {switchList.map((text, index) => (
+            {measureList.map((text, index) => (
               <Styled.Radio
                 key={index}
                 onClick={() => {
@@ -207,11 +209,14 @@ export default function SizeForm(props: FormProps) {
               cm
             </span>
           </Styled.InputContainer>
-          <NextButton isActive={isNextActive} />
+          <NextButton isActive={isNextActive} onClick={() => setIsAlertActive(true)} />
         </Styled.Form>
       )}
-      {/* {errors.topLength && errors.topLength?.message} */}
-      <Alert message="메시지" />
+      <Alert
+        isActive={isAlertActive}
+        setIsActive={setIsAlertActive}
+        message={`${Object.values({ ...errors }).shift()?.message}`}
+      />
     </Styled.Root>
   );
 }
