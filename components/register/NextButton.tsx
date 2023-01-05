@@ -7,7 +7,8 @@ interface ButtonProps {
   onClick?: () => void;
 }
 
-export default function NextButton({ isActive, onClick }: ButtonProps) {
+export default function NextButton(props: ButtonProps) {
+  const { isActive, onClick } = props;
   return (
     <Styled.NextButton type="submit" isActive={isActive} onClick={onClick}>
       다음

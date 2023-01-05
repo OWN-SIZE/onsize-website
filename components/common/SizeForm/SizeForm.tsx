@@ -56,7 +56,8 @@ const bottomSwitchMapper = {
 
 type measureType = '단면' | '둘레';
 
-export default function SizeForm({ noHeader, formType, isNextActive, setIsNextActive }: FormProps) {
+export default function SizeForm(props: FormProps) {
+  const { noHeader, formType, isNextActive, setIsNextActive } = props;
   const switchList: measureType[] = ['단면', '둘레'];
   const [measure, setMeasure] = useState<measureType>('단면');
 

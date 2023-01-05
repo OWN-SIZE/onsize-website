@@ -26,7 +26,8 @@ interface ProgressProps {
   selectedOption: OptionType;
 }
 
-function Progress({ progress, selectedOption }: ProgressProps) {
+function Progress(props: ProgressProps) {
+  const { progress, selectedOption } = props;
   return (
     <Styled.Root>
       <Styled.StepsOl>

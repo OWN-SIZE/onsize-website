@@ -21,13 +21,8 @@ const optionImgMapper = {
   하의: BottomImg,
 };
 
-export default function SizeOption({
-  selectedOption,
-  setSelectedOption,
-  isNextActive,
-  setIsNextActive,
-  onClickNext,
-}: ButtonProps) {
+export default function SizeOption(props: ButtonProps) {
+  const { selectedOption, setSelectedOption, isNextActive, setIsNextActive, onClickNext } = props;
   const optionList: OptionType[] = ['상/하의', '상의', '하의'];
 
   const onClickOption = (option: OptionType) => {
