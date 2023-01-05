@@ -47,7 +47,14 @@ export default function SizeOption(props: ButtonProps) {
             type="button"
             key={index}
           >
-            <Image src={option ? optionImgMapper[option] : TopBottomImg} alt={`${option} 이미지`} placeholder="blur" />
+            {/* <Image
+              width={10}
+              height={10}
+              blurDataURL={'assets/img/bottom.png'}
+              src={option ? optionImgMapper[option] : TopBottomImg}
+              alt={`${option} 이미지`}
+              placeholder="blur"
+            /> */}
             <p>{option}</p>
           </Styled.SizeOptionButton>
         ))}

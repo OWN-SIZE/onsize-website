@@ -7,6 +7,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import NextButton from 'components/register/NextButton';
+import Alert from './Alert';
 
 interface FormProps {
   noHeader?: boolean;
@@ -87,7 +88,6 @@ export default function SizeForm(props: FormProps) {
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
-      {/* {errors.topLength && errors.topLength?.message} */}
       {formType === '하의' ? (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
@@ -209,6 +209,8 @@ export default function SizeForm(props: FormProps) {
           <NextButton isActive={isNextActive} />
         </Styled.Form>
       )}
+      {/* {errors.topLength && errors.topLength?.message} */}
+      <Alert message="메시지" isAlert />
     </Styled.Root>
   );
 }
