@@ -75,8 +75,8 @@ const Styled = {
     ${({ isSelected }) =>
       isSelected
         ? css`
-            border: 2px solid #fbf26c;
-            box-shadow: 0px 0px 10px rgba(251, 242, 108, 0.5);
+            border: 0.2rem solid #fbf26c;
+            box-shadow: 0rem 0rem 1rem rgba(251, 242, 108, 0.5);
           `
         : css`
             border: 0.1rem solid #f6f6f6;
