@@ -13,3 +13,5 @@ export { default as HoveredEditIcon } from './hover_edit.png';
 export { default as SizeIcon } from './size.png';
 export { default as HoveredDeleteIcon } from './hover_delete.png';
 export { default as RecommendedIcon } from './recommended.png';
+export { default as RadioClickedIcon } from './radio-clicked.png';
+export { default as RadioIcon } from './radio.png';

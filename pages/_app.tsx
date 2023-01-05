@@ -1,5 +1,7 @@
 import { QueryClient, QueryClientProvider } from 'react-query';
+import { GoogleOAuthProvider } from '@react-oauth/google';
 import type { AppProps } from 'next/app';
+import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'styles/GlobalStyle';
 
 import { AsyncBoundary } from 'components/common/AsyncBoundary';
@@ -16,8 +18,12 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <AsyncBoundary>
-        <GlobalStyle />
-        <Component {...pageProps} />
+        <RecoilRoot>
+          <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </GoogleOAuthProvider>
+        </RecoilRoot>
       </AsyncBoundary>
     </QueryClientProvider>
   );
