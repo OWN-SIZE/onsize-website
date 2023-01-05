@@ -98,7 +98,7 @@ const Styled = {
     > h2 {
       margin-top: 4.2rem;
       color: ${theme.colors.gray000};
-      ${theme.fonts.body4};
+      ${theme.fonts.body7};
     }
   `,
   RightContainer: styled.article`
