@@ -1,4 +1,5 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -62,7 +63,9 @@ function CardEdit() {
           </Styled.InputContainer>
         </Styled.InputForm>
         <Styled.ButtonContainer>
-          <Styled.SubmitButton>취소</Styled.SubmitButton>
+          <Link href="/home">
+            <Styled.SubmitButton>취소</Styled.SubmitButton>
+          </Link>
           <Styled.SubmitButton
             className={productNameCount === 0 && sizeCount === 0 && memoCount === 0 ? 'disabled' : 'abled'}
           >
