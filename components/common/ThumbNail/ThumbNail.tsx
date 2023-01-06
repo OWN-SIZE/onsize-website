@@ -83,7 +83,38 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
 
-      <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
+      {page === 'closet' ? (
+        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+      ) : (
+        <Styled.ThumbNailImg className={'category'} width={width} height={height}>
+          <Image
+            src=""
+            alt="썸네일 이미지1"
+            width={226}
+            height={300}
+            placeholder="blur"
+            blurDataURL="assets/icon/folder_filled.png"
+          />
+          <div>
+            <Image
+              src=""
+              alt="썸네일 이미지2"
+              width={226}
+              height={150}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+            />
+            <Image
+              src=""
+              alt="썸네일 이미지3"
+              width={226}
+              height={150}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+            />
+          </div>
+        </Styled.ThumbNailImg>
+      )}
 
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
         {!noAddCategory && (
@@ -191,6 +222,7 @@ const Styled = {
 
     &.category {
       background-color: pink;
+      display: flex;
     }
   `,
   SizeContainer: styled.div`

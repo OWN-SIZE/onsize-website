@@ -7,23 +7,50 @@ import Folder from 'assets/icon/folder_filled.png';
 import Add from 'assets/icon/add.png';
 import Hanger from 'assets/icon/total_clothes.png';
 import Modal from 'components/common/Modal';
+import ThumbNail from 'components/common/ThumbNail/ThumbNail';
+import Category from './Category';
+import CategoryCreateModal from '../../components/common/modal/CategoryCreateModal';
+
+interface directoryData {
+  id: string;
+  memo: string;
+  mallName: string;
+  isPin: boolean;
+}
 
 export default function category() {
-  const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
+  
+    const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
 
-  const onClickCategoryCreateModal = () => {
-    setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
-  };
-  const onClickCancel = () => {
-    setIsCategoryCreateModalOpen(false);
-  };
-  const onClickMake = () => {
-    console.log('모달을 만들었습니다.');
-    setIsCategoryCreateModalOpen(false);
-  };
+    const onClickCategoryCreateModal = () => {
+        setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
+      };
 
   const [changeInputValue, setChangeInputValue] = useState(0);
   const inputRef = useRef(null);
+  const updateInputValue = (length: number) => {setChangeInputValue(length)};
+
+  const data: directoryData[] = [
+    {
+      id: '62daeb7e82b56574bf940e54',
+      memo: '어쩌구저쩌구',
+      mallName: '무신사',
+      isPin: true,
+    },
+    {
+      id: '62daeb7e82b56574bf940e55',
+      memo: '살까말까',
+      mallName: '무신사',
+      isPin: false,
+    },
+    {
+      id: '62daeb7e82b56574bf940e56',
+      memo: '색 이쁨',
+      mallName: '무신사',
+      isPin: true,
+    },
+  ];
+  const product = data.map((item) => <Category key={item.id} data={item} />);
 
   return (
     <Layout>
@@ -49,72 +76,11 @@ export default function category() {
               onClick={onClickCategoryCreateModal}
             />
           </Styled.CategoryStateBar>
-          <Styled.Category>
-            <Styled.CategoryImage>
-              <Image
-                src={Folder}
-                alt="디렉토리 개수를 뜻하는 폴더 이미지"
-                width={226}
-                height={300}
-                placeholder="blur"
-                blurDataURL="assets/icon/folder_filled.png"
-              />
-              <div>
-                {' '}
-                <Image
-                  src={Add}
-                  alt="폴더 추가를 뜻하는 더하기 이미지"
-                  width={226}
-                  height={150}
-                  placeholder="blur"
-                  blurDataURL="assets/icon/folder_filled.png"
-                />
-                <Image
-                  src={Add}
-                  alt="폴더 추가를 뜻하는 더하기 이미지"
-                  width={226}
-                  height={150}
-                  placeholder="blur"
-                  blurDataURL="assets/icon/folder_filled.png"
-                />
-              </div>
-            </Styled.CategoryImage>
-            <Styled.CategoryTitle>봄 가을 스커트</Styled.CategoryTitle>
-            <Styled.ClothesAmount>
-              <Image
-                src={Hanger}
-                alt="디렉토리 내 옷의 개수를 뜻하는 옷걸이 이미지"
-                width={40}
-                height={40}
-                placeholder="blur"
-                blurDataURL="assets/icon/total_clothes.png"
-              />
-              <h1>3</h1>
-            </Styled.ClothesAmount>
-          </Styled.Category>
+         {product}
         </Styled.CategoryContainer>
       </Styled.Root>
       {isCategoryCreateModalOpen && (
-        <Modal
-          onClickModal={onClickCategoryCreateModal}
-          onClickLeftButton={onClickCancel}
-          onClickRightButton={onClickMake}
-          title="카테고리 만들기"
-          LeftButtonText="취소"
-          RightButtonText="만들기"
-          width={74}
-        >
-          <Styled.CategoryCreateModal>
-            <h1>카테고리 이름</h1>
-            <Styled.CategoryNameInput
-              placeholder="예) 2023 위시리스트"
-              maxLength={20}
-              ref={inputRef}
-              onChange={(e) => setChangeInputValue(e.target.value.length)}
-            ></Styled.CategoryNameInput>
-            <h6>{changeInputValue > 20 ? 20 : changeInputValue}/20</h6>
-          </Styled.CategoryCreateModal>
-        </Modal>
+        <CategoryCreateModal changeInputValue={changeInputValue} updateInputValue={updateInputValue} inputRef={inputRef} onClickCategoryCreateModal={onClickCategoryCreateModal}></CategoryCreateModal>
       )}
     </Layout>
   );
