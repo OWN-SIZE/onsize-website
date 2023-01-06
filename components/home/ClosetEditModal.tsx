@@ -88,6 +88,9 @@ export default ClosetEditModal;
 
 const Styled = {
   Root: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: absolute;
 
     top: 0;
@@ -102,11 +105,6 @@ const Styled = {
     display: flex;
     flex-direction: column;
     align-items: center;
-
-    position: absolute;
-
-    left: 48.4rem;
-    top: 16.6rem;
 
     width: 76rem;
     height: 76rem;
