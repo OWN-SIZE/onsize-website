@@ -1,9 +1,15 @@
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, useState } from 'react';
 import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-function CardEdit() {
+interface ModalProps {
+  setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
+}
+
+function ClosetEditModal(props: ModalProps) {
+  const { setIsModalOpen } = props;
+
   const [productNameCount, setProductNameCount] = useState(0);
   const [sizeCount, setSizeCount] = useState(0);
   const [memoCount, setMemoCount] = useState(0);
@@ -39,6 +45,7 @@ function CardEdit() {
     <Styled.Root>
       <Styled.ModalContainer>
         <Styled.Title>수정하기</Styled.Title>
+
         <Styled.InputForm>
           <Styled.InputContainer className="productName">
             <Styled.InputTitle>의류명</Styled.InputTitle>
@@ -51,21 +58,22 @@ function CardEdit() {
             ></Styled.Input>
             <Styled.TextCount>{`${String(productNameCount)}/36`}</Styled.TextCount>
           </Styled.InputContainer>
+
           <Styled.InputContainer className="size">
             <Styled.InputTitle>사이즈</Styled.InputTitle>
             <Styled.Input type="text" id="size" maxLength={5} onChange={handleOnChange} onInput={handleOnInput} />
             <Styled.TextCount>{`${String(sizeCount)}/5`}</Styled.TextCount>
           </Styled.InputContainer>
+
           <Styled.InputContainer className="memo">
             <Styled.InputTitle>메모</Styled.InputTitle>
             <textarea id="memo" maxLength={50} onChange={handleOnChange} onInput={handleOnInput} />
             <Styled.TextCount>{`${String(memoCount)}/50`}</Styled.TextCount>
           </Styled.InputContainer>
         </Styled.InputForm>
+
         <Styled.ButtonContainer>
-          <Link href="/home">
-            <Styled.SubmitButton>취소</Styled.SubmitButton>
-          </Link>
+          <Styled.SubmitButton onClick={() => setIsModalOpen(false)}>취소</Styled.SubmitButton>
           <Styled.SubmitButton
             className={productNameCount === 0 && sizeCount === 0 && memoCount === 0 ? 'disabled' : 'abled'}
           >
@@ -77,7 +85,7 @@ function CardEdit() {
   );
 }
 
-export default CardEdit;
+export default ClosetEditModal;
 
 const Styled = {
   Root: styled.div`
