@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Layout from 'components/common/Layout';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -21,6 +21,9 @@ export default function category() {
     console.log('모달을 만들었습니다.');
     setIsCategoryCreateModalOpen(false);
   };
+
+  const [changeInputValue, setChangeInputValue] = useState(0);
+  const inputRef = useRef(null);
 
   return (
     <Layout>
@@ -103,8 +106,13 @@ export default function category() {
         >
           <Styled.CategoryCreateModal>
             <h1>카테고리 이름</h1>
-            <Styled.CategoryNameInput placeholder="예) 2023 위시리스트"></Styled.CategoryNameInput>
-            <h6>0/20</h6>
+            <Styled.CategoryNameInput
+              placeholder="예) 2023 위시리스트"
+              maxLength={20}
+              ref={inputRef}
+              onChange={(e) => setChangeInputValue(e.target.value.length)}
+            ></Styled.CategoryNameInput>
+            <h6>{changeInputValue > 20 ? 20 : changeInputValue}/20</h6>
           </Styled.CategoryCreateModal>
         </Modal>
       )}
@@ -197,7 +205,7 @@ const Styled = {
     border: 0.1rem solid ${theme.colors.gray350};
     padding-left: 2.4rem;
     ${theme.fonts.body1};
-      color: ${theme.colors.gray550};
+    color: ${theme.colors.gray550};
     ::-webkit-input-placeholder {
       ${theme.fonts.body1};
       color: ${theme.colors.gray250};
