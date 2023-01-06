@@ -55,14 +55,14 @@ function Modal(props: PropsWithChildren<ModalProps>) {
 
   return (
     <Styled.Root>
-      <Styled.HistoryModalContainer width={width}>
+      <Styled.ModalContainer width={width} >
         <Styled.ModalTitle width={width}>{title}</Styled.ModalTitle>
         {children}
         <Styled.ModalButtons>
           <Styled.LeftButton onClick={onClickLeftButton}>{LeftButtonText}</Styled.LeftButton>
           <Styled.RightButton onClick={onClickRightButton}>{RightButtonText}</Styled.RightButton>
         </Styled.ModalButtons>
-      </Styled.HistoryModalContainer>
+      </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
     </Styled.Root>
   );
@@ -80,7 +80,7 @@ const Styled = {
     justify-content: center;
     z-index: 10;
   `,
-  HistoryModalContainer: styled.div<{ width: number }>`
+  ModalContainer: styled.div<{ width: number }>`
     position: fixed;
     width: ${(props) => `${props.width}rem`};
     height: ${(props) => `${props.width * 0.5}rem`};
