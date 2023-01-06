@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import {
+  AddCategoryCloseIcon,
   AddCategoryIcon,
   BlackFolderIcon,
   DeleteIcon,
@@ -57,7 +58,7 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const categoryName = '카테고리명카테고리명';
-  const category = categoryName.substr(0, 8);
+  const category = categoryName.substring(0, 9);
 
   return (
     <Styled.Root
@@ -67,7 +68,7 @@ function ThumbNail(props: ThumbNailProps) {
       width={width}
       height={height}
     >
-      <Styled.HoverHideContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
+      <Styled.HoverHideContainer className={isModalShown ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
         {!noSizeTag && data.size && (
           <>
             <Image
@@ -96,12 +97,15 @@ function ThumbNail(props: ThumbNailProps) {
 
       <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
 
-      {/* {imgHoveredTarget === data.id ? 'show' : 'hide'} */}
-      <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
+      <Styled.HoverThumbNail
+        className={isModalShown ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
+        width={width}
+        height={height}
+      >
         {!noAddCategory && (
           <button onClick={handleOnClick}>
             카테고리 추가
-            <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
+            <Image src={isModalShown ? AddCategoryCloseIcon : AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
           </button>
         )}
 
@@ -380,6 +384,7 @@ const Styled = {
     border: none;
     border-radius: 2.5rem;
 
+    ${theme.fonts.card1};
     background-color: ${theme.colors.yellow01};
 
     cursor: pointer;

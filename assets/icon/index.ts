@@ -18,3 +18,4 @@ export { default as RadioIcon } from './radio.png';
 export { default as BlackFolderIcon } from './folder.png';
 export { default as GrayFolderIcon } from './gray_folder.png';
 export { default as Folder20Icon } from './folder20.png';
+export { default as AddCategoryCloseIcon } from './addCategoryClose.png';
