@@ -4,7 +4,15 @@ export interface TopSizeInput {
   chest: number;
 }
 
-export interface TopSizeOutput {
+export interface BottomSizeInput {
+  bottomLength: number;
+  waist: number;
+  thigh: number;
+  rise: number;
+  hem: number;
+}
+
+export interface MySizeOutput {
   status: number;
   success: boolean;
   message: string;

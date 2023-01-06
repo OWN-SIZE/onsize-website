@@ -5,9 +5,9 @@ import Image from 'next/image';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { TopSizeInput } from 'types/mySize/remote';
+import { BottomSizeInput, TopSizeInput } from 'types/mySize/remote';
 
-import { usePostMyTopSizeMutation } from '@/hooks/queries/mySize';
+import { usePostMyBottomSizeMutation, usePostMyTopSizeMutation } from '@/hooks/queries/mySize';
 import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
@@ -62,16 +62,33 @@ const bottomSwitchMapper = {
 
 type MeasureType = '단면' | '둘레';
 
-type TopValidType = {
+type TopFormType = {
   총장: string;
   '어깨 너비': string;
   가슴: string;
 };
 
+type BottomFormType = {
+  총장: string;
+  밑위: string;
+  허리: string;
+  허벅지: string;
+  밑단: string;
+};
+
 const mutateMapper = {
-  총장: 'topLength',
-  '어깨 너비': 'shoulder',
-  가슴: 'chest',
+  top: {
+    총장: 'topLength',
+    '어깨 너비': 'shoulder',
+    가슴: 'chest',
+  },
+  bottom: {
+    총장: 'bottomLength',
+    밑위: 'waist',
+    허리: 'thigh',
+    허벅지: 'rise',
+    밑단: 'hem',
+  },
 };
 
 export default function SizeForm(props: FormProps) {
@@ -91,11 +108,12 @@ export default function SizeForm(props: FormProps) {
   });
 
   const { mutate: postMyTopSizeMutate } = usePostMyTopSizeMutation();
+  const { mutate: postMyBottomSizeMutate } = usePostMyBottomSizeMutation();
 
-  const onValidTop = async (data: TopValidType) => {
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+  const onValidTop = async (data: TopFormType) => {
     setIsAlertActive(false);
 
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
     const mutateInput: TopSizeInput = {
       topLength: 0,
       shoulder: 0,
@@ -103,16 +121,29 @@ export default function SizeForm(props: FormProps) {
     };
 
     Object.entries(data).map(([key, value]) => {
-      mutateInput[mutateMapper[key]] = parseFloat(value);
+      mutateInput[mutateMapper.top[key]] = parseFloat(value);
     });
 
     postMyTopSizeMutate(mutateInput);
   };
 
-  const onValidBottom = (data: any) => {
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+  const onValidBottom = (data: BottomFormType) => {
     setIsAlertActive(false);
-    console.log(data);
+
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    const mutateInput: BottomSizeInput = {
+      bottomLength: 0,
+      waist: 0,
+      thigh: 0,
+      rise: 0,
+      hem: 0,
+    };
+
+    Object.entries(data).map(([key, value]) => {
+      mutateInput[mutateMapper.bottom[key]] = parseFloat(value);
+    });
+
+    postMyBottomSizeMutate(mutateInput);
   };
 
   useEffect(() => {
