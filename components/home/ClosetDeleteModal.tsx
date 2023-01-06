@@ -1,4 +1,4 @@
-import { Dispatch, useState } from 'react';
+import { Dispatch } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
