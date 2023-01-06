@@ -39,17 +39,10 @@ function ThumbNail(props: ThumbNailProps) {
   const { data, width, height, noSizeTag, noAddCategory, page } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
-  const [isCategoryModalShown, setIsModalShown] = useState(false);
+
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const handleImgMousehover = (e: React.MouseEvent) => {
-    setImgHoveredTarget(e.currentTarget.id);
-  };
-
-  const handleImgMouseLeave = () => {
-    setImgHoveredTarget('');
-  };
 
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
@@ -59,24 +52,16 @@ function ThumbNail(props: ThumbNailProps) {
     setIconHoveredTarget('');
   };
 
-  const handleOnClick = () => {
-    setIsModalShown(!isCategoryModalShown);
-  };
-
-  const handleDeleteOnClick = () => {
-    setIsDeleteModalOpen(!isDeleteModalOpen);
-  };
-
   return (
     <Styled.Root
-      onMouseEnter={handleImgMousehover}
-      onMouseLeave={handleImgMouseLeave}
+      onMouseEnter={() => setImgHoveredTarget(data.id)}
+      onMouseLeave={() => setImgHoveredTarget('')}
       id={data.id}
       width={width}
       height={height}
     >
       {/* 사이즈표와 오른쪽 상단 고정 표시 */}
-      <Styled.HoverHideContainer className={isCategoryModalShown ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
+      <Styled.HoverHideContainer className={isCategoryModalOpen ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
         {!noSizeTag && data.size && (
           <>
             <Image
@@ -106,21 +91,18 @@ function ThumbNail(props: ThumbNailProps) {
       <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail
-        className={isCategoryModalShown ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
+        className={isCategoryModalOpen ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
         height={height}
       >
         {/* 카테고리 추가 */}
         {!noAddCategory && (
-          <button onClick={handleOnClick}>
+          <button onClick={() => setIsCategoryModalOpen(!isCategoryModalOpen)}>
             카테고리 추가
-            <Image
-              src={isCategoryModalShown ? AddCategoryCloseIcon : AddCategoryIcon}
-              alt="카테고리 추가 버튼 아이콘"
-            />
+            <Image src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
           </button>
         )}
-        {isCategoryModalShown && <AddCategoryModal />}
+        {isCategoryModalOpen && <AddCategoryModal />}
 
         {/* 아이콘 */}
         <div className="iconContainer">
@@ -140,7 +122,7 @@ function ThumbNail(props: ThumbNailProps) {
             <Image
               src={HoveredEditIcon}
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
-              onClick={() => setIsEditModalOpen(true)}
+              onClick={() => setIsEditModalOpen(!isEditModalOpen)}
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
@@ -157,7 +139,7 @@ function ThumbNail(props: ThumbNailProps) {
             <Image
               src={HoveredDeleteIcon}
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
-              onClick={handleDeleteOnClick}
+              onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
               alt="호버된 삭제 버튼 아이콘"
             />
           </Styled.IconCotainer>
