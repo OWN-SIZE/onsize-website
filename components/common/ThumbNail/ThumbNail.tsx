@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import {
   AddCategoryCloseIcon,
   AddCategoryIcon,
@@ -35,7 +36,7 @@ function ThumbNail(props: ThumbNailProps) {
   const { data, width, height, noSizeTag, noAddCategory, page } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
-  const [isModalShown, setIsModalShown] = useState(false);
+  const [isCategoryModalShown, setIsModalShown] = useState(false);
 
   const handleImgMousehover = (e: React.MouseEvent) => {
     setImgHoveredTarget(e.currentTarget.id);
@@ -54,7 +55,7 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClick = () => {
-    setIsModalShown(!isModalShown);
+    setIsModalShown(!isCategoryModalShown);
   };
 
   return (
@@ -65,7 +66,7 @@ function ThumbNail(props: ThumbNailProps) {
       width={width}
       height={height}
     >
-      <Styled.HoverHideContainer className={isModalShown ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
+      <Styled.HoverHideContainer className={isCategoryModalShown ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
         {!noSizeTag && data.size && (
           <>
             <Image
@@ -95,18 +96,21 @@ function ThumbNail(props: ThumbNailProps) {
       <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
 
       <Styled.HoverThumbNail
-        className={isModalShown ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
+        className={isCategoryModalShown ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
         height={height}
       >
         {!noAddCategory && (
           <button onClick={handleOnClick}>
             카테고리 추가
-            <Image src={isModalShown ? AddCategoryCloseIcon : AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
+            <Image
+              src={isCategoryModalShown ? AddCategoryCloseIcon : AddCategoryIcon}
+              alt="카테고리 추가 버튼 아이콘"
+            />
           </button>
         )}
 
-        {isModalShown && <AddCategoryModal />}
+        {isCategoryModalShown && <AddCategoryModal />}
 
         <div className="iconContainer">
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
