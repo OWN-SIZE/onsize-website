@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
@@ -7,6 +7,10 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import NextButton from 'components/register/NextButton';
+
+import ModalPortal from '../modal/ModalPortal';
+
+import Alert from './Alert';
 
 interface FormProps {
   noHeader?: boolean;
@@ -58,8 +62,9 @@ type MeasureType = '단면' | '둘레';
 
 export default function SizeForm(props: FormProps) {
   const { noHeader, formType, isNextActive, setIsNextActive } = props;
-  const switchList: MeasureType[] = ['단면', '둘레'];
+  const measureList: MeasureType[] = ['단면', '둘레'];
   const [measure, setMeasure] = useState<MeasureType>('단면');
+  const [isAlertActive, setIsAlertActive] = useState(false);
 
   const {
     register,
@@ -67,16 +72,18 @@ export default function SizeForm(props: FormProps) {
     watch,
     handleSubmit,
     formState: { errors },
-    setError,
-  } = useForm();
+  } = useForm({
+    shouldFocusError: false,
+  });
 
   const onValid = (data: any) => {
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    setIsAlertActive(false);
     console.log(data);
   };
 
   useEffect(() => {
-    // input이 비어있지 않은 경우 다음 버튼 활성화
+    // input이 하나라도 비어있지 않은 경우 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
         setIsNextActive(true);
@@ -84,18 +91,22 @@ export default function SizeForm(props: FormProps) {
     });
   }, [watch]);
 
+  const onClickNextButton = () => {
+    setIsAlertActive(true);
+  };
+
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
-      {/* {errors.topLength && errors.topLength?.message} */}
       {formType === '하의' ? (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
@@ -106,11 +117,11 @@ export default function SizeForm(props: FormProps) {
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
-            {switchList.map((text, index) => (
+            {measureList.map((text, index) => (
               <Styled.Radio
                 key={index}
                 onClick={() => {
@@ -132,32 +143,34 @@ export default function SizeForm(props: FormProps) {
               <label>
                 {key} {measure}
               </label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
                       value < scope[measure].min || value > scope[measure].max
-                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${chestScopeMapper[measure].max}까지 입력할 수 있습니다.`
+                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${scope[measure].max}까지 입력할 수 있습니다.`
                         : true,
                   })}
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
-          <NextButton isActive={isNextActive} />
+          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       ) : (
         <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
+                  step="0.1"
                   {...register(key, {
                     required: true,
                     validate: (value) =>
@@ -168,11 +181,11 @@ export default function SizeForm(props: FormProps) {
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
-            {switchList.map((text, index) => (
+            {measureList.map((text, index) => (
               <Styled.Radio
                 key={index}
                 onClick={() => {
@@ -191,9 +204,10 @@ export default function SizeForm(props: FormProps) {
           </Styled.RadioContainer>
           <Styled.InputContainer>
             <label>가슴 {measure}</label>
-            <span>
+            <div>
               <Styled.Input
                 type="number"
+                step="0.1"
                 {...register('가슴', {
                   required: true,
                   validate: (value) =>
@@ -204,10 +218,19 @@ export default function SizeForm(props: FormProps) {
                 onBlur={(e) => e.currentTarget.value && setValue('가슴', parseFloat(e.currentTarget.value).toFixed(1))}
               />
               cm
-            </span>
+            </div>
           </Styled.InputContainer>
-          <NextButton isActive={isNextActive} />
+          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
+      )}
+      {isAlertActive && (
+        <ModalPortal>
+          <Alert
+            isActive={isAlertActive}
+            setIsActive={setIsAlertActive}
+            message={`${Object.values({ ...errors }).shift()?.message}`}
+          />
+        </ModalPortal>
       )}
     </Styled.Root>
   );
@@ -240,6 +263,10 @@ const Styled = {
     &:nth-child(1),
     &:nth-child(4) {
       margin-top: 0;
+    }
+    div {
+      display: flex;
+      align-items: flex-end;
     }
   `,
   Input: styled.input`
