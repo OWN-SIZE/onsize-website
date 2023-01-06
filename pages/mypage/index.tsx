@@ -1,12 +1,13 @@
-import Layout from 'components/common/Layout';
+import { useCallback, useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { useCallback, useState } from 'react';
-import HistoryModal from './historyModal';
+
+import Layout from 'components/common/Layout';
 import Modal from 'components/common/Modal';
 
+import HistoryModal from './historyModal';
 
 function MyPage() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);

@@ -1,6 +1,7 @@
 import React, { PropsWithChildren, useEffect, useRef } from 'react';
-import styled from 'styled-components';
 import Image from 'next/image';
+import styled from 'styled-components';
+
 import theme from '../../styles/theme';
 
 type ModalProps = {
@@ -17,8 +18,16 @@ type ModalProps = {
 사용법: children 에서 중간 margin 값을 주고, Modal 에 props 값을 전달해주시면 끝! 
 */
 function Modal(props: PropsWithChildren<ModalProps>) {
-  const { title, LeftButtonText, RightButtonText, width, onClickModal, onClickLeftButton, onClickRightButton, children } =
-    props;
+  const {
+    title,
+    LeftButtonText,
+    RightButtonText,
+    width,
+    onClickModal,
+    onClickLeftButton,
+    onClickRightButton,
+    children,
+  } = props;
 
   const disableScroll = () => {
     document.body.style.cssText = `
@@ -37,7 +46,6 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     return () => enableScroll();
   }, []);
 
-
   const closeModal = (e: React.MouseEvent) => {
     e.preventDefault();
     if (onClickModal) {
@@ -47,7 +55,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
 
   return (
     <Styled.Root>
-      <Styled.HistoryModalContainer width={width} >
+      <Styled.HistoryModalContainer width={width}>
         <Styled.ModalTitle width={width}>{title}</Styled.ModalTitle>
         {children}
         <Styled.ModalButtons>

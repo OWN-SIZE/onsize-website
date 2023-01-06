@@ -18,7 +18,8 @@ const colors = {
   gray500: '#2f2f2f',
   gray600: '#222222',
   black: '#1E2025',
-  card_hover: '#2F2F2F',
+  card_hover: 'rgba(47, 47, 47, 0.4)',
+  icon_hover: 'rgba(235, 235, 235, 0.5);',
 } as const;
 
 interface Font {
@@ -30,7 +31,7 @@ interface Font {
 
 function FONT({ weight, size, lineHeight, letterSpacing }: Font): string {
   return `
-      font-family: 'Noto Sans', sans-serif;
+      font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight}rem;

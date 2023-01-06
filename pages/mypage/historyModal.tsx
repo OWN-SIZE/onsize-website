@@ -1,8 +1,8 @@
 import React, { PropsWithChildren } from 'react';
-import styled from 'styled-components';
-import Image from 'next/image';
-import theme from 'styles/theme';
 import link from 'assets/icon/link.png';
+import Image from 'next/image';
+import styled from 'styled-components';
+import theme from 'styles/theme';
 
 interface HistoryModalProps {
   onClickHistoryModal: () => void;
