@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { TopSizeInput } from 'types/mySize/remote';
 
+import { usePostMyTopSizeMutation } from '@/hooks/queries/mySize';
 import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
@@ -60,6 +62,18 @@ const bottomSwitchMapper = {
 
 type MeasureType = '단면' | '둘레';
 
+type TopValidType = {
+  총장: string;
+  '어깨 너비': string;
+  가슴: string;
+};
+
+const mutateMapper = {
+  총장: 'topLength',
+  '어깨 너비': 'shoulder',
+  가슴: 'chest',
+};
+
 export default function SizeForm(props: FormProps) {
   const { noHeader, formType, isNextActive, setIsNextActive } = props;
   const measureList: MeasureType[] = ['단면', '둘레'];
@@ -76,7 +90,26 @@ export default function SizeForm(props: FormProps) {
     shouldFocusError: false,
   });
 
-  const onValid = (data: any) => {
+  const { mutate: postMyTopSizeMutate } = usePostMyTopSizeMutation();
+
+  const onValidTop = async (data: TopValidType) => {
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    setIsAlertActive(false);
+
+    const mutateInput: TopSizeInput = {
+      topLength: 0,
+      shoulder: 0,
+      chest: 0,
+    };
+
+    Object.entries(data).map(([key, value]) => {
+      mutateInput[mutateMapper[key]] = parseFloat(value);
+    });
+
+    postMyTopSizeMutate(mutateInput);
+  };
+
+  const onValidBottom = (data: any) => {
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
     setIsAlertActive(false);
     console.log(data);
@@ -99,7 +132,7 @@ export default function SizeForm(props: FormProps) {
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
       {formType === '하의' ? (
-        <Styled.Form onSubmit={handleSubmit(onValid)}>
+        <Styled.Form onSubmit={handleSubmit(onValidBottom)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
@@ -163,7 +196,7 @@ export default function SizeForm(props: FormProps) {
           <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       ) : (
-        <Styled.Form onSubmit={handleSubmit(onValid)}>
+        <Styled.Form onSubmit={handleSubmit(onValidTop)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
