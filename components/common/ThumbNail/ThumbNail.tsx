@@ -18,6 +18,7 @@ import {
   SizeIcon,
 } from 'assets/icon';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ThumbNailData } from 'types/common';
@@ -142,11 +143,9 @@ function ThumbNail(props: ThumbNailProps) {
 
           <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={EditIcon} alt="편집 버튼 아이콘" />
-            <Image
-              src={HoveredEditIcon}
-              className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
-              alt="호버된 편집 버튼 아이콘"
-            />
+            <Link className={iconHoveredTarget === `Edit` ? 'show' : 'hide'} href={`/home/edit/${data.id}`}>
+              <Image src={HoveredEditIcon} alt="호버된 편집 버튼 아이콘" />
+            </Link>
           </Styled.IconCotainer>
 
           <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
