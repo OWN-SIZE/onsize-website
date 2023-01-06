@@ -72,7 +72,9 @@ export default function SizeForm(props: FormProps) {
     watch,
     handleSubmit,
     formState: { errors },
-  } = useForm();
+  } = useForm({
+    shouldFocusError: false,
+  });
 
   const onValid = (data: any) => {
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
