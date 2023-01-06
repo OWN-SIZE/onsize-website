@@ -129,7 +129,9 @@ function ThumbNail(props: ThumbNailProps) {
           {/*** 아래 null 부분에 수정 모달 넣어주세용 ***/}
           {isEditModalOpen && (
             <ModalPortal>
-              {page === 'closet' ? <ClosetEditModal setIsModalOpen={setIsEditModalOpen} /> : null}
+              {page === 'closet' ? (
+                <ClosetEditModal setIsModalOpen={setIsEditModalOpen} setImgHoveredTarget={setImgHoveredTarget} />
+              ) : null}
             </ModalPortal>
           )}
 
@@ -147,7 +149,11 @@ function ThumbNail(props: ThumbNailProps) {
           {isDeleteModalOpen && (
             <ModalPortal>
               {page === 'closet' ? (
-                <CardDelete isModalOpen={isDeleteModalOpen} setIsModalOpen={setIsDeleteModalOpen} />
+                <CardDelete
+                  isModalOpen={isDeleteModalOpen}
+                  setIsModalOpen={setIsDeleteModalOpen}
+                  setImgHoveredTarget={setImgHoveredTarget}
+                />
               ) : null}
             </ModalPortal>
           )}

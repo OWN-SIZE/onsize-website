@@ -7,18 +7,21 @@ import Modal from '../common/Modal';
 interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
 }
 function ClosetDeleteModal(props: ModalProps) {
-  const { isModalOpen, setIsModalOpen } = props;
+  const { isModalOpen, setIsModalOpen, setImgHoveredTarget } = props;
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
   };
   const onClickCancel = () => {
     setIsModalOpen(false);
+    setImgHoveredTarget('');
   };
   const onClickMake = () => {
     console.log('모달을 만들었습니다.');
     setIsModalOpen(false);
+    setImgHoveredTarget('');
   };
 
   return (

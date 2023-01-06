@@ -4,10 +4,11 @@ import theme from 'styles/theme';
 
 interface ModalProps {
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
 }
 
 function ClosetEditModal(props: ModalProps) {
-  const { setIsModalOpen } = props;
+  const { setIsModalOpen, setImgHoveredTarget } = props;
 
   const [productNameCount, setProductNameCount] = useState(0);
   const [sizeCount, setSizeCount] = useState(0);
@@ -38,6 +39,11 @@ function ClosetEditModal(props: ModalProps) {
     if (e.currentTarget.value.length > e.currentTarget.maxLength) {
       e.currentTarget.value = e.currentTarget.value.slice(0, e.currentTarget.maxLength);
     }
+  };
+
+  const handleCancleOnClick = () => {
+    setIsModalOpen(false);
+    setImgHoveredTarget('');
   };
 
   return (
@@ -72,7 +78,7 @@ function ClosetEditModal(props: ModalProps) {
         </Styled.InputForm>
 
         <Styled.ButtonContainer>
-          <Styled.SubmitButton onClick={() => setIsModalOpen(false)}>취소</Styled.SubmitButton>
+          <Styled.SubmitButton onClick={handleCancleOnClick}>취소</Styled.SubmitButton>
           <Styled.SubmitButton
             className={productNameCount === 0 && sizeCount === 0 && memoCount === 0 ? 'disabled' : 'abled'}
           >
