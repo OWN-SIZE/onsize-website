@@ -15,3 +15,6 @@ export { default as HoveredDeleteIcon } from './hover_delete.png';
 export { default as RecommendedIcon } from './recommended.png';
 export { default as RadioClickedIcon } from './radio-clicked.png';
 export { default as RadioIcon } from './radio.png';
+export { default as BlackFolderIcon } from './folder.png';
+export { default as GrayFolderIcon } from './gray_folder.png';
+export { default as Folder20Icon } from './folder20.png';

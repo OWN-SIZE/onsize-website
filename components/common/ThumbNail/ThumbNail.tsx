@@ -1,8 +1,11 @@
 import { useState } from 'react';
 import {
   AddCategoryIcon,
+  BlackFolderIcon,
   DeleteIcon,
   EditIcon,
+  Folder20Icon,
+  GrayFolderIcon,
   HoveredDeleteIcon,
   HoveredEditIcon,
   HoveredPinFillIcon,
@@ -31,6 +34,7 @@ function ThumbNail(props: ThumbNailProps) {
   const { data, width, height, noSizeTag, noAddCategory, page } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
+  const [isModalShown, setIsModalShown] = useState(false);
 
   const handleImgMousehover = (e: React.MouseEvent) => {
     setImgHoveredTarget(e.currentTarget.id);
@@ -47,6 +51,13 @@ function ThumbNail(props: ThumbNailProps) {
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
   };
+
+  const handleOnClick = () => {
+    setIsModalShown(!isModalShown);
+  };
+
+  const categoryName = '카테고리명카테고리명';
+  const category = categoryName.substr(0, 8);
 
   return (
     <Styled.Root
@@ -85,15 +96,37 @@ function ThumbNail(props: ThumbNailProps) {
 
       <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
 
+      {/* {imgHoveredTarget === data.id ? 'show' : 'hide'} */}
       <Styled.HoverThumbNail className={imgHoveredTarget === data.id ? 'show' : 'hide'} width={width} height={height}>
         {!noAddCategory && (
-          <button>
+          <button onClick={handleOnClick}>
             카테고리 추가
             <Image src={AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
           </button>
         )}
 
-        <div>
+        <Styled.AddCategoryContainer className={String(isModalShown)}>
+          <Styled.MyCategory>나의 카테고리</Styled.MyCategory>
+          <Styled.CategoryList>
+            <Styled.Category className="disabled">
+              <Image src={GrayFolderIcon} alt="카테고리 아이콘" />
+              {`${category}...`}
+            </Styled.Category>
+            <Styled.Category>
+              <Image src={BlackFolderIcon} alt="카테고리 아이콘" />
+              카테고리명카테고리...
+            </Styled.Category>
+            <Styled.Category>
+              <Image src={BlackFolderIcon} alt="카테고리 아이콘" />
+              카테고리명카테고리...
+            </Styled.Category>
+          </Styled.CategoryList>
+          <Styled.addCategoryButton>
+            <Image src={Folder20Icon} alt="카테고리 아이콘" />새 카테고리 만들기
+          </Styled.addCategoryButton>
+        </Styled.AddCategoryContainer>
+
+        <div className="iconContainer">
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} alt="고정 해제 버튼 아이콘" />
             <Image
@@ -131,9 +164,6 @@ export default ThumbNail;
 const Styled = {
   Root: styled.div<{ width: string; height: string }>`
     position: relative;
-
-    width: ${({ width }) => `${width}rem`};
-    height: ${({ height }) => `${height}rem`};
 
     & > img {
       position: absolute;
@@ -254,7 +284,7 @@ const Styled = {
         }
       }
 
-      & > div {
+      & > .iconContainer {
         position: absolute;
         bottom: 1.6rem;
         right: 2.6rem;
@@ -265,6 +295,97 @@ const Styled = {
         width: 13.6rem;
         height: 4rem;
       }
+    }
+  `,
+  AddCategoryContainer: styled.div`
+    position: absolute;
+
+    top: 6.3rem;
+    left: 1.6rem;
+
+    width: 30rem;
+    height: 42.4rem;
+
+    border-radius: 1rem;
+
+    z-index: 3;
+
+    background-color: ${theme.colors.gray000};
+    box-shadow: 0px 0px 10px 8px rgba(0, 0, 0, 0.05);
+
+    &.false {
+      display: none;
+    }
+  `,
+  MyCategory: styled.header`
+    margin-top: 2.9rem;
+    margin-left: 2.3rem;
+
+    ${theme.fonts.sizetag};
+    color: ${theme.colors.gray550};
+  `,
+  CategoryList: styled.div`
+    display: flex;
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    width: 25.5rem;
+
+    margin: 2.2rem auto 0;
+  `,
+  Category: styled.button`
+    display: flex;
+    align-items: center;
+
+    width: 25.5rem;
+    height: 3.1rem;
+
+    border-radius: 2.4rem;
+
+    background: none;
+    border: none;
+
+    padding-left: 1.2rem;
+    margin-bottom: 1.2rem;
+
+    ${theme.fonts.body2};
+    color: ${theme.colors.gray550};
+
+    cursor: pointer;
+
+    & > img {
+      margin-right: 1.2rem;
+    }
+
+    &.disabled {
+      color: ${theme.colors.gray300};
+    }
+    &:hover {
+      background-color: ${theme.colors.gray100};
+    }
+  `,
+  addCategoryButton: styled.button`
+    position: absolute;
+    top: 34.5rem;
+    left: 2.3rem;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 25.5rem;
+    height: 5rem;
+
+    border: none;
+    border-radius: 2.5rem;
+
+    background-color: ${theme.colors.yellow01};
+
+    cursor: pointer;
+
+    & > img {
+      margin-right: 1.2rem;
     }
   `,
 };
