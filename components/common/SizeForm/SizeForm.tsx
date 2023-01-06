@@ -101,7 +101,7 @@ export default function SizeForm(props: FormProps) {
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
                   step="0.1"
@@ -115,7 +115,7 @@ export default function SizeForm(props: FormProps) {
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
@@ -141,7 +141,7 @@ export default function SizeForm(props: FormProps) {
               <label>
                 {key} {measure}
               </label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
                   step="0.1"
@@ -155,7 +155,7 @@ export default function SizeForm(props: FormProps) {
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
           <NextButton isActive={isNextActive} onClick={onClickNextButton} />
@@ -165,7 +165,7 @@ export default function SizeForm(props: FormProps) {
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
-              <span>
+              <div>
                 <Styled.Input
                   type="number"
                   step="0.1"
@@ -179,7 +179,7 @@ export default function SizeForm(props: FormProps) {
                   onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
                 />
                 cm
-              </span>
+              </div>
             </Styled.InputContainer>
           ))}
           <Styled.RadioContainer>
@@ -202,7 +202,7 @@ export default function SizeForm(props: FormProps) {
           </Styled.RadioContainer>
           <Styled.InputContainer>
             <label>가슴 {measure}</label>
-            <span>
+            <div>
               <Styled.Input
                 type="number"
                 step="0.1"
@@ -216,7 +216,7 @@ export default function SizeForm(props: FormProps) {
                 onBlur={(e) => e.currentTarget.value && setValue('가슴', parseFloat(e.currentTarget.value).toFixed(1))}
               />
               cm
-            </span>
+            </div>
           </Styled.InputContainer>
           <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
@@ -261,6 +261,10 @@ const Styled = {
     &:nth-child(1),
     &:nth-child(4) {
       margin-top: 0;
+    }
+    div {
+      display: flex;
+      align-items: flex-end;
     }
   `,
   Input: styled.input`
