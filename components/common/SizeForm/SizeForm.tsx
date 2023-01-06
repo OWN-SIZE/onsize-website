@@ -7,18 +7,21 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/remote';
 
-import { usePostMyBottomSizeMutation, usePostMyTopSizeMutation } from '@/hooks/queries/mySize';
+import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
 import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
 
 import Alert from './Alert';
+import { useRouter } from 'next/router';
 
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
   isNextActive: boolean;
   setIsNextActive: (prev: boolean) => void;
+  progress: number;
+  setProgress: (prev: number) => void;
 }
 
 const formTypeMapper = {
@@ -92,7 +95,7 @@ const mutateMapper = {
 };
 
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, isNextActive, setIsNextActive } = props;
+  const { noHeader, formType, isNextActive, setIsNextActive, progress, setProgress } = props;
   const measureList: MeasureType[] = ['단면', '둘레'];
   const [measure, setMeasure] = useState<MeasureType>('단면');
   const [isAlertActive, setIsAlertActive] = useState(false);
@@ -106,32 +109,37 @@ export default function SizeForm(props: FormProps) {
   } = useForm({
     shouldFocusError: false,
   });
+  const router = useRouter();
 
-  const { mutate: postMyTopSizeMutate } = usePostMyTopSizeMutation();
-  const { mutate: postMyBottomSizeMutate } = usePostMyBottomSizeMutation();
+  const { postMyTopSize } = usePostMyTopSize();
+  const { postMyBottomSize } = usePostMyBottomSize();
 
   const onValidTop = async (data: TopFormType) => {
     setIsAlertActive(false);
 
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const mutateInput: TopSizeInput = {
+    const inputData: TopSizeInput = {
       topLength: 0,
       shoulder: 0,
       chest: 0,
     };
 
     Object.entries(data).map(([key, value]) => {
-      mutateInput[mutateMapper.top[key]] = parseFloat(value);
+      inputData[mutateMapper.top[key]] = parseFloat(value);
     });
 
-    postMyTopSizeMutate(mutateInput);
+    if (progress === 2) {
+      await postMyTopSize(inputData, () => setProgress(progress + 1));
+    } else {
+      await postMyTopSize(inputData, () => router.push('/home'));
+    }
   };
 
-  const onValidBottom = (data: BottomFormType) => {
+  const onValidBottom = async (data: BottomFormType) => {
     setIsAlertActive(false);
 
     // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const mutateInput: BottomSizeInput = {
+    const inputData: BottomSizeInput = {
       bottomLength: 0,
       waist: 0,
       thigh: 0,
@@ -140,10 +148,14 @@ export default function SizeForm(props: FormProps) {
     };
 
     Object.entries(data).map(([key, value]) => {
-      mutateInput[mutateMapper.bottom[key]] = parseFloat(value);
+      inputData[mutateMapper.bottom[key]] = parseFloat(value);
     });
 
-    postMyBottomSizeMutate(mutateInput);
+    if (progress === 2) {
+      await postMyBottomSize(inputData, () => setProgress(progress + 1));
+    } else {
+      await postMyBottomSize(inputData, () => router.push('/home'));
+    }
   };
 
   useEffect(() => {
