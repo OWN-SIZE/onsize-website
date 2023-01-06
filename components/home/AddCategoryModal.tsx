@@ -12,20 +12,20 @@ function AddCategoryModal() {
       <Styled.MyCategory>나의 카테고리</Styled.MyCategory>
       <Styled.CategoryList>
         <Styled.Category className="disabled">
-          <Image src={GrayFolderIcon} alt="카테고리 아이콘" />
+          <Image src={GrayFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
           {`${category}...`}
         </Styled.Category>
         <Styled.Category>
-          <Image src={BlackFolderIcon} alt="카테고리 아이콘" />
+          <Image src={BlackFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
           카테고리명카테고리...
         </Styled.Category>
         <Styled.Category>
-          <Image src={BlackFolderIcon} alt="카테고리 아이콘" />
+          <Image src={BlackFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
           카테고리명카테고리...
         </Styled.Category>
       </Styled.CategoryList>
       <Styled.addCategoryButton>
-        <Image src={Folder20Icon} alt="카테고리 아이콘" />새 카테고리 만들기
+        <Image src={Folder20Icon} width={20} height={20} alt="카테고리 아이콘" />새 카테고리 만들기
       </Styled.addCategoryButton>
     </Styled.AddCategoryContainer>
   );

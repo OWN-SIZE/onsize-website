@@ -61,7 +61,7 @@ function ThumbNail(props: ThumbNailProps) {
       height={height}
     >
       {/* 사이즈표와 오른쪽 상단 고정 표시 */}
-      <Styled.HoverHideContainer className={isCategoryModalOpen ? 'hide' : imgHoveredTarget === data.id ? 'hide' : ''}>
+      <Styled.HoverHideContainer className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'hide' : ''}>
         {!noSizeTag && data.size && (
           <>
             <Image
