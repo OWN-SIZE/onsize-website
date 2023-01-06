@@ -195,10 +195,12 @@ const Styled = {
     height: 6.5rem;
     border-radius: 0.5rem;
     border: 0.1rem solid ${theme.colors.gray350};
+    padding-left: 2.4rem;
+    ${theme.fonts.body1};
+      color: ${theme.colors.gray550};
     ::-webkit-input-placeholder {
       ${theme.fonts.body1};
-      color: ${theme.colors.gray550};
-      padding-left: 2.4rem;
+      color: ${theme.colors.gray250};
     }
   `,
 };
