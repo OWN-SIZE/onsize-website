@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -27,6 +27,7 @@ function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
+  const rootRef = useRef(null);
 
   const onClickSize = () => {
     if (progress === 3) {
@@ -39,7 +40,7 @@ function Register() {
 
   return (
     <Layout noHeader noMenuBar>
-      <Styled.Root>
+      <Styled.Root ref={rootRef}>
         <Styled.LeftConatiner>
           <h1>Log In</h1>
           <h2>

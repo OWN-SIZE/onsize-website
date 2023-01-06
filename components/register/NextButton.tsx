@@ -32,6 +32,7 @@ const Styled = {
         : css`
             border: 0.2rem solid ${theme.colors.black};
             color: ${theme.colors.gray550};
+            pointer-events: none;
           `}
     border-radius: 3rem;
     ${theme.fonts.title3};
