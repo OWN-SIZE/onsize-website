@@ -36,8 +36,11 @@ function ClosetEditModal(props: ModalProps) {
   };
 
   const handleOnInput = (e: FormEvent<HTMLInputElement> | FormEvent<HTMLTextAreaElement>) => {
-    if (e.currentTarget.value.length > e.currentTarget.maxLength) {
-      e.currentTarget.value = e.currentTarget.value.slice(0, e.currentTarget.maxLength);
+    const {
+      currentTarget: { value, maxLength },
+    } = e;
+    if (value.length > maxLength) {
+      e.currentTarget.value = value.slice(0, maxLength);
     }
   };
 
