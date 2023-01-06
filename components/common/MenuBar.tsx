@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-export default function MenuBar() {
+function MenuBar() {
   const router = useRouter();
 
   return (
@@ -18,6 +18,8 @@ export default function MenuBar() {
     </Styled.Root>
   );
 }
+
+export default MenuBar;
 
 const Styled = {
   Root: styled.div`
