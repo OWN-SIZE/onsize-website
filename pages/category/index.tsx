@@ -78,7 +78,6 @@ export default function category() {
             />
           </Styled.CategoryStateBar>
           {product}
-          <Styled.Not></Styled.Not>
         </Styled.CategoryContainer>
       </Styled.Root>
       {isCategoryCreateModalOpen && (
@@ -94,10 +93,6 @@ export default function category() {
 }
 
 const Styled = {
-  Not: styled.div`
-    height: 1000rem;
-    width: 200rem;
-  `,
   Root: styled.div`
     width: 100vw;
     height: 100vh;
