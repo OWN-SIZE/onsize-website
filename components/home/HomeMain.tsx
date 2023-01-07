@@ -2,14 +2,12 @@ import { ClosetIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-
-import { useFetchAllCloset } from '@/hooks/queries/allCloset';
+import { AllClosetResponse } from 'types/allCloset/remote';
 
 import Product from './Product';
 
-function HomeMain() {
-  const data = useFetchAllCloset();
-  if (!data) return;
+function HomeMain(props: AllClosetResponse) {
+  const { data } = props;
   const product = data.map((item) => <Product key={item.id} data={item} />);
 
   return (

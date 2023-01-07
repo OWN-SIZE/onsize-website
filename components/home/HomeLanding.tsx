@@ -1,15 +1,14 @@
 import styled from 'styled-components';
 
+import { useFetchAllCloset } from '@/hooks/queries/allCloset';
+
 import HomeFirst from './HomeFirst';
 import HomeMain from './HomeMain';
 
 function HomeLanding() {
-  return (
-    <Styled.Root>
-      {/* <HomeFirst /> */}
-      <HomeMain />
-    </Styled.Root>
-  );
+  const data = useFetchAllCloset();
+
+  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} />}</Styled.Root>;
 }
 
 export default HomeLanding;
