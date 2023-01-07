@@ -1,13 +1,15 @@
-import { useCallback, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
+import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-
 import Layout from 'components/common/Layout';
 import Modal from 'components/common/Modal';
-
 import HistoryModal from './historyModal';
+import { fetchUserInformation, fetchMyPageHistory } from '../../apis/category';
+import { useQuery } from 'react-query';
+import { usefetchUserInformation, usefetchMyPageHistory } from '../../hooks/queries/mypage';
 
 function MyPage() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
@@ -26,6 +28,10 @@ function MyPage() {
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
 
+  const { userInformation } = usefetchUserInformation();
+  const { history } = usefetchMyPageHistory();
+  if (!userInformation || !history) return;
+
   return (
     <Layout noMenuBar>
       <Styled.Root>
@@ -40,11 +46,11 @@ function MyPage() {
               blurDataURL="assets/icon/profileDefault.svg"
             />
             <Styled.UserInformation>
-              고다빈 <div>aaaaaaa@gmail.com</div>
+              {userInformation.name} <div>{userInformation.email}</div>
             </Styled.UserInformation>
           </Styled.UserInformationContainer>
           <Styled.History>
-            지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>00번</button> 받았어요
+            지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>{history.recCount}번</button> 받았어요
           </Styled.History>
           <Styled.InformationContainer>
             <h1>정보</h1>
@@ -61,46 +67,31 @@ function MyPage() {
       </Styled.Root>
       {isHistoryModalOpen && (
         <HistoryModal onClickHistoryModal={onClickHistoryModal}>
-          <Styled.HistoryModalLink>
-            <h5>L</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>S</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>M</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>L</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>XL</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>S</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
-          <Styled.HistoryModalLink>
-            <h5>M</h5>
-            <p>www.onsize.com</p>
-          </Styled.HistoryModalLink>
+          {history.recData.map((history) => (
+            <Styled.HistoryModalLink key={history.id}>
+              {history.recommendSize === '-' ? (
+                <h5>
+                <Image
+                  src={sizeReplacement}
+                  alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
+                  width={6}
+                  height={6}
+                  placeholder="blur"
+                  blurDataURL="assets/icon/sizeReplacement.png"
+                ></Image>
+                </h5>
+              ) : (
+                <h5>{history.recommendSize}</h5>
+              )}
+              <p
+                onClick={() => {
+                  window.open(history.url, '_blank');
+                }}
+              >
+                {history.url.substr(0, 17)}
+              </p>
+            </Styled.HistoryModalLink>
+          ))}
         </HistoryModal>
       )}
       {isLeaveModalOpen && (
@@ -229,11 +220,14 @@ const Styled = {
       ${theme.fonts.card2};
       color: ${theme.colors.gray550};
       width: 9rem;
-      margin-left: 4.4rem;
+      text-align: center;
+      margin-right: 3.2rem;
+      margin-left: 1.4rem;
     }
     & > p {
       ${theme.fonts.body2};
       color: ${theme.colors.gray550};
+      width: 14rem;
     }
   `,
   LeaveModalContent: styled.div`

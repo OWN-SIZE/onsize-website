@@ -19,16 +19,17 @@ interface directoryData {
 }
 
 export default function category() {
-  
-    const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
+  const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
 
-    const onClickCategoryCreateModal = () => {
-        setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
-      };
+  const onClickCategoryCreateModal = () => {
+    setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
+  };
 
   const [changeInputValue, setChangeInputValue] = useState(0);
   const inputRef = useRef(null);
-  const updateInputValue = (length: number) => {setChangeInputValue(length)};
+  const updateInputValue = (length: number) => {
+    setChangeInputValue(length);
+  };
 
   const data: directoryData[] = [
     {
@@ -76,17 +77,27 @@ export default function category() {
               onClick={onClickCategoryCreateModal}
             />
           </Styled.CategoryStateBar>
-         {product}
+          {product}
+          <Styled.Not></Styled.Not>
         </Styled.CategoryContainer>
       </Styled.Root>
       {isCategoryCreateModalOpen && (
-        <CategoryCreateModal changeInputValue={changeInputValue} updateInputValue={updateInputValue} inputRef={inputRef} onClickCategoryCreateModal={onClickCategoryCreateModal}></CategoryCreateModal>
+        <CategoryCreateModal
+          changeInputValue={changeInputValue}
+          updateInputValue={updateInputValue}
+          inputRef={inputRef}
+          onClickCategoryCreateModal={onClickCategoryCreateModal}
+        ></CategoryCreateModal>
       )}
     </Layout>
   );
 }
 
 const Styled = {
+  Not: styled.div`
+    height: 1000rem;
+    width: 200rem;
+  `,
   Root: styled.div`
     width: 100vw;
     height: 100vh;

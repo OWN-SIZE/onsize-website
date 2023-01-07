@@ -53,6 +53,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     }
   };
 
+
   return (
     <Styled.Root>
       <Styled.ModalContainer width={width} >
