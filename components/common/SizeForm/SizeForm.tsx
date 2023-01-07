@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -13,7 +14,6 @@ import NextButton from 'components/register/NextButton';
 import ModalPortal from '../modal/ModalPortal';
 
 import Alert from './Alert';
-import { useRouter } from 'next/router';
 
 interface FormProps {
   noHeader?: boolean;
@@ -106,6 +106,7 @@ export default function SizeForm(props: FormProps) {
     watch,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm({
     shouldFocusError: false,
   });
@@ -129,7 +130,10 @@ export default function SizeForm(props: FormProps) {
     });
 
     if (progress === 2) {
-      await postMyTopSize(inputData, () => setProgress(progress + 1));
+      await postMyTopSize(inputData, () => {
+        setProgress(progress + 1);
+        resetField('총장');
+      });
     } else {
       await postMyTopSize(inputData, () => router.push('/home'));
     }
@@ -152,7 +156,10 @@ export default function SizeForm(props: FormProps) {
     });
 
     if (progress === 2) {
-      await postMyBottomSize(inputData, () => setProgress(progress + 1));
+      await postMyBottomSize(inputData, () => {
+        setProgress(progress + 1);
+        resetField('총장');
+      });
     } else {
       await postMyBottomSize(inputData, () => router.push('/home'));
     }
