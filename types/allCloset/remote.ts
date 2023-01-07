@@ -1,15 +1,5 @@
-export interface AllClosetOutput {
-  id: string;
-  images: string;
-  productName: string;
-  size: string;
-  memo: string;
-  mallName: string;
-  isRecommend: boolean;
-  isPin: boolean;
-  link: string;
-}
+import { AllClosetOutput } from './client';
 
-export interface UpdateAllClosetProductInput {
-  productId: string;
+export interface AllClosetResponse {
+  data: AllClosetOutput[];
 }

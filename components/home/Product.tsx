@@ -23,11 +23,11 @@ function Product(props: ProductProps) {
   return (
     <Styled.Root>
       <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
-      <Styled.Title>제목제목제제목제목제목제목제목</Styled.Title>
-      <Styled.Memo>메모메모메모메모메모메메모메모메모메모메모</Styled.Memo>
+      <Styled.Title>{data.productName}</Styled.Title>
+      <Styled.Memo>{data.memo}</Styled.Memo>
       <Styled.BrandSection>
         <Styled.BrandLogo />
-        <Styled.BrandName>쇼핑몰명</Styled.BrandName>
+        <Styled.BrandName>{data.mallName}</Styled.BrandName>
       </Styled.BrandSection>
     </Styled.Root>
   );
