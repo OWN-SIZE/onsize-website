@@ -67,6 +67,8 @@ function ThumbNail(props: ThumbNailProps) {
               src={SizeIcon}
               id="sizeIcon"
               className={imgHoveredTarget === data.id ? 'hide' : ''}
+              width={70}
+              height={36}
               alt="사이즈 표시"
             />
 
@@ -82,6 +84,8 @@ function ThumbNail(props: ThumbNailProps) {
             src={PinIcon}
             id="pinIcon"
             className={imgHoveredTarget === data.id ? 'hide' : ''}
+            width={25}
+            height={25}
             alt="고정된 상품 핀 아이콘"
           />
         )}
@@ -98,7 +102,12 @@ function ThumbNail(props: ThumbNailProps) {
         {!noAddCategory && (
           <button onClick={() => setIsCategoryModalOpen(!isCategoryModalOpen)}>
             카테고리 추가
-            <Image src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon} alt="카테고리 추가 버튼 아이콘" />
+            <Image
+              src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon}
+              width={16}
+              height={9}
+              alt="카테고리 추가 버튼 아이콘"
+            />
           </button>
         )}
         {isCategoryModalOpen && <AddCategoryModal />}
@@ -107,21 +116,30 @@ function ThumbNail(props: ThumbNailProps) {
         <div className="iconContainer">
           {/* 고정 */}
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} alt="고정 해제 버튼 아이콘" />
+            <Image
+              src={data.isPin ? PinButtonFillIcon : PinButonIcon}
+              width={40}
+              height={40}
+              alt="고정 해제 버튼 아이콘"
+            />
             <Image
               src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
               className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
+              width={40}
+              height={40}
               alt="호버된 고정 해제 버튼 아이콘"
             />
           </Styled.IconCotainer>
 
           {/* 수정 */}
           <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={EditIcon} alt="수정 버튼 아이콘" />
+            <Image src={EditIcon} width={40} height={40} alt="수정 버튼 아이콘" />
             <Image
               src={HoveredEditIcon}
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
               onClick={() => setIsEditModalOpen(!isEditModalOpen)}
+              width={40}
+              height={40}
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
@@ -136,11 +154,13 @@ function ThumbNail(props: ThumbNailProps) {
 
           {/* 삭제 */}
           <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={DeleteIcon} alt="삭제 버튼 아이콘" />
+            <Image src={DeleteIcon} width={40} height={40} alt="삭제 버튼 아이콘" />
             <Image
               src={HoveredDeleteIcon}
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
               onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+              width={40}
+              height={40}
               alt="호버된 삭제 버튼 아이콘"
             />
           </Styled.IconCotainer>
