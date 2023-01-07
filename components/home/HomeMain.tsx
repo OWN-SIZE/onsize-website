@@ -24,7 +24,7 @@ function HomeMain() {
       image:
         'https://norefund-bucket.s3.ap-northeast-2.amazonaws.com/%E1%84%80%E1%85%A2%E1%84%87%E1%85%A1%E1%86%AF%E1%84%8D%E1%85%A1%E1%86%AF.png',
       productName: '아끼는옷',
-      size: 'XL',
+      size: null,
       memo: '어쩌구저쩌구',
       mallName: '무신사',
       isRecommend: true,

@@ -30,13 +30,12 @@ interface ThumbNailProps {
   data: ThumbNailData;
   width: string;
   height: string;
-  noSizeTag?: boolean;
   noAddCategory?: boolean;
   page: string;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noSizeTag, noAddCategory, page } = props;
+  const { data, width, height, noAddCategory, page } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
@@ -62,7 +61,7 @@ function ThumbNail(props: ThumbNailProps) {
     >
       {/* 사이즈표와 오른쪽 상단 고정 표시 */}
       <Styled.HoverHideContainer className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'hide' : ''}>
-        {!noSizeTag && data.size && (
+        {data.size && (
           <>
             <Image
               src={SizeIcon}
