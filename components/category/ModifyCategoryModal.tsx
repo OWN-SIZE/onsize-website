@@ -1,39 +1,43 @@
-import React from 'react';
-import Layout from 'components/common/Layout';
-import Image from 'next/image';
+import React, { useRef, useState } from 'react';
+import Modal from 'components/common/Modal';
+import ModalPortal from '../common/modal/ModalPortal';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import Modal from 'components/common/Modal';
-import ModalPortal from './ModalPortal';
 
-type CategoryCreateModalProps = {
-  changeInputValue: number;
-  updateInputValue: (length: number) => void;
-  inputRef: React.RefObject<HTMLInputElement>;
-  onClickCategoryCreateModal: () => void;
+type ModifyCategoryModalProps = { 
+  onClickModifyCategoryModal: () => void;
 };
-export default function CategoryCreateModal(props: CategoryCreateModalProps) {
-  const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal } = props;
+
+export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
+  const { onClickModifyCategoryModal } = props;
 
   const onClickCancel = () => {
-    onClickCategoryCreateModal();
+    onClickModifyCategoryModal();
   };
-  const onClickMake = () => {
-    console.log('모달을 만들었습니다.');
-    onClickCategoryCreateModal();
+  const onClickModify = () => {
+    console.log('모달을 수정했습니다.');
+    onClickModifyCategoryModal();
   };
+
+  const inputRef = useRef(null);
+  const [changeInputValue, setChangeInputValue] = useState(0);
+  const updateInputValue = (length: number) => {
+    setChangeInputValue(length);
+  };
+
+
   return (
     <ModalPortal>
-    <Modal
-      onClickModal={onClickCategoryCreateModal}
-      onClickLeftButton={onClickCancel}
-      onClickRightButton={onClickMake}
-      title="카테고리 만들기"
-      LeftButtonText="취소"
-      RightButtonText="만들기"
-      width={74}
-    >
-      <Styled.CategoryCreateModal>
+      <Modal
+        onClickModal={onClickModifyCategoryModal}
+        onClickLeftButton={onClickCancel}
+        onClickRightButton={onClickModify}
+        title="카테고리 수정"
+        LeftButtonText="취소"
+        RightButtonText="수정"
+        width={74.3}
+      >
+        <Styled.CategoryModifyModal>
         <h1>카테고리 이름</h1>
         <Styled.CategoryNameInput
           placeholder="예) 2023 위시리스트"
@@ -42,14 +46,14 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
           onChange={(e) => updateInputValue(e.target.value.length)}
         ></Styled.CategoryNameInput>
         <h6>{changeInputValue > 20 ? 20 : changeInputValue}/20</h6>
-      </Styled.CategoryCreateModal>
-    </Modal>
+      </Styled.CategoryModifyModal>
+      </Modal>
     </ModalPortal>
   );
 }
 
 const Styled = {
-  CategoryCreateModal: styled.div`
+  CategoryModifyModal: styled.div`
     margin-top: 4.6rem;
     margin-bottom: 4.6rem;
     width: 62.5rem;

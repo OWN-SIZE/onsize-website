@@ -1,6 +1,6 @@
 import React from 'react';
 import { closetData, ThumbNailData } from 'types/common';
-import ThumbNail from '../../components/common/ThumbNail/ThumbNail';
+import ThumbNail from '../common/ThumbNail/ThumbNail';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import Image from 'next/image';

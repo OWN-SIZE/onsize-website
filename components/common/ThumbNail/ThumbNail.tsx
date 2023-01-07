@@ -24,7 +24,10 @@ import AddCategoryModal from '@/components/home/AddCategoryModal';
 import CardDelete from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
 
+import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
+
 import ModalPortal from '../modal/ModalPortal';
+import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
 interface ThumbNailProps {
   data: ThumbNailData;
@@ -50,6 +53,16 @@ function ThumbNail(props: ThumbNailProps) {
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
   };
+
+  const onClickDeleteCategoryModal = () => {
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+    setImgHoveredTarget('');
+  }
+
+  const onClickModifyCategoryModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+    setImgHoveredTarget('');
+  }
 
   return (
     <Styled.Root
@@ -180,7 +193,7 @@ function ThumbNail(props: ThumbNailProps) {
             <ModalPortal>
               {page === 'closet' ? (
                 <ClosetEditModal setIsModalOpen={setIsEditModalOpen} setImgHoveredTarget={setImgHoveredTarget} />
-              ) : null}
+              ) : <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>}
             </ModalPortal>
           )}
 
@@ -205,7 +218,9 @@ function ThumbNail(props: ThumbNailProps) {
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
                 />
-              ) : null}
+              ) : <DeleteCategoryModal 
+                  onClickDeleteCategoryModal={onClickDeleteCategoryModal}
+              ></DeleteCategoryModal>}
             </ModalPortal>
           )}
         </div>
