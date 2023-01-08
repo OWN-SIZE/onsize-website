@@ -25,6 +25,7 @@ export default function App({ Component, pageProps }: AppProps) {
           </GoogleOAuthProvider>
         </RecoilRoot>
       </AsyncBoundary>
+      <div id="modal-root"></div>
     </QueryClientProvider>
   );
 }
