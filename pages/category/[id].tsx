@@ -2,13 +2,13 @@ import { CategoryDeleteIcon, CategoryEditIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { AllClosetOutput } from 'types/allCloset/client';
+import { ClosetOutput } from 'types/allCloset/client';
 
 import HomeMain from '@/components/home/HomeMain';
 import Layout from 'components/common/Layout';
 
 function Detail() {
-  const data: AllClosetOutput[] = [
+  const data: ClosetOutput[] = [
     {
       id: 17,
       userId: 2,

@@ -1,5 +1,5 @@
-import { AllClosetOutput } from './client';
+import { ClosetOutput } from './client';
 
-export interface AllClosetResponse {
-  data: AllClosetOutput[];
+export interface ClosetResponse {
+  data: ClosetOutput[];
 }

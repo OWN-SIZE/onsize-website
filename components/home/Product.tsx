@@ -1,12 +1,12 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { AllClosetOutput } from 'types/allCloset/client';
+import { ClosetOutput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface ProductProps {
-  data: AllClosetOutput;
+  data: ClosetOutput;
   page: string;
 }
 

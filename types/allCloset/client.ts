@@ -1,6 +1,4 @@
-import { AllCategory } from 'types/category/client';
-
-export interface AllClosetOutput {
+export interface ClosetOutput {
   id: number;
   userId: number;
   image: string;
@@ -15,7 +13,7 @@ export interface AllClosetOutput {
   faviconUrl: string | null;
 }
 
-export interface UpdateAllClosetProductInput {
+export interface UpdateClosetInput {
   productId: string;
   editBody?: {
     productName: string;

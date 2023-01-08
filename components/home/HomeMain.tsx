@@ -2,12 +2,12 @@ import { ClosetIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { AllClosetOutput } from 'types/allCloset/client';
+import { ClosetOutput } from 'types/allCloset/client';
 
 import Product from './Product';
 
 interface HomeMainProps {
-  data: AllClosetOutput[];
+  data: ClosetOutput[];
   page: string;
 }
 
