@@ -1,4 +1,4 @@
-import React, { PropsWithChildren } from 'react';
+import React, { PropsWithChildren, useEffect } from 'react';
 import link from 'assets/icon/link.png';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -9,6 +9,23 @@ interface HistoryModalProps {
 }
 
 function HistoryModal({ onClickHistoryModal, children }: PropsWithChildren<HistoryModalProps>) {
+  const disableScroll = () => {
+    document.body.style.cssText = `
+    position: fixed; 
+    top: -${window.scrollY}px;
+    overflow-y: scroll;
+    width: 100%;`;
+  };
+  const enableScroll = () => {
+    const scrollY = document.body.style.top;
+    document.body.style.cssText = '';
+    window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+  };
+  useEffect(() => {
+    disableScroll();
+    return () => enableScroll();
+  }, []);
+
   return (
     <Styled.Root>
       <Styled.HistoryModalContainer>
@@ -125,5 +142,6 @@ const Styled = {
     width: 100%;
     height: 100%;
     z-index: 9;
+    position: fixed;
   `,
 };

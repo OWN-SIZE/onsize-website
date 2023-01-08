@@ -1,6 +1,8 @@
 import { Head, Html, Main, NextScript } from 'next/document';
+import { useRef } from 'react';
 
 export default function Document() {
+
   return (
     <Html lang="ko">
       <Head>
@@ -17,6 +19,7 @@ export default function Document() {
         />
       </Head>
       <body>
+      <div id="modal-root"></div>
         <Main />
         <NextScript />
       </body>

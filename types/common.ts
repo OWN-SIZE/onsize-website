@@ -1,13 +1,13 @@
 export interface closetData {
   id: string;
-  image: string;
-  productName: string;
-  size: string | null;
+  image?: string;
+  productName?: string;
+  size?: string | null;
   memo: string;
-  mallName: string;
-  isRecommend: boolean;
+  mallName?: string;
+  isRecommend?: boolean;
   isPin: boolean;
-  link: string;
+  link?: string;
 }
 
 export interface ThumbNailData {

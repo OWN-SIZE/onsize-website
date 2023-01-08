@@ -6,8 +6,8 @@ import theme from '../../styles/theme';
 
 type ModalProps = {
   title: string;
-  LeftButtonText: string;
-  RightButtonText: string;
+  leftButtonText: string;
+  rightButtonText: string;
   width: number;
   onClickModal: () => void;
   onClickLeftButton: () => void;
@@ -20,8 +20,8 @@ type ModalProps = {
 function Modal(props: PropsWithChildren<ModalProps>) {
   const {
     title,
-    LeftButtonText,
-    RightButtonText,
+    leftButtonText,
+    rightButtonText,
     width,
     onClickModal,
     onClickLeftButton,
@@ -55,14 +55,14 @@ function Modal(props: PropsWithChildren<ModalProps>) {
 
   return (
     <Styled.Root>
-      <Styled.HistoryModalContainer width={width}>
+      <Styled.ModalContainer width={width}>
         <Styled.ModalTitle width={width}>{title}</Styled.ModalTitle>
         {children}
         <Styled.ModalButtons>
-          <Styled.LeftButton onClick={onClickLeftButton}>{LeftButtonText}</Styled.LeftButton>
-          <Styled.RightButton onClick={onClickRightButton}>{RightButtonText}</Styled.RightButton>
+          <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
+          <Styled.RightButton onClick={onClickRightButton}>{rightButtonText}</Styled.RightButton>
         </Styled.ModalButtons>
-      </Styled.HistoryModalContainer>
+      </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
     </Styled.Root>
   );
@@ -80,7 +80,7 @@ const Styled = {
     justify-content: center;
     z-index: 10;
   `,
-  HistoryModalContainer: styled.div<{ width: number }>`
+  ModalContainer: styled.div<{ width: number }>`
     position: fixed;
     width: ${(props) => `${props.width}rem`};
     height: ${(props) => `${props.width * 0.5}rem`};
@@ -95,10 +95,11 @@ const Styled = {
   `,
   Backdrop: styled.div`
     width: 100%;
-    height: 100%;
+    height: ${() => `${window.screen.height}rem`};
     background-color: ${theme.colors.card_hover};
     opacity: 0.4;
     z-index: 9;
+    position: fixed;
   `,
   ModalTitle: styled.div<{ width: number }>`
     width: ${(props) => `${props.width}rem`};
