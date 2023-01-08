@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { fetchAllCloset } from '@/apis/allCloset';
+import { fetchAllCloset, updateAllClosetProduct } from '@/apis/allCloset';
 
 const QUERY_KEY = {
   allCloset: 'allCloset',
@@ -15,15 +15,15 @@ export const useFetchAllCloset = () => {
 
 /** Mutation */
 
-// export const useUpdateAllClosetProductMutation = () => {
-//   const queryClient = useQueryClient();
+export const useUpdateAllClosetProductMutation = () => {
+  const queryClient = useQueryClient();
 
-//   return useMutation(updateAllClosetProduct, {
-//     onSuccess() {
-//       queryClient.invalidateQueries([QUERY_KEY.allCloset]);
-//     },
-//   });
-// };
+  return useMutation(updateAllClosetProduct, {
+    onSuccess() {
+      queryClient.invalidateQueries([QUERY_KEY.allCloset]);
+    },
+  });
+};
 
 // export const useDeleteAllClosetProductMutation = () => {
 //   const queryClient = useQueryClient();

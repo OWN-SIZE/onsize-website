@@ -2,7 +2,7 @@ export interface closetData {
   id: string;
   image?: string;
   productName: string;
-  size?: string | null;
+  size?: string;
   memo?: string;
   mallName?: string;
   isRecommend?: boolean;
@@ -14,7 +14,7 @@ export interface ThumbNailData {
   id: string;
   image?: string;
   productName?: string;
-  size?: string | null;
+  size?: string;
   memo?: string;
   isRecommend?: boolean;
   isPin: boolean;

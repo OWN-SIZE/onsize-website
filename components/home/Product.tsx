@@ -110,7 +110,7 @@ const Styled = {
 
     margin-top: 4rem;
 
-    width: 12.9rem;
+    width: 100%;
     height: 5rem;
   `,
   BrandLogo: styled.div`

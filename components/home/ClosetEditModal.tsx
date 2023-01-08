@@ -1,14 +1,17 @@
-import { ChangeEvent, Dispatch, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+
+import { updateAllClosetProduct } from '@/apis/allCloset';
 
 interface ModalProps {
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
   data: {
+    id: string;
     productName: string;
-    size: string | null;
-    memo: string;
+    size?: string;
+    memo?: string;
   };
 }
 
@@ -16,8 +19,8 @@ function ClosetEditModal(props: ModalProps) {
   const { setIsModalOpen, setImgHoveredTarget, data } = props;
 
   const [productNameInput, setProductNameInput] = useState(data.productName);
-  const [sizeInput, setSizeInput] = useState(data.size === null ? '' : data.size);
-  const [memoInput, setMemoInput] = useState(data.memo);
+  const [sizeInput, setSizeInput] = useState(!data.size ? '' : data.size);
+  const [memoInput, setMemoInput] = useState(!data.memo ? '' : data.memo);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value;
@@ -52,6 +55,15 @@ function ClosetEditModal(props: ModalProps) {
   const handleCloseOnClick = () => {
     setIsModalOpen(false);
     setImgHoveredTarget('');
+  };
+
+  const handleSubmitOnClick = () => {
+    const updateData = updateAllClosetProduct({
+      productId: data.id,
+      editBody: { productName: productNameInput, size: sizeInput, memo: memoInput, isPin: false },
+    });
+    handleCloseOnClick();
+    console.log(updateData);
   };
 
   return (
@@ -95,7 +107,14 @@ function ClosetEditModal(props: ModalProps) {
 
         <Styled.ButtonContainer>
           <Styled.SubmitButton onClick={handleCloseOnClick}>취소</Styled.SubmitButton>
-          <Styled.SubmitButton className={productNameInput.length === 0 ? 'disabled' : 'abled'}>
+          <Styled.SubmitButton
+            onClick={handleSubmitOnClick}
+            className={
+              productNameInput === data.productName && sizeInput === data.size && memoInput === data.memo
+                ? 'disabled'
+                : 'abled'
+            }
+          >
             수정
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
@@ -114,7 +133,6 @@ const Styled = {
     position: absolute;
 
     top: 0;
-    z-index: 3;
     z-index: 3;
 
     width: 100vw;
