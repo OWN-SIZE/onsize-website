@@ -1,5 +1,5 @@
 import { client } from 'apis';
-import { MyPageHistoryResponse, MyPageUserInformationResponse } from 'types/category/remote';
+import { MyPageHistoryResponse, MyPageUserInformationResponse } from 'types/mypage/remote';
 
 export const fetchUserInformation = async () => {
   const {

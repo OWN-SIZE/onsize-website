@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { AllClosetOutput } from 'types/allCloset/client';
+import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 
@@ -13,10 +14,10 @@ function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const { data, page } = props;
 
-  const ThumbNailData = {
-    id: data.id,
+  const ThumbNailData: ThumbNailData = {
+    id: String(data.id),
     image: data.image,
-    productName: data.productName,
+    name: data.productName,
     size: data.size,
     memo: data.memo,
     isRecommend: data.isRecommend,

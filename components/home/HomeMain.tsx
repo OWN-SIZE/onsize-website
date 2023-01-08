@@ -14,7 +14,7 @@ interface HomeMainProps {
 function HomeMain(props: HomeMainProps) {
   const { data, page } = props;
   const countProduct = data.length;
-  const product = data.map((item) => <Product key={item.id} data={item} page={page} />);
+  const product = data.map((item) => <Product key={String(item.id)} data={item} page={page} />);
 
   return (
     <Styled.Container>
