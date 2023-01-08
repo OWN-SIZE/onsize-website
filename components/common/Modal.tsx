@@ -99,6 +99,7 @@ const Styled = {
     background-color: ${theme.colors.card_hover};
     opacity: 0.4;
     z-index: 9;
+    position: fixed;
   `,
   ModalTitle: styled.div<{ width: number }>`
     width: ${(props) => `${props.width}rem`};
