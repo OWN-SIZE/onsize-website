@@ -14,9 +14,7 @@ export const updateAllClosetProduct = async ({ productId, editBody }: UpdateAllC
   return data;
 };
 
-// export const deleteAllClosetProduct = async ({ productId }: UpdateAllClosetProductInput) => {
-//   const { data } = await client.delete<Pick<AllClosetOutput, 'productName' | 'size' | 'memo' | 'isPin'>>(
-//     `/allCloset/${productId}`
-//   );
-//   return data;
-// };
+export const deleteAllClosetProduct = async ({ productId }: UpdateAllClosetProductInput) => {
+  const { data } = await client.delete(`/allCloset/${productId}`);
+  return data;
+};

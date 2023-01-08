@@ -2,15 +2,18 @@ import { Dispatch } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { useDeleteAllClosetProductMutation } from '@/hooks/queries/allCloset';
+
 import Modal from '../common/Modal';
 
 interface ModalProps {
+  id: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
 }
 function ClosetDeleteModal(props: ModalProps) {
-  const { isModalOpen, setIsModalOpen, setImgHoveredTarget } = props;
+  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, id } = props;
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -18,8 +21,10 @@ function ClosetDeleteModal(props: ModalProps) {
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };
+
+  const { mutate: deleteClosetProduct } = useDeleteAllClosetProductMutation();
   const onClickMake = () => {
-    console.log('모달을 만들었습니다.');
+    deleteClosetProduct({ productId: id });
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };
@@ -31,8 +36,8 @@ function ClosetDeleteModal(props: ModalProps) {
         onClickLeftButton={onClickCancel}
         onClickRightButton={onClickMake}
         title="삭제"
-        LeftButtonText="아니오"
-        RightButtonText="예"
+        leftButtonText="아니오"
+        rightButtonText="예"
         width={53}
       >
         <Styled.Content>나의 옷장에서 삭제하시겠습니까?</Styled.Content>

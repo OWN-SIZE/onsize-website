@@ -12,10 +12,10 @@ export interface AllClosetOutput {
 
 export interface UpdateAllClosetProductInput {
   productId: string;
-  editBody: {
+  editBody?: {
     productName: string;
-    size?: string;
-    memo?: string;
+    size: string;
+    memo: string;
     isPin: boolean;
   };
 }

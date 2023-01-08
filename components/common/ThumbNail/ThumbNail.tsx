@@ -23,6 +23,8 @@ import { ThumbNailData } from 'types/common';
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import CardDelete from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
+import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
+import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
 import ModalPortal from '../modal/ModalPortal';
 
@@ -49,6 +51,16 @@ function ThumbNail(props: ThumbNailProps) {
 
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
+  };
+
+  const onClickDeleteCategoryModal = () => {
+    setIsDeleteModalOpen(!isDeleteModalOpen);
+    setImgHoveredTarget('');
+  };
+
+  const onClickModifyCategoryModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+    setImgHoveredTarget('');
   };
 
   return (
@@ -91,7 +103,39 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      <Styled.ThumbNailImg className={page === 'closet' ? 'closet' : 'category'} width={width} height={height} />
+      {page === 'closet' ? (
+        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+      ) : (
+        <Styled.ThumbNailImg className={'category'} width={width} height={height}>
+          <Image
+            src=""
+            alt="썸네일 이미지1"
+            width={226}
+            height={300}
+            placeholder="blur"
+            blurDataURL="assets/icon/folder_filled.png"
+          />
+          <div>
+            <Image
+              src=""
+              alt="썸네일 이미지2"
+              width={226}
+              height={150}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+            />
+            <Image
+              src=""
+              alt="썸네일 이미지3"
+              width={226}
+              height={150}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+            />
+          </div>
+        </Styled.ThumbNailImg>
+      )}
+
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail
         className={isCategoryModalOpen ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
@@ -146,15 +190,17 @@ function ThumbNail(props: ThumbNailProps) {
           {/*** 아래 null 부분에 수정 모달 넣어주세용 ***/}
           {isEditModalOpen && (
             <ModalPortal>
-              {page === 'closet'
-                ? data.productName && (
-                    <ClosetEditModal
-                      setIsModalOpen={setIsEditModalOpen}
-                      setImgHoveredTarget={setImgHoveredTarget}
-                      data={{ id: data.id, productName: data.productName, size: data.size, memo: data.memo }}
-                    />
-                  )
-                : null}
+              {page === 'closet' ? (
+                data.productName && (
+                  <ClosetEditModal
+                    setIsModalOpen={setIsEditModalOpen}
+                    setImgHoveredTarget={setImgHoveredTarget}
+                    data={{ id: data.id, productName: data.productName, size: data.size, memo: data.memo }}
+                  />
+                )
+              ) : (
+                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
+              )}
             </ModalPortal>
           )}
 
@@ -175,11 +221,14 @@ function ThumbNail(props: ThumbNailProps) {
             <ModalPortal>
               {page === 'closet' ? (
                 <CardDelete
+                  id={data.id}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
                 />
-              ) : null}
+              ) : (
+                <DeleteCategoryModal onClickDeleteCategoryModal={onClickDeleteCategoryModal}></DeleteCategoryModal>
+              )}
             </ModalPortal>
           )}
         </div>
@@ -250,6 +299,7 @@ const Styled = {
 
     &.category {
       background-color: pink;
+      display: flex;
     }
   `,
   SizeContainer: styled.div`

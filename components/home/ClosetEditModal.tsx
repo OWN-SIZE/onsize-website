@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { updateAllClosetProduct } from '@/apis/allCloset';
+import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
 
 interface ModalProps {
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
@@ -57,13 +58,14 @@ function ClosetEditModal(props: ModalProps) {
     setImgHoveredTarget('');
   };
 
+  const { mutate: updateCloset } = useUpdateAllClosetProductMutation();
+
   const handleSubmitOnClick = () => {
-    const updateData = updateAllClosetProduct({
+    updateCloset({
       productId: data.id,
       editBody: { productName: productNameInput, size: sizeInput, memo: memoInput, isPin: false },
     });
     handleCloseOnClick();
-    console.log(updateData);
   };
 
   return (
