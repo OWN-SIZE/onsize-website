@@ -69,8 +69,8 @@ function ClosetEditModal(props: ModalProps) {
 
           <Styled.InputContainer className="size">
             <Styled.InputTitle>사이즈</Styled.InputTitle>
-            <Styled.Input type="text" id="size" maxLength={5} onChange={handleOnChange} onInput={handleOnInput} />
-            <Styled.TextCount>{`${String(sizeCount)}/5`}</Styled.TextCount>
+            <Styled.Input type="text" id="size" maxLength={4} onChange={handleOnChange} onInput={handleOnInput} />
+            <Styled.TextCount>{`${String(sizeCount)}/4`}</Styled.TextCount>
           </Styled.InputContainer>
 
           <Styled.InputContainer className="memo">
@@ -103,7 +103,7 @@ const Styled = {
     position: absolute;
 
     top: 0;
-    z-index: 2;
+    z-index: 3;
 
     width: 100vw;
     height: 100vh;
