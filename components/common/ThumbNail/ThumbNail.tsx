@@ -191,11 +191,11 @@ function ThumbNail(props: ThumbNailProps) {
           {isEditModalOpen && (
             <ModalPortal>
               {page === 'closet' ? (
-                data.productName && (
+                data.name && (
                   <ClosetEditModal
                     setIsModalOpen={setIsEditModalOpen}
                     setImgHoveredTarget={setImgHoveredTarget}
-                    data={{ id: data.id, productName: data.productName, size: data.size, memo: data.memo }}
+                    data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
                   />
                 )
               ) : (

@@ -10,7 +10,7 @@ interface ModalProps {
   data: {
     id: string;
     productName: string;
-    size?: string;
+    size?: string | null;
     memo?: string | null;
   };
 }
