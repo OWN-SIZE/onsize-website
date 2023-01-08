@@ -8,7 +8,7 @@ import HomeMain from './HomeMain';
 function HomeLanding() {
   const data = useFetchAllCloset();
 
-  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} />}</Styled.Root>;
+  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} page="closet" />}</Styled.Root>;
 }
 
 export default HomeLanding;

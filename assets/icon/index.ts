@@ -19,3 +19,5 @@ export { default as BlackFolderIcon } from './folder.png';
 export { default as GrayFolderIcon } from './gray_folder.png';
 export { default as Folder20Icon } from './folder20.png';
 export { default as AddCategoryCloseIcon } from './addCategoryClose.png';
+export { default as CategoryEditIcon } from './categoryEdit.png';
+export { default as CategoryDeleteIcon } from './categoryDelete.png';

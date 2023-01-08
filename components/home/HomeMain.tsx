@@ -2,19 +2,25 @@ import { ClosetIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { AllClosetResponse } from 'types/allCloset/remote';
+import { AllClosetOutput } from 'types/allCloset/client';
 
 import Product from './Product';
 
-function HomeMain(props: AllClosetResponse) {
-  const { data } = props;
-  const product = data.map((item) => <Product key={item.id} data={item} />);
+interface HomeMainProps {
+  data: AllClosetOutput[];
+  page: string;
+}
+
+function HomeMain(props: HomeMainProps) {
+  const { data, page } = props;
+  const countProduct = data.length;
+  const product = data.map((item) => <Product key={item.id} data={item} page={page} />);
 
   return (
     <Styled.Container>
       <Styled.CountSection>
         <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" />
-        <Styled.Count>4</Styled.Count>
+        <Styled.Count>{countProduct}</Styled.Count>
       </Styled.CountSection>
       <Styled.Closet>{product}</Styled.Closet>
     </Styled.Container>
