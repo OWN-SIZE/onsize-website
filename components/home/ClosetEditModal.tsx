@@ -110,6 +110,7 @@ const Styled = {
 
     top: 0;
     z-index: 3;
+    z-index: 3;
 
     width: 100vw;
     height: 100vh;

@@ -6,11 +6,12 @@ import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface ProductProps {
   data: closetData;
+  page: string;
 }
 
 function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
-  const { data } = props;
+  const { data, page } = props;
 
   const ThumbNailData: ThumbNailData = {
     id: data.id,
@@ -22,7 +23,11 @@ function Product(props: ProductProps) {
 
   return (
     <Styled.Root>
-      <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
+      {page === 'closet' ? (
+        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
+      ) : (
+        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" noAddCategory />
+      )}
       <Styled.Title>{data.productName}</Styled.Title>
       <Styled.Memo>{data.memo}</Styled.Memo>
       <Styled.BrandSection>
