@@ -60,12 +60,20 @@ function Register() {
               onClickNext={onClickSize}
             />
           ) : progress === 2 ? (
-            <SizeForm formType={selectedOption} isNextActive={isNextActive} setIsNextActive={setIsNextActive} />
+            <SizeForm
+              formType={selectedOption}
+              isNextActive={isNextActive}
+              setIsNextActive={setIsNextActive}
+              progress={progress}
+              setProgress={setProgress}
+            />
           ) : (
             <SizeForm
               formType={selectedOption && nextFormMapper[selectedOption]}
               isNextActive={isNextActive}
               setIsNextActive={setIsNextActive}
+              progress={progress}
+              setProgress={setProgress}
             />
           )}
         </Styled.RightContainer>
