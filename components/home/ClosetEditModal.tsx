@@ -10,24 +10,24 @@ interface ModalProps {
 function ClosetEditModal(props: ModalProps) {
   const { setIsModalOpen, setImgHoveredTarget } = props;
 
-  const [productNameCount, setProductNameCount] = useState(0);
-  const [sizeCount, setSizeCount] = useState(0);
-  const [memoCount, setMemoCount] = useState(0);
+  const [productNameInput, setProductNameInput] = useState('상품명');
+  const [sizeInput, setSizeInput] = useState('XL');
+  const [memoInput, setMemoInput] = useState('메모');
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
-    const length = e.currentTarget.value.length;
+    const newValue = e.currentTarget.value;
 
     switch (e.currentTarget.id) {
       case 'productName':
-        setProductNameCount(length);
+        setProductNameInput(newValue);
         break;
 
       case 'size':
-        setSizeCount(length);
+        setSizeInput(newValue);
         break;
 
       case 'memo':
-        setMemoCount(length);
+        setMemoInput(newValue);
         break;
 
       default:
@@ -44,7 +44,7 @@ function ClosetEditModal(props: ModalProps) {
     }
   };
 
-  const handleCancleOnClick = () => {
+  const handleCloseOnClick = () => {
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };
@@ -60,31 +60,37 @@ function ClosetEditModal(props: ModalProps) {
             <Styled.Input
               type="text"
               id="productName"
+              value={productNameInput}
               maxLength={36}
               onChange={handleOnChange}
               onInput={handleOnInput}
             ></Styled.Input>
-            <Styled.TextCount>{`${String(productNameCount)}/36`}</Styled.TextCount>
+            <Styled.TextCount>{`${productNameInput.length}/36`}</Styled.TextCount>
           </Styled.InputContainer>
 
           <Styled.InputContainer className="size">
             <Styled.InputTitle>사이즈</Styled.InputTitle>
-            <Styled.Input type="text" id="size" maxLength={5} onChange={handleOnChange} onInput={handleOnInput} />
-            <Styled.TextCount>{`${String(sizeCount)}/5`}</Styled.TextCount>
+            <Styled.Input
+              type="text"
+              id="size"
+              value={sizeInput}
+              maxLength={4}
+              onChange={handleOnChange}
+              onInput={handleOnInput}
+            />
+            <Styled.TextCount>{`${sizeInput.length}/4`}</Styled.TextCount>
           </Styled.InputContainer>
 
           <Styled.InputContainer className="memo">
             <Styled.InputTitle>메모</Styled.InputTitle>
-            <textarea id="memo" maxLength={50} onChange={handleOnChange} onInput={handleOnInput} />
-            <Styled.TextCount>{`${String(memoCount)}/50`}</Styled.TextCount>
+            <textarea id="memo" value={memoInput} maxLength={50} onChange={handleOnChange} onInput={handleOnInput} />
+            <Styled.TextCount>{`${memoInput.length}/50`}</Styled.TextCount>
           </Styled.InputContainer>
         </Styled.InputForm>
 
         <Styled.ButtonContainer>
-          <Styled.SubmitButton onClick={handleCancleOnClick}>취소</Styled.SubmitButton>
-          <Styled.SubmitButton
-            className={productNameCount === 0 && sizeCount === 0 && memoCount === 0 ? 'disabled' : 'abled'}
-          >
+          <Styled.SubmitButton onClick={handleCloseOnClick}>취소</Styled.SubmitButton>
+          <Styled.SubmitButton className={productNameInput.length === 0 ? 'disabled' : 'abled'}>
             수정
           </Styled.SubmitButton>
         </Styled.ButtonContainer>
@@ -103,7 +109,7 @@ const Styled = {
     position: absolute;
 
     top: 0;
-    z-index: 2;
+    z-index: 3;
 
     width: 100vw;
     height: 100vh;
