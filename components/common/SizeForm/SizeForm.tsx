@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { BottomSizeInput, TopSizeInput } from 'types/mySize/remote';
+import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
 import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
 import NextButton from 'components/register/NextButton';

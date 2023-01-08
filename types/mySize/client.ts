@@ -17,3 +17,7 @@ export interface MySizeOutput {
   success: boolean;
   message: string;
 }
+
+export interface MySizeResponse {
+  data: MySizeOutput;
+}

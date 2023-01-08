@@ -1,4 +1,4 @@
-import { BottomSizeInput, TopSizeInput } from 'types/mySize/remote';
+import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
 import { usePostMyBottomSizeMutation, usePostMyTopSizeMutation } from '../queries/mySize';
 
