@@ -1,13 +1,16 @@
-export interface AllClosetOutput {
-  id: string;
-  image?: string;
+import { AllCategory } from 'types/category/client';
+
+export interface AllClosetOutput extends AllCategory {
+  userId: string;
+  image: string;
   productName: string;
   size: string;
-  memo: string;
-  mallName: string;
+  memo: null;
   isRecommend: boolean;
-  isPin: boolean;
-  link?: string;
+  mallName: string;
+  topOrBottom: number;
+  productUrl: string;
+  faviconUrl: string;
 }
 
 export interface UpdateAllClosetProductInput {

@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { closetData } from 'types/common';
+import { AllClosetOutput } from 'types/allCloset/client';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface ProductProps {
-  data: closetData;
+  data: AllClosetOutput;
   page: string;
 }
 

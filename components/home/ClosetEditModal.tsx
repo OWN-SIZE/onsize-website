@@ -1,8 +1,7 @@
-import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { updateAllClosetProduct } from '@/apis/allCloset';
 import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
 
 interface ModalProps {
@@ -12,7 +11,7 @@ interface ModalProps {
     id: string;
     productName: string;
     size?: string;
-    memo?: string;
+    memo?: string | null;
   };
 }
 
