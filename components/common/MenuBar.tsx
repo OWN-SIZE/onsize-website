@@ -29,7 +29,7 @@ const Styled = {
 
     height: 6.1rem;
     margin: 0 auto;
-    margin-top: 7rem;
+    margin-top: 10.4rem;
     border-bottom: 0.3rem solid ${theme.colors.gray200};
     
   `,
