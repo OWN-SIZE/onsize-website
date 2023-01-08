@@ -5,14 +5,19 @@ import theme from 'styles/theme';
 interface ModalProps {
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
+  data: {
+    productName: string;
+    size: string | null;
+    memo: string;
+  };
 }
 
 function ClosetEditModal(props: ModalProps) {
-  const { setIsModalOpen, setImgHoveredTarget } = props;
+  const { setIsModalOpen, setImgHoveredTarget, data } = props;
 
-  const [productNameInput, setProductNameInput] = useState('상품명');
-  const [sizeInput, setSizeInput] = useState('XL');
-  const [memoInput, setMemoInput] = useState('메모');
+  const [productNameInput, setProductNameInput] = useState(data.productName);
+  const [sizeInput, setSizeInput] = useState(data.size === null ? '' : data.size);
+  const [memoInput, setMemoInput] = useState(data.memo);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value;

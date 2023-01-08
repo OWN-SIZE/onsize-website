@@ -18,7 +18,7 @@ import {
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { ThumbNailData } from 'types/common';
+import { closetData, ThumbNailData } from 'types/common';
 
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import CardDelete from '@/components/home/ClosetDeleteModal';
@@ -27,7 +27,7 @@ import ClosetEditModal from '@/components/home/ClosetEditModal';
 import ModalPortal from '../modal/ModalPortal';
 
 interface ThumbNailProps {
-  data: ThumbNailData;
+  data: closetData;
   width: string;
   height: string;
   noAddCategory?: boolean;
@@ -147,7 +147,11 @@ function ThumbNail(props: ThumbNailProps) {
           {isEditModalOpen && (
             <ModalPortal>
               {page === 'closet' ? (
-                <ClosetEditModal setIsModalOpen={setIsEditModalOpen} setImgHoveredTarget={setImgHoveredTarget} />
+                <ClosetEditModal
+                  setIsModalOpen={setIsEditModalOpen}
+                  setImgHoveredTarget={setImgHoveredTarget}
+                  data={{ productName: data.productName, size: data.size, memo: data.memo }}
+                />
               ) : null}
             </ModalPortal>
           )}
