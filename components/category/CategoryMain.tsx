@@ -7,7 +7,7 @@ import Add from 'assets/icon/add.png';
 import Hanger from 'assets/icon/total_clothes.png';
 import Modal from 'components/common/Modal';
 import ThumbNail from 'components/common/ThumbNail/ThumbNail';
-import Category from './category';
+import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 

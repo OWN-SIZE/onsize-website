@@ -7,6 +7,8 @@ import Image from 'next/image';
 import Folder from 'assets/icon/folder_filled.png';
 import Add from 'assets/icon/add.png';
 import Hanger from 'assets/icon/total_clothes.png';
+import Link from 'next/link';
+
 
 interface ProductProps {
   data: closetData;
@@ -27,7 +29,10 @@ export default function Category(props: ProductProps) {
         <Styled.CategoryImage>
           <ThumbNail data={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory />
         </Styled.CategoryImage>
-        <Styled.CategoryTitle>봄 가을 스커트</Styled.CategoryTitle>
+        <Link href="/category/:categoryId">
+          <Styled.CategoryTitle>봄 가을 스커트</Styled.CategoryTitle>
+        </Link>
+
         <Styled.ClothesAmount>
           <Image
             src={Hanger}

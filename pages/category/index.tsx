@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import Layout from 'components/common/Layout';
-import CategoryMain from 'components/category/categoryMain';
+import CategoryMain from 'components/category/CategoryMain';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
