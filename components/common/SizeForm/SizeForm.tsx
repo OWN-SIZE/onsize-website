@@ -1,11 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { SubmitHandler, useForm } from 'react-hook-form';
 import { RadioClickedIcon, RadioIcon } from 'assets/icon';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
+import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
 import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
@@ -17,6 +20,8 @@ interface FormProps {
   formType: OptionType;
   isNextActive: boolean;
   setIsNextActive: (prev: boolean) => void;
+  progress: number;
+  setProgress: (prev: number) => void;
 }
 
 const formTypeMapper = {
@@ -60,8 +65,37 @@ const bottomSwitchMapper = {
 
 type MeasureType = '단면' | '둘레';
 
+type TopFormType = {
+  총장: string;
+  '어깨 너비': string;
+  가슴: string;
+};
+
+type BottomFormType = {
+  총장: string;
+  밑위: string;
+  허리: string;
+  허벅지: string;
+  밑단: string;
+};
+
+const mutateMapper = {
+  top: {
+    총장: 'topLength',
+    '어깨 너비': 'shoulder',
+    가슴: 'chest',
+  },
+  bottom: {
+    총장: 'bottomLength',
+    밑위: 'waist',
+    허리: 'thigh',
+    허벅지: 'rise',
+    밑단: 'hem',
+  },
+};
+
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, isNextActive, setIsNextActive } = props;
+  const { noHeader, formType, isNextActive, setIsNextActive, progress, setProgress } = props;
   const measureList: MeasureType[] = ['단면', '둘레'];
   const [measure, setMeasure] = useState<MeasureType>('단면');
   const [isAlertActive, setIsAlertActive] = useState(false);
@@ -72,14 +106,63 @@ export default function SizeForm(props: FormProps) {
     watch,
     handleSubmit,
     formState: { errors },
+    resetField,
   } = useForm({
     shouldFocusError: false,
   });
+  const router = useRouter();
 
-  const onValid = (data: any) => {
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+  const { postMyTopSize } = usePostMyTopSize();
+  const { postMyBottomSize } = usePostMyBottomSize();
+
+  const onValidTop = async (data: TopFormType) => {
     setIsAlertActive(false);
-    console.log(data);
+
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    const inputData: TopSizeInput = {
+      topLength: 0,
+      shoulder: 0,
+      chest: 0,
+    };
+
+    Object.entries(data).map(([key, value]) => {
+      inputData[mutateMapper.top[key]] = parseFloat(value);
+    });
+
+    if (progress === 2) {
+      await postMyTopSize(inputData, () => {
+        setProgress(progress + 1);
+        resetField('총장');
+      });
+    } else {
+      await postMyTopSize(inputData, () => router.push('/home'));
+    }
+  };
+
+  const onValidBottom = async (data: BottomFormType) => {
+    setIsAlertActive(false);
+
+    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
+    const inputData: BottomSizeInput = {
+      bottomLength: 0,
+      waist: 0,
+      thigh: 0,
+      rise: 0,
+      hem: 0,
+    };
+
+    Object.entries(data).map(([key, value]) => {
+      inputData[mutateMapper.bottom[key]] = parseFloat(value);
+    });
+
+    if (progress === 2) {
+      await postMyBottomSize(inputData, () => {
+        setProgress(progress + 1);
+        resetField('총장');
+      });
+    } else {
+      await postMyBottomSize(inputData, () => router.push('/home'));
+    }
   };
 
   useEffect(() => {
@@ -99,7 +182,7 @@ export default function SizeForm(props: FormProps) {
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
       {formType === '하의' ? (
-        <Styled.Form onSubmit={handleSubmit(onValid)}>
+        <Styled.Form onSubmit={handleSubmit(onValidBottom)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
@@ -163,7 +246,7 @@ export default function SizeForm(props: FormProps) {
           <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       ) : (
-        <Styled.Form onSubmit={handleSubmit(onValid)}>
+        <Styled.Form onSubmit={handleSubmit(onValidTop)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <Styled.InputContainer key={key}>
               <label>{key}</label>
