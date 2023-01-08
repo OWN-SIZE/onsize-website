@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { closetData, ThumbNailData } from 'types/common';
+import { closetData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 
@@ -13,12 +13,22 @@ function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const { data, page } = props;
 
+  const ThumbNailData = {
+    id: data.id,
+    image: data.image,
+    productName: data.productName,
+    size: data.size,
+    memo: data.memo,
+    isRecommend: data.isRecommend,
+    isPin: data.isPin,
+  };
+
   return (
     <Styled.Root>
       {page === 'closet' ? (
-        <ThumbNail data={data} width="33.2" height="33.2" page="closet" />
+        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
       ) : (
-        <ThumbNail data={data} width="33.2" height="33.2" page="closet" noAddCategory />
+        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" noAddCategory />
       )}
       <Styled.Title>{data.productName}</Styled.Title>
       <Styled.Memo>{data.memo}</Styled.Memo>

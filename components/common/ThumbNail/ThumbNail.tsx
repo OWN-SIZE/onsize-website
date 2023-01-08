@@ -18,7 +18,7 @@ import {
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { closetData, ThumbNailData } from 'types/common';
+import { ThumbNailData } from 'types/common';
 
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import CardDelete from '@/components/home/ClosetDeleteModal';
@@ -27,7 +27,7 @@ import ClosetEditModal from '@/components/home/ClosetEditModal';
 import ModalPortal from '../modal/ModalPortal';
 
 interface ThumbNailProps {
-  data: closetData;
+  data: ThumbNailData;
   width: string;
   height: string;
   noAddCategory?: boolean;
@@ -146,13 +146,17 @@ function ThumbNail(props: ThumbNailProps) {
           {/*** 아래 null 부분에 수정 모달 넣어주세용 ***/}
           {isEditModalOpen && (
             <ModalPortal>
-              {page === 'closet' ? (
-                <ClosetEditModal
-                  setIsModalOpen={setIsEditModalOpen}
-                  setImgHoveredTarget={setImgHoveredTarget}
-                  data={{ productName: data.productName, size: data.size, memo: data.memo }}
-                />
-              ) : null}
+              {page === 'closet'
+                ? data.productName &&
+                  data.size &&
+                  data.memo && (
+                    <ClosetEditModal
+                      setIsModalOpen={setIsEditModalOpen}
+                      setImgHoveredTarget={setImgHoveredTarget}
+                      data={{ productName: data.productName, size: data.size, memo: data.memo }}
+                    />
+                  )
+                : null}
             </ModalPortal>
           )}
 
