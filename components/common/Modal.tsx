@@ -6,8 +6,8 @@ import theme from '../../styles/theme';
 
 type ModalProps = {
   title: string;
-  LeftButtonText: string;
-  RightButtonText: string;
+  leftButtonText: string;
+  rightButtonText: string;
   width: number;
   onClickModal: () => void;
   onClickLeftButton: () => void;
@@ -20,8 +20,8 @@ type ModalProps = {
 function Modal(props: PropsWithChildren<ModalProps>) {
   const {
     title,
-    LeftButtonText,
-    RightButtonText,
+    leftButtonText,
+    rightButtonText,
     width,
     onClickModal,
     onClickLeftButton,
@@ -53,15 +53,14 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     }
   };
 
-
   return (
     <Styled.Root>
-      <Styled.ModalContainer width={width} >
+      <Styled.ModalContainer width={width}>
         <Styled.ModalTitle width={width}>{title}</Styled.ModalTitle>
         {children}
         <Styled.ModalButtons>
-          <Styled.LeftButton onClick={onClickLeftButton}>{LeftButtonText}</Styled.LeftButton>
-          <Styled.RightButton onClick={onClickRightButton}>{RightButtonText}</Styled.RightButton>
+          <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
+          <Styled.RightButton onClick={onClickRightButton}>{rightButtonText}</Styled.RightButton>
         </Styled.ModalButtons>
       </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
@@ -96,7 +95,7 @@ const Styled = {
   `,
   Backdrop: styled.div`
     width: 100%;
-    height: 100%;
+    height: ${() => `${window.screen.height}rem`};
     background-color: ${theme.colors.card_hover};
     opacity: 0.4;
     z-index: 9;

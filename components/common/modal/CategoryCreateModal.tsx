@@ -29,8 +29,8 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
       onClickLeftButton={onClickCancel}
       onClickRightButton={onClickMake}
       title="카테고리 만들기"
-      LeftButtonText="취소"
-      RightButtonText="만들기"
+      leftButtonText="취소"
+      rightButtonText="만들기"
       width={74}
     >
       <Styled.CategoryCreateModal>

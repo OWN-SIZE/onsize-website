@@ -4,13 +4,13 @@ import { MyPageUserInformationResponse, MyPageHistoryResponse } from 'types/cate
 export const fetchUserInformation = async () => {
   const {
     data: { data },
-  } = await client.get<MyPageUserInformationResponse>('http://13.124.105.148:3003/mypage');
+  } = await client.get<MyPageUserInformationResponse>('/mypage');
   return data;
 };
 
 export const fetchMyPageHistory = async () => {
   const {
     data: { data },
-  } = await client.get<MyPageHistoryResponse>('http://13.124.105.148:3003/mypage/history');
+  } = await client.get<MyPageHistoryResponse>('/mypage/history');
   return data;
 };

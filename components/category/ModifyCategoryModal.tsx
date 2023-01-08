@@ -33,8 +33,8 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         onClickLeftButton={onClickCancel}
         onClickRightButton={onClickModify}
         title="카테고리 수정"
-        LeftButtonText="취소"
-        RightButtonText="수정"
+        leftButtonText="취소"
+        rightButtonText="수정"
         width={74.3}
       >
         <Styled.CategoryModifyModal>

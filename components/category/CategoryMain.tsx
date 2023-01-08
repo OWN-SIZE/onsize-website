@@ -11,7 +11,7 @@ import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
-interface directoryData {
+interface DirectoryDataType {
   id: string;
   memo: string;
   mallName: string;
@@ -20,18 +20,17 @@ interface directoryData {
 
 export default function CategoryMain() {
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
+  const [changeInputValue, setChangeInputValue] = useState(0);
+  const inputRef = useRef(null);
 
   const onClickCategoryCreateModal = () => {
     setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
   };
-
-  const [changeInputValue, setChangeInputValue] = useState(0);
-  const inputRef = useRef(null);
   const updateInputValue = (length: number) => {
     setChangeInputValue(length);
   };
 
-  const data: directoryData[] = [
+  const data: DirectoryDataType[] = [
     {
       id: '62daeb7e82b56574bf940e54',
       memo: '어쩌구저쩌구',
@@ -85,7 +84,7 @@ export default function CategoryMain() {
             updateInputValue={updateInputValue}
             inputRef={inputRef}
             onClickCategoryCreateModal={onClickCategoryCreateModal}
-          ></CategoryCreateModal>
+          />
         </ModalPortal>
       )}
     </Styled.Root>

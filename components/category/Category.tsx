@@ -19,7 +19,6 @@ export default function Category(props: ProductProps) {
 
   const ThumbNailData: ThumbNailData = {
     id: data.id,
-    isRecommend: data.isRecommend,
     isPin: data.isPin,
   };
 
@@ -32,7 +31,6 @@ export default function Category(props: ProductProps) {
         <Link href="/category/:categoryId">
           <Styled.CategoryTitle>봄 가을 스커트</Styled.CategoryTitle>
         </Link>
-
         <Styled.ClothesAmount>
           <Image
             src={Hanger}

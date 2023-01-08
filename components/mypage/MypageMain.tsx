@@ -33,87 +33,87 @@ function MyPageMain() {
   if (!userInformation || !history) return;
 
   return (
-      <Styled.Root>
-        <Styled.MySizeContainer>
-          <Styled.UserInformationContainer>
-            <Image
-              src={profileDefault}
-              alt="사용자 지정 프로필 이미지가 없는 경우의 디폴트 프로필 이미지"
-              width={82}
-              height={82}
-              placeholder="blur"
-              blurDataURL="assets/icon/profileDefault.svg"
-            />
-            <Styled.UserInformation>
-              {userInformation.name} <div>{userInformation.email}</div>
-            </Styled.UserInformation>
-          </Styled.UserInformationContainer>
-          <Styled.History>
-            지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>{history.recCount}번</button> 받았어요
-          </Styled.History>
-          <Styled.InformationContainer>
-            <h1>정보</h1>
-            <p>피드백 및 버그 제보</p>
-            <p>개인 정보 보호 정책</p>
-          </Styled.InformationContainer>
-          <Styled.UserLeaveContainer>
-            <button className="withdrawal" onClick={onClickLeaveModal}>
-              탈퇴하기
-            </button>
-            <button className="signOut">로그아웃</button>
-          </Styled.UserLeaveContainer>
-        </Styled.MySizeContainer>
-        {isHistoryModalOpen && (
-          <ModalPortal>
-            <HistoryModal onClickHistoryModal={onClickHistoryModal}>
-              {history.recData.map((history) => (
-                <Styled.HistoryModalLink key={history.id}>
-                  {history.recommendSize === '-' ? (
-                    <h5>
-                      <Image
-                        src={sizeReplacement}
-                        alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
-                        width={6}
-                        height={6}
-                        placeholder="blur"
-                        blurDataURL="assets/icon/sizeReplacement.png"
-                      ></Image>
-                    </h5>
-                  ) : (
-                    <h5>{history.recommendSize}</h5>
-                  )}
-                  <p
-                    onClick={() => {
-                      window.open(history.url, '_blank');
-                    }}
-                  >
-                    {history.url.substr(0, 17)}
-                  </p>
-                </Styled.HistoryModalLink>
-              ))}
-            </HistoryModal>
-          </ModalPortal>
-        )}
-        {isLeaveModalOpen && (
-          <ModalPortal>
-            <Modal
-              onClickModal={onClickLeaveModal}
-              onClickLeftButton={onClickCancel}
-              onClickRightButton={onClickWithdraw}
-              title="탈퇴"
-              LeftButtonText="아니오"
-              RightButtonText="예"
-              width={53}
-            >
-              <Styled.LeaveModalContent>
-                온사이즈를 탈퇴하시겠습니까?
-                <br />
-                추천받은 사이즈와 저장된 의류는 모두 삭제돼요
-              </Styled.LeaveModalContent>
-            </Modal>
-          </ModalPortal>
-        )}
-      </Styled.Root>
+    <Styled.Root>
+      <Styled.MySizeContainer>
+        <Styled.UserInformationContainer>
+          <Image
+            src={profileDefault}
+            alt="사용자 지정 프로필 이미지가 없는 경우의 디폴트 프로필 이미지"
+            width={82}
+            height={82}
+            placeholder="blur"
+            blurDataURL="assets/icon/profileDefault.svg"
+          />
+          <Styled.UserInformation>
+            {userInformation.name} <div>{userInformation.email}</div>
+          </Styled.UserInformation>
+        </Styled.UserInformationContainer>
+        <Styled.History>
+          지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>{history.recCount}번</button> 받았어요
+        </Styled.History>
+        <Styled.InformationContainer>
+          <h1>정보</h1>
+          <p>피드백 및 버그 제보</p>
+          <p>개인 정보 보호 정책</p>
+        </Styled.InformationContainer>
+        <Styled.UserLeaveContainer>
+          <button className="withdrawal" onClick={onClickLeaveModal}>
+            탈퇴하기
+          </button>
+          <button className="signOut">로그아웃</button>
+        </Styled.UserLeaveContainer>
+      </Styled.MySizeContainer>
+      {isHistoryModalOpen && (
+        <ModalPortal>
+          <HistoryModal onClickHistoryModal={onClickHistoryModal}>
+            {history.recData.map((history) => (
+              <Styled.HistoryModalLink key={history.id}>
+                {history.recommendSize === '-' ? (
+                  <div>
+                    <Image
+                      src={sizeReplacement}
+                      alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
+                      width={6}
+                      height={6}
+                      placeholder="blur"
+                      blurDataURL="assets/icon/sizeReplacement.png"
+                    ></Image>
+                  </div>
+                ) : (
+                  <h5>{history.recommendSize}</h5>
+                )}
+                <p
+                  onClick={() => {
+                    window.open(history.url, '_blank');
+                  }}
+                >
+                  {history.url.substr(0, 17)}
+                </p>
+              </Styled.HistoryModalLink>
+            ))}
+          </HistoryModal>
+        </ModalPortal>
+      )}
+      {isLeaveModalOpen && (
+        <ModalPortal>
+          <Modal
+            onClickModal={onClickLeaveModal}
+            onClickLeftButton={onClickCancel}
+            onClickRightButton={onClickWithdraw}
+            title="탈퇴"
+            leftButtonText="아니오"
+            rightButtonText="예"
+            width={53}
+          >
+            <Styled.LeaveModalContent>
+              온사이즈를 탈퇴하시겠습니까?
+              <br />
+              추천받은 사이즈와 저장된 의류는 모두 삭제돼요
+            </Styled.LeaveModalContent>
+          </Modal>
+        </ModalPortal>
+      )}
+    </Styled.Root>
   );
 }
 
@@ -218,7 +218,7 @@ const Styled = {
     padding-bottom: 1.2rem;
     border-bottom: 0.1rem solid ${theme.colors.gray150};
 
-    & > h5 {
+    & > h5, div {
       ${theme.fonts.card2};
       color: ${theme.colors.gray550};
       width: 9rem;
