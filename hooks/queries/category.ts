@@ -2,7 +2,6 @@ import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteCategory, fetchAllCategory, postCategory } from 'apis/category';
 import { CreateCategory } from 'types/category/client';
 
-
 const QUERY_KEY = {
   category: 'category',
 };
@@ -28,7 +27,6 @@ export const usePostCategory = () => {
   });
 };
 
-
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
 
@@ -38,4 +36,3 @@ export const useDeleteCategory = () => {
     },
   });
 };
-

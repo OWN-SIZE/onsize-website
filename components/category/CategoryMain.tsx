@@ -7,11 +7,11 @@ import Add from 'assets/icon/add.png';
 import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
-import { useFetchAllCategory, usePostCategory } from 'hooks/queries/category';
+import { useFetchAllCategory } from 'hooks/queries/category';
+import { AllCategory } from 'types/category/client';
 
 export default function CategoryMain() {
-  const { category } = useFetchAllCategory();
-  const { data } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  let { category } = useFetchAllCategory();
 
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
@@ -23,6 +23,18 @@ export default function CategoryMain() {
   const updateInputValue = (input: string) => {
     setChangeInputValue(input);
   };
+
+  const orderSort = (item: AllCategory[]) => {
+    return item.sort((a, b) => {
+      return Number(b.id) - Number(a.id);
+    });
+  };
+
+  if (category) {
+    const pinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === true));
+    const noPinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === false));
+    category = pinData.concat(noPinData);
+  }
 
   if (!category) return;
   const product = category.map((item) => <Category key={item.id} data={item} />);

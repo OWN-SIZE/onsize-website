@@ -20,6 +20,7 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const onClickDelete = () => {
     onClickDeleteCategoryModal();
     mutate(deletedCategoryId);
+
   };
   return (
     <ModalPortal>
