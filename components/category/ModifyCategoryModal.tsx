@@ -15,7 +15,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    console.log('모달을 수정했습니다.');
+    
     onClickModifyCategoryModal();
   };
 

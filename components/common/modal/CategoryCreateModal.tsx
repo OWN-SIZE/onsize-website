@@ -5,45 +5,65 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import Modal from 'components/common/Modal';
 import ModalPortal from './ModalPortal';
+import { usePostCategory } from 'hooks/queries/category';
+import { postCategory } from 'apis/category';
 
 type CategoryCreateModalProps = {
-  changeInputValue: number;
-  updateInputValue: (length: number) => void;
+  changeInputValue: string;
+  updateInputValue: (input: string) => void;
   inputRef: React.RefObject<HTMLInputElement>;
   onClickCategoryCreateModal: () => void;
 };
 export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal } = props;
+  const { data, isLoading, mutate, mutateAsync } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+
 
   const onClickCancel = () => {
     onClickCategoryCreateModal();
   };
   const onClickMake = () => {
-    console.log('모달을 만들었습니다.');
+    mutate({categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3']});
     onClickCategoryCreateModal();
   };
+  /*
+  const PostData = () => {
+
+    const posting = async () => {
+            const url = `/posting`;
+            const payload = { data };
+            axios.post(url, payload)
+                    .then(el => console.log(el.data))
+                    .catch(err => console.log(err));
+    }
+      
+  
+  const { mutate, isLoading, isError, error, isSuccess } = useMutation(PostData);
+  
+*/
+
   return (
     <ModalPortal>
-    <Modal
-      onClickModal={onClickCategoryCreateModal}
-      onClickLeftButton={onClickCancel}
-      onClickRightButton={onClickMake}
-      title="카테고리 만들기"
-      leftButtonText="취소"
-      rightButtonText="만들기"
-      width={74}
-    >
-      <Styled.CategoryCreateModal>
-        <h1>카테고리 이름</h1>
-        <Styled.CategoryNameInput
-          placeholder="예) 2023 위시리스트"
-          maxLength={20}
-          ref={inputRef}
-          onChange={(e) => updateInputValue(e.target.value.length)}
-        ></Styled.CategoryNameInput>
-        <h6>{changeInputValue > 20 ? 20 : changeInputValue}/20</h6>
-      </Styled.CategoryCreateModal>
-    </Modal>
+      <Modal
+        onClickModal={onClickCategoryCreateModal}
+        onClickLeftButton={onClickCancel}
+        onClickRightButton={onClickMake}
+        title="카테고리 만들기"
+        leftButtonText="취소"
+        rightButtonText="만들기"
+        width={74}
+      >
+        <Styled.CategoryCreateModal>
+          <h1>카테고리 이름</h1>
+          <Styled.CategoryNameInput
+            placeholder="예) 2023 위시리스트"
+            maxLength={20}
+            ref={inputRef}
+            onChange={(e) => updateInputValue(e.target.value)}
+          ></Styled.CategoryNameInput>
+          <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
+        </Styled.CategoryCreateModal>
+      </Modal>
     </ModalPortal>
   );
 }

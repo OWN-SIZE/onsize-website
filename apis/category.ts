@@ -1,16 +1,22 @@
 import { client } from 'apis';
-import { MyPageUserInformationResponse, MyPageHistoryResponse } from 'types/category/remote';
+import { AllCategoryResponse, CreateCategoryResponse, DeleteCategoryResponse } from 'types/category/remote';
+import { CreateCategory } from 'types/category/client';
 
-export const fetchUserInformation = async () => {
+export const fetchAllCategory = async () => {
   const {
     data: { data },
-  } = await client.get<MyPageUserInformationResponse>('/mypage');
+  } = await client.get<AllCategoryResponse>('/category');
   return data;
 };
 
-export const fetchMyPageHistory = async () => {
+export const postCategory = async (props: CreateCategory): Promise<CreateCategory> => {
   const {
     data: { data },
-  } = await client.get<MyPageHistoryResponse>('/mypage/history');
+  } = await client.post<CreateCategoryResponse>('/category/createCategory', props);
+  return data;
+};
+
+export const deleteCategory = async (categoryId: number) => {
+  const { data } = await client.delete<DeleteCategoryResponse>(`/category/${categoryId}`);
   return data;
 };

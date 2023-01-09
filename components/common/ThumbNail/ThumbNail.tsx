@@ -57,12 +57,14 @@ function ThumbNail(props: ThumbNailProps) {
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
     setImgHoveredTarget('');
-  }
+  };
 
   const onClickModifyCategoryModal = () => {
     setIsEditModalOpen(!isEditModalOpen);
     setImgHoveredTarget('');
-  }
+  };
+
+  if (!data.image) return;
 
   return (
     <Styled.Root
@@ -110,16 +112,16 @@ function ThumbNail(props: ThumbNailProps) {
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
           <Image
             src=""
-            alt="썸네일 이미지1"
+            alt={'썸네일 이미지' + data.image[0]}
             width={226}
             height={300}
             placeholder="blur"
             blurDataURL="assets/icon/folder_filled.png"
           />
-          <div>
+          <Styled.SeparateImages>
             <Image
               src=""
-              alt="썸네일 이미지2"
+              alt={'썸네일 이미지' + data.image[1]}
               width={226}
               height={150}
               placeholder="blur"
@@ -127,13 +129,13 @@ function ThumbNail(props: ThumbNailProps) {
             />
             <Image
               src=""
-              alt="썸네일 이미지3"
+              alt={'썸네일 이미지' + data.image[2]}
               width={226}
               height={150}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
             />
-          </div>
+          </Styled.SeparateImages>
         </Styled.ThumbNailImg>
       )}
 
@@ -193,7 +195,9 @@ function ThumbNail(props: ThumbNailProps) {
             <ModalPortal>
               {page === 'closet' ? (
                 <ClosetEditModal setIsModalOpen={setIsEditModalOpen} setImgHoveredTarget={setImgHoveredTarget} />
-              ) : <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>}
+              ) : (
+                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
+              )}
             </ModalPortal>
           )}
 
@@ -218,9 +222,9 @@ function ThumbNail(props: ThumbNailProps) {
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
                 />
-              ) : <DeleteCategoryModal 
-                  onClickDeleteCategoryModal={onClickDeleteCategoryModal}
-              ></DeleteCategoryModal>}
+              ) : (
+                <DeleteCategoryModal onClickDeleteCategoryModal={onClickDeleteCategoryModal} deletedCategoryId={Number(data.id)}></DeleteCategoryModal>
+              )}
             </ModalPortal>
           )}
         </div>
@@ -367,5 +371,10 @@ const Styled = {
         height: 4rem;
       }
     }
+  `,
+  SeparateImages: styled.div`
+    display: flex;
+    width: 22.6rem;
+    flex-wrap: wrap;
   `,
 };

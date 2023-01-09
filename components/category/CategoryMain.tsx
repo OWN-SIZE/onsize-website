@@ -10,6 +10,7 @@ import ThumbNail from 'components/common/ThumbNail/ThumbNail';
 import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
+import { useFetchAllCategory, usePostCategory } from 'hooks/queries/category';
 
 interface DirectoryDataType {
   id: string;
@@ -19,38 +20,24 @@ interface DirectoryDataType {
 }
 
 export default function CategoryMain() {
+  const { category } = useFetchAllCategory();
+  const { data, isLoading, mutate, mutateAsync } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+
+  console.log(category);
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
-  const [changeInputValue, setChangeInputValue] = useState(0);
+  const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
 
   const onClickCategoryCreateModal = () => {
+    console.log(data);
     setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
   };
-  const updateInputValue = (length: number) => {
-    setChangeInputValue(length);
+  const updateInputValue = (input: string) => {
+    setChangeInputValue(input);
   };
 
-  const data: DirectoryDataType[] = [
-    {
-      id: '62daeb7e82b56574bf940e54',
-      memo: '어쩌구저쩌구',
-      mallName: '무신사',
-      isPin: true,
-    },
-    {
-      id: '62daeb7e82b56574bf940e55',
-      memo: '살까말까',
-      mallName: '무신사',
-      isPin: false,
-    },
-    {
-      id: '62daeb7e82b56574bf940e56',
-      memo: '색 이쁨',
-      mallName: '무신사',
-      isPin: true,
-    },
-  ];
-  const product = data.map((item) => <Category key={item.id} data={item} />);
+  if (!category) return;
+  const product = category.map((item) => <Category key={item.id} data={item} />);
 
   return (
     <Styled.Root>
@@ -64,7 +51,7 @@ export default function CategoryMain() {
             placeholder="blur"
             blurDataURL="assets/icon/folder_filled.png"
           />
-          <h1>0</h1>
+          <h1>{category.length}</h1>
           <Image
             src={Add}
             alt="폴더 추가를 뜻하는 더하기 이미지"
