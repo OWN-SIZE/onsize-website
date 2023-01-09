@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { RadioClickedIcon, RadioIcon } from 'assets/icon';
-import Image from 'next/image';
+import { useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
@@ -108,53 +106,49 @@ export default function SizeForm(props: FormProps) {
   const { postMyTopSize } = usePostMyTopSize();
   const { postMyBottomSize } = usePostMyBottomSize();
 
-  const onValidTop = async (data: TopFormType) => {
+  const onValid = async (data: TopFormType | BottomFormType) => {
     setIsAlertActive(false);
 
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const inputData: TopSizeInput = {
-      topLength: 0,
-      shoulder: 0,
-      chest: 0,
-    };
+    if (formType === '상의') {
+      const inputData: TopSizeInput = {
+        topLength: 0,
+        shoulder: 0,
+        chest: 0,
+      };
 
-    Object.entries(data).map(([key, value]) => {
-      inputData[mutateMapper.top[key]] = parseFloat(value);
-    });
-
-    if (progress === 2) {
-      await postMyTopSize(inputData, () => {
-        setProgress(progress + 1);
-        resetField('총장');
+      Object.entries(mutateMapper.top).map(([kor, eng]) => {
+        inputData[eng] = parseFloat(data[kor]);
       });
+
+      if (progress === 2) {
+        await postMyTopSize(inputData, () => {
+          setProgress(progress + 1);
+          resetField('총장');
+        });
+      } else {
+        await postMyTopSize(inputData, () => router.push('/home'));
+      }
     } else {
-      await postMyTopSize(inputData, () => router.push('/home'));
-    }
-  };
+      const inputData: BottomSizeInput = {
+        bottomLength: 0,
+        waist: 0,
+        thigh: 0,
+        rise: 0,
+        hem: 0,
+      };
 
-  const onValidBottom = async (data: BottomFormType) => {
-    setIsAlertActive(false);
-
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const inputData: BottomSizeInput = {
-      bottomLength: 0,
-      waist: 0,
-      thigh: 0,
-      rise: 0,
-      hem: 0,
-    };
-
-    Object.entries(data).map(([key, value]) => {
-      inputData[mutateMapper.bottom[key]] = parseFloat(value);
-    });
-
-    if (progress === 2) {
-      await postMyBottomSize(inputData, () => {
-        setProgress(progress + 1);
-        resetField('총장');
+      Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
+        inputData[eng] = parseFloat(data[kor]);
       });
-    } else {
-      await postMyBottomSize(inputData, () => router.push('/home'));
+
+      if (progress === 2) {
+        await postMyBottomSize(inputData, () => {
+          setProgress(progress + 1);
+          resetField('총장');
+        });
+      } else {
+        await postMyBottomSize(inputData, () => router.push('/home'));
+      }
     }
   };
 
@@ -176,7 +170,7 @@ export default function SizeForm(props: FormProps) {
       {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
       {formType === '하의' ? (
         // 하의 사이즈 입력 폼
-        <Styled.Form onSubmit={handleSubmit(onValidBottom)}>
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
             <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
           ))}
@@ -197,7 +191,7 @@ export default function SizeForm(props: FormProps) {
         </Styled.Form>
       ) : (
         // 상의 사이즈 입력 폼
-        <Styled.Form onSubmit={handleSubmit(onValidTop)}>
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
           ))}

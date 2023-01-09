@@ -26,7 +26,7 @@ function SizeInput(props: InputProps) {
             required: true,
             validate: (value) =>
               value < valid.min || value > valid.max
-                ? `${label}은 최소 ${valid.min}부터 최대 ${valid.max}까지 입력할 수 있습니다.`
+                ? `${label}은(는) 최소 ${valid.min}부터 최대 ${valid.max}까지 입력할 수 있습니다.`
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
