@@ -21,8 +21,9 @@ import theme from 'styles/theme';
 import { ThumbNailData } from 'types/common';
 
 import AddCategoryModal from '@/components/home/AddCategoryModal';
-import CardDelete from '@/components/home/ClosetDeleteModal';
+import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
+import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
@@ -45,6 +46,8 @@ function ThumbNail(props: ThumbNailProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const { mutate: updateIsPin } = useUpdateAllClosetProductMutation();
+
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
   };
@@ -61,6 +64,13 @@ function ThumbNail(props: ThumbNailProps) {
   const onClickModifyCategoryModal = () => {
     setIsEditModalOpen(!isEditModalOpen);
     setImgHoveredTarget('');
+  };
+
+  const handleOnClickPin = () => {
+    updateIsPin({
+      productId: data.id,
+      editBody: { isPin: !data.isPin },
+    });
   };
 
   return (
@@ -138,7 +148,7 @@ function ThumbNail(props: ThumbNailProps) {
 
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail
-        className={isCategoryModalOpen ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
+        className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
         height={height}
       >
@@ -160,21 +170,16 @@ function ThumbNail(props: ThumbNailProps) {
         <div className="iconContainer">
           {/* 고정 */}
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image
-              src={data.isPin ? PinButtonFillIcon : PinButonIcon}
-              width={40}
-              height={40}
-              alt="고정 해제 버튼 아이콘"
-            />
+            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} width={40} height={40} alt="고정 버튼 아이콘" />
             <Image
               src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
               className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
+              onClick={handleOnClickPin}
               width={40}
               height={40}
-              alt="호버된 고정 해제 버튼 아이콘"
+              alt="호버된 고정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-
           {/* 수정 */}
           <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={EditIcon} width={40} height={40} alt="수정 버튼 아이콘" />
@@ -187,10 +192,9 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {/*** 아래 null 부분에 수정 모달 넣어주세용 ***/}
           {isEditModalOpen && (
             <ModalPortal>
-              {page === 'closet' ? (
+              {page === ('closet' || 'categoryDeatil') ? (
                 data.name && (
                   <ClosetEditModal
                     setIsModalOpen={setIsEditModalOpen}
@@ -203,7 +207,6 @@ function ThumbNail(props: ThumbNailProps) {
               )}
             </ModalPortal>
           )}
-
           {/* 삭제 */}
           <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={DeleteIcon} width={40} height={40} alt="삭제 버튼 아이콘" />
@@ -216,12 +219,13 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 삭제 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {/*** 아래 null 부분에 삭제 모달 넣어주세용 ***/}
           {isDeleteModalOpen && (
             <ModalPortal>
               {page === 'closet' ? (
-                <CardDelete
-                  id={data.id}
+                <ClosetDeleteModal
+                  productId={data.id}
+                  categoryId={data.categoryId}
+                  page={page}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}

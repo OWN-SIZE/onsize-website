@@ -3,17 +3,20 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { useDeleteAllClosetProductMutation } from '@/hooks/queries/allCloset';
+import { useDeleteCategoryClosetProductMutation } from '@/hooks/queries/categoryDetail';
 
 import Modal from '../common/Modal';
 
 interface ModalProps {
-  id: string;
+  productId: string;
+  categoryId?: string | string[];
+  page: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
 }
 function ClosetDeleteModal(props: ModalProps) {
-  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, id } = props;
+  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, categoryId, page } = props;
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -23,8 +26,13 @@ function ClosetDeleteModal(props: ModalProps) {
   };
 
   const { mutate: deleteClosetProduct } = useDeleteAllClosetProductMutation();
+  const { mutate: deleteCategoryDetailProduct } = useDeleteCategoryClosetProductMutation();
   const onClickMake = () => {
-    deleteClosetProduct({ productId: id });
+    if (page === 'closet') {
+      deleteClosetProduct(productId);
+    } else {
+      categoryId && deleteCategoryDetailProduct({ productId: productId, categoryId: categoryId });
+    }
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };

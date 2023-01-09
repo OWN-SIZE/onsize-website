@@ -8,13 +8,14 @@ import Product from './Product';
 
 interface HomeMainProps {
   data: ClosetOutput[];
+  categoryId?: string | string[];
   page: string;
 }
 
 function HomeMain(props: HomeMainProps) {
-  const { data, page } = props;
+  const { data, page, categoryId } = props;
   const countProduct = data.length;
-  const product = data.map((item) => <Product key={String(item.id)} data={item} page={page} />);
+  const product = data.map((item) => <Product key={String(item.id)} data={item} categoryId={categoryId} page={page} />);
 
   return (
     <Styled.Container>

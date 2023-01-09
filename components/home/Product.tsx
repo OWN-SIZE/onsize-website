@@ -7,15 +7,17 @@ import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface ProductProps {
   data: ClosetOutput;
+  categoryId?: string | string[];
   page: string;
 }
 
 function Product(props: ProductProps) {
   //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
-  const { data, page } = props;
+  const { data, page, categoryId } = props;
 
   const ThumbNailData: ThumbNailData = {
     id: String(data.id),
+    categoryId: categoryId,
     image: data.image,
     name: data.productName,
     size: data.size,

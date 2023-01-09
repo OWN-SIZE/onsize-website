@@ -14,7 +14,7 @@ export const updateAllClosetProduct = async ({ productId, editBody }: UpdateClos
   return data;
 };
 
-export const deleteAllClosetProduct = async ({ productId }: UpdateClosetInput) => {
+export const deleteAllClosetProduct = async (productId: string) => {
   const { data } = await client.delete(`/allCloset/${productId}`);
   return data;
 };

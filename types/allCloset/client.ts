@@ -15,10 +15,10 @@ export interface ClosetOutput {
 
 export interface UpdateClosetInput {
   productId: string;
-  editBody?: {
-    productName: string;
-    size: string;
-    memo: string;
-    isPin: boolean;
+  editBody: {
+    productName?: string;
+    size?: string | null;
+    memo?: string | null;
+    isPin?: boolean;
   };
 }
