@@ -18,16 +18,16 @@ import {
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { UpdateClosetInput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
 import AddCategoryModal from '@/components/home/AddCategoryModal';
-import CardDelete from '@/components/home/ClosetDeleteModal';
+import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
-
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
+import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
 import ModalPortal from '../modal/ModalPortal';
-import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
 interface ThumbNailProps {
   data: ThumbNailData;
@@ -35,25 +35,23 @@ interface ThumbNailProps {
   height: string;
   noAddCategory?: boolean;
   page: string;
+  updateIsPin: ({ productId, editBody }: UpdateClosetInput) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
   };
-
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
   };
-
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
     setImgHoveredTarget('');
@@ -64,7 +62,12 @@ function ThumbNail(props: ThumbNailProps) {
     setImgHoveredTarget('');
   };
 
-  if (!data.image) return;
+  const handleOnClickPin = () => {
+    updateIsPin({
+      productId: data.id,
+      editBody: { isPin: !data.isPin },
+    });
+  };
 
   return (
     <Styled.Root
@@ -86,14 +89,12 @@ function ThumbNail(props: ThumbNailProps) {
               height={36}
               alt="사이즈 표시"
             />
-
             <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
               <span>{data.size}</span>
               {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
             </Styled.SizeContainer>
           </>
         )}
-
         {data.isPin && (
           <Image
             src={PinIcon}
@@ -106,7 +107,7 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {page === 'closet' ? (
+      {data.image && page === 'closet' ? (
         <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
       ) : (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
@@ -141,7 +142,7 @@ function ThumbNail(props: ThumbNailProps) {
 
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail
-        className={isCategoryModalOpen ? 'show' : imgHoveredTarget === data.id ? 'show' : 'hide'}
+        className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
         height={height}
       >
@@ -158,26 +159,20 @@ function ThumbNail(props: ThumbNailProps) {
           </button>
         )}
         {isCategoryModalOpen && <AddCategoryModal />}
-
         {/* 아이콘 */}
         <div className="iconContainer">
           {/* 고정 */}
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image
-              src={data.isPin ? PinButtonFillIcon : PinButonIcon}
-              width={40}
-              height={40}
-              alt="고정 해제 버튼 아이콘"
-            />
+            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} width={40} height={40} alt="고정 버튼 아이콘" />
             <Image
               src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
               className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
+              onClick={handleOnClickPin}
               width={40}
               height={40}
-              alt="호버된 고정 해제 버튼 아이콘"
+              alt="호버된 고정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-
           {/* 수정 */}
           <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={EditIcon} width={40} height={40} alt="수정 버튼 아이콘" />
@@ -190,17 +185,21 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {/*** 아래 null 부분에 수정 모달 넣어주세용 ***/}
           {isEditModalOpen && (
             <ModalPortal>
-              {page === 'closet' ? (
-                <ClosetEditModal setIsModalOpen={setIsEditModalOpen} setImgHoveredTarget={setImgHoveredTarget} />
+              {page === ('closet' || 'categoryDeatil') ? (
+                data.name && (
+                  <ClosetEditModal
+                    setIsModalOpen={setIsEditModalOpen}
+                    setImgHoveredTarget={setImgHoveredTarget}
+                    data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
+                  />
+                )
               ) : (
                 <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
               )}
             </ModalPortal>
           )}
-
           {/* 삭제 */}
           <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
             <Image src={DeleteIcon} width={40} height={40} alt="삭제 버튼 아이콘" />
@@ -213,17 +212,22 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 삭제 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {/*** 아래 null 부분에 삭제 모달 넣어주세용 ***/}
           {isDeleteModalOpen && (
             <ModalPortal>
               {page === 'closet' ? (
-                <CardDelete
+                <ClosetDeleteModal
+                  productId={data.id}
+                  categoryId={data.categoryId}
+                  page={page}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
                 />
               ) : (
-                <DeleteCategoryModal onClickDeleteCategoryModal={onClickDeleteCategoryModal} deletedCategoryId={Number(data.id)}></DeleteCategoryModal>
+                <DeleteCategoryModal
+                  onClickDeleteCategoryModal={onClickDeleteCategoryModal}
+                  deletedCategoryId={Number(data.id)}
+                ></DeleteCategoryModal>
               )}
             </ModalPortal>
           )}
@@ -232,13 +236,10 @@ function ThumbNail(props: ThumbNailProps) {
     </Styled.Root>
   );
 }
-
 export default ThumbNail;
-
 const Styled = {
   Root: styled.div<{ width: string; height: string }>`
     position: relative;
-
     & > img {
       position: absolute;
       top: 2.4rem;
@@ -253,12 +254,10 @@ const Styled = {
     div {
       position: absolute;
       z-index: 2;
-
       &#sizeIcon {
         top: -0.3rem;
         left: 2.9rem;
       }
-
       &#pinIcon {
         right: 2.6rem;
         top: 2.4rem;
@@ -269,13 +268,10 @@ const Styled = {
     position: relative;
     width: 4rem;
     height: 4rem;
-
     cursor: pointer;
-
     & > .hide {
       display: none;
     }
-
     & > :nth-child(2) {
       position: absolute;
       top: 0;
@@ -286,13 +282,10 @@ const Styled = {
   ThumbNailImg: styled.div<{ width: string; height: string }>`
     width: ${({ width }) => `${width}rem`};
     height: ${({ height }) => `${height}rem`};
-
     border-radius: 1rem;
-
     &.closet {
       background-color: ${theme.colors.gray250};
     }
-
     &.category {
       background-color: pink;
       display: flex;
@@ -303,15 +296,11 @@ const Styled = {
     position: absolute;
     justify-content: center;
     align-items: center;
-
     top: -0.3rem;
     left: 2.9rem;
-
     width: 7rem;
     height: 3.6rem;
-
     z-index: 2;
-
     & > span {
       margin-right: 0.2rem;
       ${theme.fonts.sizetag};
@@ -323,50 +312,38 @@ const Styled = {
     &.hide {
       display: none;
     }
-
     &.show {
       position: absolute;
       top: 0;
       width: ${({ width }) => `${width}rem`};
       height: ${({ height }) => `${height}rem`};
       border-radius: 1rem;
-
       background-color: ${theme.colors.card_hover};
-
       & > button {
         position: absolute;
         display: flex;
         justify-content: space-between;
         align-items: center;
-
         width: 14.2rem;
         height: 2.7rem;
-
         top: 2rem;
         left: 2.6rem;
-
         border: none;
         background: none;
-
         ${theme.fonts.title3};
         color: ${theme.colors.gray000};
-
         cursor: pointer;
-
         & > img {
           width: 1.6rem;
           height: 0.9rem;
         }
       }
-
       & > .iconContainer {
         position: absolute;
         bottom: 1.6rem;
         right: 2.6rem;
-
         display: flex;
         justify-content: space-between;
-
         width: 13.6rem;
         height: 4rem;
       }
