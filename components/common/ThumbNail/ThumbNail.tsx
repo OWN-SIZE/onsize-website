@@ -47,9 +47,6 @@ function ThumbNail(props: ThumbNailProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  // const { mutate } = useUpdateAllClosetProductMutation();
-  const updateIsPinFunction = updateIsPin;
-
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
   };
@@ -69,11 +66,10 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
-    if (page === 'closet')
-      updateIsPinFunction({
-        productId: data.id,
-        editBody: { isPin: !data.isPin },
-      });
+    updateIsPin({
+      productId: data.id,
+      editBody: { isPin: !data.isPin },
+    });
   };
 
   return (
