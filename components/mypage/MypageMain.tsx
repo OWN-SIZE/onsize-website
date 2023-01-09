@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
@@ -6,8 +6,6 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import Modal from 'components/common/Modal';
 import HistoryModal from './HistoryModal';
-import { fetchUserInformation, fetchMyPageHistory } from '../../apis/mypageHistory';
-import { useQuery } from 'react-query';
 import { useFetchUserInformation, useFetchMyPageHistory } from '../../hooks/queries/mypageHistory';
 import ModalPortal from 'components/common/modal/ModalPortal';
 

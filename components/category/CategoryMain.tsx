@@ -4,26 +4,15 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import Folder from 'assets/icon/folder_filled.png';
 import Add from 'assets/icon/add.png';
-import Hanger from 'assets/icon/total_clothes.png';
-import Modal from 'components/common/Modal';
-import ThumbNail from 'components/common/ThumbNail/ThumbNail';
 import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 import { useFetchAllCategory, usePostCategory } from 'hooks/queries/category';
 
-interface DirectoryDataType {
-  id: string;
-  memo: string;
-  mallName: string;
-  isPin: boolean;
-}
-
 export default function CategoryMain() {
   const { category } = useFetchAllCategory();
-  const { data, isLoading, mutate, mutateAsync } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  const { data } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
 
-  console.log(category);
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);

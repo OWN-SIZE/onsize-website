@@ -1,12 +1,9 @@
 import React from 'react';
-import Layout from 'components/common/Layout';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import Modal from 'components/common/Modal';
 import ModalPortal from './ModalPortal';
 import { usePostCategory } from 'hooks/queries/category';
-import { postCategory } from 'apis/category';
 
 type CategoryCreateModalProps = {
   changeInputValue: string;
@@ -16,7 +13,7 @@ type CategoryCreateModalProps = {
 };
 export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal } = props;
-  const { data, isLoading, mutate, mutateAsync } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  const { mutate } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
 
 
   const onClickCancel = () => {
@@ -26,21 +23,6 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
     mutate({categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3']});
     onClickCategoryCreateModal();
   };
-  /*
-  const PostData = () => {
-
-    const posting = async () => {
-            const url = `/posting`;
-            const payload = { data };
-            axios.post(url, payload)
-                    .then(el => console.log(el.data))
-                    .catch(err => console.log(err));
-    }
-      
-  
-  const { mutate, isLoading, isError, error, isSuccess } = useMutation(PostData);
-  
-*/
 
   return (
     <ModalPortal>

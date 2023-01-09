@@ -1,14 +1,11 @@
 import React from 'react';
-import { closetData, ThumbNailData } from 'types/common';
+import { ThumbNailData } from 'types/common';
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import Image from 'next/image';
-import Folder from 'assets/icon/folder_filled.png';
-import Add from 'assets/icon/add.png';
 import Hanger from 'assets/icon/total_clothes.png';
 import Link from 'next/link';
-import { isTemplateExpression } from 'typescript';
 import { AllCategory } from 'types/category/client';
 
 interface CategoryProps {

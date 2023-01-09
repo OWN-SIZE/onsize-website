@@ -12,6 +12,7 @@ export interface closetData {
 
 export interface ThumbNailData {
   id: string;
+  categoryId?: string;
   isPin: boolean;
   image?: string[];
   name?: string;
