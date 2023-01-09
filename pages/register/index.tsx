@@ -77,7 +77,7 @@ function Register() {
             <SizeForm
               isAlertActive={isAlertActive}
               setIsAlertActive={setIsAlertActive}
-              formType={selectedOption}
+              formType={selectedOption === '하의' ? '하의' : '상의'}
               setIsSubmitActive={setIsNextActive}
               onSuccessSubmit={onSuccessSubmit}
             >
@@ -87,7 +87,7 @@ function Register() {
             <SizeForm
               isAlertActive={isAlertActive}
               setIsAlertActive={setIsAlertActive}
-              formType={nextFormMapper[selectedOption]}
+              formType={selectedOption === '하의' ? '상의' : '하의'}
               setIsSubmitActive={setIsNextActive}
               onSuccessSubmit={onSuccessSubmit}
             >
