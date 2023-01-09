@@ -1,25 +1,24 @@
 import React from 'react';
-import { closetData, ThumbNailData } from 'types/common';
+import { ThumbNailData } from 'types/common';
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import Image from 'next/image';
-import Folder from 'assets/icon/folder_filled.png';
-import Add from 'assets/icon/add.png';
 import Hanger from 'assets/icon/total_clothes.png';
 import Link from 'next/link';
+import { AllCategory } from 'types/category/client';
 
-
-interface ProductProps {
-  data: closetData;
+interface CategoryProps {
+  data: AllCategory;
 }
 
-export default function Category(props: ProductProps) {
+export default function Category(props: CategoryProps) {
   const { data } = props;
 
   const ThumbNailData: ThumbNailData = {
     id: data.id,
-    isPin: data.isPin,
+    isPin: data.isPinCategory,
+    image: data.image,
   };
 
   return (
@@ -28,8 +27,8 @@ export default function Category(props: ProductProps) {
         <Styled.CategoryImage>
           <ThumbNail data={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory />
         </Styled.CategoryImage>
-        <Link href="/category/:categoryId">
-          <Styled.CategoryTitle>봄 가을 스커트</Styled.CategoryTitle>
+        <Link href={`/category/${data.id}`}>
+          <Styled.CategoryTitle>{data.categoryName}</Styled.CategoryTitle>
         </Link>
         <Styled.ClothesAmount>
           <Image
@@ -40,7 +39,7 @@ export default function Category(props: ProductProps) {
             placeholder="blur"
             blurDataURL="assets/icon/total_clothes.png"
           />
-          <h1>3</h1>
+          <h1>{data.productNum}</h1>
         </Styled.ClothesAmount>
       </Styled.Category>
     </Styled.Root>
@@ -52,7 +51,7 @@ const Styled = {
   Category: styled.div`
     width: 45.2rem;
     height: 41.2rem;
-    background-color: ${theme.colors.gray150};
+    background-color: ${theme.colors.gray000};
     margin-left: 1.3rem;
     margin-right: 1.3rem;
     margin-bottom: 8rem;

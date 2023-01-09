@@ -4,53 +4,40 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import Folder from 'assets/icon/folder_filled.png';
 import Add from 'assets/icon/add.png';
-import Hanger from 'assets/icon/total_clothes.png';
-import Modal from 'components/common/Modal';
-import ThumbNail from 'components/common/ThumbNail/ThumbNail';
 import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
-
-interface DirectoryDataType {
-  id: string;
-  memo: string;
-  mallName: string;
-  isPin: boolean;
-}
+import { useFetchAllCategory } from 'hooks/queries/category';
+import { AllCategory } from 'types/category/client';
 
 export default function CategoryMain() {
+  let { category } = useFetchAllCategory();
+
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
-  const [changeInputValue, setChangeInputValue] = useState(0);
+  const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
 
   const onClickCategoryCreateModal = () => {
     setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
   };
-  const updateInputValue = (length: number) => {
-    setChangeInputValue(length);
+  const updateInputValue = (input: string) => {
+    setChangeInputValue(input);
   };
 
-  const data: DirectoryDataType[] = [
-    {
-      id: '62daeb7e82b56574bf940e54',
-      memo: '어쩌구저쩌구',
-      mallName: '무신사',
-      isPin: true,
-    },
-    {
-      id: '62daeb7e82b56574bf940e55',
-      memo: '살까말까',
-      mallName: '무신사',
-      isPin: false,
-    },
-    {
-      id: '62daeb7e82b56574bf940e56',
-      memo: '색 이쁨',
-      mallName: '무신사',
-      isPin: true,
-    },
-  ];
-  const product = data.map((item) => <Category key={item.id} data={item} />);
+  const orderSort = (item: AllCategory[]) => {
+    return item.sort((a, b) => {
+      return Number(b.id) - Number(a.id);
+    });
+  };
+
+  if (category) {
+    const pinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === true));
+    const noPinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === false));
+    category = pinData.concat(noPinData);
+  }
+
+  if (!category) return;
+  const product = category.map((item) => <Category key={item.id} data={item} />);
 
   return (
     <Styled.Root>
@@ -64,7 +51,7 @@ export default function CategoryMain() {
             placeholder="blur"
             blurDataURL="assets/icon/folder_filled.png"
           />
-          <h1>0</h1>
+          <h1>{category.length}</h1>
           <Image
             src={Add}
             alt="폴더 추가를 뜻하는 더하기 이미지"

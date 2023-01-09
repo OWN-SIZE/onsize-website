@@ -3,19 +3,24 @@ import Modal from 'components/common/Modal';
 import ModalPortal from '../common/modal/ModalPortal';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { useDeleteCategory, useFetchAllCategory } from 'hooks/queries/category';
 
 type DeleteCategoryModalProps = {
   onClickDeleteCategoryModal: () => void;
+  deletedCategoryId: number;
 };
 
 export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
-  const { onClickDeleteCategoryModal } = props;
+  const { onClickDeleteCategoryModal, deletedCategoryId } = props;
+  const { mutate } = useDeleteCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
 
   const onClickCancel = () => {
     onClickDeleteCategoryModal();
   };
   const onClickDelete = () => {
     onClickDeleteCategoryModal();
+    mutate(deletedCategoryId);
+
   };
   return (
     <ModalPortal>

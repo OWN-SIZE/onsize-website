@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
@@ -6,9 +6,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import Modal from 'components/common/Modal';
 import HistoryModal from './HistoryModal';
-import { fetchUserInformation, fetchMyPageHistory } from '../../apis/category';
-import { useQuery } from 'react-query';
-import { usefetchUserInformation, usefetchMyPageHistory } from '../../hooks/queries/mypage';
+import { useFetchUserInformation, useFetchMyPageHistory } from '../../hooks/queries/mypageHistory';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
 function MyPageMain() {
@@ -28,8 +26,8 @@ function MyPageMain() {
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
 
-  const { userInformation } = usefetchUserInformation();
-  const { history } = usefetchMyPageHistory();
+  const { userInformation } = useFetchUserInformation();
+  const { history } = useFetchMyPageHistory();
   if (!userInformation || !history) return;
 
   return (
@@ -218,7 +216,8 @@ const Styled = {
     padding-bottom: 1.2rem;
     border-bottom: 0.1rem solid ${theme.colors.gray150};
 
-    & > h5, div {
+    & > h5,
+    div {
       ${theme.fonts.card2};
       color: ${theme.colors.gray550};
       width: 9rem;

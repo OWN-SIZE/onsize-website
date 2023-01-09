@@ -1,9 +1,13 @@
-import { MyPageHistory, MyPageUserInformation } from "./client";
+import { AllCategory, CreateCategory } from './client';
 
-export interface MyPageUserInformationResponse {
-    data: MyPageUserInformation
+export interface AllCategoryResponse {
+  data: AllCategory[];
 }
 
-export interface MyPageHistoryResponse {
-    data: MyPageHistory    
+export interface CreateCategoryResponse {
+  data: CreateCategory;
+}
+
+export interface DeleteCategoryResponse {
+  data: AllCategory;
 }

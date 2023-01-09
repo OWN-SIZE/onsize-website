@@ -1,9 +1,13 @@
-export interface MyPageUserInformation {
-    name: string;
-    email: string;
+export interface AllCategory {
+  id: string;
+  categoryName: string;
+  isPinCategory: boolean;
+  productNum: number;
+  image: string[];
 }
 
-export interface MyPageHistory {
-    recCount: number;
-    recData: {id: number, userId: number, url: string, recommendSize: string}[];
+export interface CreateCategory {
+  categoryName: string;
+  isPinCategory: boolean;
+  image: string[];
 }
