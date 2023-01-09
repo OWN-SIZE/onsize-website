@@ -1,7 +1,9 @@
-import React, { useRef, useState } from 'react';
+import React, { useState } from 'react';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import NextButton from '@/components/register/NextButton';
 import Layout from 'components/common/Layout';
 import SizeForm from 'components/common/SizeForm/SizeForm';
 import Progress from 'components/register/Progress';
@@ -9,7 +11,6 @@ import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
 export type OptionType = '상/하의' | '상의' | '하의' | null;
-export type ProgressType = 1 | 2 | 3;
 
 interface iNextFormMapper {
   '상/하의': OptionType;
@@ -27,7 +28,8 @@ function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
-  const rootRef = useRef(null);
+  const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
+  const router = useRouter();
 
   const onClickSize = () => {
     if (progress === 3) {
@@ -38,9 +40,21 @@ function Register() {
     }
   };
 
+  const onClickNextButton = () => {
+    setIsAlertActive(true);
+  };
+
+  const onSuccessSubmit = () => {
+    if (progress === 2) {
+      setProgress(progress + 1);
+    } else {
+      router.push('/home');
+    }
+  };
+
   return (
     <Layout noHeader noMenuBar>
-      <Styled.Root ref={rootRef}>
+      <Styled.Root>
         <Styled.LeftConatiner>
           <h1>Log In</h1>
           <h2>
@@ -61,20 +75,24 @@ function Register() {
             />
           ) : progress === 2 ? (
             <SizeForm
+              isAlertActive={isAlertActive}
+              setIsAlertActive={setIsAlertActive}
               formType={selectedOption}
-              isNextActive={isNextActive}
-              setIsNextActive={setIsNextActive}
-              progress={progress}
-              setProgress={setProgress}
-            />
+              setIsSubmitActive={setIsNextActive}
+              onSuccessSubmit={onSuccessSubmit}
+            >
+              <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+            </SizeForm>
           ) : (
             <SizeForm
-              formType={selectedOption && nextFormMapper[selectedOption]}
-              isNextActive={isNextActive}
-              setIsNextActive={setIsNextActive}
-              progress={progress}
-              setProgress={setProgress}
-            />
+              isAlertActive={isAlertActive}
+              setIsAlertActive={setIsAlertActive}
+              formType={nextFormMapper[selectedOption]}
+              setIsSubmitActive={setIsNextActive}
+              onSuccessSubmit={onSuccessSubmit}
+            >
+              <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+            </SizeForm>
           )}
         </Styled.RightContainer>
       </Styled.Root>

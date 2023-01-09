@@ -1,13 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
 import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
-import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
 
@@ -18,10 +16,11 @@ import SizeInput from './SizeInput';
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
-  isNextActive: boolean;
-  setIsNextActive: (prev: boolean) => void;
-  progress: number;
-  setProgress: (prev: number) => void;
+  isAlertActive: boolean;
+  setIsAlertActive: (prev: boolean) => void;
+  setIsSubmitActive?: (prev: boolean) => void;
+  onSuccessSubmit: () => void;
+  children: ReactNode;
 }
 
 // 상의 총장, 어깨너비
@@ -87,9 +86,8 @@ const mutateMapper = {
 };
 
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, isNextActive, setIsNextActive, progress, setProgress } = props;
+  const { noHeader, formType, setIsSubmitActive, children, isAlertActive, setIsAlertActive, onSuccessSubmit } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
-  const [isAlertActive, setIsAlertActive] = useState(false);
 
   const {
     register,
@@ -101,7 +99,6 @@ export default function SizeForm(props: FormProps) {
   } = useForm<FieldValues>({
     shouldFocusError: false,
   });
-  const router = useRouter();
 
   const { postMyTopSize } = usePostMyTopSize();
   const { postMyBottomSize } = usePostMyBottomSize();
@@ -120,14 +117,10 @@ export default function SizeForm(props: FormProps) {
         inputData[eng] = parseFloat(data[kor]);
       });
 
-      if (progress === 2) {
-        await postMyTopSize(inputData, () => {
-          setProgress(progress + 1);
-          resetField('총장');
-        });
-      } else {
-        await postMyTopSize(inputData, () => router.push('/home'));
-      }
+      postMyTopSize(inputData, () => {
+        resetField('총장');
+        onSuccessSubmit();
+      });
     } else {
       const inputData: BottomSizeInput = {
         bottomLength: 0,
@@ -141,14 +134,10 @@ export default function SizeForm(props: FormProps) {
         inputData[eng] = parseFloat(data[kor]);
       });
 
-      if (progress === 2) {
-        await postMyBottomSize(inputData, () => {
-          setProgress(progress + 1);
-          resetField('총장');
-        });
-      } else {
-        await postMyBottomSize(inputData, () => router.push('/home'));
-      }
+      postMyBottomSize(inputData, () => {
+        resetField('총장');
+        onSuccessSubmit();
+      });
     }
   };
 
@@ -156,14 +145,10 @@ export default function SizeForm(props: FormProps) {
     // input이 다 채워졌으면 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
-        setIsNextActive(true);
+        setIsSubmitActive && setIsSubmitActive(true);
       }
     });
   }, [watch]);
-
-  const onClickNextButton = () => {
-    setIsAlertActive(true);
-  };
 
   return (
     <Styled.Root>
@@ -187,7 +172,7 @@ export default function SizeForm(props: FormProps) {
               valid={{ min: scope[measure].min, max: scope[measure].max }}
             />
           ))}
-          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+          {children}
         </Styled.Form>
       ) : (
         // 상의 사이즈 입력 폼
@@ -205,16 +190,12 @@ export default function SizeForm(props: FormProps) {
             setValue={setValue}
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
           />
-          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+          {children}
         </Styled.Form>
       )}
       {isAlertActive && (
         <ModalPortal>
-          <Alert
-            isActive={isAlertActive}
-            setIsActive={setIsAlertActive}
-            message={`${Object.values({ ...errors }).shift()?.message}`}
-          />
+          <Alert setIsActive={setIsAlertActive} message={`${Object.values({ ...errors }).shift()?.message}`} />
         </ModalPortal>
       )}
     </Styled.Root>
