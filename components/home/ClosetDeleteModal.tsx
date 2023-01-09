@@ -19,7 +19,6 @@ function ClosetDeleteModal(props: ModalProps) {
     setImgHoveredTarget('');
   };
   const onClickMake = () => {
-    console.log('모달을 만들었습니다.');
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };

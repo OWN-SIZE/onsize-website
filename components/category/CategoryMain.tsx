@@ -18,7 +18,6 @@ export default function CategoryMain() {
   const inputRef = useRef(null);
 
   const onClickCategoryCreateModal = () => {
-    console.log(data);
     setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
   };
   const updateInputValue = (input: string) => {
