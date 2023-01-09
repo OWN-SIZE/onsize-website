@@ -26,12 +26,6 @@ interface FormProps {
   setProgress: (prev: number) => void;
 }
 
-const formTypeMapper = {
-  '상/하의': '상의',
-  상의: '상의',
-  하의: '하의',
-};
-
 // 상의 총장, 어깨너비
 const topScopeMapper = {
   총장: { min: 30, max: 180 },
@@ -165,7 +159,7 @@ export default function SizeForm(props: FormProps) {
   };
 
   useEffect(() => {
-    // input이 하나라도 비어있지 않은 경우 다음 버튼 활성화
+    // input이 다 채워졌으면 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
         setIsNextActive(true);
@@ -179,72 +173,30 @@ export default function SizeForm(props: FormProps) {
 
   return (
     <Styled.Root>
-      {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
+      {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
       {formType === '하의' ? (
+        // 하의 사이즈 입력 폼
         <Styled.Form onSubmit={handleSubmit(onValidBottom)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
-            <Styled.InputContainer key={key}>
-              <label>{key}</label>
-              <div>
-                <Styled.Input
-                  type="number"
-                  step="0.1"
-                  {...register(key, {
-                    required: true,
-                    validate: (value) =>
-                      value < min || value > max
-                        ? `${key}은 최소 ${min}부터 최대 ${max}까지 입력할 수 있습니다.`
-                        : true,
-                  })}
-                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
-                />
-                cm
-              </div>
-            </Styled.InputContainer>
+            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
           ))}
           <Styled.RadioContainer>
-            {measureList.map((text, index) => (
-              <Styled.Radio
-                key={index}
-                onClick={() => {
-                  setMeasure(text);
-                }}
-              >
-                <Image
-                  src={text === measure ? RadioClickedIcon : RadioIcon}
-                  alt="라디오버튼 아이콘"
-                  width={22}
-                  height={22}
-                />
-                <label>{text}</label>
-              </Styled.Radio>
-            ))}
+            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
-            <Styled.InputContainer key={key}>
-              <label>
-                {key} {measure}
-              </label>
-              <div>
-                <Styled.Input
-                  type="number"
-                  step="0.1"
-                  {...register(key, {
-                    required: true,
-                    validate: (value) =>
-                      value < scope[measure].min || value > scope[measure].max
-                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${scope[measure].max}까지 입력할 수 있습니다.`
-                        : true,
-                  })}
-                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
-                />
-                cm
-              </div>
-            </Styled.InputContainer>
+            <SizeInput
+              key={key}
+              inputKey={key}
+              register={register}
+              setValue={setValue}
+              valid={{ min: scope[measure].min, max: scope[measure].max }}
+            />
           ))}
           <NextButton isActive={isNextActive} onClick={onClickNextButton} />
         </Styled.Form>
       ) : (
+        // 상의 사이즈 입력 폼
         <Styled.Form onSubmit={handleSubmit(onValidTop)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
             <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
@@ -254,7 +206,7 @@ export default function SizeForm(props: FormProps) {
             <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           <SizeInput
-            inputKey={`가슴 ${measure}`}
+            inputKey={'가슴'}
             register={register}
             setValue={setValue}
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
@@ -292,36 +244,6 @@ const Styled = {
     display: flex;
     flex-direction: column;
   `,
-  InputContainer: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 2.6rem;
-    color: ${theme.colors.gray550};
-    ${theme.fonts.caption1};
-    &:nth-child(1),
-    &:nth-child(4) {
-      margin-top: 0;
-    }
-    div {
-      display: flex;
-      align-items: flex-end;
-    }
-  `,
-  Input: styled.input`
-    width: 28.5rem;
-    height: 5.4rem;
-    margin-right: 1rem;
-    padding-left: 1.6rem;
-    background: ${theme.colors.gray000};
-    border: 0;
-    border-radius: 0.5rem;
-    color: #000000;
-    ${theme.fonts.body1};
-    :focus {
-      outline: none;
-    }
-  `,
   RadioContainer: styled.div`
     display: flex;
     justify-content: center;
@@ -330,14 +252,5 @@ const Styled = {
     margin-bottom: 3.6rem;
     color: ${theme.colors.gray550};
     ${theme.fonts.caption1}
-  `,
-  Radio: styled.span`
-    display: flex;
-    align-items: center;
-    margin-right: 3rem;
-    cursor: pointer;
-    > label {
-      margin-left: 0.8rem;
-    }
   `,
 };

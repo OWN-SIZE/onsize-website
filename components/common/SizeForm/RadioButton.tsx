@@ -13,12 +13,7 @@ function RadioButton(props: RadioProps) {
   const { isClicked, label, onClick } = props;
 
   return (
-    <Styled.Radio
-      //   onClick={() => {
-      //     setMeasure(text);
-      //   }}
-      onClick={onClick}
-    >
+    <Styled.Radio onClick={onClick}>
       <Image src={isClicked ? RadioClickedIcon : RadioIcon} alt="라디오버튼 아이콘" width={22} height={22} />
       <label>{label}</label>
     </Styled.Radio>
