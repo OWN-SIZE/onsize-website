@@ -18,12 +18,12 @@ import {
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { UpdateClosetInput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
-import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
@@ -35,10 +35,11 @@ interface ThumbNailProps {
   height: string;
   noAddCategory?: boolean;
   page: string;
+  updateIsPin: ({ productId, editBody }: UpdateClosetInput) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
@@ -46,7 +47,8 @@ function ThumbNail(props: ThumbNailProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const { mutate: updateIsPin } = useUpdateAllClosetProductMutation();
+  // const { mutate } = useUpdateAllClosetProductMutation();
+  const updateIsPinFunction = updateIsPin;
 
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
@@ -67,10 +69,11 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
-    updateIsPin({
-      productId: data.id,
-      editBody: { isPin: !data.isPin },
-    });
+    if (page === 'closet')
+      updateIsPinFunction({
+        productId: data.id,
+        editBody: { isPin: !data.isPin },
+      });
   };
 
   return (

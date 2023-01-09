@@ -3,6 +3,8 @@ import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
+import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
+
 import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface ProductProps {
@@ -26,12 +28,21 @@ function Product(props: ProductProps) {
     isPin: data.isPin,
   };
 
+  const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation();
+
   return (
     <Styled.Root>
       {page === 'closet' ? (
-        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" />
+        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" updateIsPin={updateIsPIn} />
       ) : (
-        <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" noAddCategory />
+        <ThumbNail
+          data={ThumbNailData}
+          width="33.2"
+          height="33.2"
+          page="closet"
+          updateIsPin={updateIsPIn}
+          noAddCategory
+        />
       )}
       <Styled.Title>{data.productName}</Styled.Title>
       <Styled.Memo>{data.memo}</Styled.Memo>
