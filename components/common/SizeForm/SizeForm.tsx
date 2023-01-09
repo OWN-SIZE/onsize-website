@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useForm } from 'react-hook-form';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { useRouter } from 'next/router';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
@@ -98,7 +98,7 @@ export default function SizeForm(props: FormProps) {
     handleSubmit,
     formState: { errors },
     resetField,
-  } = useForm({
+  } = useForm<FieldValues>({
     shouldFocusError: false,
   });
   const router = useRouter();
@@ -106,7 +106,7 @@ export default function SizeForm(props: FormProps) {
   const { postMyTopSize } = usePostMyTopSize();
   const { postMyBottomSize } = usePostMyBottomSize();
 
-  const onValid = async (data: TopFormType | BottomFormType) => {
+  const onValid: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsAlertActive(false);
 
     if (formType === '상의') {
