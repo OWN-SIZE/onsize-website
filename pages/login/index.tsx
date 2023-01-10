@@ -2,20 +2,24 @@ import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg } from 'assets/img';
 import axios from 'axios';
-//import { useLoginMutation } from 'hooks/queries/user';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { useAuth } from '@/hooks/business/user';
 import Layout from 'components/common/Layout';
 
 function Login() {
+  const { authLogin } = useAuth();
+  const router = useRouter();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       });
-      console.log(data);
+
+      authLogin(data, () => router.push('/register'));
     },
   });
 
