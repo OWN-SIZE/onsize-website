@@ -3,11 +3,16 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
+import { useRouter } from 'next/router';
 
 import HomeMain from '@/components/home/HomeMain';
 import Layout from 'components/common/Layout';
 
 function Detail() {
+  //카테고리 이름 넘겨준 거! 이렇게 쓰면 됩니다 :)
+  const router = useRouter();
+  console.log(router.query);
+
   const data: ClosetOutput[] = [
     {
       id: 17,

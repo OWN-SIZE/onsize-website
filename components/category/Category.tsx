@@ -7,6 +7,7 @@ import Image from 'next/image';
 import Hanger from 'assets/icon/total_clothes.png';
 import Link from 'next/link';
 import { AllCategory } from 'types/category/client';
+import { useRouter } from 'next/router';
 
 interface CategoryProps {
   data: AllCategory;
@@ -14,6 +15,7 @@ interface CategoryProps {
 
 export default function Category(props: CategoryProps) {
   const { data } = props;
+  const router = useRouter();
 
   const ThumbNailData: ThumbNailData = {
     id: data.id,
@@ -27,7 +29,10 @@ export default function Category(props: CategoryProps) {
         <Styled.CategoryImage>
           <ThumbNail data={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory />
         </Styled.CategoryImage>
-        <Link href={`/category/${data.id}`}>
+        <Link
+          href={{ pathname: `/category/${data.id}`, query: { categoryName: data.categoryName } }}
+          as={`/category/${data.id}`}
+        >
           <Styled.CategoryTitle>{data.categoryName}</Styled.CategoryTitle>
         </Link>
         <Styled.ClothesAmount>
