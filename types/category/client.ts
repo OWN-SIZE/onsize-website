@@ -11,3 +11,13 @@ export interface CreateCategory {
   isPinCategory: boolean;
   image: string[];
 }
+
+export interface UpdateCategoryRequest {
+  categoryId: string;
+  categoryName: string;
+}
+
+export interface UpdateCategoryRequestBody {
+  categoryName: string;
+
+}
