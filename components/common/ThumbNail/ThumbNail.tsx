@@ -189,7 +189,9 @@ function ThumbNail(props: ThumbNailProps) {
           </Styled.IconCotainer>
           {isEditModalOpen && (
             <ModalPortal>
-              {page === ('closet' || 'categoryDeatil') ? (
+              {page === 'category' ? (
+                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
+              ) : (
                 data.name && (
                   <ClosetEditModal
                     categoryId={categoryId}
@@ -198,8 +200,6 @@ function ThumbNail(props: ThumbNailProps) {
                     data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
                   />
                 )
-              ) : (
-                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
               )}
             </ModalPortal>
           )}
