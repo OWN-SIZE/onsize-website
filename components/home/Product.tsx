@@ -38,7 +38,7 @@ function Product(props: ProductProps) {
             data={ThumbNailData}
             width="33.2"
             height="33.2"
-            page="closet"
+            page="categoryDetail"
             categoryId={categoryId}
             updateIsPin={updateIsPIn}
             noAddCategory

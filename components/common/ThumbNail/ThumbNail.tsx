@@ -21,6 +21,7 @@ import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
+import CategoryClosetDeleteModal from '@/components/category/detail/CategoryClosetDeleteModal';
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
@@ -108,9 +109,7 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {data.image && page === 'closet' ? (
-        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
-      ) : (
+      {data.image && page === 'category' ? (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
           <Image
             src=""
@@ -139,6 +138,8 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
+      ) : (
+        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
       )}
 
       {/* 썸네일 호버시 코드 */}
@@ -219,7 +220,15 @@ function ThumbNail(props: ThumbNailProps) {
               {page === 'closet' ? (
                 <ClosetDeleteModal
                   productId={data.id}
-                  categoryId={data.categoryId}
+                  page={page}
+                  isModalOpen={isDeleteModalOpen}
+                  setIsModalOpen={setIsDeleteModalOpen}
+                  setImgHoveredTarget={setImgHoveredTarget}
+                />
+              ) : page === 'categoryDetail' && categoryId ? (
+                <CategoryClosetDeleteModal
+                  productId={data.id}
+                  categoryId={categoryId}
                   page={page}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
