@@ -6,14 +6,17 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import DeleteCategoryModal from '@/components/category/DeleteCategoryModal';
+import ModifyCategoryModal from '@/components/category/ModifyCategoryModal';
+import ModalPortal from '@/components/common/modal/ModalPortal';
 import HomeMain from '@/components/home/HomeMain';
 import { useFetchCategoryDetail } from '@/hooks/queries/allCloset';
 import Layout from 'components/common/Layout';
 
 function Detail() {
   const router = useRouter();
-  const categoryName = router.query.categoryName;
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [categoryName, setCategoryName] = useState(router.query.categoryName);
 
   const [categoryId, setCategoryId] = useState('');
   const {
@@ -30,13 +33,23 @@ function Detail() {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
 
+  const onClickModifyCategoryModal = () => {
+    setIsEditModalOpen(!isEditModalOpen);
+  };
+
   return (
     <Layout noMenuBar>
       <Styled.Root>
         <Styled.categoryNameContainer>
           <Styled.categoryName>{categoryName}</Styled.categoryName>
           <div>
-            <Image src={CategoryEditIcon} width={58} height={58} alt="카테고리 제목 편집 아이콘" />
+            <Image
+              src={CategoryEditIcon}
+              onClick={onClickModifyCategoryModal}
+              width={58}
+              height={58}
+              alt="카테고리 제목 편집 아이콘"
+            />
             <Image
               src={CategoryDeleteIcon}
               onClick={onClickDeleteCategoryModal}
@@ -47,11 +60,20 @@ function Detail() {
           </div>
         </Styled.categoryNameContainer>
         {data && <HomeMain data={data} categoryId={categoryId} page="categoryDetail" />}
+        {isEditModalOpen && (
+          <ModifyCategoryModal
+            onClickModifyCategoryModal={onClickModifyCategoryModal}
+            setCategoryName={setCategoryName}
+            categoryId={categoryId}
+          />
+        )}
         {isDeleteModalOpen && (
-          <DeleteCategoryModal
-            onClickDeleteCategoryModal={onClickDeleteCategoryModal}
-            deletedCategoryId={Number(categoryId)}
-          ></DeleteCategoryModal>
+          <ModalPortal>
+            <DeleteCategoryModal
+              onClickDeleteCategoryModal={onClickDeleteCategoryModal}
+              deletedCategoryId={Number(categoryId)}
+            />
+          </ModalPortal>
         )}
       </Styled.Root>
     </Layout>
