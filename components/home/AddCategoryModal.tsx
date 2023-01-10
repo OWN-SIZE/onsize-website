@@ -1,3 +1,4 @@
+import { useRef, useState } from 'react';
 import { BlackFolderIcon, Folder20Icon, GrayFolderIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -6,16 +7,32 @@ import theme from 'styles/theme';
 import { useFetchIncludeCategory, usePostIncludeCategoryMutation } from '@/hooks/queries/allCloset';
 import { useFetchAllCategory } from '@/hooks/queries/category';
 
+import CategoryCreateModal from '../common/modal/CategoryCreateModal';
+import ModalPortal from '../common/modal/ModalPortal';
+
 interface AddCategoryModalProps {
   productId: string;
 }
 function AddCategoryModal(props: AddCategoryModalProps) {
   const { productId } = props;
+  const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
+  const [changeInputValue, setChangeInputValue] = useState('');
+  const inputRef = useRef(null);
+
   const { category } = useFetchAllCategory();
   const includeCategoryData = useFetchIncludeCategory(productId);
   const { mutate: postIncludeCategory } = usePostIncludeCategoryMutation(productId);
-  const handleOnClick = (categoryId: string) => {
+
+  const handleCategoryOnClick = (categoryId: string) => {
     postIncludeCategory({ postBody: { productId: productId, categoryId: categoryId } });
+  };
+
+  const onClickCategoryCreateModal = () => {
+    setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
+  };
+
+  const updateInputValue = (input: string) => {
+    setChangeInputValue(input);
   };
 
   let categoryProduct = null;
@@ -24,7 +41,7 @@ function AddCategoryModal(props: AddCategoryModalProps) {
       <Styled.Category
         key={data.id}
         className={includeCategoryData?.includes(Number(data.id)) ? 'disabled' : 'abled'}
-        onClick={() => handleOnClick(data.id)}
+        onClick={() => handleCategoryOnClick(data.id)}
       >
         <Image
           src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
@@ -32,7 +49,7 @@ function AddCategoryModal(props: AddCategoryModalProps) {
           height={15}
           alt="카테고리 아이콘"
         />
-        {data.categoryName.length > 9 ? `${data.categoryName.substring(0, 9)}...` : `${data.categoryName}`}
+        {data.categoryName.length > 12 ? `${data.categoryName.substring(0, 12)}...` : `${data.categoryName}`}
       </Styled.Category>
     ));
   }
@@ -41,9 +58,19 @@ function AddCategoryModal(props: AddCategoryModalProps) {
     <Styled.AddCategoryContainer>
       <Styled.MyCategory>나의 카테고리</Styled.MyCategory>
       <Styled.CategoryList>{categoryProduct}</Styled.CategoryList>
-      <Styled.addCategoryButton>
+      <Styled.addCategoryButton onClick={onClickCategoryCreateModal}>
         <Image src={Folder20Icon} width={20} height={20} alt="카테고리 아이콘" />새 카테고리 만들기
       </Styled.addCategoryButton>
+      {isCategoryCreateModalOpen && (
+        <ModalPortal>
+          <CategoryCreateModal
+            changeInputValue={changeInputValue}
+            updateInputValue={updateInputValue}
+            inputRef={inputRef}
+            onClickCategoryCreateModal={onClickCategoryCreateModal}
+          />
+        </ModalPortal>
+      )}
     </Styled.AddCategoryContainer>
   );
 }
@@ -114,8 +141,9 @@ const Styled = {
 
     &.disabled {
       color: ${theme.colors.gray300};
+      cursor: default;
     }
-    &:hover {
+    &.abled:hover {
       background-color: ${theme.colors.gray100};
     }
   `,
