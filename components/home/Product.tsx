@@ -8,12 +8,11 @@ import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
 
 interface ProductProps {
   data: ClosetOutput;
-  categoryId?: string | string[];
   page: string;
+  categoryId?: string;
 }
 
 function Product(props: ProductProps) {
-  //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const { data, page, categoryId } = props;
 
   const ThumbNailData: ThumbNailData = {
@@ -27,21 +26,24 @@ function Product(props: ProductProps) {
     isPin: data.isPin,
   };
 
-  const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation();
+  const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation('');
 
   return (
     <Styled.Root>
       {page === 'closet' ? (
         <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" updateIsPin={updateIsPIn} />
       ) : (
-        <ThumbNail
-          data={ThumbNailData}
-          width="33.2"
-          height="33.2"
-          page="closet"
-          updateIsPin={updateIsPIn}
-          noAddCategory
-        />
+        categoryId && (
+          <ThumbNail
+            data={ThumbNailData}
+            width="33.2"
+            height="33.2"
+            page="closet"
+            categoryId={categoryId}
+            updateIsPin={updateIsPIn}
+            noAddCategory
+          />
+        )
       )}
       <Styled.Title>{data.productName}</Styled.Title>
       <Styled.Memo>{data.memo}</Styled.Memo>

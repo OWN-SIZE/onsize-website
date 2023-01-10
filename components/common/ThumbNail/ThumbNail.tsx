@@ -33,13 +33,14 @@ interface ThumbNailProps {
   data: ThumbNailData;
   width: string;
   height: string;
-  noAddCategory?: boolean;
   page: string;
+  noAddCategory?: boolean;
+  categoryId?: string;
   updateIsPin: ({ productId, editBody }: UpdateClosetInput) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page, updateIsPin } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin, categoryId } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
@@ -190,6 +191,7 @@ function ThumbNail(props: ThumbNailProps) {
               {page === ('closet' || 'categoryDeatil') ? (
                 data.name && (
                   <ClosetEditModal
+                    categoryId={categoryId}
                     setIsModalOpen={setIsEditModalOpen}
                     setImgHoveredTarget={setImgHoveredTarget}
                     data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}

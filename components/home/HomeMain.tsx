@@ -8,8 +8,8 @@ import Product from './Product';
 
 interface HomeMainProps {
   data: ClosetOutput[];
-  categoryId?: string | string[];
   page: string;
+  categoryId?: string;
 }
 
 function HomeMain(props: HomeMainProps) {
