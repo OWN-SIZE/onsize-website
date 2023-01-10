@@ -25,7 +25,7 @@ interface FormProps {
 
 // 상의 총장, 어깨너비
 const topScopeMapper = {
-  총장: { min: 30, max: 180 },
+  윗총장: { min: 30, max: 180 },
   '어깨 너비': { min: 25, max: 80 },
 };
 
@@ -37,7 +37,7 @@ const chestScopeMapper = {
 
 // 하의 총장, 밑위
 const bottomScopeMappper = {
-  총장: { min: 80, max: 130 },
+  아랫총장: { min: 80, max: 130 },
   밑위: { min: 20, max: 60 },
 };
 

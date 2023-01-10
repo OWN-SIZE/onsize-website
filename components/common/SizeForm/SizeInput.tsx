@@ -1,3 +1,4 @@
+import { useFetchMysize } from 'hooks/queries/mySize';
 import React from 'react';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import styled from 'styled-components';
@@ -13,7 +14,22 @@ interface InputProps {
 
 function SizeInput(props: InputProps) {
   const { inputKey, measure, register, setValue, valid } = props;
-  const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
+
+  const {allMysize} = useFetchMysize();
+  if (!allMysize) return;
+
+  const topLabel =  measure ? `${inputKey === '윗총장' ? '총장' : inputKey} ${measure}` : `${inputKey === '윗총장' ? '총장' : inputKey}`;
+  const bottomLabel  =  measure ? `${inputKey === '아랫총장' ? '총장' : inputKey} ${measure}` : `${inputKey === '아랫총장' ? '총장' : inputKey}`;
+
+  let label = topLabel;
+  if (inputKey === '윗총장'){ 
+    label = topLabel;
+  } else if (inputKey === '아랫총장') {
+    label = bottomLabel;
+  }
+
+  const topSize = allMysize.top;
+  const bottomSize = allMysize.bottom;
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -30,6 +46,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
+          defaultValue={inputKey === '윗총장' ? topSize.topLength : inputKey === '아랫총장' ? bottomSize.bottomLength : label === '어깨길이' ? topSize.shoulder : label === '가슴' ? topSize.chest : label === '밑위' ? topSize.waist : label === '허리' ? topSize.thigh : label === '허벅지' ? topSize.rise : label === '밑단' ? topSize.hem : null}
         />
         cm
       </div>

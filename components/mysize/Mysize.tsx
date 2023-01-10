@@ -5,13 +5,13 @@ import theme from 'styles/theme';
 import Image from 'next/image';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
-
+import { useFetchMysize } from 'hooks/queries/mySize';
 
 export default function Mysize() {
+
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
   const onSuccessSubmit = () => {};
-
 
   const [topColor, setTopColor] = useState(`${theme.colors.black}`);
   const [bottomColor, setBottomColor] = useState(`${theme.colors.gray200}`);
@@ -29,13 +29,18 @@ export default function Mysize() {
     }
   };
 
+  const { allMysize } = useFetchMysize();
+  if (!allMysize) return;
+
+ 
+
   return (
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
           <p>상의</p>
           <Image
-            src={isTopClicked? TopBottomClicked : TopBottomUnclicked}
+            src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
             alt="상의가 클릭되었음을 나타내는 체크 이미지"
             width={32}
             height={32}
@@ -45,7 +50,7 @@ export default function Mysize() {
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
           <p>하의</p>
           <Image
-            src={!isTopClicked? TopBottomClicked : TopBottomUnclicked}
+            src={!isTopClicked ? TopBottomClicked : TopBottomUnclicked}
             alt="하의가 클릭되었음을 나타내는 체크 이미지"
             width={32}
             height={32}
