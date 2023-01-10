@@ -1,34 +1,27 @@
-import React, { useEffect, useState } from 'react';
-import { SubmitHandler, useForm } from 'react-hook-form';
-import { RadioClickedIcon, RadioIcon } from 'assets/icon';
-import Image from 'next/image';
-import { useRouter } from 'next/router';
+import React, { ReactNode, useEffect, useState } from 'react';
+import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
 import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
-import NextButton from 'components/register/NextButton';
 
 import ModalPortal from '../modal/ModalPortal';
 
 import Alert from './Alert';
+import RadioButton from './RadioButton';
+import SizeInput from './SizeInput';
 
 interface FormProps {
   noHeader?: boolean;
   formType: OptionType;
-  isNextActive: boolean;
-  setIsNextActive: (prev: boolean) => void;
-  progress: number;
-  setProgress: (prev: number) => void;
+  isAlertActive: boolean;
+  setIsAlertActive: (prev: boolean) => void;
+  setIsSubmitActive?: (prev: boolean) => void;
+  onSuccessSubmit: () => void;
+  children: ReactNode;
 }
-
-const formTypeMapper = {
-  '상/하의': '상의',
-  상의: '상의',
-  하의: '하의',
-};
 
 // 상의 총장, 어깨너비
 const topScopeMapper = {
@@ -63,8 +56,6 @@ const bottomSwitchMapper = {
   },
 };
 
-type MeasureType = '단면' | '둘레';
-
 type TopFormType = {
   총장: string;
   '어깨 너비': string;
@@ -95,10 +86,8 @@ const mutateMapper = {
 };
 
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, isNextActive, setIsNextActive, progress, setProgress } = props;
-  const measureList: MeasureType[] = ['단면', '둘레'];
-  const [measure, setMeasure] = useState<MeasureType>('단면');
-  const [isAlertActive, setIsAlertActive] = useState(false);
+  const { noHeader, formType, setIsSubmitActive, children, isAlertActive, setIsAlertActive, onSuccessSubmit } = props;
+  const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
   const {
     register,
@@ -107,212 +96,116 @@ export default function SizeForm(props: FormProps) {
     handleSubmit,
     formState: { errors },
     resetField,
-  } = useForm({
+  } = useForm<FieldValues>({
     shouldFocusError: false,
   });
-  const router = useRouter();
 
   const { postMyTopSize } = usePostMyTopSize();
   const { postMyBottomSize } = usePostMyBottomSize();
 
-  const onValidTop = async (data: TopFormType) => {
+  const onValid: SubmitHandler<FieldValues> = async (data: FieldValues) => {
     setIsAlertActive(false);
 
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const inputData: TopSizeInput = {
-      topLength: 0,
-      shoulder: 0,
-      chest: 0,
-    };
+    if (formType === '상의') {
+      const inputData: TopSizeInput = {
+        topLength: 0,
+        shoulder: 0,
+        chest: 0,
+        isWidthOfTop: true,
+      };
 
-    Object.entries(data).map(([key, value]) => {
-      inputData[mutateMapper.top[key]] = parseFloat(value);
-    });
+      Object.entries(mutateMapper.top).map(([kor, eng]) => {
+        inputData[eng] = parseFloat(data[kor]);
+      });
 
-    if (progress === 2) {
-      await postMyTopSize(inputData, () => {
-        setProgress(progress + 1);
+      if (measure === '둘레') {
+        inputData.isWidthOfTop = false;
+      }
+
+      postMyTopSize(inputData, () => {
         resetField('총장');
+        onSuccessSubmit();
       });
     } else {
-      await postMyTopSize(inputData, () => router.push('/home'));
-    }
-  };
+      const inputData: BottomSizeInput = {
+        bottomLength: 0,
+        waist: 0,
+        thigh: 0,
+        rise: 0,
+        hem: 0,
+        isWidthOfBottom: true,
+      };
 
-  const onValidBottom = async (data: BottomFormType) => {
-    setIsAlertActive(false);
-
-    // 모든 유효성이 true이면 recoil에 저장 또는 서버에 넘기기
-    const inputData: BottomSizeInput = {
-      bottomLength: 0,
-      waist: 0,
-      thigh: 0,
-      rise: 0,
-      hem: 0,
-    };
-
-    Object.entries(data).map(([key, value]) => {
-      inputData[mutateMapper.bottom[key]] = parseFloat(value);
-    });
-
-    if (progress === 2) {
-      await postMyBottomSize(inputData, () => {
-        setProgress(progress + 1);
-        resetField('총장');
+      Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
+        inputData[eng] = parseFloat(data[kor]);
       });
-    } else {
-      await postMyBottomSize(inputData, () => router.push('/home'));
+
+      if (measure === '둘레') {
+        inputData.isWidthOfBottom = false;
+      }
+
+      postMyBottomSize(inputData, () => {
+        resetField('총장');
+        onSuccessSubmit();
+      });
     }
   };
 
   useEffect(() => {
-    // input이 하나라도 비어있지 않은 경우 다음 버튼 활성화
+    // input이 다 채워졌으면 다음 버튼 활성화
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
-        setIsNextActive(true);
+        setIsSubmitActive && setIsSubmitActive(true);
       }
     });
   }, [watch]);
 
-  const onClickNextButton = () => {
-    setIsAlertActive(true);
-  };
-
   return (
     <Styled.Root>
-      {!noHeader && formType && <Styled.Header>{formTypeMapper[formType]} 사이즈를 입력해주세요</Styled.Header>}
+      {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
       {formType === '하의' ? (
-        <Styled.Form onSubmit={handleSubmit(onValidBottom)}>
+        // 하의 사이즈 입력 폼
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
-            <Styled.InputContainer key={key}>
-              <label>{key}</label>
-              <div>
-                <Styled.Input
-                  type="number"
-                  step="0.1"
-                  {...register(key, {
-                    required: true,
-                    validate: (value) =>
-                      value < min || value > max
-                        ? `${key}은 최소 ${min}부터 최대 ${max}까지 입력할 수 있습니다.`
-                        : true,
-                  })}
-                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
-                />
-                cm
-              </div>
-            </Styled.InputContainer>
+            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
           ))}
           <Styled.RadioContainer>
-            {measureList.map((text, index) => (
-              <Styled.Radio
-                key={index}
-                onClick={() => {
-                  setMeasure(text);
-                }}
-              >
-                <Image
-                  src={text === measure ? RadioClickedIcon : RadioIcon}
-                  alt="라디오버튼 아이콘"
-                  width={22}
-                  height={22}
-                />
-                <label>{text}</label>
-              </Styled.Radio>
-            ))}
+            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
-            <Styled.InputContainer key={key}>
-              <label>
-                {key} {measure}
-              </label>
-              <div>
-                <Styled.Input
-                  type="number"
-                  step="0.1"
-                  {...register(key, {
-                    required: true,
-                    validate: (value) =>
-                      value < scope[measure].min || value > scope[measure].max
-                        ? `${key} ${measure}은 최소 ${scope[measure].min}부터 최대 ${scope[measure].max}까지 입력할 수 있습니다.`
-                        : true,
-                  })}
-                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
-                />
-                cm
-              </div>
-            </Styled.InputContainer>
+            <SizeInput
+              key={key}
+              inputKey={key}
+              register={register}
+              setValue={setValue}
+              valid={{ min: scope[measure].min, max: scope[measure].max }}
+            />
           ))}
-          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+          {children}
         </Styled.Form>
       ) : (
-        <Styled.Form onSubmit={handleSubmit(onValidTop)}>
+        // 상의 사이즈 입력 폼
+        <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
-            <Styled.InputContainer key={key}>
-              <label>{key}</label>
-              <div>
-                <Styled.Input
-                  type="number"
-                  step="0.1"
-                  {...register(key, {
-                    required: true,
-                    validate: (value) =>
-                      value < min || value > max
-                        ? `${key}은 최소 ${min}부터 최대 ${max}까지 입력할 수 있습니다.`
-                        : true,
-                  })}
-                  onBlur={(e) => e.currentTarget.value && setValue(key, parseFloat(e.currentTarget.value).toFixed(1))}
-                />
-                cm
-              </div>
-            </Styled.InputContainer>
+            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
           ))}
           <Styled.RadioContainer>
-            {measureList.map((text, index) => (
-              <Styled.Radio
-                key={index}
-                onClick={() => {
-                  setMeasure(text);
-                }}
-              >
-                <Image
-                  src={text === measure ? RadioClickedIcon : RadioIcon}
-                  alt="라디오버튼 아이콘"
-                  width={22}
-                  height={22}
-                />
-                <label>{text}</label>
-              </Styled.Radio>
-            ))}
+            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
-          <Styled.InputContainer>
-            <label>가슴 {measure}</label>
-            <div>
-              <Styled.Input
-                type="number"
-                step="0.1"
-                {...register('가슴', {
-                  required: true,
-                  validate: (value) =>
-                    value < chestScopeMapper[measure].min || value > chestScopeMapper[measure].max
-                      ? `가슴 ${measure}은 최소 ${chestScopeMapper[measure].min}부터 최대 ${chestScopeMapper[measure].max}까지 입력할 수 있습니다.`
-                      : true,
-                })}
-                onBlur={(e) => e.currentTarget.value && setValue('가슴', parseFloat(e.currentTarget.value).toFixed(1))}
-              />
-              cm
-            </div>
-          </Styled.InputContainer>
-          <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+          <SizeInput
+            inputKey={'가슴'}
+            register={register}
+            setValue={setValue}
+            valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
+          />
+          {children}
         </Styled.Form>
       )}
       {isAlertActive && (
         <ModalPortal>
-          <Alert
-            isActive={isAlertActive}
-            setIsActive={setIsAlertActive}
-            message={`${Object.values({ ...errors }).shift()?.message}`}
-          />
+          <Alert setIsActive={setIsAlertActive} message={`${Object.values({ ...errors }).shift()?.message}`} />
         </ModalPortal>
       )}
     </Styled.Root>
@@ -336,36 +229,6 @@ const Styled = {
     display: flex;
     flex-direction: column;
   `,
-  InputContainer: styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-top: 2.6rem;
-    color: ${theme.colors.gray550};
-    ${theme.fonts.caption1};
-    &:nth-child(1),
-    &:nth-child(4) {
-      margin-top: 0;
-    }
-    div {
-      display: flex;
-      align-items: flex-end;
-    }
-  `,
-  Input: styled.input`
-    width: 28.5rem;
-    height: 5.4rem;
-    margin-right: 1rem;
-    padding-left: 1.6rem;
-    background: ${theme.colors.gray000};
-    border: 0;
-    border-radius: 0.5rem;
-    color: #000000;
-    ${theme.fonts.body1};
-    :focus {
-      outline: none;
-    }
-  `,
   RadioContainer: styled.div`
     display: flex;
     justify-content: center;
@@ -374,14 +237,5 @@ const Styled = {
     margin-bottom: 3.6rem;
     color: ${theme.colors.gray550};
     ${theme.fonts.caption1}
-  `,
-  Radio: styled.span`
-    display: flex;
-    align-items: center;
-    margin-right: 3rem;
-    cursor: pointer;
-    > label {
-      margin-left: 0.8rem;
-    }
   `,
 };

@@ -2,6 +2,7 @@ export interface TopSizeInput {
   topLength: number;
   shoulder: number;
   chest: number;
+  isWidthOfTop: boolean;
 }
 
 export interface BottomSizeInput {
@@ -10,6 +11,7 @@ export interface BottomSizeInput {
   thigh: number;
   rise: number;
   hem: number;
+  isWidthOfBottom: boolean;
 }
 
 export interface MySizeOutput {

@@ -13,12 +13,14 @@ import Layout from 'components/common/Layout';
 function Login() {
   const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const login = useGoogleLogin({
-    onSuccess: (response) => {
+    onSuccess: ({ code }) => {
       // recoil에 토큰들 저장하기
-      setAccessToken(response.access_token);
+      // setAccessToken(response.access_token);
       // 서버에 액세스 토큰 넘기기
       // useLoginMutation(accessToken);
+      console.log(code);
     },
+    flow: 'auth-code',
   });
 
   return (

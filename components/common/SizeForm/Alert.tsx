@@ -4,12 +4,11 @@ import theme from 'styles/theme';
 
 interface AlertProps {
   message: string;
-  isActive: boolean;
   setIsActive: (prev: boolean) => void;
 }
 
 function Alert(props: AlertProps) {
-  const { message, isActive, setIsActive } = props;
+  const { message, setIsActive } = props;
 
   const disableClick = () => {
     //(document.activeElement as HTMLElement).blur();
@@ -24,7 +23,7 @@ function Alert(props: AlertProps) {
   }, []);
 
   return (
-    <Styled.Root isAlert={isActive}>
+    <Styled.Root>
       {message}
       <br />
       다시 입력해 주세요.
@@ -37,7 +36,7 @@ export default Alert;
 
 const Styled = {
   Root: styled.div<{ isAlert?: boolean }>`
-    display: ${({ isAlert }) => (isAlert ? 'flex' : 'none')};
+    display: flex;
     position: fixed;
     top: 0;
     left: 50%;
