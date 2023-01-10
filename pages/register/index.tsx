@@ -37,6 +37,7 @@ function Register() {
       setProgress(progress + 1);
     } else {
       router.push('/home');
+      localStorage.setItem('isRegister', 'true');
     }
   };
 
