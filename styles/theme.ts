@@ -18,6 +18,8 @@ const colors = {
   gray500: '#2f2f2f',
   gray600: '#222222',
   black: '#1E2025',
+  card_hover: 'rgba(47, 47, 47, 0.4)',
+  icon_hover: 'rgba(235, 235, 235, 0.5);',
 } as const;
 
 interface Font {
@@ -29,7 +31,7 @@ interface Font {
 
 function FONT({ weight, size, lineHeight, letterSpacing }: Font): string {
   return `
-      font-family: 'Noto Sans KR', sans-serif;
+      font-family: 'Noto Sans', 'Noto Sans KR', sans-serif;
       font-weight: ${weight};
       font-size: ${size}rem;
       line-height: ${lineHeight}rem;
@@ -44,16 +46,21 @@ const fonts = {
   title4: FONT({ weight: 700, size: 2.6, lineHeight: 3.5 }),
   subtitle1: FONT({ weight: 500, size: 3, lineHeight: 5 }),
   title4Semibold: FONT({ weight: 600, size: 2, lineHeight: 2.7 }),
+  title5Semibold: FONT({ weight: 600, size: 1.8, lineHeight: 2.5 }),
   body1: FONT({ weight: 400, size: 1.8, lineHeight: 3 }),
   body2: FONT({ weight: 400, size: 1.4, lineHeight: 1.9 }),
   body3: FONT({ weight: 500, size: 2.4, lineHeight: 3.3 }),
-  body4: FONT({ weight: 500, size: 2.2, lineHeight: 3.0 }),
+  body4: FONT({ weight: 500, size: 1.6, lineHeight: 3.8 }),
   body5: FONT({ weight: 700, size: 2.2, lineHeight: 3.0 }),
   body6: FONT({ weight: 500, size: 2.6, lineHeight: 3.5 }),
+  body7: FONT({ weight: 500, size: 2.2, lineHeight: 3.0 }),
   caption: FONT({ weight: 400, size: 1.4, lineHeight: 3.2 }),
   caption1: FONT({ weight: 600, size: 1.8, lineHeight: 2.5 }),
   tooltip: FONT({ weight: 400, size: 1.2, lineHeight: 1.8, letterSpacing: 6 }),
+  sizetag: FONT({ weight: 700, size: 1.6, lineHeight: 2.2 }),
   button1: FONT({ weight: 800, size: 4, lineHeight: 5.4 }),
+  card1: FONT({ weight: 600, size: 1.6, lineHeight: 1.9 }),
+  card2: FONT({ weight: 500, size: 1.4, lineHeight: 1.9 }),
 } as const;
 
 const theme = {

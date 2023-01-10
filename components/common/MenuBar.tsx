@@ -3,7 +3,7 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-export default function MenuBar() {
+function MenuBar() {
   const router = useRouter();
 
   return (
@@ -19,6 +19,8 @@ export default function MenuBar() {
   );
 }
 
+export default MenuBar;
+
 const Styled = {
   Root: styled.div`
     display: flex;
@@ -27,7 +29,9 @@ const Styled = {
 
     height: 6.1rem;
     margin: 0 auto;
+    margin-top: 10.4rem;
     border-bottom: 0.3rem solid ${theme.colors.gray200};
+    
   `,
   Menu: styled.button<{ isClicked: boolean }>`
     display: flex;

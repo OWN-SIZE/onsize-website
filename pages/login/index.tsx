@@ -4,8 +4,6 @@ import { GoogleLoginImg } from 'assets/img';
 import axios from 'axios';
 //import { useLoginMutation } from 'hooks/queries/user';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { accessTokenState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 

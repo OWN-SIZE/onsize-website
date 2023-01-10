@@ -1,5 +1,12 @@
 import Layout from 'components/common/Layout';
+import HomeLanding from 'components/home/HomeLanding';
 
-export default function index() {
-  return <Layout>Home</Layout>;
+function Home() {
+  return (
+    <Layout>
+      <HomeLanding />
+    </Layout>
+  );
 }
+
+export default Home;
