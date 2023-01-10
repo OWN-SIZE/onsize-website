@@ -65,7 +65,7 @@ function ClosetEditModal(props: ModalProps) {
 
   const handleSubmitOnClick = () => {
     updateCloset({
-      productId: data.id,
+      targetId: data.id,
       editBody: { productName: productNameInput, size: sizeInput, memo: memoInput },
     });
     handleCloseOnClick();

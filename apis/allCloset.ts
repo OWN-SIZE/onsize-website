@@ -21,8 +21,8 @@ export const postIncludeCategory = async ({ postBody }: PostClosetInput) => {
   return data;
 };
 
-export const updateAllClosetProduct = async ({ productId, editBody }: UpdateClosetInput) => {
-  const { data } = await client.put<ClosetOutput>(`/allCloset/${productId}`, editBody);
+export const updateAllClosetProduct = async ({ targetId, editBody }: UpdateClosetInput) => {
+  const { data } = await client.put<ClosetOutput>(`/allCloset/${targetId}`, editBody);
   return data;
 };
 

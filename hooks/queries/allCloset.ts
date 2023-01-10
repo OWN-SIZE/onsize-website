@@ -7,7 +7,7 @@ import {
   postIncludeCategory,
   updateAllClosetProduct,
 } from '@/apis/allCloset';
-import { deleteCategoryClosetProduct, fetchCategoryDetail } from '@/apis/categoryDetail';
+import { deleteCategoryClosetProduct, fetchCategoryDetail, updateIsInPin } from '@/apis/categoryDetail';
 const QUERY_KEY = {
   allCloset: 'allCloset',
   includeCategory: (productId: string) => ['includeCategory', productId],
@@ -64,6 +64,15 @@ export const useDeleteAllClosetProductMutation = () => {
 };
 
 // 카테고리 세부 조회
+export const useUpdateIsInPinMutation = (categoryId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(updateIsInPin, {
+    onSuccess() {
+      queryClient.invalidateQueries([QUERY_KEY.categoryDetail(categoryId)]);
+    },
+  });
+};
+
 export const useDeleteCategoryClosetProductMutation = (categoryId: string) => {
   const queryClient = useQueryClient();
   return useMutation(deleteCategoryClosetProduct, {

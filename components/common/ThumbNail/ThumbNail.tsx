@@ -37,7 +37,7 @@ interface ThumbNailProps {
   page: string;
   noAddCategory?: boolean;
   categoryId?: string;
-  updateIsPin: ({ productId, editBody }: UpdateClosetInput) => void;
+  updateIsPin: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -65,10 +65,18 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
-    updateIsPin({
-      productId: data.id,
-      editBody: { isPin: !data.isPin },
-    });
+    if (page === 'categoryDetail') {
+      updateIsPin({
+        categoryId: categoryId,
+        targetId: data.id,
+        editBody: { isInPin: !data.isInPin },
+      });
+    } else {
+      updateIsPin({
+        targetId: data.id,
+        editBody: { isPin: !data.isPin },
+      });
+    }
   };
 
   return (
@@ -97,7 +105,7 @@ function ThumbNail(props: ThumbNailProps) {
             </Styled.SizeContainer>
           </>
         )}
-        {data.isPin && (
+        {(page === 'categoryDetail' ? data.isInPin : data.isPin) && (
           <Image
             src={PinIcon}
             id="pinIcon"
@@ -165,9 +173,14 @@ function ThumbNail(props: ThumbNailProps) {
         <div className="iconContainer">
           {/* 고정 */}
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} width={40} height={40} alt="고정 버튼 아이콘" />
             <Image
-              src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
+              src={(page === 'categoryDetail' ? data.isInPin : data.isPin) ? PinButtonFillIcon : PinButonIcon}
+              width={40}
+              height={40}
+              alt="고정 버튼 아이콘"
+            />
+            <Image
+              src={(page === 'categoryDetail' ? data.isInPin : data.isPin) ? HoveredPinFillIcon : HoveredPinIcon}
               className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
               onClick={handleOnClickPin}
               width={40}

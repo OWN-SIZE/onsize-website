@@ -19,7 +19,6 @@ function HomeLanding() {
     const noPinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin === false));
     data = pinData.concat(noPinData);
   }
-  console.log(data);
 
   return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} page="closet" />}</Styled.Root>;
 }

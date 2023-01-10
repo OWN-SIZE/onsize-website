@@ -4,7 +4,7 @@ import { ClosetOutput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '@/components/common/ThumbNail/ThumbNail';
-import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
+import { useUpdateAllClosetProductMutation, useUpdateIsInPinMutation } from '@/hooks/queries/allCloset';
 
 interface ProductProps {
   data: ClosetOutput;
@@ -14,6 +14,10 @@ interface ProductProps {
 
 function Product(props: ProductProps) {
   const { data, page, categoryId } = props;
+  let targetCategoryId = '';
+  if (categoryId) {
+    targetCategoryId = categoryId;
+  }
 
   const ThumbNailData: ThumbNailData = {
     id: String(data.id),
@@ -24,9 +28,11 @@ function Product(props: ProductProps) {
     memo: data.memo,
     isRecommend: data.isRecommend,
     isPin: data.isPin,
+    isInPin: data.isInPin,
   };
 
   const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation('');
+  const { mutate: updateIsInPin } = useUpdateIsInPinMutation(targetCategoryId);
 
   return (
     <Styled.Root>
@@ -40,7 +46,7 @@ function Product(props: ProductProps) {
             height="33.2"
             page="categoryDetail"
             categoryId={categoryId}
-            updateIsPin={updateIsPIn}
+            updateIsPin={updateIsInPin}
             noAddCategory
           />
         )

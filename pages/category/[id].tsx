@@ -4,6 +4,7 @@ import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { ClosetOutput } from 'types/allCloset/client';
 
 import DeleteCategoryModal from '@/components/category/DeleteCategoryModal';
 import ModifyCategoryModal from '@/components/category/ModifyCategoryModal';
@@ -27,7 +28,18 @@ function Detail() {
     if (typeof id == 'string') setCategoryId(id);
   }, [id]);
 
-  const data = useFetchCategoryDetail(categoryId);
+  const orderSort = (item: ClosetOutput[]) => {
+    return item.sort((a, b) => {
+      return Number(b.id) - Number(a.id);
+    });
+  };
+
+  let data = useFetchCategoryDetail(categoryId);
+  if (data) {
+    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin === true));
+    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin === false));
+    data = pinData.concat(noPinData);
+  }
 
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);

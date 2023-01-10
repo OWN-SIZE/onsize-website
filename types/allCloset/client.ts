@@ -5,6 +5,7 @@ export interface ClosetOutput {
   productName: string;
   size: string | null;
   memo: string | null;
+  isInPin: boolean;
   isPin: boolean;
   isRecommend: boolean;
   mallName: string;
@@ -14,12 +15,14 @@ export interface ClosetOutput {
 }
 
 export interface UpdateClosetInput {
-  productId: string;
+  categoryId?: string;
+  targetId: string;
   editBody: {
     productName?: string;
     size?: string | null;
     memo?: string | null;
     isPin?: boolean;
+    isInPin?: boolean;
   };
 }
 
