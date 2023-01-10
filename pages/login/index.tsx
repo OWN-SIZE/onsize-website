@@ -12,36 +12,14 @@ import theme from 'styles/theme';
 import Layout from 'components/common/Layout';
 
 function Login() {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
   const login = useGoogleLogin({
-    flow: 'auth-code',
-    onSuccess: async ({ code }) => {
-      console.log(code);
-      const tokens = await axios.post('백api', {
-        code,
+    onSuccess: async (tokenResponse) => {
+      const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       });
-      // console.log('token', tokens.data);
-      // recoil에 토큰들 저장하기
-      // setAccessToken(response.access_token);
-      // 서버에 액세스 토큰 넘기기
-      // useLoginMutation(accessToken);
+      console.log(data);
     },
-    onError: (errorResponse) => console.log(errorResponse),
   });
-  // const login = useGoogleLogin({
-  //   onSuccess: async (tokenResponse) => {
-  //     console.log(tokenResponse);
-  //     // fetching userinfo can be done on the client or the server
-  //     const userInfo = await axios
-  //       .get('https://www.googleapis.com/oauth2/v3/userinfo', {
-  //         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
-  //       })
-  //       .then((res) => res.data);
-
-  //     console.log(userInfo);
-  //   },
-  //   // flow: 'implicit', // implicit is the default
-  // });
 
   return (
     <Layout noHeader noMenuBar>
