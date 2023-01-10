@@ -3,28 +3,31 @@ import Modal from 'components/common/Modal';
 import ModalPortal from '../common/modal/ModalPortal';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { useUpdateCategory } from 'hooks/queries/category';
 
-type ModifyCategoryModalProps = { 
+type ModifyCategoryModalProps = {
   onClickModifyCategoryModal: () => void;
+  categoryId: string;
 };
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
-  const { onClickModifyCategoryModal } = props;
+  const { mutate } = useUpdateCategory();
+
+  const { onClickModifyCategoryModal, categoryId } = props;
 
   const onClickCancel = () => {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    
+    mutate({ categoryId: categoryId, categoryName: changeInputValue }); 
     onClickModifyCategoryModal();
   };
 
   const inputRef = useRef(null);
-  const [changeInputValue, setChangeInputValue] = useState(0);
-  const updateInputValue = (length: number) => {
-    setChangeInputValue(length);
+  const [changeInputValue, setChangeInputValue] = useState('');
+  const updateInputValue = (input: string) => {
+    setChangeInputValue(input);
   };
-
 
   return (
     <ModalPortal>
@@ -38,15 +41,15 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         width={74.3}
       >
         <Styled.CategoryModifyModal>
-        <h1>카테고리 이름</h1>
-        <Styled.CategoryNameInput
-          placeholder="예) 2023 위시리스트"
-          maxLength={20}
-          ref={inputRef}
-          onChange={(e) => updateInputValue(e.target.value.length)}
-        ></Styled.CategoryNameInput>
-        <h6>{changeInputValue > 20 ? 20 : changeInputValue}/20</h6>
-      </Styled.CategoryModifyModal>
+          <h1>카테고리 이름</h1>
+          <Styled.CategoryNameInput
+            placeholder="예) 2023 위시리스트"
+            maxLength={20}
+            ref={inputRef}
+            onChange={(e) => updateInputValue(e.target.value)}
+          ></Styled.CategoryNameInput>
+          <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
+        </Styled.CategoryModifyModal>
       </Modal>
     </ModalPortal>
   );
