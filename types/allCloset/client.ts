@@ -22,3 +22,10 @@ export interface UpdateClosetInput {
     isPin?: boolean;
   };
 }
+
+export interface PostClosetInput {
+  postBody: {
+    productId: string;
+    categoryId: string;
+  };
+}

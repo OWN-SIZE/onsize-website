@@ -3,27 +3,44 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-function AddCategoryModal() {
-  const categoryName = '카테고리명카테고리명';
-  const category = categoryName.substring(0, 9);
+import { useFetchIncludeCategory, usePostIncludeCategoryMutation } from '@/hooks/queries/allCloset';
+import { useFetchAllCategory } from '@/hooks/queries/category';
+
+interface AddCategoryModalProps {
+  productId: string;
+}
+function AddCategoryModal(props: AddCategoryModalProps) {
+  const { productId } = props;
+  const { category } = useFetchAllCategory();
+  const includeCategoryData = useFetchIncludeCategory(productId);
+  const { mutate: postIncludeCategory } = usePostIncludeCategoryMutation(productId);
+  const handleOnClick = (categoryId: string) => {
+    postIncludeCategory({ postBody: { productId: productId, categoryId: categoryId } });
+  };
+
+  let categoryProduct = null;
+  if (category) {
+    categoryProduct = category.map((data) => (
+      <Styled.Category
+        key={data.id}
+        className={includeCategoryData?.includes(Number(data.id)) ? 'disabled' : 'abled'}
+        onClick={() => handleOnClick(data.id)}
+      >
+        <Image
+          src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
+          width={15}
+          height={15}
+          alt="카테고리 아이콘"
+        />
+        {data.categoryName.length > 9 ? `${data.categoryName.substring(0, 9)}...` : `${data.categoryName}`}
+      </Styled.Category>
+    ));
+  }
 
   return (
     <Styled.AddCategoryContainer>
       <Styled.MyCategory>나의 카테고리</Styled.MyCategory>
-      <Styled.CategoryList>
-        <Styled.Category className="disabled">
-          <Image src={GrayFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
-          {`${category}...`}
-        </Styled.Category>
-        <Styled.Category>
-          <Image src={BlackFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
-          카테고리명카테고리...
-        </Styled.Category>
-        <Styled.Category>
-          <Image src={BlackFolderIcon} width={15} height={15} alt="카테고리 아이콘" />
-          카테고리명카테고리...
-        </Styled.Category>
-      </Styled.CategoryList>
+      <Styled.CategoryList>{categoryProduct}</Styled.CategoryList>
       <Styled.addCategoryButton>
         <Image src={Folder20Icon} width={20} height={20} alt="카테고리 아이콘" />새 카테고리 만들기
       </Styled.addCategoryButton>

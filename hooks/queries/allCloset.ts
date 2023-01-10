@@ -1,9 +1,16 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 
-import { deleteAllClosetProduct, fetchAllCloset, updateAllClosetProduct } from '@/apis/allCloset';
+import {
+  deleteAllClosetProduct,
+  fetchAllCloset,
+  fetchIncludeCategory,
+  postIncludeCategory,
+  updateAllClosetProduct,
+} from '@/apis/allCloset';
 import { deleteCategoryClosetProduct, fetchCategoryDetail } from '@/apis/categoryDetail';
 const QUERY_KEY = {
   allCloset: 'allCloset',
+  includeCategory: (productId: string) => ['includeCategory', productId],
   categoryDetail: (categoryId: string) => ['allCloset', categoryId],
 };
 /** Query */
@@ -11,6 +18,11 @@ const QUERY_KEY = {
 // 나의 옷장
 export const useFetchAllCloset = () => {
   const { data } = useQuery([QUERY_KEY.allCloset], fetchAllCloset);
+  return data;
+};
+
+export const useFetchIncludeCategory = (productId: string) => {
+  const { data } = useQuery([QUERY_KEY.includeCategory(productId)], () => fetchIncludeCategory(productId));
   return data;
 };
 
@@ -33,6 +45,15 @@ export const useUpdateAllClosetProductMutation = (categoryId: string) => {
 };
 
 // 나의 옷장
+export const usePostIncludeCategoryMutation = (productId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(postIncludeCategory, {
+    onSuccess() {
+      queryClient.invalidateQueries([QUERY_KEY.includeCategory(productId)]);
+    },
+  });
+};
+
 export const useDeleteAllClosetProductMutation = () => {
   const queryClient = useQueryClient();
   return useMutation(deleteAllClosetProduct, {
