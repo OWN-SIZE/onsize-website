@@ -1,4 +1,4 @@
-import { AllCategory, CreateCategory } from './client';
+import { AllCategory, CreateCategory, UpdateCategoryRequest } from './client';
 
 export interface AllCategoryResponse {
   data: AllCategory[];
@@ -6,6 +6,14 @@ export interface AllCategoryResponse {
 
 export interface CreateCategoryResponse {
   data: CreateCategory;
+}
+
+export interface UpdateCategoryResponse {
+  data: UpdateCategoryRequest;
+}
+
+export interface UpdateCategoryBodyResponse {
+  data: UpdateCategoryBodyResponse;
 }
 
 export interface DeleteCategoryResponse {

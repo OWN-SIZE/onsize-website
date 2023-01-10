@@ -1,6 +1,12 @@
 import { client } from 'apis';
-import { AllCategoryResponse, CreateCategoryResponse, DeleteCategoryResponse } from 'types/category/remote';
-import { CreateCategory } from 'types/category/client';
+import { CreateCategory, UpdateCategoryRequest } from 'types/category/client';
+import {
+  AllCategoryResponse,
+  CreateCategoryResponse,
+  DeleteCategoryResponse,
+  UpdateCategoryBodyResponse,
+  UpdateCategoryResponse,
+} from 'types/category/remote';
 
 export const fetchAllCategory = async () => {
   const {
@@ -16,7 +22,16 @@ export const postCategory = async (props: CreateCategory): Promise<CreateCategor
   return data;
 };
 
+export const updateCategory = async (props: UpdateCategoryRequest) => {
+  const {
+    data: { data },
+  } = await client.put<UpdateCategoryResponse>(`/category/${props.categoryId}`, props);
+
+  return data;
+};
+
 export const deleteCategory = async (categoryId: number) => {
   const { data } = await client.delete<DeleteCategoryResponse>(`/category/${categoryId}`);
+
   return data;
 };

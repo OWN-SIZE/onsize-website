@@ -6,9 +6,9 @@ export const usePostMyTopSize = () => {
   const postMyTopSizeMutate = usePostMyTopSizeMutation();
 
   const postMyTopSize = async (body: TopSizeInput, onSuccessPost: () => void) => {
-    const { message } = await postMyTopSizeMutate.mutateAsync(body, {
+    const { data } = await postMyTopSizeMutate.mutateAsync(body, {
       onSuccess() {
-        console.log(message);
+        console.log(data);
         onSuccessPost();
       },
     });
@@ -21,9 +21,9 @@ export const usePostMyBottomSize = () => {
   const postMyBottomSizeMutate = usePostMyBottomSizeMutation();
 
   const postMyBottomSize = async (body: BottomSizeInput, onSuccessPost: () => void) => {
-    const { message } = await postMyBottomSizeMutate.mutateAsync(body, {
+    const { data } = await postMyBottomSizeMutate.mutateAsync(body, {
       onSuccess() {
-        console.log(message);
+        console.log(data);
         onSuccessPost();
       },
     });

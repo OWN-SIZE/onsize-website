@@ -187,10 +187,14 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {isEditModalOpen && (
+
+          {data.id && isEditModalOpen && (
             <ModalPortal>
               {page === 'category' ? (
-                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
+                <ModifyCategoryModal
+                  onClickModifyCategoryModal={onClickModifyCategoryModal}
+                  categoryId={data.id}
+                ></ModifyCategoryModal>
               ) : (
                 data.name && (
                   <ClosetEditModal
