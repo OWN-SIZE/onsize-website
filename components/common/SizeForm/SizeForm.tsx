@@ -111,11 +111,16 @@ export default function SizeForm(props: FormProps) {
         topLength: 0,
         shoulder: 0,
         chest: 0,
+        isWidthOfTop: true,
       };
 
       Object.entries(mutateMapper.top).map(([kor, eng]) => {
         inputData[eng] = parseFloat(data[kor]);
       });
+
+      if (measure === '둘레') {
+        inputData.isWidthOfTop = false;
+      }
 
       postMyTopSize(inputData, () => {
         resetField('총장');
@@ -128,11 +133,16 @@ export default function SizeForm(props: FormProps) {
         thigh: 0,
         rise: 0,
         hem: 0,
+        isWidthOfBottom: true,
       };
 
       Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
         inputData[eng] = parseFloat(data[kor]);
       });
+
+      if (measure === '둘레') {
+        inputData.isWidthOfBottom = false;
+      }
 
       postMyBottomSize(inputData, () => {
         resetField('총장');

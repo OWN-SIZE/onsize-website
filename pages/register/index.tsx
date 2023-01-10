@@ -12,18 +12,6 @@ import SizeOption from 'components/register/SizeOption';
 // 버튼 컴포넌트 전달을 위한 타입
 export type OptionType = '상/하의' | '상의' | '하의' | null;
 
-interface iNextFormMapper {
-  '상/하의': OptionType;
-  상의: OptionType;
-  하의: OptionType;
-}
-
-const nextFormMapper: iNextFormMapper = {
-  '상/하의': '하의',
-  상의: '하의',
-  하의: '상의',
-};
-
 function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
