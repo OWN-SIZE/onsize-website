@@ -15,7 +15,6 @@ interface CategoryProps {
 
 export default function Category(props: CategoryProps) {
   const { data } = props;
-  const router = useRouter();
 
   const ThumbNailData: ThumbNailData = {
     id: data.id,

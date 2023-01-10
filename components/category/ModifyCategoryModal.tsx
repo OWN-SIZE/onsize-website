@@ -24,7 +24,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   };
 
   const inputRef = useRef(null);
-  const [changeInputValue, setChangeInputValue] = useState('d');
+  const [changeInputValue, setChangeInputValue] = useState('');
   const updateInputValue = (input: string) => {
     setChangeInputValue(input);
   };
