@@ -27,7 +27,6 @@ export default HomeLanding;
 const Styled = {
   Root: styled.div`
     width: 140.8rem;
-    height: 100%;
     margin: 0 auto;
   `,
 };

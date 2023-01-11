@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
@@ -51,10 +52,18 @@ function Product(props: ProductProps) {
           />
         )
       )}
-      <Styled.Title>{data.productName}</Styled.Title>
+      <a href={data.productUrl} target={'_blank'} rel="noreferrer">
+        <Styled.Title>{data.productName}</Styled.Title>
+      </a>
       <Styled.Memo>{data.memo}</Styled.Memo>
       <Styled.BrandSection>
         <Styled.BrandLogo />
+        {/* 브랜드 로고 url */}
+        {/* {data.faviconUrl ? (
+          <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" />
+        ) : (
+          <Styled.BrandLogo />
+        )} */}
         <Styled.BrandName>{data.mallName}</Styled.BrandName>
       </Styled.BrandSection>
     </Styled.Root>

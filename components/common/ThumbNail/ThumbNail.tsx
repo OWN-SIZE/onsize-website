@@ -117,38 +117,45 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {data.image && page === 'category' ? (
-        <Styled.ThumbNailImg className={'category'} width={width} height={height}>
-          <Image
-            src=""
-            alt={'썸네일 이미지' + data.image[0]}
-            width={226}
-            height={300}
-            placeholder="blur"
-            blurDataURL="assets/icon/folder_filled.png"
-          />
-          <Styled.SeparateImages>
+      {
+        data.image && page === 'category' ? (
+          <Styled.ThumbNailImg className={'category'} width={width} height={height}>
             <Image
               src=""
-              alt={'썸네일 이미지' + data.image[1]}
+              alt={'썸네일 이미지' + data.image[0]}
               width={226}
-              height={150}
+              height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
             />
-            <Image
-              src=""
-              alt={'썸네일 이미지' + data.image[2]}
-              width={226}
-              height={150}
-              placeholder="blur"
-              blurDataURL="assets/icon/folder_filled.png"
-            />
-          </Styled.SeparateImages>
-        </Styled.ThumbNailImg>
-      ) : (
-        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
-      )}
+            <Styled.SeparateImages>
+              <Image
+                src=""
+                alt={'썸네일 이미지' + data.image[1]}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+              <Image
+                src=""
+                alt={'썸네일 이미지' + data.image[2]}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+            </Styled.SeparateImages>
+          </Styled.ThumbNailImg>
+        ) : (
+          <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+        )
+        // (typeof data.image === 'string' ? (
+        //   <Image src={data.image} width={Number(width)} height={Number(height)} alt="상품 대표 이미지" />
+        // ) : (
+        //   <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+        // ))
+      }
 
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail

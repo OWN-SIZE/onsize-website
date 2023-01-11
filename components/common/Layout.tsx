@@ -27,8 +27,8 @@ function Layout(props: LayoutProps) {
 export default Layout;
 
 const Root = styled.div`
-  // width: 100vw;
-  height: 100%;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   flex-direction: column;
 `;
