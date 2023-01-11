@@ -15,8 +15,8 @@ function HomeLanding() {
 
   let data = useFetchAllCloset();
   if (data) {
-    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin === true));
-    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin === false));
+    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin));
+    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isPin));
     data = pinData.concat(noPinData);
   }
 

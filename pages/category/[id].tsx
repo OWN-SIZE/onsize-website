@@ -36,8 +36,8 @@ function Detail() {
 
   let data = useFetchCategoryDetail(categoryId);
   if (data) {
-    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin === true));
-    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin === false));
+    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isInPin));
     data = pinData.concat(noPinData);
   }
 

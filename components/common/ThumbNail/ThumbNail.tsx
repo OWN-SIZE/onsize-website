@@ -67,7 +67,7 @@ function ThumbNail(props: ThumbNailProps) {
   const handleOnClickPin = () => {
     if (page === 'categoryDetail') {
       updateIsPin({
-        categoryId: categoryId,
+        categoryId,
         targetId: data.id,
         editBody: { isInPin: !data.isInPin },
       });

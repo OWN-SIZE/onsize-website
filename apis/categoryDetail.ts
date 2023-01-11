@@ -10,6 +10,7 @@ export const fetchCategoryDetail = async (categoryId: string) => {
   return data;
 };
 
+// 카테고리 내부에서 핀 고정/해제
 export const updateIsInPin = async ({ categoryId, targetId, editBody }: UpdateClosetInput) => {
   const { data } = await client.put(`/category/${categoryId}/${targetId}`, editBody);
   return data;
