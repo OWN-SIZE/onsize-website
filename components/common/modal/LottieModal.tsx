@@ -8,6 +8,7 @@ import theme from 'styles/theme';
 import tutorialAnimation1 from '../../../assets/lottie/tutorial01.json';
 import tutorialAnimation2 from '../../../assets/lottie/tutorial02.json';
 import tutorialAnimation3 from '../../../assets/lottie/tutorial03.json';
+import tutorialAnimation4 from '../../../assets/lottie/tutorial04.json';
 import Modal from '../../common/Modal';
 import ModalPortal from '../../common/modal/ModalPortal';
 
@@ -17,8 +18,7 @@ const lottieMapper = [
     message: '먼저, 온사이즈 아이콘을 상단에 고정해주세요',
   },
   {
-    // 디자인에서 받아서 바꿔야 함
-    lottie: tutorialAnimation1,
+    lottie: tutorialAnimation4,
     message: `나의 옷 중 가장 잘맞는 옷의 사이즈를\n쇼핑몰에서 찾아 입력해주세요!`,
   },
   {
