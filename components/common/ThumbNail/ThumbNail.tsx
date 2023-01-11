@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import React from 'react';
 import {
   AddCategoryCloseIcon,
@@ -16,6 +16,7 @@ import {
   SizeIcon,
 } from 'assets/icon';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
@@ -38,19 +39,32 @@ interface ThumbNailProps {
   noAddCategory?: boolean;
   categoryId?: string;
   updateIsPin: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
+  setIsProductHovered: Dispatch<SetStateAction<boolean>>;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page, updateIsPin, categoryId } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin, categoryId, setIsProductHovered } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleImageMousehover = () => {
+    setImgHoveredTarget(data.id);
+    setIsProductHovered(true);
+  };
+
+  const handleImageMouseLeave = () => {
+    setImgHoveredTarget('');
+    setIsProductHovered(false);
+  };
+
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
   };
+
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
   };
@@ -81,8 +95,8 @@ function ThumbNail(props: ThumbNailProps) {
 
   return (
     <Styled.Root
-      onMouseEnter={() => setImgHoveredTarget(data.id)}
-      onMouseLeave={() => setImgHoveredTarget('')}
+      onMouseEnter={handleImageMousehover}
+      onMouseLeave={handleImageMouseLeave}
       id={data.id}
       width={width}
       height={height}
@@ -158,6 +172,7 @@ function ThumbNail(props: ThumbNailProps) {
       }
 
       {/* 썸네일 호버시 코드 */}
+
       <Styled.HoverThumbNail
         className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
@@ -177,6 +192,15 @@ function ThumbNail(props: ThumbNailProps) {
         )}
         {isCategoryModalOpen && (
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} />
+        )}
+        {page === 'category' ? (
+          <Link href={`/category/${data.id}`}>
+            <Styled.CategoryClickZone />
+          </Link>
+        ) : (
+          <a href={data.productUrl} target={'_blank'} rel="noreferrer">
+            <Styled.ClosetClickZone page={page} />
+          </a>
         )}
         {/* 아이콘 */}
         <div className="iconContainer">
@@ -385,6 +409,17 @@ const Styled = {
         height: 4rem;
       }
     }
+  `,
+  ClosetClickZone: styled.div<{ page: string }>`
+    position: absolute;
+    top: ${({ page }) => (page === 'closet' ? ' 4.7rem' : 0)};
+
+    width: 100%;
+    height: ${({ page }) => (page === 'closet' ? '22.9rem' : '27.6rem')};
+  `,
+  CategoryClickZone: styled.div`
+    width: 100%;
+    height: 24.4rem;
   `,
   SeparateImages: styled.div`
     display: flex;
