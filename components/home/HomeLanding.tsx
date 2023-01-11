@@ -20,7 +20,7 @@ function HomeLanding() {
     data = pinData.concat(noPinData);
   }
 
-  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} page="closet" />}</Styled.Root>;
+  return <Styled.Root>{data ? <HomeMain data={data} page="closet" /> : <HomeFirst />}</Styled.Root>;
 }
 
 export default HomeLanding;

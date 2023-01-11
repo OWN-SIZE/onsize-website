@@ -51,7 +51,7 @@ const Styled = {
   Container: styled.div`
     position: relative;
 
-    width: 172.8rem;
+    width: 140.8rem;
     height: 25rem;
 
     margin: 0 auto;
@@ -59,7 +59,7 @@ const Styled = {
   Title: styled.h1`
     position: absolute;
     top: 5.2rem;
-    left: 16rem;
+    left: 0;
 
     ${theme.fonts.button1};
     color: ${theme.colors.gray550};
@@ -67,7 +67,7 @@ const Styled = {
   RightSection: styled.section`
     position: absolute;
     top: 7rem;
-    right: 16rem;
+    right: 0;
 
     display: flex;
     justify-content: space-between;
@@ -85,7 +85,7 @@ const Styled = {
   Contact: styled.div`
     position: absolute;
 
-    left: 16rem;
+    left: 0;
     top: 11.6rem;
 
     ${theme.fonts.caption1};
