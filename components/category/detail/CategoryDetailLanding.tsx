@@ -36,11 +36,11 @@ function CategoryDetailLanding() {
   };
 
   let data = useFetchCategoryDetail(categoryId);
-  if (!data) return;
-  const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin));
-  const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isInPin));
-  data = pinData.concat(noPinData);
-
+  if (data) {
+    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isInPin));
+    data = pinData.concat(noPinData);
+  }
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -70,7 +70,7 @@ function CategoryDetailLanding() {
           />
         </div>
       </Styled.categoryNameContainer>
-      {data.length !== 0 ? (
+      {data && data.length !== 0 ? (
         <HomeMain data={data} categoryId={categoryId} page="categoryDetail" />
       ) : (
         <CategoryDetailFirst />
