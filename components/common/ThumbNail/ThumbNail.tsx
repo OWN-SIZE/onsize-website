@@ -175,7 +175,9 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </button>
         )}
-        {isCategoryModalOpen && <AddCategoryModal productId={data.id} />}
+        {isCategoryModalOpen && (
+          <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} />
+        )}
         {/* 아이콘 */}
         <div className="iconContainer">
           {/* 고정 */}

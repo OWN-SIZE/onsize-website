@@ -1,4 +1,4 @@
-import { useRef, useState } from 'react';
+import { Dispatch, useRef, useState } from 'react';
 import { BlackFolderIcon, Folder20Icon, GrayFolderIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -12,19 +12,25 @@ import ModalPortal from '../common/modal/ModalPortal';
 
 interface AddCategoryModalProps {
   productId: string;
+  setIsCategoryModalOpen: Dispatch<React.SetStateAction<boolean>>;
 }
 function AddCategoryModal(props: AddCategoryModalProps) {
-  const { productId } = props;
+  const { productId, setIsCategoryModalOpen } = props;
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
 
-  const { category } = useFetchAllCategory();
+  let { category } = useFetchAllCategory();
   const includeCategoryData = useFetchIncludeCategory(productId);
   const { mutate: postIncludeCategory } = usePostIncludeCategoryMutation(productId);
 
+  category = category?.sort((a, b) => {
+    return Number(b.id) - Number(a.id);
+  });
+
   const handleCategoryOnClick = (categoryId: string) => {
     postIncludeCategory({ postBody: { productId: productId, categoryId: categoryId } });
+    setIsCategoryModalOpen(false);
   };
 
   const onClickCategoryCreateModal = () => {
@@ -36,23 +42,21 @@ function AddCategoryModal(props: AddCategoryModalProps) {
   };
 
   let categoryProduct = null;
-  if (category) {
-    categoryProduct = category.map((data) => (
-      <Styled.Category
-        key={data.id}
-        className={includeCategoryData?.includes(Number(data.id)) ? 'disabled' : 'abled'}
-        onClick={() => handleCategoryOnClick(data.id)}
-      >
-        <Image
-          src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
-          width={15}
-          height={15}
-          alt="카테고리 아이콘"
-        />
-        {data.categoryName.length > 12 ? `${data.categoryName.substring(0, 12)}...` : `${data.categoryName}`}
-      </Styled.Category>
-    ));
-  }
+  categoryProduct = category?.map((data) => (
+    <Styled.Category
+      key={data.id}
+      className={includeCategoryData?.includes(Number(data.id)) ? 'disabled' : 'abled'}
+      onClick={() => handleCategoryOnClick(data.id)}
+    >
+      <Image
+        src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
+        width={15}
+        height={15}
+        alt="카테고리 아이콘"
+      />
+      {data.categoryName.length > 12 ? `${data.categoryName.substring(0, 12)}...` : `${data.categoryName}`}
+    </Styled.Category>
+  ));
 
   return (
     <Styled.AddCategoryContainer>
@@ -106,14 +110,13 @@ const Styled = {
     color: ${theme.colors.gray550};
   `,
   CategoryList: styled.div`
-    display: flex;
-    flex-direction: column;
-
-    align-items: flex-start;
-
     width: 25.5rem;
+    height: 25.7rem;
 
     margin: 2.2rem auto 0;
+
+    overflow-y: auto;
+    overflow-x: hidden;
   `,
   Category: styled.button`
     display: flex;
