@@ -195,11 +195,11 @@ function ThumbNail(props: ThumbNailProps) {
         )}
         {page === 'category' ? (
           <Link href={`/category/${data.id}`}>
-            <Styled.CategoryClickZone />
+            <Styled.ClickZone />
           </Link>
         ) : (
           <a href={data.productUrl} target={'_blank'} rel="noreferrer">
-            <Styled.ClosetClickZone page={page} />
+            <Styled.ClickZone />
           </a>
         )}
         {/* 아이콘 */}
@@ -330,6 +330,7 @@ const Styled = {
     width: 4rem;
     height: 4rem;
     cursor: pointer;
+    z-index: 2;
     & > .hide {
       display: none;
     }
@@ -385,14 +386,20 @@ const Styled = {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         width: 14.2rem;
         height: 2.7rem;
+
         top: 2rem;
         left: 2.6rem;
+        z-index: 2;
+
         border: none;
         background: none;
+
         ${theme.fonts.title3};
         color: ${theme.colors.gray000};
+
         cursor: pointer;
         & > img {
           width: 1.6rem;
@@ -410,16 +417,9 @@ const Styled = {
       }
     }
   `,
-  ClosetClickZone: styled.div<{ page: string }>`
-    position: absolute;
-    top: ${({ page }) => (page === 'closet' ? ' 4.7rem' : 0)};
-
+  ClickZone: styled.div`
     width: 100%;
-    height: ${({ page }) => (page === 'closet' ? '22.9rem' : '27.6rem')};
-  `,
-  CategoryClickZone: styled.div`
-    width: 100%;
-    height: 24.4rem;
+    height: 100%;
   `,
   SeparateImages: styled.div`
     display: flex;
