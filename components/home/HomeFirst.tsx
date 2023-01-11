@@ -10,7 +10,7 @@ function HomeFirst() {
     <Styled.Root>
       <Styled.Greeting>온사이즈를 시작하러 가볼까요?</Styled.Greeting>
       <Styled.Button onClick={() => setIsTutorial(true)}>튜토리얼 확인하기</Styled.Button>
-      {isTutorial && <LottieModal />}
+      {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
     </Styled.Root>
   );
 }

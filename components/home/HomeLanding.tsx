@@ -21,7 +21,11 @@ function HomeLanding() {
   }
   console.log(data);
 
-  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} page="closet" />}</Styled.Root>;
+  return (
+    <Styled.Root>
+      <HomeFirst />
+    </Styled.Root>
+  );
 }
 
 export default HomeLanding;

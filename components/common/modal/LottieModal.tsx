@@ -31,7 +31,12 @@ const lottieMapper = [
   },
 ];
 
-function LottieModal() {
+interface LottieProps {
+  onClickCloseButton: () => void;
+}
+
+function LottieModal(props: LottieProps) {
+  const { onClickCloseButton } = props;
   const [page, setPage] = useState(0);
 
   const onClickArrow = (arrowType: 'left' | 'right') => {
@@ -63,6 +68,7 @@ function LottieModal() {
         </Styled.PageContainer>
         <Styled.MessageContainer>
           <pre>{lottieMapper[page].message}</pre>
+          <button onClick={onClickCloseButton}>닫기</button>
         </Styled.MessageContainer>
       </Modal>
     </ModalPortal>
@@ -121,6 +127,14 @@ const Styled = {
       text-align: center;
       ${theme.fonts.body8};
       color: ${theme.colors.yellow01};
+    }
+    button {
+      position: fixed;
+      right: 7.9rem;
+      color: ${theme.colors.gray250};
+      ${theme.fonts.body8};
+      background: transparent;
+      border: 0;
     }
   `,
 };
