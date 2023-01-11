@@ -1,9 +1,12 @@
 import React from 'react';
-import Modal from 'components/common/Modal';
-import ModalPortal from '../common/modal/ModalPortal';
+import { useDeleteCategory, useFetchAllCategory } from 'hooks/queries/category';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { useDeleteCategory, useFetchAllCategory } from 'hooks/queries/category';
+
+import Modal from 'components/common/Modal';
+
+import ModalPortal from '../common/modal/ModalPortal';
 
 type DeleteCategoryModalProps = {
   onClickDeleteCategoryModal: () => void;
@@ -13,6 +16,7 @@ type DeleteCategoryModalProps = {
 export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const { onClickDeleteCategoryModal, deletedCategoryId } = props;
   const { mutate } = useDeleteCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  const router = useRouter();
 
   const onClickCancel = () => {
     onClickDeleteCategoryModal();
@@ -20,7 +24,9 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const onClickDelete = () => {
     onClickDeleteCategoryModal();
     mutate(deletedCategoryId);
-
+    if (router.query) {
+      router.push('/category');
+    }
   };
   return (
     <ModalPortal>

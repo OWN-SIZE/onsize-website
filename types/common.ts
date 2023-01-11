@@ -7,4 +7,5 @@ export interface ThumbNailData {
   size?: string | null;
   memo?: string | null;
   isRecommend?: boolean;
+  isInPin?: boolean;
 }

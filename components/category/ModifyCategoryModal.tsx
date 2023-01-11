@@ -1,26 +1,30 @@
-import React, { useRef, useState } from 'react';
-import Modal from 'components/common/Modal';
-import ModalPortal from '../common/modal/ModalPortal';
+import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import { useUpdateCategory } from 'hooks/queries/category';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { useUpdateCategory } from 'hooks/queries/category';
+
+import Modal from 'components/common/Modal';
+
+import ModalPortal from '../common/modal/ModalPortal';
 
 type ModifyCategoryModalProps = {
   onClickModifyCategoryModal: () => void;
   categoryId: string;
+  setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>>;
 };
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
 
-  const { onClickModifyCategoryModal, categoryId } = props;
+  const { onClickModifyCategoryModal, categoryId, setCategoryName } = props;
 
   const onClickCancel = () => {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    mutate({ categoryId: categoryId, categoryName: changeInputValue }); 
+    mutate({ categoryId: categoryId, categoryName: changeInputValue });
     onClickModifyCategoryModal();
+    setCategoryName && setCategoryName(changeInputValue);
   };
 
   const inputRef = useRef(null);

@@ -1,4 +1,4 @@
-import { ChangeEvent, Dispatch, FormEvent, useState } from 'react';
+import { ChangeEvent, Dispatch, FormEvent, useEffect, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -13,14 +13,16 @@ interface ModalProps {
     size?: string | null;
     memo?: string | null;
   };
+  categoryId?: string;
 }
 
 function ClosetEditModal(props: ModalProps) {
-  const { setIsModalOpen, setImgHoveredTarget, data } = props;
+  const { setIsModalOpen, setImgHoveredTarget, data, categoryId } = props;
 
   const [productNameInput, setProductNameInput] = useState(data.productName);
   const [sizeInput, setSizeInput] = useState(!data.size ? '' : data.size);
   const [memoInput, setMemoInput] = useState(!data.memo ? '' : data.memo);
+  const [targetCategoryId, setTargetCategoryId] = useState('');
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value;
@@ -56,11 +58,14 @@ function ClosetEditModal(props: ModalProps) {
     setImgHoveredTarget('');
   };
 
-  const { mutate: updateCloset } = useUpdateAllClosetProductMutation();
+  useEffect(() => {
+    if (categoryId) setTargetCategoryId(categoryId);
+  }, [categoryId]);
+  const { mutate: updateCloset } = useUpdateAllClosetProductMutation(targetCategoryId);
 
   const handleSubmitOnClick = () => {
     updateCloset({
-      productId: data.id,
+      targetId: data.id,
       editBody: { productName: productNameInput, size: sizeInput, memo: memoInput },
     });
     handleCloseOnClick();
