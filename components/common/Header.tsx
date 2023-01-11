@@ -1,4 +1,5 @@
-import { InfoIcon } from 'assets/icon';
+import { InfoIcon, OpenMySizeIcon } from 'assets/icon';
+import { OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -10,12 +11,12 @@ function Header() {
       <Styled.Container>
         <Styled.TopSection>
           <Link href="/home">
-            <Styled.LogoImg />
+            <Image src={OwnSizeLogoImg} width={94} height={94} alt="온사이즈 로고 / 홈 이동" />
           </Link>
 
           <Styled.RightSection>
             <Styled.InfoButton>
-              <Image src={InfoIcon} alt="튜토리얼 보기 아이콘" />
+              <Image src={InfoIcon} width={50} height={50} alt="튜토리얼 보기 아이콘" />
             </Styled.InfoButton>
 
             <Link href="/mypage">
@@ -23,10 +24,14 @@ function Header() {
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
-
-        <Link href="/mysize">
-          <Styled.MySizeButton>My Size</Styled.MySizeButton>
-        </Link>
+        <Styled.MySizeButtonBackGround>
+          <Link href="/mysize">
+            <Styled.MySizeButton>
+              MY SIZE
+              <Image src={OpenMySizeIcon} alt="mysize 버튼 아이콘" />
+            </Styled.MySizeButton>
+          </Link>
+        </Styled.MySizeButtonBackGround>
       </Styled.Container>
     </Styled.Root>
   );
@@ -37,16 +42,16 @@ export default Header;
 const Styled = {
   Root: styled.div`
     width: 100%;
-    height: 26.6rem;
 
-    background-color: #d9d9d9;
+    background-color: ${theme.colors.black};
 
     text-align: center;
-    z-index: 1;
   `,
 
   Container: styled.div`
     width: 140.8rem;
+
+    height: 26.6rem;
 
     margin: 0 auto;
   `,
@@ -54,14 +59,14 @@ const Styled = {
   TopSection: styled.div`
     display: flex;
     justify-content: space-between;
-  `,
 
-  LogoImg: styled.div`
-    width: 6rem;
-    height: 6rem;
-    background-color: #8e8e8e;
+    height: 11.8rem;
 
-    margin-top: 3rem;
+    & > a {
+      & > img {
+        margin-top: 2.4rem;
+      }
+    }
   `,
 
   RightSection: styled.div`
@@ -69,16 +74,13 @@ const Styled = {
     justify-content: space-between;
     align-items: center;
 
-    width: 13.2rem;
+    width: 14.7rem;
     height: 7rem;
 
-    margin-top: 4rem;
+    margin-top: 3.5rem;
   `,
 
   InfoButton: styled.button`
-    width: 5rem;
-    height: 5rem;
-
     background: none;
     border: none;
 
@@ -96,20 +98,47 @@ const Styled = {
     cursor: pointer;
   `,
 
-  MySizeButton: styled.button`
-    width: 42.2rem;
-    height: 7rem;
+  MySizeButtonBackGround: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
 
-    border-radius: 3.5rem;
+    width: 43rem;
+    height: 8.5rem;
+
+    border-radius: 5.5rem;
+
+    margin: 10.5rem auto 0;
+
+    background-color: ${theme.colors.gray000};
+  `,
+
+  MySizeButton: styled.button`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 42rem;
+    height: 7.5rem;
+
+    border-radius: 5.5rem;
     border: none;
 
-    margin-top: 12rem;
+    font-family: 'Arial';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 34px;
 
-    ${theme.fonts.button1};
-    color: ${theme.colors.gray350};
+    color: ${theme.colors.yellow};
+    background-color: ${theme.colors.black};
 
-    box-shadow: 0 0 1rem 0.8rem rgba(0, 0, 0, 0.05);
+    filter: drop-shadow(0px 8px 14px rgba(0, 0, 0, 0.15));
 
     cursor: pointer;
+
+    & > img {
+      margin-left: 1.2rem;
+    }
   `,
 };

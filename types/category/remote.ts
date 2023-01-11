@@ -9,11 +9,11 @@ export interface CreateCategoryResponse {
 }
 
 export interface UpdateCategoryResponse {
-  data: UpdateCategoryRequest
+  data: UpdateCategoryRequest;
 }
 
 export interface UpdateCategoryBodyResponse {
-  data: UpdateCategoryBodyResponse
+  data: UpdateCategoryBodyResponse;
 }
 
 export interface DeleteCategoryResponse {

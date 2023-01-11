@@ -19,5 +19,4 @@ export interface UpdateCategoryRequest {
 
 export interface UpdateCategoryRequestBody {
   categoryName: string;
-
 }

@@ -1,6 +1,6 @@
 import { client } from 'apis';
-import { ClosetOutput, UpdateClosetInput } from 'types/allCloset/client';
-import { ClosetResponse } from 'types/allCloset/remote';
+import { ClosetOutput, PostClosetInput, UpdateClosetInput } from 'types/allCloset/client';
+import { ClosetResponse, IncludeCategoryResponse } from 'types/allCloset/remote';
 
 export const fetchAllCloset = async () => {
   const {
@@ -9,8 +9,20 @@ export const fetchAllCloset = async () => {
   return data;
 };
 
-export const updateAllClosetProduct = async ({ productId, editBody }: UpdateClosetInput) => {
-  const { data } = await client.put<ClosetOutput>(`/allCloset/${productId}`, editBody);
+export const fetchIncludeCategory = async (productId: string) => {
+  const {
+    data: { data },
+  } = await client.get<IncludeCategoryResponse>(`allCloset/${productId}`);
+  return data;
+};
+
+export const postIncludeCategory = async ({ postBody }: PostClosetInput) => {
+  const { data } = await client.post<IncludeCategoryResponse>(`/allCloset/toCategory`, postBody);
+  return data;
+};
+
+export const updateAllClosetProduct = async ({ targetId, editBody }: UpdateClosetInput) => {
+  const { data } = await client.put<ClosetOutput>(`/allCloset/${targetId}`, editBody);
   return data;
 };
 

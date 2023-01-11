@@ -1,13 +1,14 @@
 import React from 'react';
-import { ThumbNailData } from 'types/common';
-import ThumbNail from '../common/ThumbNail/ThumbNail';
+import Hanger from 'assets/icon/total_clothes.png';
+import Image from 'next/image';
+import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import Image from 'next/image';
-import Hanger from 'assets/icon/total_clothes.png';
-import Link from 'next/link';
 import { AllCategory } from 'types/category/client';
-import { useRouter } from 'next/router';
+import { ThumbNailData } from 'types/common';
+
+import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface CategoryProps {
   data: AllCategory;
