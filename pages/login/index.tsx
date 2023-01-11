@@ -24,7 +24,7 @@ function Login() {
   });
 
   return (
-    <Layout noHeader noMenuBar>
+    <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Styled.GreetingImg />
         <Styled.LoginButton onClick={() => login()}>

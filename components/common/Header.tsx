@@ -40,7 +40,7 @@ function Header() {
 export default Header;
 
 const Styled = {
-  Root: styled.div`
+  Root: styled.header`
     width: 100%;
 
     background-color: ${theme.colors.black};

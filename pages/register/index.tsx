@@ -41,7 +41,7 @@ function Register() {
   };
 
   return (
-    <Layout noHeader noMenuBar>
+    <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Styled.LeftConatiner>
           <h1>Log In</h1>
