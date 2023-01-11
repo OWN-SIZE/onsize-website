@@ -6,12 +6,23 @@ import Image from 'next/image';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
 import { useFetchMysize } from 'hooks/queries/mySize';
+import useToast from 'components/common/Toast/useToast';
+import {Toast} from 'components/common/Toast/Toast';
+import { ToastContext } from 'components/common/Toast/ToastProvider';
+import { useContext } from 'react';
 import TopRequestModal from 'assets/icon/topRequestModal.png';
 import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
 
 export default function Mysize() {
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
+
+  const { isOpenToast, message, showToast } = useToast();
+
+  const handleClick = () => {
+    showToast("저장되었습니다.");
+  };
+
   const onSuccessSubmit = () => { console.log('저장 성공')}; //토스트
 
   const [topColor, setTopColor] = useState(`${theme.colors.black}`);
@@ -140,7 +151,7 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
         >
-          <Styled.SaveButton>저장</Styled.SaveButton>
+          <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
         </SizeForm>
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
@@ -158,6 +169,7 @@ export default function Mysize() {
           </Styled.BottomRequestModal>
         </Styled.BottomRequestModalContainer>
       ) : null}
+      {isOpenToast && <Styled.ToastContainer><Toast message = {message} /></Styled.ToastContainer>}
     </Styled.Root>
   );
 }
@@ -276,7 +288,6 @@ const Styled = {
     border-width: 0.5rem 0 0.5rem 0.6rem;
     border-color: transparent transparent transparent ${theme.colors.gray000};
     filter: drop-shadow(0rem 0rem 0.4rem rgba(0, 0, 0, 0.12)) drop-shadow(0.2rem 0.6rem 1.2rem rgba(0, 0, 0, 0.12));
-
   `,
   BottomModalTriangle: styled.div`
     width: 0;
@@ -286,4 +297,11 @@ const Styled = {
     border-color: transparent ${theme.colors.gray000} transparent transparent;
     filter: drop-shadow(0rem 0rem 0.4rem rgba(0, 0, 0, 0.12)) drop-shadow(0.2rem 0.6rem 1.2rem rgba(0, 0, 0, 0.12));
   `,
+  ToastContainer: styled.div`
+    position: fixed;
+    bottom: 5.2rem;
+    display: flex;
+    align-items: center;
+    margin-left: 22.4rem;
+`,
 };
