@@ -26,6 +26,7 @@ const Styled = {
   Root: styled.div`
     font-family: 'Noto Sans';
     padding: 0 16rem;
+    background-color: ${theme.colors.black};
   `,
   ImageWrapper: styled.div`
     position: fixed;
