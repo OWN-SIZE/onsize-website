@@ -2,19 +2,19 @@ import { Dispatch } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { useDeleteAllClosetProductMutation } from '@/hooks/queries/allCloset';
-
-import Modal from '../common/Modal';
+import Modal from '@/components/common/Modal';
+import { useDeleteCategoryClosetProductMutation } from '@/hooks/queries/allCloset';
 
 interface ModalProps {
   productId: string;
+  categoryId: string;
   page: string;
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
 }
-function ClosetDeleteModal(props: ModalProps) {
-  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId } = props;
+function CategoryClosetDeleteModal(props: ModalProps) {
+  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, categoryId } = props;
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -23,9 +23,9 @@ function ClosetDeleteModal(props: ModalProps) {
     setImgHoveredTarget('');
   };
 
-  const { mutate: deleteClosetProduct } = useDeleteAllClosetProductMutation();
+  const { mutate: deleteClosetProduct } = useDeleteCategoryClosetProductMutation(categoryId);
   const onClickMake = () => {
-    deleteClosetProduct(productId);
+    deleteClosetProduct({ categoryId: categoryId, productId: productId });
     setIsModalOpen(false);
     setImgHoveredTarget('');
   };
@@ -40,12 +40,12 @@ function ClosetDeleteModal(props: ModalProps) {
         rightButtonText="예"
         width={53}
       >
-        <Styled.Content>나의 옷장에서 삭제하시겠습니까?</Styled.Content>
+        <Styled.Content>카테고리에서 삭제하시겠습니까?</Styled.Content>
       </Modal>
     </Styled.Root>
   );
 }
-export default ClosetDeleteModal;
+export default CategoryClosetDeleteModal;
 const Styled = {
   Root: styled.div`
     position: absolute;
