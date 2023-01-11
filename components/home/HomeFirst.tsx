@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import LottieModal from '../common/modal/LottieModal';
+
 function HomeFirst() {
+  const [isTutorial, setIsTutorial] = useState(false);
   return (
     <Styled.Root>
       <Styled.Greeting>온사이즈를 시작하러 가볼까요?</Styled.Greeting>
-      <Styled.Button>튜토리얼 확인하기</Styled.Button>
+      <Styled.Button onClick={() => setIsTutorial(true)}>튜토리얼 확인하기</Styled.Button>
+      {isTutorial && <LottieModal />}
     </Styled.Root>
   );
 }
