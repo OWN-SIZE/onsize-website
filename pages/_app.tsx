@@ -17,14 +17,14 @@ export default function App({ Component, pageProps }: AppProps) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <AsyncBoundary>
-        <RecoilRoot>
-          <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
+      <RecoilRoot>
+        <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
+          <AsyncBoundary>
             <GlobalStyle />
             <Component {...pageProps} />
-          </GoogleOAuthProvider>
-        </RecoilRoot>
-      </AsyncBoundary>
+          </AsyncBoundary>
+        </GoogleOAuthProvider>
+      </RecoilRoot>
     </QueryClientProvider>
   );
 }

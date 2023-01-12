@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg } from 'assets/img';
 import axios from 'axios';
@@ -22,6 +22,10 @@ function Login() {
       authLogin(data, () => router.push('/register'));
     },
   });
+
+  useEffect(() => {
+    // 내가 아는 정보 : userId, token, isRegister(정보모두입력여부)
+  }, []);
 
   return (
     <Layout noHeader noMenuBar>
