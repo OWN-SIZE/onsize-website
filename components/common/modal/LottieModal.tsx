@@ -1,7 +1,4 @@
 import React, { useState } from 'react';
-import { LeftArrowIcon, RightArrowIcon } from 'assets/icon';
-import Lottie from 'lottie-react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -12,7 +9,9 @@ import tutorialAnimation4 from '../../../assets/lottie/tutorial04.json';
 import Modal from '../../common/Modal';
 import ModalPortal from '../../common/modal/ModalPortal';
 
-const lottieMapper = [
+import LottiePlayer from './LottiePlayer';
+
+export const lottieMapper = [
   {
     lottie: tutorialAnimation1,
     message: '먼저, 온사이즈 아이콘을 상단에 고정해주세요',
@@ -50,22 +49,7 @@ function LottieModal(props: LottieProps) {
   return (
     <ModalPortal>
       <Modal width={93} radius={2}>
-        <Styled.PageContainer>
-          <Styled.ArrowButton onClick={() => onClickArrow('left')}>
-            <Image src={LeftArrowIcon} width={60} height={60} alt="왼쪽 화살표 버튼" />
-          </Styled.ArrowButton>
-          <Styled.LottieContainer>
-            <Lottie animationData={lottieMapper[page].lottie} />
-            <Styled.PageButtonContainer>
-              {lottieMapper.map((lottie, index) => (
-                <Styled.PageButton key={index} isSelected={page === index} />
-              ))}
-            </Styled.PageButtonContainer>
-          </Styled.LottieContainer>
-          <Styled.ArrowButton onClick={() => onClickArrow('right')}>
-            <Image src={RightArrowIcon} width={60} height={60} alt="오른쪽 화살표 버튼" />
-          </Styled.ArrowButton>
-        </Styled.PageContainer>
+        <LottiePlayer onClickArrow={onClickArrow} page={page} lottie={lottieMapper[page].lottie} />
         <Styled.MessageContainer>
           <pre>{lottieMapper[page].message}</pre>
           <button onClick={onClickCloseButton}>닫기</button>
@@ -78,42 +62,6 @@ function LottieModal(props: LottieProps) {
 export default LottieModal;
 
 const Styled = {
-  PageContainer: styled.div`
-    display: flex;
-    align-items: center;
-    width: 82.2rem;
-    height: 44rem;
-    margin-top: 5rem;
-  `,
-  ArrowButton: styled.button`
-    display: flex;
-    justify-content: center;
-    align-content: center;
-    background: transparent;
-    width: 6rem;
-    height: 6rem;
-    border: 0;
-    cursor: pointer;
-  `,
-  LottieContainer: styled.div`
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 65.4rem;
-    margin: 0 2.4rem;
-  `,
-  PageButtonContainer: styled.div`
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    gap: 0 2.6rem;
-  `,
-  PageButton: styled.div<{ isSelected?: boolean }>`
-    width: 1.5rem;
-    height: 1.5rem;
-    margin-top: 1.7rem;
-    background: ${({ isSelected }) => (isSelected ? theme.colors.black : theme.colors.gray200)};
-    border-radius: 50%;
-  `,
   MessageContainer: styled.div`
     display: flex;
     justify-content: center;

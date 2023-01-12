@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
+import Lottie from 'lottie-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { lottieMapper } from '@/components/common/modal/LottieModal';
 import { useAuth } from '@/hooks/business/user';
 import Layout from 'components/common/Layout';
 
@@ -22,10 +24,7 @@ function Login() {
       authLogin(data, () => router.push('/register'));
     },
   });
-
-  useEffect(() => {
-    // 내가 아는 정보 : userId, token, isRegister(정보모두입력여부)
-  }, []);
+  const [page, setPage] = useState(0);
 
   return (
     <Layout noHeader noMenuBar>
@@ -33,7 +32,9 @@ function Login() {
         <Styled.Header>
           <Image src={OwnSizeLogoImg} alt="로고 이미지" />
         </Styled.Header>
-        <Styled.GreetingImg />
+        <Styled.LottieContainer>
+          <Lottie animationData={lottieMapper[page].lottie} />
+        </Styled.LottieContainer>
         <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
         </Styled.LoginButton>
@@ -66,17 +67,16 @@ const Styled = {
     padding-top: 2.3rem;
     padding-left: 16rem;
   `,
-  GreetingImg: styled.img`
+  LottieContainer: styled.div`
     width: 70rem;
     height: 50rem;
-    background-color: #d9d9d9;
     border-radius: 1.5rem;
-    margin-top: 16rem;
+    margin-top: 15.4rem;
   `,
   LoginButton: styled.button`
     width: 69.2rem;
     height: 7.2rem;
-    margin-top: 8rem;
+    margin-top: 14.6rem;
     border: 0;
     background: transparent;
     cursor: pointer;
