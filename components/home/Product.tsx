@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
@@ -12,10 +11,11 @@ interface ProductProps {
   data: ClosetOutput;
   page: string;
   categoryId?: string;
+  showToast: (message: string) => void;
 }
 
 function Product(props: ProductProps) {
-  const { data, page, categoryId } = props;
+  const { data, page, categoryId, showToast } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
   let targetCategoryId = '';
   if (categoryId) {
@@ -34,7 +34,6 @@ function Product(props: ProductProps) {
     isInPin: data.isInPin,
     productUrl: data.productUrl,
   };
-
   const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation('');
   const { mutate: updateIsInPin } = useUpdateIsInPinMutation(targetCategoryId);
 
@@ -56,6 +55,7 @@ function Product(props: ProductProps) {
           page="closet"
           updateIsPin={updateIsPIn}
           setIsProductHovered={setIsProductHovered}
+          showToast={showToast}
         />
       ) : (
         categoryId && (

@@ -43,6 +43,7 @@ interface ThumbNailProps {
   updateIsPin?: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
   updateIsCategoryPin?: ({ targetId, editBody }: UpdateCategoryRequest) => void;
   setIsProductHovered: Dispatch<SetStateAction<boolean>>;
+  showToast?: (message: string) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -56,6 +57,7 @@ function ThumbNail(props: ThumbNailProps) {
     categoryId,
     setIsProductHovered,
     updateIsCategoryPin,
+    showToast,
   } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
@@ -273,6 +275,7 @@ function ThumbNail(props: ThumbNailProps) {
                     categoryId={categoryId}
                     setIsModalOpen={setIsEditModalOpen}
                     setImgHoveredTarget={setImgHoveredTarget}
+                    showToast={showToast}
                     data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
                   />
                 )
@@ -293,13 +296,14 @@ function ThumbNail(props: ThumbNailProps) {
           </Styled.IconCotainer>
           {isDeleteModalOpen && (
             <ModalPortal>
-              {page === 'closet' ? (
+              {page === 'closet' && showToast ? (
                 <ClosetDeleteModal
                   productId={data.id}
                   page={page}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
+                  showToast={showToast}
                 />
               ) : page === 'categoryDetail' && categoryId ? (
                 <CategoryClosetDeleteModal
