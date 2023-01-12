@@ -16,6 +16,7 @@ type ModifyCategoryModalProps = {
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
+  const [isButtonActivated, setIsButtonActivated] = useState(false);
 
   const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName } = props;
 
@@ -41,6 +42,12 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
 
   useEffect(() => {
     setDefaultValue(changeInputValue);
+    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName){
+      setIsButtonActivated(true);
+      console.log(changeInputValue);
+    } else {
+      setIsButtonActivated(false);
+    }
   },[changeInputValue])
   
 
@@ -67,6 +74,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         leftButtonText="취소"
         rightButtonText="수정"
         width={74.3}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.CategoryModifyModal>
           <h1>카테고리 이름</h1>
