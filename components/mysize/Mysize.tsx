@@ -11,7 +11,6 @@ import theme from 'styles/theme';
 
 import SizeForm from 'components/common/SizeForm/SizeForm';
 import { Toast } from 'components/common/Toast/Toast';
-import { ToastContext } from 'components/common/Toast/ToastProvider';
 import useToast from 'components/common/Toast/useToast';
 
 
@@ -63,6 +62,7 @@ export default function Mysize() {
     const shoulder = top?.shoulder;
     const chest = top?.chest;
     const isWidthOfTop = top?.isWidthOfTop;
+    console.log(isWidthOfTop);
     const bottomLength = bottom?.bottomLength;
     const rise = bottom?.rise;
     const waist = bottom?.waist;
@@ -80,7 +80,7 @@ export default function Mysize() {
     ) {
       inputRequest = '하의';
     }
-    if (topLength !== null && shoulder !== null && chest !== null && isWidthOfTop !== null) {
+    if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
       inputRequest = '상의';
     }
 
@@ -88,9 +88,9 @@ export default function Mysize() {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
     } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '단면') {
+    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '둘레') {
+    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
     } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
       data = {
@@ -113,6 +113,7 @@ export default function Mysize() {
     } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
       data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
     }
+  
   }
   return (
     <Styled.Root>
@@ -145,7 +146,6 @@ export default function Mysize() {
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
       <Styled.SizeFormContainer>
-        {data && (
           <SizeForm
             noHeader
             formType={isTopClicked ? '상의' : '하의'}
@@ -158,7 +158,6 @@ export default function Mysize() {
           >
             <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
           </SizeForm>
-        )}
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
         <Styled.TopRequestModalContainer>

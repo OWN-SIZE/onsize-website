@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 type DataType =
-  | {
+   {
       [key: string]: number;
       총장: number;
       '어깨 너비': number;
@@ -31,7 +31,6 @@ interface InputProps {
 function SizeInput(props: InputProps) {
   const { inputKey, measure, register, setValue, valid, data } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
-
   return (
     <Styled.InputContainer key={inputKey}>
       <label>{label}</label>

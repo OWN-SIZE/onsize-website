@@ -57,6 +57,9 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     }
   };
 
+ 
+
+
   return (
     <Styled.Root>
       <Styled.ModalContainer width={width} radius={radius}>
@@ -65,7 +68,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
         {onClickLeftButton && onClickRightButton && (
           <Styled.ModalButtons>
             <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
-            <Styled.RightButton onClick={onClickRightButton} isButtonActivated = {isButtonActivated} >{rightButtonText}</Styled.RightButton>
+            <Styled.RightButton onClick={onClickRightButton} isButtonActivated={isButtonActivated ? isButtonActivated : !isButtonActivated} >{rightButtonText}</Styled.RightButton>
           </Styled.ModalButtons>
         )}
       </Styled.ModalContainer>
@@ -132,7 +135,7 @@ const Styled = {
   LeftButton: styled.button`
     background-color: ${theme.colors.gray200};
   `,
-  RightButton: styled.button`
-    background-color: ${(props: any) => props.isButtonActivated ? theme.colors.black : theme.colors.gray200};
+  RightButton: styled.button<{isButtonActivated: boolean }>`
+    background-color: ${(props) => props.isButtonActivated ? theme.colors.black : theme.colors.gray200};
   `,
 };
