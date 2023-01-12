@@ -19,7 +19,8 @@
       "@/components/*": ["components/*"],
       "@/pages/*": ["pages/*"],
       "@/apis/*": ["apis/*"],
-      "@/hooks/*": ["hooks/*"]
+      "@/hooks/*": ["hooks/*"],
+      "@/assets/*": ["assets/*"]
     },
     "incremental": true,
     "isolatedModules": true
