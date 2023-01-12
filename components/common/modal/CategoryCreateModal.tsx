@@ -1,5 +1,5 @@
-import React from 'react';
 import { usePostCategory } from 'hooks/queries/category';
+import React, {useEffect, useState} from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -16,6 +16,7 @@ type CategoryCreateModalProps = {
 export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal } = props;
   const { mutate } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  const [isButtonActivated, setIsButtonActivated] = useState(false);
 
   const onClickCancel = () => {
     onClickCategoryCreateModal();
@@ -23,12 +24,12 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const onClickMake = () => {
     if (changeInputValue.length > 0) {
       mutate({ categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3'] });
+      onClickCategoryCreateModal();
     }
-    onClickCategoryCreateModal();
   };
 
   //한글 글자수 제한 (서현이 것 쇽샥)
-  const handleOnInput = (e) => {
+  const handleOnInput = (e: any) => {
     const {
       currentTarget: { value, maxLength },
     } = e;
@@ -36,6 +37,15 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
       e.currentTarget.value = value.slice(0, maxLength);
     }
   };
+
+  useEffect(() => {
+    if (changeInputValue.length > 0){
+      setIsButtonActivated(true);
+      console.log(changeInputValue);
+    } else {
+      setIsButtonActivated(false);
+    }
+  }, [changeInputValue])
 
   return (
     <ModalPortal>
@@ -47,6 +57,7 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
         leftButtonText="취소"
         rightButtonText="만들기"
         width={74}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.CategoryCreateModal>
           <h1>카테고리 이름</h1>

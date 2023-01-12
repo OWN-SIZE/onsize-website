@@ -14,9 +14,9 @@ import { Toast } from 'components/common/Toast/Toast';
 import { ToastContext } from 'components/common/Toast/ToastProvider';
 import useToast from 'components/common/Toast/useToast';
 
+
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
-  console.log(allMysize);
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
@@ -54,57 +54,64 @@ export default function Mysize() {
     }
   };
 
+
   if (allMysize) {
+    const { bottom } = allMysize;
+    const { top } = allMysize;
+
+    const topLength = top?.topLength;
+    const shoulder = top?.shoulder;
+    const chest = top?.chest;
+    const isWidthOfTop = top?.isWidthOfTop;
+    const bottomLength = bottom?.bottomLength;
+    const rise = bottom?.rise;
+    const waist = bottom?.waist;
+    const thigh = bottom?.thigh;
+    const hem = bottom?.hem;
+    const isWidthOfBottom = bottom?.isWidthOfBottom;
+
     if (
-      allMysize.bottom.bottomLength === null &&
-      allMysize.bottom.hem === null &&
-      allMysize.bottom.isWidthOfBottom === null &&
-      allMysize.bottom.rise === null &&
-      allMysize.bottom.thigh === null &&
-      allMysize.bottom.waist === null
+      bottomLength === null &&
+      hem === null &&
+      isWidthOfBottom === null &&
+      rise === null &&
+      thigh === null &&
+      waist === null
     ) {
       inputRequest = '하의';
     }
-    if (
-      allMysize.top.topLength === null &&
-      allMysize.top.shoulder === null &&
-      allMysize.chest.isWidthOfBottom === null &&
-      allMysize.top.isWidthOfTop === null
-    ) {
+    if (topLength !== null && shoulder !== null && chest !== null && isWidthOfTop !== null) {
       inputRequest = '상의';
     }
 
-    const { chest } = allMysize.top;
-    const { thigh, rise, hem } = allMysize.bottom;
-
-    if (isTopClicked && allMysize.top.isWidthOfTop && clickedMeasure === '둘레') {
-      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest };
-    } else if (isTopClicked && allMysize.top.isWidthOfTop && clickedMeasure === '단면') {
-      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: '' };
-    } else if (isTopClicked && allMysize.top.isWidthOfTop === null && clickedMeasure === '단면') {
-      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest };
-    } else if (isTopClicked && allMysize.top.isWidthOfTop === null && clickedMeasure === '둘레') {
-      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: '' };
-    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom && clickedMeasure === '둘레') {
+    if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
+      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
+    } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
+      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
+    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '단면') {
+      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
+    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '둘레') {
+      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
+    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
       data = {
-        총장: allMysize.bottom.bottomLength,
-        밑위: allMysize.bottom.rise,
-        허리: allMysize.bottom.waist,
-        허벅지: allMysize.bottom.thigh,
-        밑단: allMysize.bottom.hem,
+        총장: bottomLength,
+        밑위: rise,
+        허리: waist,
+        허벅지: thigh,
+        밑단: hem,
       };
-    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom && clickedMeasure === '단면') {
-      data = { 총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: '', 허벅지: '', 밑단: '' };
-    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom === null && clickedMeasure === '단면') {
+    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
+      data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
+    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '단면') {
       data = {
-        총장: allMysize.bottom.bottomLength,
-        밑위: allMysize.bottom.rise,
-        허리: allMysize.bottom.waist,
-        허벅지: allMysize.bottom.thigh,
-        밑단: allMysize.bottom.hem,
+        총장: bottomLength,
+        밑위: rise,
+        허리: waist,
+        허벅지: thigh,
+        밑단: hem,
       };
-    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom === null && clickedMeasure === '둘레') {
-      data = { 총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: '', 허벅지: '', 밑단: '' };
+    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
+      data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
     }
   }
   return (
@@ -138,18 +145,20 @@ export default function Mysize() {
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
       <Styled.SizeFormContainer>
-        <SizeForm
-          noHeader
-          formType={isTopClicked ? '상의' : '하의'}
-          isAlertActive={isAlertActive}
-          setIsAlertActive={setIsAlertActive}
-          setIsSubmitActive={setIsSubmitActive}
-          onSuccessSubmit={onSuccessSubmit}
-          onClickMeasure={onClickMeasure}
-          data={data}
-        >
-          <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
-        </SizeForm>
+        {data && (
+          <SizeForm
+            noHeader
+            formType={isTopClicked ? '상의' : '하의'}
+            isAlertActive={isAlertActive}
+            setIsAlertActive={setIsAlertActive}
+            setIsSubmitActive={setIsSubmitActive}
+            onSuccessSubmit={onSuccessSubmit}
+            onClickMeasure={onClickMeasure}
+            data={data}
+          >
+            <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
+          </SizeForm>
+        )}
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
         <Styled.TopRequestModalContainer>

@@ -13,6 +13,7 @@ type ModalProps = {
   onClickModal?: () => void;
   onClickLeftButton?: () => void;
   onClickRightButton?: () => void;
+  isButtonActivated?: boolean;
 };
 /*width 를 props 로 전달해야 하는 이유: 가로 대 세로 2 대 1의 비율로 모달 컴포넌트를 제작했기 때문..!
 <= 안그러면 padding top 과 bottom 의 값이 조금씩 달라져서..! 최대한 원래 디자인을 살리는 방법으로 이 방법을 선택했어요
@@ -29,6 +30,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     onClickLeftButton,
     onClickRightButton,
     children,
+    isButtonActivated,
   } = props;
 
   const disableScroll = () => {
@@ -63,7 +65,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
         {onClickLeftButton && onClickRightButton && (
           <Styled.ModalButtons>
             <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
-            <Styled.RightButton onClick={onClickRightButton}>{rightButtonText}</Styled.RightButton>
+            <Styled.RightButton onClick={onClickRightButton} isButtonActivated = {isButtonActivated} >{rightButtonText}</Styled.RightButton>
           </Styled.ModalButtons>
         )}
       </Styled.ModalContainer>
@@ -131,6 +133,6 @@ const Styled = {
     background-color: ${theme.colors.gray200};
   `,
   RightButton: styled.button`
-    background-color: ${theme.colors.black};
+    background-color: ${(props: any) => props.isButtonActivated ? theme.colors.black : theme.colors.gray200};
   `,
 };

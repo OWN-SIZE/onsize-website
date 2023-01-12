@@ -1,9 +1,9 @@
 import { client } from 'apis';
 import { BottomSizeInput, MySizeResponse, TopSizeInput } from 'types/mySize/client';
-import { AllMysizeResponse } from 'types/mySize/remote';
+import { AllMysize } from 'types/mySize/remote';
 
 export const fetchMysize = async () => {
-  const {data} = await client.get<AllMysizeResponse>(`/mySize`);
+  const { data :  data  } = await client.get<AllMysize>(`/mySize`);
   return data;
 }
 

@@ -23,7 +23,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    if (changeInputValue.length > 0) {
+    if (changeInputValue && changeInputValue.length > 0) {
       console.log(changeInputValue);
       mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
     }
@@ -37,15 +37,15 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     setChangeInputValue(input);
   };
 
-  const [defaultValue, setDefaultValue] = useState("dfs");
+  const [defaultValue, setDefaultValue] = useState<undefined | string>("dfs");
 
   useEffect(() => {
-      setDefaultValue(changeInputValue);
+    setDefaultValue(changeInputValue);
   },[changeInputValue])
   
 
   //한글 글자수 제한 (서현이 것 쇽샥)
-  const handleOnInput = (e) => {
+  const handleOnInput = (e: any) => {
     const {
       currentTarget: { value, maxLength },
     } = e;
@@ -79,7 +79,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
             onInput={handleOnInput}
             autoFocus={true}
           ></Styled.CategoryNameInput>
-          <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
+          <h6>{changeInputValue ? (changeInputValue.length > 20 ? 20 : changeInputValue.length) : 0}/20</h6>
         </Styled.CategoryModifyModal>
       </Modal>
     </ModalPortal>

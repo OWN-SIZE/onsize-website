@@ -24,7 +24,7 @@ export default function Category(props: CategoryProps) {
   const newArray: string[] | null = [];
 
   if (data) {
-    data = data.sort((a, b) => {
+    data = data.sort((a: any, b: any) => {
       return Number(b.id) - Number(a.id);
     });
   }
