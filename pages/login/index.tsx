@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
-import Lottie from 'lottie-react';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { lottieMapper } from '@/components/common/modal/LottieModal';
+import LottiePlayer from '@/components/common/modal/LottiePlayer';
 import { useAuth } from '@/hooks/business/user';
 import Layout from 'components/common/Layout';
 
@@ -25,6 +25,13 @@ function Login() {
     },
   });
   const [page, setPage] = useState(0);
+  const onClickArrow = (arrowType: 'left' | 'right') => {
+    if (arrowType === 'left') {
+      setPage((prev) => (prev === 0 ? lottieMapper.length - 1 : prev - 1));
+    } else {
+      setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
+    }
+  };
 
   return (
     <Layout noHeader noMenuBar>
@@ -32,9 +39,7 @@ function Login() {
         <Styled.Header>
           <Image src={OwnSizeLogoImg} alt="로고 이미지" />
         </Styled.Header>
-        <Styled.LottieContainer>
-          <Lottie animationData={lottieMapper[page].lottie} />
-        </Styled.LottieContainer>
+        <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode />
         <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
         </Styled.LoginButton>
@@ -66,12 +71,7 @@ const Styled = {
     width: 100%;
     padding-top: 2.3rem;
     padding-left: 16rem;
-  `,
-  LottieContainer: styled.div`
-    width: 70rem;
-    height: 50rem;
-    border-radius: 1.5rem;
-    margin-top: 15.4rem;
+    margin-bottom: 10.4rem;
   `,
   LoginButton: styled.button`
     width: 69.2rem;
