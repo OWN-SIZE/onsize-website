@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import React from 'react';
 import {
   AddCategoryCloseIcon,
@@ -16,6 +16,7 @@ import {
   SizeIcon,
 } from 'assets/icon';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
@@ -38,19 +39,32 @@ interface ThumbNailProps {
   noAddCategory?: boolean;
   categoryId?: string;
   updateIsPin: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
+  setIsProductHovered: Dispatch<SetStateAction<boolean>>;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page, updateIsPin, categoryId } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin, categoryId, setIsProductHovered } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const handleImageMousehover = () => {
+    setImgHoveredTarget(data.id);
+    setIsProductHovered(true);
+  };
+
+  const handleImageMouseLeave = () => {
+    setImgHoveredTarget('');
+    setIsProductHovered(false);
+  };
+
   const handleIconMousehover = (e: React.MouseEvent) => {
     setIconHoveredTarget(e.currentTarget.id);
   };
+
   const handleIconMouseLeave = () => {
     setIconHoveredTarget('');
   };
@@ -81,8 +95,8 @@ function ThumbNail(props: ThumbNailProps) {
 
   return (
     <Styled.Root
-      onMouseEnter={() => setImgHoveredTarget(data.id)}
-      onMouseLeave={() => setImgHoveredTarget('')}
+      onMouseEnter={handleImageMousehover}
+      onMouseLeave={handleImageMouseLeave}
       id={data.id}
       width={width}
       height={height}
@@ -117,40 +131,48 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {data.image && page === 'category' ? (
-        <Styled.ThumbNailImg className={'category'} width={width} height={height}>
-          <Image
-            src=""
-            alt={'썸네일 이미지' + data.image[0]}
-            width={226}
-            height={300}
-            placeholder="blur"
-            blurDataURL="assets/icon/folder_filled.png"
-          />
-          <Styled.SeparateImages>
+      {
+        data.image && page === 'category' ? (
+          <Styled.ThumbNailImg className={'category'} width={width} height={height}>
             <Image
               src=""
-              alt={'썸네일 이미지' + data.image[1]}
+              alt={'썸네일 이미지' + data.image[0]}
               width={226}
-              height={150}
+              height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
             />
-            <Image
-              src=""
-              alt={'썸네일 이미지' + data.image[2]}
-              width={226}
-              height={150}
-              placeholder="blur"
-              blurDataURL="assets/icon/folder_filled.png"
-            />
-          </Styled.SeparateImages>
-        </Styled.ThumbNailImg>
-      ) : (
-        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
-      )}
+            <Styled.SeparateImages>
+              <Image
+                src=""
+                alt={'썸네일 이미지' + data.image[1]}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+              <Image
+                src=""
+                alt={'썸네일 이미지' + data.image[2]}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+            </Styled.SeparateImages>
+          </Styled.ThumbNailImg>
+        ) : (
+          <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+        )
+        // (typeof data.image === 'string' ? (
+        //   <Image src={data.image} width={Number(width)} height={Number(height)} alt="상품 대표 이미지" />
+        // ) : (
+        //   <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
+        // ))
+      }
 
       {/* 썸네일 호버시 코드 */}
+
       <Styled.HoverThumbNail
         className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
@@ -168,7 +190,18 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </button>
         )}
-        {isCategoryModalOpen && <AddCategoryModal productId={data.id} />}
+        {isCategoryModalOpen && (
+          <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} />
+        )}
+        {page === 'category' ? (
+          <Link href={`/category/${data.id}`}>
+            <Styled.ClickZone />
+          </Link>
+        ) : (
+          <a href={data.productUrl} target={'_blank'} rel="noreferrer">
+            <Styled.ClickZone />
+          </a>
+        )}
         {/* 아이콘 */}
         <div className="iconContainer">
           {/* 고정 */}
@@ -297,6 +330,7 @@ const Styled = {
     width: 4rem;
     height: 4rem;
     cursor: pointer;
+    z-index: 2;
     & > .hide {
       display: none;
     }
@@ -352,14 +386,20 @@ const Styled = {
         display: flex;
         justify-content: space-between;
         align-items: center;
+
         width: 14.2rem;
         height: 2.7rem;
+
         top: 2rem;
         left: 2.6rem;
+        z-index: 2;
+
         border: none;
         background: none;
+
         ${theme.fonts.title3};
         color: ${theme.colors.gray000};
+
         cursor: pointer;
         & > img {
           width: 1.6rem;
@@ -376,6 +416,10 @@ const Styled = {
         height: 4rem;
       }
     }
+  `,
+  ClickZone: styled.div`
+    width: 100%;
+    height: 100%;
   `,
   SeparateImages: styled.div`
     display: flex;

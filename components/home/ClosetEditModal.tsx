@@ -118,6 +118,7 @@ function ClosetEditModal(props: ModalProps) {
                 ? 'disabled'
                 : 'abled'
             }
+            disabled={productNameInput === data.productName && sizeInput === data.size && memoInput === data.memo}
           >
             수정
           </Styled.SubmitButton>
@@ -224,6 +225,9 @@ const Styled = {
     cursor: pointer;
     &.abled {
       background-color: ${theme.colors.black};
+    }
+    &.disabled {
+      cursor: default;
     }
   `,
 };

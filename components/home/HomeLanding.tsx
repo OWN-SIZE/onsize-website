@@ -20,14 +20,13 @@ function HomeLanding() {
     data = pinData.concat(noPinData);
   }
 
-  return <Styled.Root>{!data ? <HomeFirst /> : <HomeMain data={data} page="closet" />}</Styled.Root>;
+  return <Styled.Root>{data ? <HomeMain data={data} page="closet" /> : <HomeFirst />}</Styled.Root>;
 }
 
 export default HomeLanding;
 const Styled = {
   Root: styled.div`
     width: 140.8rem;
-    height: 100%;
     margin: 0 auto;
   `,
 };

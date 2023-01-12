@@ -1,14 +1,16 @@
-import React, { useState, useRef } from 'react';
+import React, { useRef, useState } from 'react';
+import Add from 'assets/icon/add.png';
+import Folder from 'assets/icon/folder_filled.png';
+import { useFetchAllCategory } from 'hooks/queries/category';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import Folder from 'assets/icon/folder_filled.png';
-import Add from 'assets/icon/add.png';
-import Category from './Category';
+import { AllCategory } from 'types/category/client';
+
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
-import { useFetchAllCategory } from 'hooks/queries/category';
-import { AllCategory } from 'types/category/client';
+
+import Category from './Category';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
@@ -81,7 +83,6 @@ export default function CategoryMain() {
 const Styled = {
   Root: styled.div`
     width: 100vw;
-    height: 100vh;
     background-color: ${theme.colors.gray000};
   `,
   CategoryContainer: styled.div`

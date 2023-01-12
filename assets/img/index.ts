@@ -6,3 +6,5 @@ export { default as TopImg } from './top.png';
 export { default as BottomImg } from './bottom.png';
 export { default as Hanger } from './hanger.png';
 export { default as OwnSizeLogoImg } from './ownsizeLogo.png';
+export { default as MouseImg } from './mouse.png';
+export { default as MouseHoverImg } from './mouse_hover.png';
