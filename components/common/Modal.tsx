@@ -123,10 +123,14 @@ const Styled = {
       border-radius: 0.5rem;
       border: none;
       &:hover {
-        background-color: ${theme.colors.black};
+        cursor: pointer;
       }
     }
   `,
-  LeftButton: styled.button``,
-  RightButton: styled.button``,
+  LeftButton: styled.button`
+    background-color: ${theme.colors.gray200};
+  `,
+  RightButton: styled.button`
+    background-color: ${theme.colors.black};
+  `,
 };

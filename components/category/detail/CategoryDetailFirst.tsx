@@ -1,34 +1,25 @@
-import { ClosetIcon } from 'assets/icon';
+import { CategoryDetailFirstClosetIcon, ClosetIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { ClosetOutput } from 'types/allCloset/client';
 
-import Product from './Product';
-
-interface HomeMainProps {
-  data: ClosetOutput[];
-  page: string;
-  categoryId?: string;
-}
-
-function HomeMain(props: HomeMainProps) {
-  const { data, page, categoryId } = props;
-  const countProduct = data.length;
-  const product = data.map((item) => <Product key={String(item.id)} data={item} categoryId={categoryId} page={page} />);
-
+function CategoryDetailFirst() {
   return (
     <Styled.Root>
       <Styled.CountSection>
         <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" />
-        <Styled.Count>{countProduct}</Styled.Count>
+        <Styled.Count>0</Styled.Count>
       </Styled.CountSection>
-      <Styled.Closet>{product}</Styled.Closet>
+      <Styled.BlankLanding>
+        <Image src={CategoryDetailFirstClosetIcon} alt="옷걸이 아이콘" />
+        카테고리 의류가 비어있어요
+      </Styled.BlankLanding>
     </Styled.Root>
   );
 }
-export default HomeMain;
-// 시맨틱 태그 다시 확인
+
+export default CategoryDetailFirst;
+
 const Styled = {
   Root: styled.div`
     display: flex;
@@ -36,6 +27,7 @@ const Styled = {
     width: 140.6rem;
     margin: 5rem auto 0;
   `,
+
   CountSection: styled.div`
     display: flex;
   `,
@@ -48,5 +40,20 @@ const Styled = {
     display: flex;
     flex-wrap: wrap;
     margin-top: 5rem;
+  `,
+
+  BlankLanding: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    width: 32.5rem;
+    height: 13.5rem;
+
+    margin: 9.5rem auto 34.1rem;
+
+    ${theme.fonts.title4};
+    color: ${theme.colors.gray550};
   `,
 };

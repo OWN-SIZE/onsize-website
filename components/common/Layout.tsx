@@ -1,5 +1,6 @@
 import styled from 'styled-components';
 
+import Footer from './Footer';
 import Header from './Header';
 import MenuBar from './MenuBar';
 
@@ -7,16 +8,18 @@ interface LayoutProps {
   children: React.ReactNode;
   noHeader?: boolean;
   noMenuBar?: boolean;
+  noFooter?: boolean;
 }
 
 function Layout(props: LayoutProps) {
-  const { children, noHeader, noMenuBar } = props;
+  const { children, noHeader, noMenuBar, noFooter } = props;
 
   return (
     <Root>
       {!noHeader && <Header />}
       {!noMenuBar && <MenuBar />}
       {children}
+      {!noFooter && <Footer />}
     </Root>
   );
 }

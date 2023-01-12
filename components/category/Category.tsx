@@ -1,39 +1,74 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Hanger from 'assets/icon/total_clothes.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { AllCategory } from 'types/category/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
+import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
+import { useUpdateCategory } from 'hooks/queries/category';
 
 interface CategoryProps {
-  data: AllCategory;
+  categoryData: AllCategory;
 }
 
 export default function Category(props: CategoryProps) {
-  const { data } = props;
+  const { categoryData } = props;
+  const [isProductHovered, setIsProductHovered] = useState(false);
+
+  let data = useFetchCategoryDetail(categoryData.id);
+
+  const newArray: string[] | null = [];
+
+  if (data) {
+    data = data.sort((a, b) => {
+      return Number(b.id) - Number(a.id);
+    });
+  }
+  [0, 1, 2].map((item) => {
+    if (data) {
+      newArray.push(data[item]?.image);
+    }
+  });
+
+  const { mutate: updateIsPin } = useUpdateCategory();
+
 
   const ThumbNailData: ThumbNailData = {
-    id: data.id,
-    isPin: data.isPinCategory,
-    image: data.image,
+    id: categoryData.id,
+    isPin: categoryData.isPinCategory,
+    image: newArray, 
+    categoryName: categoryData.categoryName
+  };
+
+  const handleOnMouseEnter = () => {
+    setIsProductHovered(true);
+  };
+
+  const handleOnMouseLeave = () => {
+    setIsProductHovered(false);
   };
 
   return (
     <Styled.Root>
       <Styled.Category>
         <Styled.CategoryImage>
-          <ThumbNail data={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory />
+          <ThumbNail data={ThumbNailData} categoryData={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory updateIsPin={updateIsPin} setIsProductHovered={setIsProductHovered}/>
         </Styled.CategoryImage>
         <Link
-          href={{ pathname: `/category/${data.id}`, query: { categoryName: data.categoryName } }}
-          as={`/category/${data.id}`}
+          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
+          as={`/category/${categoryData.id}`}
         >
-          <Styled.CategoryTitle>{data.categoryName}</Styled.CategoryTitle>
+          <Styled.CategoryTitle
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+            isProductHovered={isProductHovered}
+          >
+            {categoryData.categoryName}
+          </Styled.CategoryTitle>
         </Link>
         <Styled.ClothesAmount>
           <Image
@@ -44,7 +79,7 @@ export default function Category(props: CategoryProps) {
             placeholder="blur"
             blurDataURL="assets/icon/total_clothes.png"
           />
-          <h1>{data.productNum}</h1>
+          <h1>{data && data.length}</h1>
         </Styled.ClothesAmount>
       </Styled.Category>
     </Styled.Root>
@@ -69,13 +104,14 @@ const Styled = {
     display: flex;
     border-radius: 1rem;
   `,
-  CategoryTitle: styled.div`
+  CategoryTitle: styled.div<{ isProductHovered: boolean }>`
     width: 36.8rem;
     height: 3.2rem;
     ${theme.fonts.title3};
     color: ${theme.colors.gray550};
     margin-top: 1.6rem;
     margin-bottom: 2.4rem;
+    text-decoration: ${({ isProductHovered }) => (isProductHovered ? 'underline 0.2rem' : 'none')};
   `,
   ClothesAmount: styled.div`
     width: 36.8rem;

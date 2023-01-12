@@ -23,3 +23,4 @@ export interface MySizeOutput {
 export interface MySizeResponse {
   data: MySizeOutput;
 }
+

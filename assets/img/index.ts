@@ -8,3 +8,5 @@ export { default as Hanger } from './hanger.png';
 export { default as OwnSizeLogoImg } from './ownsizeLogo.png';
 export { default as LoginMouseImg } from './login-mouse.png';
 export { default as BigLogoImg } from './logo-big.png';
+export { default as MouseImg } from './mouse.png';
+export { default as MouseHoverImg } from './mouse_hover.png';

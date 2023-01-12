@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteCategory, fetchAllCategory, postCategory, updateCategory } from 'apis/category';
+import { deleteCategory, fetchAllCategory, fetchOneCategory, postCategory, updateCategory } from 'apis/category';
 import { CreateCategory } from 'types/category/client';
+import { useRouter } from 'next/router';
 
 const QUERY_KEY = {
   category: 'category',
@@ -14,6 +15,7 @@ export const useFetchAllCategory = () => {
     category: data,
   };
 };
+
 
 /** Mutation */
 
@@ -39,10 +41,13 @@ export const useUpdateCategory = () => {
 
 export const useDeleteCategory = () => {
   const queryClient = useQueryClient();
-
+  const router = useRouter();
   return useMutation(deleteCategory, {
     onSuccess() {
       queryClient.invalidateQueries([QUERY_KEY.category]);
+      if (router.asPath.startsWith('/category/')) {
+        router.push('/category');
+      }
     },
   });
 };

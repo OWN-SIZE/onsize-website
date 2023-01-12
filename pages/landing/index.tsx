@@ -12,7 +12,7 @@ function Lading() {
     localStorage.setItem('isRegister', 'false');
   }, []);
   return (
-    <Layout noHeader noMenuBar>
+    <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Image src={BigLogoImg} width={300} height={300} placeholder="blur" alt="로고 이미지" />
         <Styled.Title>쉽고 똑똑한 나만의 쇼핑 도우미, 온사이즈</Styled.Title>

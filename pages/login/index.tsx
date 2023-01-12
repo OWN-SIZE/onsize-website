@@ -34,7 +34,7 @@ function Login() {
   };
 
   return (
-    <Layout noHeader noMenuBar>
+    <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Styled.Header>
           <Image src={OwnSizeLogoImg} alt="로고 이미지" />

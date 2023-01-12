@@ -24,9 +24,7 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const onClickDelete = () => {
     onClickDeleteCategoryModal();
     mutate(deletedCategoryId);
-    if (router.query) {
-      router.push('/category');
-    }
+    
   };
   return (
     <ModalPortal>
