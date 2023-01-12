@@ -1,11 +1,13 @@
-import { InfoIcon, OpenMySizeIcon } from 'assets/icon';
-import { OwnSizeLogoImg } from 'assets/img';
+import { useState } from 'react';
+import { AddCategoryIcon, HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from 'assets/icon';
+import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 function Header() {
+  const [isButtonHovered, setIsButtonHovered] = useState(false);
   return (
     <Styled.Root>
       <Styled.Container>
@@ -24,11 +26,20 @@ function Header() {
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
+        <Image
+          src={isButtonHovered ? MouseHoverImg : MouseImg}
+          className={isButtonHovered ? 'mouse hovered' : 'mouse'}
+          alt="마우스 이미지"
+        />
         <Styled.MySizeButtonBackGround>
           <Link href="/mysize">
-            <Styled.MySizeButton>
+            <Styled.MySizeButton
+              onMouseEnter={() => setIsButtonHovered(!isButtonHovered)}
+              onMouseLeave={() => setIsButtonHovered(!isButtonHovered)}
+              className={isButtonHovered ? 'hovered' : ''}
+            >
               MY SIZE
-              <Image src={OpenMySizeIcon} alt="mysize 버튼 아이콘" />
+              <Image src={isButtonHovered ? HoveredOpenMySizeIcon : OpenMySizeIcon} alt="mysize 버튼 아이콘" />
             </Styled.MySizeButton>
           </Link>
         </Styled.MySizeButtonBackGround>
@@ -40,7 +51,7 @@ function Header() {
 export default Header;
 
 const Styled = {
-  Root: styled.div`
+  Root: styled.header`
     width: 100%;
 
     background-color: ${theme.colors.black};
@@ -49,11 +60,22 @@ const Styled = {
   `,
 
   Container: styled.div`
+    position: relative;
     width: 140.8rem;
 
     height: 26.6rem;
 
     margin: 0 auto;
+
+    & > img {
+      position: absolute;
+      top: 14rem;
+      left: 64.3rem;
+
+      &.hovered {
+        top: 12.1rem;
+      }
+    }
   `,
 
   TopSection: styled.div`
@@ -132,6 +154,11 @@ const Styled = {
 
     color: ${theme.colors.yellow};
     background-color: ${theme.colors.black};
+
+    &.hovered {
+      color: ${theme.colors.black};
+      background-color: ${theme.colors.yellow01};
+    }
 
     filter: drop-shadow(0px 8px 14px rgba(0, 0, 0, 0.15));
 

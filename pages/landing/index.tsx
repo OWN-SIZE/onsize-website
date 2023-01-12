@@ -8,7 +8,7 @@ import Layout from 'components/common/Layout';
 
 function Lading() {
   return (
-    <Layout noHeader noMenuBar>
+    <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Styled.GreetingImg />
         <Styled.Title>사이즈 고민 및 환불은 이제 그만!</Styled.Title>

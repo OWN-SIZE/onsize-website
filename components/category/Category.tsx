@@ -1,8 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Hanger from 'assets/icon/total_clothes.png';
 import Image from 'next/image';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { AllCategory } from 'types/category/client';
@@ -18,12 +17,14 @@ interface CategoryProps {
 
 export default function Category(props: CategoryProps) {
   const { categoryData } = props;
+  const [isProductHovered, setIsProductHovered] = useState(false);
 
   const data = useFetchCategoryDetail(categoryData.id);
 
   const { mutate: updateIsPin } = useUpdateCategory();
 
   if(!data) return;
+
 
   const ThumbNailData: ThumbNailData = {
     id: categoryData.id,
@@ -32,17 +33,31 @@ export default function Category(props: CategoryProps) {
     categoryName: categoryData.categoryName
   };
 
+  const handleOnMouseEnter = () => {
+    setIsProductHovered(true);
+  };
+
+  const handleOnMouseLeave = () => {
+    setIsProductHovered(false);
+  };
+
   return (
     <Styled.Root>
       <Styled.Category>
         <Styled.CategoryImage>
-          <ThumbNail data={ThumbNailData} categoryData={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory updateIsPin={updateIsPin}/>
+          <ThumbNail data={ThumbNailData} categoryData={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory updateIsPin={updateIsPin} setIsProductHovered={setIsProductHovered}/>
         </Styled.CategoryImage>
         <Link
           href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
           as={`/category/${categoryData.id}`}
         >
-          <Styled.CategoryTitle>{categoryData.categoryName}</Styled.CategoryTitle>
+          <Styled.CategoryTitle
+            onMouseEnter={handleOnMouseEnter}
+            onMouseLeave={handleOnMouseLeave}
+            isProductHovered={isProductHovered}
+          >
+            {categoryData.categoryName}
+          </Styled.CategoryTitle>
         </Link>
         <Styled.ClothesAmount>
           <Image
@@ -78,13 +93,14 @@ const Styled = {
     display: flex;
     border-radius: 1rem;
   `,
-  CategoryTitle: styled.div`
+  CategoryTitle: styled.div<{ isProductHovered: boolean }>`
     width: 36.8rem;
     height: 3.2rem;
     ${theme.fonts.title3};
     color: ${theme.colors.gray550};
     margin-top: 1.6rem;
     margin-bottom: 2.4rem;
+    text-decoration: ${({ isProductHovered }) => (isProductHovered ? 'underline 0.2rem' : 'none')};
   `,
   ClothesAmount: styled.div`
     width: 36.8rem;
