@@ -4,6 +4,9 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
 
+import { Toast } from 'components/common/Toast/Toast';
+import useToast from 'components/common/Toast/useToast';
+
 import Product from './Product';
 
 interface HomeMainProps {
@@ -14,8 +17,11 @@ interface HomeMainProps {
 
 function HomeMain(props: HomeMainProps) {
   const { data, page, categoryId } = props;
+  const { isOpenToast, message, showToast } = useToast();
   const countProduct = data.length;
-  const product = data.map((item) => <Product key={String(item.id)} data={item} categoryId={categoryId} page={page} />);
+  const product = data.map((item) => (
+    <Product key={String(item.id)} data={item} categoryId={categoryId} page={page} showToast={showToast} />
+  ));
 
   return (
     <Styled.Root>
@@ -24,6 +30,11 @@ function HomeMain(props: HomeMainProps) {
         <Styled.Count>{countProduct}</Styled.Count>
       </Styled.CountSection>
       <Styled.Closet>{product}</Styled.Closet>
+      {isOpenToast && (
+        <Styled.ToastContainer>
+          <Toast message={message} />
+        </Styled.ToastContainer>
+      )}
     </Styled.Root>
   );
 }
@@ -48,5 +59,14 @@ const Styled = {
     display: flex;
     flex-wrap: wrap;
     margin-top: 5rem;
+  `,
+  ToastContainer: styled.div`
+    position: fixed;
+    bottom: 5.2rem;
+
+    display: flex;
+    align-items: center;
+
+    margin-left: 53.9rem;
   `,
 };

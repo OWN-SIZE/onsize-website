@@ -1,7 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
 import { deleteCategory, fetchAllCategory, fetchOneCategory, postCategory, updateCategory } from 'apis/category';
-import { CreateCategory } from 'types/category/client';
 import { useRouter } from 'next/router';
+import { CreateCategory } from 'types/category/client';
 
 const QUERY_KEY = {
   category: 'category',
@@ -15,7 +15,6 @@ export const useFetchAllCategory = () => {
     category: data,
   };
 };
-
 
 /** Mutation */
 
