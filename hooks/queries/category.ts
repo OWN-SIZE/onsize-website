@@ -1,5 +1,5 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { deleteCategory, fetchAllCategory, postCategory } from 'apis/category';
+import { deleteCategory, fetchAllCategory, postCategory, updateCategory } from 'apis/category';
 import { CreateCategory } from 'types/category/client';
 
 const QUERY_KEY = {
@@ -21,6 +21,16 @@ export const usePostCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation(postCategory, {
+    onSuccess: () => {
+      queryClient.invalidateQueries([QUERY_KEY.category]);
+    },
+  });
+};
+
+export const useUpdateCategory = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation(updateCategory, {
     onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.category]);
     },

@@ -21,3 +21,6 @@ export { default as Folder20Icon } from './folder20.png';
 export { default as AddCategoryCloseIcon } from './addCategoryClose.png';
 export { default as CategoryEditIcon } from './categoryEdit.png';
 export { default as CategoryDeleteIcon } from './categoryDelete.png';
+export { default as LeftArrowIcon } from './arrow-left.png';
+export { default as RightArrowIcon } from './arrow-right.png';
+export { default as OpenMySizeIcon } from './openMysize.png';

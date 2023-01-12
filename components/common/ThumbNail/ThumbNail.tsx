@@ -21,6 +21,7 @@ import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
+import CategoryClosetDeleteModal from '@/components/category/detail/CategoryClosetDeleteModal';
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
@@ -33,13 +34,14 @@ interface ThumbNailProps {
   data: ThumbNailData;
   width: string;
   height: string;
-  noAddCategory?: boolean;
   page: string;
-  updateIsPin: ({ productId, editBody }: UpdateClosetInput) => void;
+  noAddCategory?: boolean;
+  categoryId?: string;
+  updateIsPin: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
-  const { data, width, height, noAddCategory, page, updateIsPin } = props;
+  const { data, width, height, noAddCategory, page, updateIsPin, categoryId } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
 
@@ -63,10 +65,18 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
-    updateIsPin({
-      productId: data.id,
-      editBody: { isPin: !data.isPin },
-    });
+    if (page === 'categoryDetail') {
+      updateIsPin({
+        categoryId,
+        targetId: data.id,
+        editBody: { isInPin: !data.isInPin },
+      });
+    } else {
+      updateIsPin({
+        targetId: data.id,
+        editBody: { isPin: !data.isPin },
+      });
+    }
   };
 
   return (
@@ -95,7 +105,7 @@ function ThumbNail(props: ThumbNailProps) {
             </Styled.SizeContainer>
           </>
         )}
-        {data.isPin && (
+        {(page === 'categoryDetail' ? data.isInPin : data.isPin) && (
           <Image
             src={PinIcon}
             id="pinIcon"
@@ -107,9 +117,7 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {data.image && page === 'closet' ? (
-        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
-      ) : (
+      {data.image && page === 'category' ? (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
           <Image
             src=""
@@ -138,6 +146,8 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
+      ) : (
+        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
       )}
 
       {/* 썸네일 호버시 코드 */}
@@ -158,14 +168,19 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </button>
         )}
-        {isCategoryModalOpen && <AddCategoryModal />}
+        {isCategoryModalOpen && <AddCategoryModal productId={data.id} />}
         {/* 아이콘 */}
         <div className="iconContainer">
           {/* 고정 */}
           <Styled.IconCotainer id={`Pin`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={data.isPin ? PinButtonFillIcon : PinButonIcon} width={40} height={40} alt="고정 버튼 아이콘" />
             <Image
-              src={data.isPin ? HoveredPinFillIcon : HoveredPinIcon}
+              src={(page === 'categoryDetail' ? data.isInPin : data.isPin) ? PinButtonFillIcon : PinButonIcon}
+              width={40}
+              height={40}
+              alt="고정 버튼 아이콘"
+            />
+            <Image
+              src={(page === 'categoryDetail' ? data.isInPin : data.isPin) ? HoveredPinFillIcon : HoveredPinIcon}
               className={iconHoveredTarget === `Pin` ? 'show' : 'hide'}
               onClick={handleOnClickPin}
               width={40}
@@ -185,18 +200,23 @@ function ThumbNail(props: ThumbNailProps) {
               alt="호버된 수정 버튼 아이콘"
             />
           </Styled.IconCotainer>
-          {isEditModalOpen && (
+
+          {data.id && isEditModalOpen && (
             <ModalPortal>
-              {page === ('closet' || 'categoryDeatil') ? (
+              {page === 'category' ? (
+                <ModifyCategoryModal
+                  onClickModifyCategoryModal={onClickModifyCategoryModal}
+                  categoryId={data.id}
+                ></ModifyCategoryModal>
+              ) : (
                 data.name && (
                   <ClosetEditModal
+                    categoryId={categoryId}
                     setIsModalOpen={setIsEditModalOpen}
                     setImgHoveredTarget={setImgHoveredTarget}
                     data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
                   />
                 )
-              ) : (
-                <ModifyCategoryModal onClickModifyCategoryModal={onClickModifyCategoryModal}></ModifyCategoryModal>
               )}
             </ModalPortal>
           )}
@@ -217,7 +237,15 @@ function ThumbNail(props: ThumbNailProps) {
               {page === 'closet' ? (
                 <ClosetDeleteModal
                   productId={data.id}
-                  categoryId={data.categoryId}
+                  page={page}
+                  isModalOpen={isDeleteModalOpen}
+                  setIsModalOpen={setIsDeleteModalOpen}
+                  setImgHoveredTarget={setImgHoveredTarget}
+                />
+              ) : page === 'categoryDetail' && categoryId ? (
+                <CategoryClosetDeleteModal
+                  productId={data.id}
+                  categoryId={categoryId}
                   page={page}
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}

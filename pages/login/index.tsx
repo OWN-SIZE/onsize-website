@@ -1,26 +1,26 @@
 import React, { useEffect } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg } from 'assets/img';
-//import { useLoginMutation } from 'hooks/queries/user';
+import axios from 'axios';
 import Image from 'next/image';
-import { useRecoilState } from 'recoil';
-import { accessTokenState } from 'states/user';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { useAuth } from '@/hooks/business/user';
 import Layout from 'components/common/Layout';
 
 function Login() {
-  const [accessToken, setAccessToken] = useRecoilState(accessTokenState);
+  const { authLogin } = useAuth();
+  const router = useRouter();
   const login = useGoogleLogin({
-    onSuccess: ({ code }) => {
-      // recoil에 토큰들 저장하기
-      // setAccessToken(response.access_token);
-      // 서버에 액세스 토큰 넘기기
-      // useLoginMutation(accessToken);
-      console.log(code);
+    onSuccess: async (tokenResponse) => {
+      const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
+      });
+
+      authLogin(data, () => router.push('/register'));
     },
-    flow: 'auth-code',
   });
 
   useEffect(() => {

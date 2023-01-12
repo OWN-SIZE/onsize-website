@@ -54,6 +54,7 @@ const fonts = {
   body5: FONT({ weight: 700, size: 2.2, lineHeight: 3.0 }),
   body6: FONT({ weight: 500, size: 2.6, lineHeight: 3.5 }),
   body7: FONT({ weight: 500, size: 2.2, lineHeight: 3.0 }),
+  body8: FONT({ weight: 600, size: 2.2, lineHeight: 3.8 }),
   caption: FONT({ weight: 400, size: 1.4, lineHeight: 3.2 }),
   caption1: FONT({ weight: 600, size: 1.8, lineHeight: 2.5 }),
   tooltip: FONT({ weight: 400, size: 1.2, lineHeight: 1.8, letterSpacing: 6 }),

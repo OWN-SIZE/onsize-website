@@ -4,17 +4,20 @@ import { ClosetOutput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '@/components/common/ThumbNail/ThumbNail';
-import { useUpdateAllClosetProductMutation } from '@/hooks/queries/allCloset';
+import { useUpdateAllClosetProductMutation, useUpdateIsInPinMutation } from '@/hooks/queries/allCloset';
 
 interface ProductProps {
   data: ClosetOutput;
-  categoryId?: string | string[];
   page: string;
+  categoryId?: string;
 }
 
 function Product(props: ProductProps) {
-  //DummyData : id, image, productName, size, memo, mallName, isRecommend, isPin, link
   const { data, page, categoryId } = props;
+  let targetCategoryId = '';
+  if (categoryId) {
+    targetCategoryId = categoryId;
+  }
 
   const ThumbNailData: ThumbNailData = {
     id: String(data.id),
@@ -25,23 +28,28 @@ function Product(props: ProductProps) {
     memo: data.memo,
     isRecommend: data.isRecommend,
     isPin: data.isPin,
+    isInPin: data.isInPin,
   };
 
-  const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation();
+  const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation('');
+  const { mutate: updateIsInPin } = useUpdateIsInPinMutation(targetCategoryId);
 
   return (
     <Styled.Root>
       {page === 'closet' ? (
         <ThumbNail data={ThumbNailData} width="33.2" height="33.2" page="closet" updateIsPin={updateIsPIn} />
       ) : (
-        <ThumbNail
-          data={ThumbNailData}
-          width="33.2"
-          height="33.2"
-          page="closet"
-          updateIsPin={updateIsPIn}
-          noAddCategory
-        />
+        categoryId && (
+          <ThumbNail
+            data={ThumbNailData}
+            width="33.2"
+            height="33.2"
+            page="categoryDetail"
+            categoryId={categoryId}
+            updateIsPin={updateIsInPin}
+            noAddCategory
+          />
+        )
       )}
       <Styled.Title>{data.productName}</Styled.Title>
       <Styled.Memo>{data.memo}</Styled.Memo>
