@@ -1,4 +1,4 @@
-import React, { ReactNode, useEffect, useState } from 'react';
+import React, { ReactNode, use, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
 import { OptionType } from 'pages/register';
 import styled from 'styled-components';
@@ -21,6 +21,10 @@ interface FormProps {
   setIsSubmitActive?: (prev: boolean) => void;
   onSuccessSubmit: () => void;
   children: ReactNode;
+  // 사이즈 입력이 선택인 경우
+  isOption?: boolean;
+  skip?: boolean;
+  setSkip?: (prev: boolean) => void;
 }
 
 // 상의 총장, 어깨너비
@@ -86,7 +90,18 @@ const mutateMapper = {
 };
 
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, setIsSubmitActive, children, isAlertActive, setIsAlertActive, onSuccessSubmit } = props;
+  const {
+    noHeader,
+    formType,
+    setIsSubmitActive,
+    children,
+    isAlertActive,
+    setIsAlertActive,
+    onSuccessSubmit,
+    isOption,
+    skip,
+    setSkip,
+  } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
   const {
@@ -123,7 +138,7 @@ export default function SizeForm(props: FormProps) {
       }
 
       postMyTopSize(inputData, () => {
-        resetField('총장');
+        Object.keys(mutateMapper.top).map((key) => resetField(key));
         onSuccessSubmit();
       });
     } else {
@@ -145,20 +160,34 @@ export default function SizeForm(props: FormProps) {
       }
 
       postMyBottomSize(inputData, () => {
-        resetField('총장');
+        Object.keys(mutateMapper.bottom).map((key) => resetField(key));
         onSuccessSubmit();
       });
     }
   };
 
   useEffect(() => {
-    // input이 다 채워졌으면 다음 버튼 활성화
     watch((formObject) => {
+      // input이 다 채워졌으면 다음 버튼 활성화
       if (!Object.values(formObject).includes('')) {
         setIsSubmitActive && setIsSubmitActive(true);
       }
+
+      // 하나라도 입력했다면 스킵 못함
+      if (Object.values(formObject).filter((value) => value !== undefined && value !== '')) {
+        setSkip && setSkip(false);
+      }
     });
   }, [watch]);
+
+  useEffect(() => {
+    if (isOption) {
+      setIsSubmitActive && setIsSubmitActive(true);
+      setSkip && setSkip(true);
+    } else {
+      setSkip && setSkip(false);
+    }
+  }, [isOption]);
 
   return (
     <Styled.Root>
@@ -179,6 +208,7 @@ export default function SizeForm(props: FormProps) {
               inputKey={key}
               register={register}
               setValue={setValue}
+              measure={measure}
               valid={{ min: scope[measure].min, max: scope[measure].max }}
             />
           ))}
@@ -198,6 +228,7 @@ export default function SizeForm(props: FormProps) {
             inputKey={'가슴'}
             register={register}
             setValue={setValue}
+            measure={measure}
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
           />
           {children}

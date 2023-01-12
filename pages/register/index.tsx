@@ -10,13 +10,14 @@ import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
-export type OptionType = '상/하의' | '상의' | '하의' | null;
+export type OptionType = '상의' | '하의' | null;
 
 function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(false);
   const router = useRouter();
 
   const onClickSize = () => {
@@ -29,12 +30,17 @@ function Register() {
   };
 
   const onClickNextButton = () => {
-    setIsAlertActive(true);
+    if (skip) {
+      router.push('/home');
+    } else {
+      setIsAlertActive(true);
+    }
   };
 
   const onSuccessSubmit = () => {
     if (progress === 2) {
       setProgress(progress + 1);
+      setIsNextActive(false);
     } else {
       router.push('/home');
     }
@@ -78,6 +84,9 @@ function Register() {
               formType={selectedOption === '하의' ? '상의' : '하의'}
               setIsSubmitActive={setIsNextActive}
               onSuccessSubmit={onSuccessSubmit}
+              isOption={true}
+              skip={skip}
+              setSkip={setSkip}
             >
               <NextButton isActive={isNextActive} onClick={onClickNextButton} />
             </SizeForm>
