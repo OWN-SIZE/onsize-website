@@ -48,7 +48,11 @@ export default function SizeOption(props: ButtonProps) {
             type="button"
             key={index}
           >
-            <Image src={optionImgMapper[option]} alt={`${option} 이미지`} placeholder="blur" />
+            <Image
+              src={option === '상/하의' ? TopBottomImg : option === '상의' ? TopImg : BottomImg}
+              alt={`${option} 이미지`}
+              placeholder="blur"
+            />
             <p>{option}</p>
           </Styled.SizeOptionButton>
         ))}
