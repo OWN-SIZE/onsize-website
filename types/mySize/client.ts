@@ -1,4 +1,5 @@
 export interface TopSizeInput {
+  [key: string]: number | boolean;
   topLength: number;
   shoulder: number;
   chest: number;
@@ -6,6 +7,7 @@ export interface TopSizeInput {
 }
 
 export interface BottomSizeInput {
+  [key: string]: number | boolean;
   bottomLength: number;
   waist: number;
   thigh: number;
@@ -23,4 +25,3 @@ export interface MySizeOutput {
 export interface MySizeResponse {
   data: MySizeOutput;
 }
-
