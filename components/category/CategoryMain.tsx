@@ -5,15 +5,16 @@ import { useFetchAllCategory } from 'hooks/queries/category';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import { AllCategory } from 'types/category/client';
-
+import EmptyFolder from 'assets/icon/emptyFolder.png';
+import Category from './Category';
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
-
-import Category from './Category';
+import { AllCategory } from 'types/category/client';
+import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
+  console.log(category);
 
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
@@ -38,8 +39,7 @@ export default function CategoryMain() {
     category = pinData.concat(noPinData);
   }
 
-  if (!category) return;
-  const product = category.map((item) => <Category key={item.id} data={item} />);
+  const product = category && category.map((item) => <Category key={item.id} categoryData={item} />);
 
   return (
     <Styled.Root>
@@ -53,7 +53,8 @@ export default function CategoryMain() {
             placeholder="blur"
             blurDataURL="assets/icon/folder_filled.png"
           />
-          <h1>{category.length}</h1>
+          <h1>{category && category.length}</h1>
+          <Styled.AddButton>
           <Image
             src={Add}
             alt="폴더 추가를 뜻하는 더하기 이미지"
@@ -63,8 +64,23 @@ export default function CategoryMain() {
             blurDataURL="assets/icon/folder_filled.png"
             onClick={onClickCategoryCreateModal}
           />
+          </Styled.AddButton>
         </Styled.CategoryStateBar>
-        {product}
+        {category && category.length === 0 ? (
+          <Styled.ZeroCategory>
+            <Image
+              src={EmptyFolder}
+              alt="빈 폴더임을 의미하는 이미지"
+              width={60}
+              height={60}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+            />
+            <p>카테고리를 만들어보세요</p>
+          </Styled.ZeroCategory>
+        ) : (
+          product
+        )}
       </Styled.CategoryContainer>
       {isCategoryCreateModalOpen && (
         <ModalPortal>
@@ -169,5 +185,18 @@ const Styled = {
       ${theme.fonts.body1};
       color: ${theme.colors.gray250};
     }
+  `,
+  ZeroCategory: styled.div`
+    ${theme.fonts.title4};
+    color: ${theme.colors.gray550};
+    padding-top: 9.5rem;
+    margin: 0 auto;
+    text-align: center;
+    & > p {
+      margin-top: 4rem;
+    }
+  `,
+  AddButton: styled.div`
+    cursor: pointer;
   `,
 };

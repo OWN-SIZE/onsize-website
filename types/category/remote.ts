@@ -1,7 +1,11 @@
-import { AllCategory, CreateCategory, UpdateCategoryRequest } from './client';
+import { AllCategory, OneCategory, CreateCategory, UpdateCategoryRequest } from './client';
 
 export interface AllCategoryResponse {
   data: AllCategory[];
+}
+
+export interface OneCategoryResponse {
+  data: OneCategory[];
 }
 
 export interface CreateCategoryResponse {

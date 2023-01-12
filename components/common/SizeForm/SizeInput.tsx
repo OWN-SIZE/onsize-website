@@ -9,11 +9,14 @@ interface InputProps {
   register: UseFormRegister<FieldValues>;
   setValue: UseFormSetValue<FieldValues>;
   valid: { min: number; max: number };
+  data?: { 총장: number; '어깨 너비': number; 가슴: number } | {총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number;};
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid } = props;
+  const { inputKey, measure, register, setValue, valid, data } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
+
+  
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -30,6 +33,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
+          placeholder={data && data[`${inputKey}`]}
         />
         cm
       </div>

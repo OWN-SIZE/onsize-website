@@ -18,10 +18,14 @@ interface ModalProps {
 
 function ClosetEditModal(props: ModalProps) {
   const { setIsModalOpen, setImgHoveredTarget, data, categoryId } = props;
+  const { productName } = data;
+  let { size, memo } = data;
+  size = !size ? '' : size;
+  memo = !memo ? '' : memo;
 
-  const [productNameInput, setProductNameInput] = useState(data.productName);
-  const [sizeInput, setSizeInput] = useState(!data.size ? '' : data.size);
-  const [memoInput, setMemoInput] = useState(!data.memo ? '' : data.memo);
+  const [productNameInput, setProductNameInput] = useState(productName);
+  const [sizeInput, setSizeInput] = useState(size);
+  const [memoInput, setMemoInput] = useState(memo);
   const [targetCategoryId, setTargetCategoryId] = useState('');
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -114,11 +118,12 @@ function ClosetEditModal(props: ModalProps) {
           <Styled.SubmitButton
             onClick={handleSubmitOnClick}
             className={
-              productNameInput === data.productName && sizeInput === data.size && memoInput === data.memo
+              productNameInput.length === 0 ||
+              (productNameInput === productName && sizeInput === size && memoInput === memo)
                 ? 'disabled'
                 : 'abled'
             }
-            disabled={productNameInput === data.productName && sizeInput === data.size && memoInput === data.memo}
+            disabled={productNameInput.length === 0 || (productNameInput === productName && sizeInput === size && memoInput === memo)}
           >
             수정
           </Styled.SubmitButton>

@@ -21,6 +21,8 @@ interface FormProps {
   setIsSubmitActive?: (prev: boolean) => void;
   onSuccessSubmit: () => void;
   children: ReactNode;
+  onClickMeasure?: (measure: string) => void;
+  data?: { 총장: number; '어깨 너비': number; 가슴: number } | {총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number;};
 }
 
 // 상의 총장, 어깨너비
@@ -86,7 +88,7 @@ const mutateMapper = {
 };
 
 export default function SizeForm(props: FormProps) {
-  const { noHeader, formType, setIsSubmitActive, children, isAlertActive, setIsAlertActive, onSuccessSubmit } = props;
+  const { noHeader, formType, setIsSubmitActive, children, isAlertActive, setIsAlertActive, onSuccessSubmit, onClickMeasure, data } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
   const {
@@ -160,6 +162,10 @@ export default function SizeForm(props: FormProps) {
     });
   }, [watch]);
 
+  const sendMeasureValue = (measure: string) => {
+    onClickMeasure && onClickMeasure(measure);
+  }
+
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
@@ -167,11 +173,11 @@ export default function SizeForm(props: FormProps) {
         // 하의 사이즈 입력 폼
         <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(bottomScopeMappper).map(([key, { min, max }]) => (
-            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
+            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} data={data}/>
           ))}
           <Styled.RadioContainer>
-            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
-            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
+            <RadioButton onClick={() => {setMeasure('단면'); sendMeasureValue('단면');}} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => {setMeasure('둘레'); sendMeasureValue('둘레');}} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
             <SizeInput
@@ -180,6 +186,8 @@ export default function SizeForm(props: FormProps) {
               register={register}
               setValue={setValue}
               valid={{ min: scope[measure].min, max: scope[measure].max }}
+              measure={measure}
+              data={data}
             />
           ))}
           {children}
@@ -188,17 +196,19 @@ export default function SizeForm(props: FormProps) {
         // 상의 사이즈 입력 폼
         <Styled.Form onSubmit={handleSubmit(onValid)}>
           {Object.entries(topScopeMapper).map(([key, { min, max }]) => (
-            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} />
+            <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} data={data}/>
           ))}
           <Styled.RadioContainer>
-            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
-            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
+            <RadioButton onClick={() => {setMeasure('단면'); sendMeasureValue('단면');}} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => {setMeasure('둘레'); sendMeasureValue('둘레');}} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           <SizeInput
             inputKey={'가슴'}
             register={register}
             setValue={setValue}
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
+            measure={measure}
+            data={data}
           />
           {children}
         </Styled.Form>

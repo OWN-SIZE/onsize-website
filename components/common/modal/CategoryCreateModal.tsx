@@ -15,13 +15,24 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal } = props;
   const { mutate } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
 
-
   const onClickCancel = () => {
     onClickCategoryCreateModal();
   };
   const onClickMake = () => {
-    mutate({categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3']});
+    if (changeInputValue.length > 0) {
+      mutate({ categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3'] });
+    }
     onClickCategoryCreateModal();
+  };
+
+  //한글 글자수 제한 (서현이 것 쇽샥)
+  const handleOnInput = (e) => {
+    const {
+      currentTarget: { value, maxLength },
+    } = e;
+    if (value.length > maxLength) {
+      e.currentTarget.value = value.slice(0, maxLength);
+    }
   };
 
   return (
@@ -42,6 +53,8 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
             maxLength={20}
             ref={inputRef}
             onChange={(e) => updateInputValue(e.target.value)}
+            onInput={handleOnInput}
+            autoFocus={true}
           ></Styled.CategoryNameInput>
           <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
         </Styled.CategoryCreateModal>
