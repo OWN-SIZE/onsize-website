@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { LeftArrowIcon, RightArrowIcon, WhiteLeftArrowIcon, WhiteRightArrowIcon } from 'assets/icon';
 import Lottie from 'lottie-react';
 import Image from 'next/image';
@@ -7,7 +7,7 @@ import theme from 'styles/theme';
 
 interface LottieProps {
   onClickArrow: (direction: 'left' | 'right') => void;
-  lottie: any;
+  lottie: object;
   page: number;
   isDarkMode?: boolean;
 }
