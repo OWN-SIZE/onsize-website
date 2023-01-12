@@ -12,7 +12,7 @@ import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
-export type OptionType = '상의' | '하의' | null;
+export type OptionType = '상의' | '하의' | '상/하의' | null;
 
 function Register() {
   const [progress, setProgress] = useState<number>(1);
