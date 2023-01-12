@@ -1,12 +1,14 @@
-import React, { useEffect } from 'react';
+import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-import { GoogleLoginImg } from 'assets/img';
+import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { lottieMapper } from '@/components/common/modal/LottieModal';
+import LottiePlayer from '@/components/common/modal/LottiePlayer';
 import { useAuth } from '@/hooks/business/user';
 import Layout from 'components/common/Layout';
 
@@ -22,15 +24,22 @@ function Login() {
       authLogin(data, () => router.push('/register'));
     },
   });
-
-  useEffect(() => {
-    // 내가 아는 정보 : userId, token, isRegister(정보모두입력여부)
-  }, []);
+  const [page, setPage] = useState(0);
+  const onClickArrow = (arrowType: 'left' | 'right') => {
+    if (arrowType === 'left') {
+      setPage((prev) => (prev === 0 ? lottieMapper.length - 1 : prev - 1));
+    } else {
+      setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
+    }
+  };
 
   return (
     <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
-        <Styled.GreetingImg />
+        <Styled.Header>
+          <Image src={OwnSizeLogoImg} alt="로고 이미지" />
+        </Styled.Header>
+        <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode />
         <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
         </Styled.LoginButton>
@@ -49,22 +58,25 @@ export default Login;
 const Styled = {
   Root: styled.section`
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    background: ${theme.colors.black};
   `,
-  GreetingImg: styled.img`
-    width: 70rem;
-    height: 50rem;
-    background-color: #d9d9d9;
-    border-radius: 1.5rem;
+  Header: styled.header`
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 2.3rem;
+    padding-left: 16rem;
+    margin-bottom: 10.4rem;
   `,
   LoginButton: styled.button`
     width: 69.2rem;
     height: 7.2rem;
-    margin-top: 8rem;
+    margin-top: 14.6rem;
     border: 0;
     background: transparent;
     cursor: pointer;

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { LoginMouseImg } from 'assets/img';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -10,13 +12,14 @@ import Progress from 'components/register/Progress';
 import SizeOption from 'components/register/SizeOption';
 
 // 버튼 컴포넌트 전달을 위한 타입
-export type OptionType = '상/하의' | '상의' | '하의' | null;
+export type OptionType = '상의' | '하의' | null;
 
 function Register() {
   const [progress, setProgress] = useState<number>(1);
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
+  const [skip, setSkip] = useState<boolean>(false);
   const router = useRouter();
 
   const onClickSize = () => {
@@ -29,12 +32,17 @@ function Register() {
   };
 
   const onClickNextButton = () => {
-    setIsAlertActive(true);
+    if (skip) {
+      router.push('/home');
+    } else {
+      setIsAlertActive(true);
+    }
   };
 
   const onSuccessSubmit = () => {
     if (progress === 2) {
       setProgress(progress + 1);
+      setIsNextActive(false);
     } else {
       router.push('/home');
       localStorage.setItem('isRegister', 'true');
@@ -51,6 +59,7 @@ function Register() {
             <br />
             입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
           </h2>
+          <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress progress={progress} selectedOption={selectedOption} />
@@ -79,6 +88,9 @@ function Register() {
               formType={selectedOption === '하의' ? '상의' : '하의'}
               setIsSubmitActive={setIsNextActive}
               onSuccessSubmit={onSuccessSubmit}
+              isOption={true}
+              skip={skip}
+              setSkip={setSkip}
             >
               <NextButton isActive={isNextActive} onClick={onClickNextButton} />
             </SizeForm>
@@ -114,6 +126,11 @@ const Styled = {
       margin-top: 4.2rem;
       color: ${theme.colors.gray000};
       ${theme.fonts.body4};
+    }
+    img {
+      position: fixed;
+      left: 41.5rem;
+      top: 4.6rem;
     }
   `,
   RightContainer: styled.article`
