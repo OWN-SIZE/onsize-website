@@ -6,6 +6,21 @@ export interface AllCategory {
   image: string[];
 }
 
+export interface OneCategory {
+  id: string;
+  userId: string; 
+  image: string;
+  productName: string; 
+  size: string;
+  memo: string;
+  isRecommend: boolean;
+  isPin: boolean;
+  mallName: string;
+  topOrBottom: number;
+  productUrl: string;
+  faviconUrl: string;
+}
+
 export interface CreateCategory {
   categoryName: string;
   isPinCategory: boolean;
@@ -13,10 +28,14 @@ export interface CreateCategory {
 }
 
 export interface UpdateCategoryRequest {
-  categoryId: string;
-  categoryName: string;
+  targetId: string;
+  editBody: {
+    categoryName?: string;
+    isPinCategory?: boolean;
+  };
 }
 
 export interface UpdateCategoryRequestBody {
   categoryName: string;
 }
+

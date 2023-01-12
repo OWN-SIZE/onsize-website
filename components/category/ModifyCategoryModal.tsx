@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useRef, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useUpdateCategory } from 'hooks/queries/category';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -11,27 +11,51 @@ type ModifyCategoryModalProps = {
   onClickModifyCategoryModal: () => void;
   categoryId: string;
   setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>>;
+  categoryName?: string;
 };
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
 
-  const { onClickModifyCategoryModal, categoryId, setCategoryName } = props;
+  const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName } = props;
 
   const onClickCancel = () => {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    mutate({ categoryId: categoryId, categoryName: changeInputValue });
+    if (changeInputValue.length > 0) {
+      console.log(changeInputValue);
+      mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
+    }
     onClickModifyCategoryModal();
     setCategoryName && setCategoryName(changeInputValue);
   };
 
   const inputRef = useRef(null);
-  const [changeInputValue, setChangeInputValue] = useState('');
+  const [changeInputValue, setChangeInputValue] = useState(props.categoryName);
   const updateInputValue = (input: string) => {
     setChangeInputValue(input);
   };
+
+  const [defaultValue, setDefaultValue] = useState("dfs");
+
+  useEffect(() => {
+      setDefaultValue(changeInputValue);
+  },[changeInputValue])
+  
+
+  //한글 글자수 제한 (서현이 것 쇽샥)
+  const handleOnInput = (e) => {
+    const {
+      currentTarget: { value, maxLength },
+    } = e;
+    if (value.length > maxLength) {
+      e.currentTarget.value = value.slice(0, maxLength);
+    }
+  };
+
+
+  
 
   return (
     <ModalPortal>
@@ -47,10 +71,13 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         <Styled.CategoryModifyModal>
           <h1>카테고리 이름</h1>
           <Styled.CategoryNameInput
-            placeholder="예) 2023 위시리스트"
+            placeholder='예) 2023 위시리스트'
+            value={defaultValue}
             maxLength={20}
             ref={inputRef}
             onChange={(e) => updateInputValue(e.target.value)}
+            onInput={handleOnInput}
+            autoFocus={true}
           ></Styled.CategoryNameInput>
           <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
         </Styled.CategoryModifyModal>

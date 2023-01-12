@@ -9,31 +9,40 @@ import { AllCategory } from 'types/category/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
+import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
+import { useUpdateCategory } from 'hooks/queries/category';
 
 interface CategoryProps {
-  data: AllCategory;
+  categoryData: AllCategory;
 }
 
 export default function Category(props: CategoryProps) {
-  const { data } = props;
+  const { categoryData } = props;
+
+  const data = useFetchCategoryDetail(categoryData.id);
+
+  const { mutate: updateIsPin } = useUpdateCategory();
+
+  if(!data) return;
 
   const ThumbNailData: ThumbNailData = {
-    id: data.id,
-    isPin: data.isPinCategory,
-    image: data.image,
+    id: categoryData.id,
+    isPin: categoryData.isPinCategory,
+    image: data[0]?.image, 
+    categoryName: categoryData.categoryName
   };
 
   return (
     <Styled.Root>
       <Styled.Category>
         <Styled.CategoryImage>
-          <ThumbNail data={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory />
+          <ThumbNail data={ThumbNailData} categoryData={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory updateIsPin={updateIsPin}/>
         </Styled.CategoryImage>
         <Link
-          href={{ pathname: `/category/${data.id}`, query: { categoryName: data.categoryName } }}
-          as={`/category/${data.id}`}
+          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
+          as={`/category/${categoryData.id}`}
         >
-          <Styled.CategoryTitle>{data.categoryName}</Styled.CategoryTitle>
+          <Styled.CategoryTitle>{categoryData.categoryName}</Styled.CategoryTitle>
         </Link>
         <Styled.ClothesAmount>
           <Image
@@ -44,7 +53,7 @@ export default function Category(props: CategoryProps) {
             placeholder="blur"
             blurDataURL="assets/icon/total_clothes.png"
           />
-          <h1>{data.productNum}</h1>
+          <h1>{data.length}</h1>
         </Styled.ClothesAmount>
       </Styled.Category>
     </Styled.Root>

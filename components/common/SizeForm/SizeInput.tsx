@@ -17,7 +17,6 @@ function SizeInput(props: InputProps) {
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   
-  if(!data) return;
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -34,7 +33,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          placeholder={data[`${inputKey}`]}
+          placeholder={data && data[`${inputKey}`]}
         />
         cm
       </div>

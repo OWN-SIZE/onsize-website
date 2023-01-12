@@ -6,12 +6,20 @@ import {
   DeleteCategoryResponse,
   UpdateCategoryBodyResponse,
   UpdateCategoryResponse,
+  OneCategoryResponse
 } from 'types/category/remote';
 
 export const fetchAllCategory = async () => {
   const {
     data: { data },
   } = await client.get<AllCategoryResponse>('/category');
+  return data;
+};
+
+export const fetchOneCategory = async (categoryId: number) => {
+  const {
+    data: { data },
+  } = await client.get<OneCategoryResponse>(`/category/${categoryId}`);
   return data;
 };
 
@@ -25,7 +33,7 @@ export const postCategory = async (props: CreateCategory): Promise<CreateCategor
 export const updateCategory = async (props: UpdateCategoryRequest) => {
   const {
     data: { data },
-  } = await client.put<UpdateCategoryResponse>(`/category/${props.categoryId}`, props);
+  } = await client.put<UpdateCategoryResponse>(`/category/${props.targetId}`, props.editBody);
 
   return data;
 };

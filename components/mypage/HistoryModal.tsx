@@ -9,6 +9,7 @@ interface HistoryModalProps {
 }
 
 function HistoryModal({ onClickHistoryModal, children }: PropsWithChildren<HistoryModalProps>) {
+
   const disableScroll = () => {
     document.body.style.cssText = `
     position: fixed; 
@@ -28,6 +29,7 @@ function HistoryModal({ onClickHistoryModal, children }: PropsWithChildren<Histo
 
   return (
     <Styled.Root>
+      <Styled.Blank></Styled.Blank>
       <Styled.HistoryModalContainer>
         <Styled.HistoryModalTriangle />
         <Styled.HistoryModalContent>
@@ -71,7 +73,7 @@ const Styled = {
     z-index: 10;
   `,
   HistoryModalContainer: styled.div`
-    position: fixed;
+    position: absolute;
     top: 65rem;
     width: 35rem;
     display: flex;
@@ -144,4 +146,7 @@ const Styled = {
     z-index: 9;
     position: fixed;
   `,
+  Blank: styled.div`
+  position: relative;
+  `
 };

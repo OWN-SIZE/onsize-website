@@ -27,17 +27,21 @@ import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
+import DefaultImage1 from 'assets/icon';
+import DefaultImage3 from 'assets/icon';
 
 import ModalPortal from '../modal/ModalPortal';
+import { UpdateCategoryRequest } from 'types/category/client';
 
 interface ThumbNailProps {
-  data: ThumbNailData;
+  data?: ThumbNailData;
+  //categoryData?: ThumbNailData;
   width: string;
   height: string;
   page: string;
   noAddCategory?: boolean;
   categoryId?: string;
-  updateIsPin: ({ categoryId, targetId, editBody }: UpdateClosetInput) => void;
+  updateIsPin: ({ targetId, editBody }: UpdateClosetInput | UpdateCategoryRequest) => void;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -71,11 +75,17 @@ function ThumbNail(props: ThumbNailProps) {
         targetId: data.id,
         editBody: { isInPin: !data.isInPin },
       });
-    } else {
+    } else if (page === 'closet'){
       updateIsPin({
         targetId: data.id,
         editBody: { isPin: !data.isPin },
       });
+    }
+    else if (page === 'category'){
+      updateIsPin({
+        targetId: data?.id,
+        editBody: {isPinCategory: !data?.isPin},
+      })
     }
   };
 
@@ -117,11 +127,11 @@ function ThumbNail(props: ThumbNailProps) {
         )}
       </Styled.HoverHideContainer>
       {/* 기본 썸네일 */}
-      {data.image && page === 'category' ? (
+      {page === 'category' && (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
           <Image
             src=""
-            alt={'썸네일 이미지' + data.image[0]}
+            alt={'썸네일 이미지'}
             width={226}
             height={300}
             placeholder="blur"
@@ -130,7 +140,7 @@ function ThumbNail(props: ThumbNailProps) {
           <Styled.SeparateImages>
             <Image
               src=""
-              alt={'썸네일 이미지' + data.image[1]}
+              alt={'썸네일 이미지 + data.image[1]' }
               width={226}
               height={150}
               placeholder="blur"
@@ -138,7 +148,7 @@ function ThumbNail(props: ThumbNailProps) {
             />
             <Image
               src=""
-              alt={'썸네일 이미지' + data.image[2]}
+              alt={'썸네일 이미지 + data.image[2]' }
               width={226}
               height={150}
               placeholder="blur"
@@ -146,10 +156,14 @@ function ThumbNail(props: ThumbNailProps) {
             />
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
-      ) : (
-        <Styled.ThumbNailImg className={'closet'} width={width} height={height} />
       )}
-
+      {page !== 'category' && (
+        <Styled.ThumbNailImg className={'closet'} width={width} height={height}>
+          {data.image && typeof data.image === 'string' && (
+            <Image src={data.image} width={332} height={332} alt="상품 대표 이미지" />
+          )}
+        </Styled.ThumbNailImg>
+      )}
       {/* 썸네일 호버시 코드 */}
       <Styled.HoverThumbNail
         className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
@@ -207,6 +221,7 @@ function ThumbNail(props: ThumbNailProps) {
                 <ModifyCategoryModal
                   onClickModifyCategoryModal={onClickModifyCategoryModal}
                   categoryId={data.id}
+                  categoryName={data.categoryName}
                 ></ModifyCategoryModal>
               ) : (
                 data.name && (
@@ -315,7 +330,7 @@ const Styled = {
       background-color: ${theme.colors.gray250};
     }
     &.category {
-      background-color: pink;
+      background-color: ${theme.colors.gray300};
       display: flex;
     }
   `,

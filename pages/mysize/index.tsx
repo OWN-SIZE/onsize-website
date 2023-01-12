@@ -5,7 +5,7 @@ import Mysize from 'components/mysize/Mysize';
 
 export default function index() {
   return (
-    <Layout noMenuBar>
+    <Layout noMenuBar >
         <Mysize></Mysize>
     </Layout>
   )

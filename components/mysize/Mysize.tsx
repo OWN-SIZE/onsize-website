@@ -7,37 +7,39 @@ import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
 import { useFetchMysize } from 'hooks/queries/mySize';
 import useToast from 'components/common/Toast/useToast';
-import {Toast} from 'components/common/Toast/Toast';
+import { Toast } from 'components/common/Toast/Toast';
 import { ToastContext } from 'components/common/Toast/ToastProvider';
 import { useContext } from 'react';
 import TopRequestModal from 'assets/icon/topRequestModal.png';
 import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
 
 export default function Mysize() {
+  const { allMysize } = useFetchMysize();
+  console.log(allMysize);
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
 
+  //토스트
   const { isOpenToast, message, showToast } = useToast();
-
   const handleClick = () => {
-    showToast("저장되었습니다.");
+    setIsAlertActive(true);
   };
-
-  const onSuccessSubmit = () => { console.log('저장 성공')}; //토스트
+  const onSuccessSubmit = () => {
+    console.log('저장 성공');
+    showToast('저장되었습니다.');
+  };
 
   const [topColor, setTopColor] = useState(`${theme.colors.black}`);
   const [bottomColor, setBottomColor] = useState(`${theme.colors.gray200}`);
   const [isTopClicked, setIsTopClicked] = useState(true);
-
   const [clickedMeasure, setClickedMeasure] = useState('단면');
 
-  console.log(clickedMeasure);
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
-  }
-
+  };
 
   let inputRequest = '없음';
+  let data;
 
   const changeBorderColor = (clicked: string) => {
     if (clicked === '상의') {
@@ -51,78 +53,72 @@ export default function Mysize() {
     }
   };
 
-  const { allMysize } = useFetchMysize();
-  if (!allMysize) return;
+  if (allMysize) {
+    if (
+      allMysize.bottom.bottomLength === null &&
+      allMysize.bottom.hem === null &&
+      allMysize.bottom.isWidthOfBottom === null &&
+      allMysize.bottom.rise === null &&
+      allMysize.bottom.thigh === null &&
+      allMysize.bottom.waist === null
+    ) {
+      inputRequest = '하의';
+    }
+    if (
+      allMysize.top.topLength === null &&
+      allMysize.top.shoulder === null &&
+      allMysize.chest.isWidthOfBottom === null &&
+      allMysize.top.isWidthOfTop === null
+    ) {
+      inputRequest = '상의';
+    }
 
-  console.log(allMysize);
-  if (
-    allMysize.bottom.bottomLength === null &&
-    allMysize.bottom.hem === null &&
-    allMysize.bottom.isWidthOfBottom === null &&
-    allMysize.bottom.rise === null &&
-    allMysize.bottom.thigh === null &&
-    allMysize.bottom.waist === null
-  ) {
-    inputRequest = '하의';
-  }
-  if (
-    allMysize.top.topLength === null &&
-    allMysize.top.shoulder === null &&
-    allMysize.chest.isWidthOfBottom === null &&
-    allMysize.top.isWidthOfTop === null
-  ) {
-    inputRequest = '상의';
-  }
+    const { chest } = allMysize.top;
+    const { thigh, rise, hem } = allMysize.bottom;
 
-    const {chest} = allMysize.top;
-
-    const {thigh, rise, hem} = allMysize.bottom;
-
-    let data;
-  if (isTopClicked && allMysize.top.isWidthOfTop)
-  {
-    if (clickedMeasure === '둘레'){
-    data = {총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest};
-    } else {
-      data = {총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: ''};
+    if (isTopClicked && allMysize.top.isWidthOfTop && clickedMeasure === '둘레') {
+      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest };
+    } else if (isTopClicked && allMysize.top.isWidthOfTop && clickedMeasure === '단면') {
+      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: '' };
+    } else if (isTopClicked && allMysize.top.isWidthOfTop === null && clickedMeasure === '단면') {
+      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest };
+    } else if (isTopClicked && allMysize.top.isWidthOfTop === null && clickedMeasure === '둘레') {
+      data = { 총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: '' };
+    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom && clickedMeasure === '둘레') {
+      data = {
+        총장: allMysize.bottom.bottomLength,
+        밑위: allMysize.bottom.rise,
+        허리: allMysize.bottom.waist,
+        허벅지: allMysize.bottom.thigh,
+        밑단: allMysize.bottom.hem,
+      };
+    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom && clickedMeasure === '단면') {
+      data = { 총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: '', 허벅지: '', 밑단: '' };
+    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom === null && clickedMeasure === '단면') {
+      data = {
+        총장: allMysize.bottom.bottomLength,
+        밑위: allMysize.bottom.rise,
+        허리: allMysize.bottom.waist,
+        허벅지: allMysize.bottom.thigh,
+        밑단: allMysize.bottom.hem,
+      };
+    } else if (isTopClicked === false && allMysize.bottom.isWidthOfBottom === null && clickedMeasure === '둘레') {
+      data = { 총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: '', 허벅지: '', 밑단: '' };
     }
   }
-  else if (isTopClicked && (allMysize.top.isWidthOfTop === null)){
-    if (clickedMeasure === '단면') {
-      data = {총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: allMysize.top.chest};
-    } else {
-      data = {총장: allMysize.top.topLength, '어깨 너비': allMysize.top.shoulder, 가슴: ''};
-    }
-  }
-  else if (!isTopClicked && allMysize.bottom.isWidthOfBottom)
-  {
-    if (clickedMeasure === '둘레'){
-      data = {총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: allMysize.bottom.waist, 허벅지: allMysize.bottom.thigh, 밑단: allMysize.bottom.hem }
-      } else {
-        data = {총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: null, 허벅지: null, 밑단: null }
-      }
-  }
-  else {
-    if (clickedMeasure === '단면'){
-      data = {총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: allMysize.bottom.waist, 허벅지: allMysize.bottom.thigh, 밑단: allMysize.bottom.hem }
-      } else {
-        data = {총장: allMysize.bottom.bottomLength, 밑위: allMysize.bottom.rise, 허리: null, 허벅지: null, 밑단: null }
-      }
-  }
-    
-
-
   return (
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
           <p>상의</p>
-          <Image
-            src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
-            alt="상의가 클릭되었음을 나타내는 체크 이미지"
-            width={32}
-            height={32}
-          />
+          {inputRequest === '상의' ? null : (
+            <Image
+              src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
+              alt="상의가 클릭되었음을 나타내는 이미지"             
+              width={32}
+              height={32}
+            />
+          )}
         </Styled.TopSize>
         <Styled.Blank></Styled.Blank>
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
@@ -169,7 +165,11 @@ export default function Mysize() {
           </Styled.BottomRequestModal>
         </Styled.BottomRequestModalContainer>
       ) : null}
-      {isOpenToast && <Styled.ToastContainer><Toast message = {message} /></Styled.ToastContainer>}
+      {isOpenToast && (
+        <Styled.ToastContainer>
+          <Toast message={message} />
+        </Styled.ToastContainer>
+      )}
     </Styled.Root>
   );
 }
@@ -194,6 +194,7 @@ const Styled = {
     & > p {
       margin-left: 1rem;
       margin-right: 1.4rem;
+      cursor: pointer;
     }
   `,
   Blank: styled.div`
@@ -209,6 +210,7 @@ const Styled = {
     & > p {
       margin-left: 1rem;
       margin-right: 1.4rem;
+      cursor: pointer;
     }
   `,
   SaveButtonContainer: styled.div`
@@ -227,6 +229,7 @@ const Styled = {
     top: 36.1rem;
     margin-left: 47.8rem;
     border-radius: 3rem;
+    cursor: pointer;
   `,
   SizeFormContainer: styled.div`
     margin: 0 auto;
@@ -303,5 +306,5 @@ const Styled = {
     display: flex;
     align-items: center;
     margin-left: 22.4rem;
-`,
+  `,
 };

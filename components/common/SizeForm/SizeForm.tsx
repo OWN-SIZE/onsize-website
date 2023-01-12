@@ -163,7 +163,7 @@ export default function SizeForm(props: FormProps) {
   }, [watch]);
 
   const sendMeasureValue = (measure: string) => {
-    onClickMeasure(measure);
+    onClickMeasure && onClickMeasure(measure);
   }
 
   return (
@@ -176,8 +176,8 @@ export default function SizeForm(props: FormProps) {
             <SizeInput key={key} inputKey={key} register={register} setValue={setValue} valid={{ min, max }} data={data}/>
           ))}
           <Styled.RadioContainer>
-            <RadioButton onClick={() => setMeasure('단면')} label="단면" isClicked={measure === '단면'} />
-            <RadioButton onClick={() => setMeasure('둘레')} label="둘레" isClicked={measure === '둘레'} />
+            <RadioButton onClick={() => {setMeasure('단면'); sendMeasureValue('단면');}} label="단면" isClicked={measure === '단면'} />
+            <RadioButton onClick={() => {setMeasure('둘레'); sendMeasureValue('둘레');}} label="둘레" isClicked={measure === '둘레'} />
           </Styled.RadioContainer>
           {Object.entries(bottomSwitchMapper).map(([key, scope]) => (
             <SizeInput
