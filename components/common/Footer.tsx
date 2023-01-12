@@ -2,36 +2,28 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 function Footer() {
+  const FEEDBACK_URL =
+    'https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform?usp=sf_link';
+  const ABOUT_OWNSIZE_URL = 'https://golden-rib-2f1.notion.site/Help-Support-9db0af92af7949d2b251e3be5dfdde98';
+  const PRIVACY_URL = 'https://golden-rib-2f1.notion.site/fe544d3a20054510b8acb233179e0d87';
+  const INSTAGRAM_URL = 'https://www.instagram.com/ownsize_official/';
+  const linkProduct = [
+    { url: FEEDBACK_URL, text: '피드백' },
+    { url: ABOUT_OWNSIZE_URL, text: 'ABOUT OWNSIZE' },
+    { url: PRIVACY_URL, text: '개인정보처리방침' },
+    { url: INSTAGRAM_URL, text: '인스타그램' },
+  ].map((item) => {
+    return (
+      <a href={item.url} target={'_blank'} rel="noreferrer" key={item.text}>
+        {item.text}
+      </a>
+    );
+  });
   return (
     <Styled.Root>
       <Styled.Container>
         <Styled.Title>OWNSIZE</Styled.Title>
-        <Styled.RightSection>
-          <a
-            href="https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform?usp=sf_link"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            피드백
-          </a>
-          <a
-            href="https://golden-rib-2f1.notion.site/Help-Support-9db0af92af7949d2b251e3be5dfdde98"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            ABOUT OWNSIZE
-          </a>
-          <a
-            href="https://golden-rib-2f1.notion.site/fe544d3a20054510b8acb233179e0d87"
-            target={'_blank'}
-            rel="noreferrer"
-          >
-            개인정보처리방침
-          </a>
-          <a href="https://www.instagram.com/ownsize_official/" target={'_blank'} rel="noreferrer">
-            인스타그램
-          </a>
-        </Styled.RightSection>
+        <Styled.RightSection>{linkProduct}</Styled.RightSection>
         <Styled.Contact>
           contact <span>ownsizeofficial@gmail.com</span>
         </Styled.Contact>
