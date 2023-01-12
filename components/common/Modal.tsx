@@ -68,8 +68,10 @@ function Modal(props: PropsWithChildren<ModalProps>) {
         {onClickLeftButton && onClickRightButton && (
           <Styled.ModalButtons>
             <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
-            <Styled.RightButton onClick={onClickRightButton} isButtonActivated={isButtonActivated ? isButtonActivated : !isButtonActivated} >{rightButtonText}</Styled.RightButton>
-          </Styled.ModalButtons>
+            {isButtonActivated !== undefined && (
+            <Styled.RightButton onClick={onClickRightButton} isButtonActivated={isButtonActivated} >{rightButtonText}</Styled.RightButton>
+            )}
+            </Styled.ModalButtons>
         )}
       </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
