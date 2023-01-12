@@ -1,6 +1,6 @@
 import React from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
-import { GoogleLoginImg } from 'assets/img';
+import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 //import { useLoginMutation } from 'hooks/queries/user';
 import Image from 'next/image';
 import { useRecoilState } from 'recoil';
@@ -26,6 +26,9 @@ function Login() {
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
+        <Styled.Header>
+          <Image src={OwnSizeLogoImg} alt="로고 이미지" />
+        </Styled.Header>
         <Styled.GreetingImg />
         <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
@@ -45,17 +48,26 @@ export default Login;
 const Styled = {
   Root: styled.section`
     display: flex;
-    justify-content: center;
     align-items: center;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
+    background: ${theme.colors.black};
+  `,
+  Header: styled.header`
+    display: flex;
+    justify-content: flex-start;
+    align-items: flex-start;
+    width: 100%;
+    padding-top: 2.3rem;
+    padding-left: 16rem;
   `,
   GreetingImg: styled.img`
     width: 70rem;
     height: 50rem;
     background-color: #d9d9d9;
     border-radius: 1.5rem;
+    margin-top: 16rem;
   `,
   LoginButton: styled.button`
     width: 69.2rem;

@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import { LoginMouseImg } from 'assets/img';
+import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -56,6 +58,7 @@ function Register() {
             <br />
             입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
           </h2>
+          <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
         </Styled.LeftConatiner>
         <Styled.RightContainer>
           <Progress progress={progress} selectedOption={selectedOption} />
@@ -122,6 +125,11 @@ const Styled = {
       margin-top: 4.2rem;
       color: ${theme.colors.gray000};
       ${theme.fonts.body4};
+    }
+    img {
+      position: fixed;
+      left: 41.5rem;
+      top: 4.6rem;
     }
   `,
   RightContainer: styled.article`
