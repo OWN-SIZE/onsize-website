@@ -89,17 +89,16 @@ function ThumbNail(props: ThumbNailProps) {
         targetId: data.id,
         editBody: { isInPin: !data.isInPin },
       });
-    } else if (page === 'closet'){
+    } else if (page === 'closet') {
       updateIsPin({
         targetId: data.id,
         editBody: { isPin: !data.isPin },
       });
-    }
-    else if (page === 'category'){
+    } else if (page === 'category') {
       updateIsPin({
         targetId: data?.id,
-        editBody: {isPinCategory: !data?.isPin},
-      })
+        editBody: { isPinCategory: !data?.isPin },
+      });
     }
   };
 
@@ -143,32 +142,37 @@ function ThumbNail(props: ThumbNailProps) {
       {/* 기본 썸네일 */}
       {page === 'category' && (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
-          <Image
-            src=""
-            alt={'썸네일 이미지'}
-            width={226}
-            height={300}
-            placeholder="blur"
-            blurDataURL="assets/icon/folder_filled.png"
-          />
-          <Styled.SeparateImages>
+          {data.image[0] && (
             <Image
-              src=""
-              alt={'썸네일 이미지 + data.image[1]' }
-
+              src={data.image[0]}
+              alt={'썸네일 이미지'}
               width={226}
               height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
             />
-            <Image
-              src=""
-              alt={'썸네일 이미지 + data.image[2]' }
-              width={226}
-              height={150}
-              placeholder="blur"
-              blurDataURL="assets/icon/folder_filled.png"
-            />
+          )}
+          <Styled.SeparateImages>
+            {data.image[1] && (
+              <Image
+                src={data.image[1]}
+                alt={'썸네일 이미지'}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+            )}
+            {data.image[2] && (
+              <Image
+                src={data.image[2]}
+                alt={'썸네일 이미지'}
+                width={226}
+                height={150}
+                placeholder="blur"
+                blurDataURL="assets/icon/folder_filled.png"
+              />
+            )}
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
       )}
@@ -361,6 +365,9 @@ const Styled = {
     &.category {
       background-color: ${theme.colors.gray300};
       display: flex;
+      & > img {
+        border-radius: 1rem;
+      }
     }
   `,
   SizeContainer: styled.div`
@@ -435,5 +442,7 @@ const Styled = {
     display: flex;
     width: 22.6rem;
     flex-wrap: wrap;
+    background-color: ${theme.colors.gray250};
+    border-radius: 1rem;
   `,
 };

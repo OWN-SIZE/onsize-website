@@ -19,7 +19,20 @@ export default function Category(props: CategoryProps) {
   const { categoryData } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
 
-  const data = useFetchCategoryDetail(categoryData.id);
+  let data = useFetchCategoryDetail(categoryData.id);
+
+  const newArray: string[] | null = [];
+
+  if (data) {
+    data = data.sort((a, b) => {
+      return Number(b.id) - Number(a.id);
+    });
+  }
+  [0, 1, 2].map((item) => {
+    if (data) {
+      newArray.push(data[item]?.image);
+    }
+  });
 
   const { mutate: updateIsPin } = useUpdateCategory();
 
@@ -29,7 +42,7 @@ export default function Category(props: CategoryProps) {
   const ThumbNailData: ThumbNailData = {
     id: categoryData.id,
     isPin: categoryData.isPinCategory,
-    image: data[0]?.image, 
+    image: newArray, 
     categoryName: categoryData.categoryName
   };
 
