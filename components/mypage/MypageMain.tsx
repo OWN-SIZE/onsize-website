@@ -4,10 +4,13 @@ import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+
 import Modal from 'components/common/Modal';
-import HistoryModal from './HistoryModal';
-import { useFetchUserInformation, useFetchMyPageHistory } from '../../hooks/queries/mypageHistory';
 import ModalPortal from 'components/common/modal/ModalPortal';
+
+import { useFetchMyPageHistory, useFetchUserInformation } from '../../hooks/queries/mypageHistory';
+
+import HistoryModal from './HistoryModal';
 
 function MyPageMain() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
@@ -78,31 +81,32 @@ function MyPageMain() {
       {isHistoryModalOpen && (
         <ModalPortal>
           <HistoryModal onClickHistoryModal={onClickHistoryModal}>
-            {history && history.recData.map((history) => (
-              <Styled.HistoryModalLink key={history.id}>
-                {history.recommendSize === '-' ? (
-                  <div>
-                    <Image
-                      src={sizeReplacement}
-                      alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
-                      width={6}
-                      height={6}
-                      placeholder="blur"
-                      blurDataURL="assets/icon/sizeReplacement.png"
-                    ></Image>
-                  </div>
-                ) : (
-                  <h5>{history.recommendSize}</h5>
-                )}
-                <p
-                  onClick={() => {
-                    window.open(history.url, '_blank');
-                  }}
-                >
-                  {history.url.substr(0, 17)}
-                </p>
-              </Styled.HistoryModalLink>
-            ))}
+            {history &&
+              history.recData.map((history) => (
+                <Styled.HistoryModalLink key={history.id}>
+                  {history.recommendSize === '-' ? (
+                    <div>
+                      <Image
+                        src={sizeReplacement}
+                        alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
+                        width={6}
+                        height={6}
+                        placeholder="blur"
+                        blurDataURL="assets/icon/sizeReplacement.png"
+                      ></Image>
+                    </div>
+                  ) : (
+                    <h5>{history.recommendSize}</h5>
+                  )}
+                  <p
+                    onClick={() => {
+                      window.open(history.url, '_blank');
+                    }}
+                  >
+                    {history.url.substr(0, 17)}
+                  </p>
+                </Styled.HistoryModalLink>
+              ))}
           </HistoryModal>
         </ModalPortal>
       )}
