@@ -5,13 +5,14 @@ import styled from 'styled-components';
 import theme from '../../styles/theme';
 
 type ModalProps = {
-  title: string;
-  leftButtonText: string;
-  rightButtonText: string;
+  title?: string;
+  leftButtonText?: string;
+  rightButtonText?: string;
   width: number;
-  onClickModal: () => void;
-  onClickLeftButton: () => void;
-  onClickRightButton: () => void;
+  radius?: number;
+  onClickModal?: () => void;
+  onClickLeftButton?: () => void;
+  onClickRightButton?: () => void;
 };
 /*width 를 props 로 전달해야 하는 이유: 가로 대 세로 2 대 1의 비율로 모달 컴포넌트를 제작했기 때문..!
 <= 안그러면 padding top 과 bottom 의 값이 조금씩 달라져서..! 최대한 원래 디자인을 살리는 방법으로 이 방법을 선택했어요
@@ -23,6 +24,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
     leftButtonText,
     rightButtonText,
     width,
+    radius,
     onClickModal,
     onClickLeftButton,
     onClickRightButton,
@@ -55,13 +57,15 @@ function Modal(props: PropsWithChildren<ModalProps>) {
 
   return (
     <Styled.Root>
-      <Styled.ModalContainer width={width}>
+      <Styled.ModalContainer width={width} radius={radius}>
         <Styled.ModalTitle width={width}>{title}</Styled.ModalTitle>
         {children}
-        <Styled.ModalButtons>
-          <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
-          <Styled.RightButton onClick={onClickRightButton}>{rightButtonText}</Styled.RightButton>
-        </Styled.ModalButtons>
+        {onClickLeftButton && onClickRightButton && (
+          <Styled.ModalButtons>
+            <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
+            <Styled.RightButton onClick={onClickRightButton}>{rightButtonText}</Styled.RightButton>
+          </Styled.ModalButtons>
+        )}
       </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
     </Styled.Root>
@@ -80,17 +84,17 @@ const Styled = {
     justify-content: center;
     z-index: 10;
   `,
-  ModalContainer: styled.div<{ width: number }>`
+  ModalContainer: styled.div<{ width: number; radius?: number }>`
     position: fixed;
     width: ${(props) => `${props.width}rem`};
-    height: ${(props) => `${props.width * 0.5}rem`};
+    min-height: ${(props) => `${props.width * 0.5}rem`};
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
     align-content: center;
     filter: drop-shadow(0 0 1.4rem rgba(0, 0, 0, 0.15));
     background-color: ${theme.colors.gray000};
-    border-radius: 1rem;
+    border-radius: ${({ radius }) => (radius ? `${radius}rem` : '1rem')};
     z-index: 10;
   `,
   Backdrop: styled.div`

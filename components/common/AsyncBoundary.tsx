@@ -1,7 +1,8 @@
-import { PropsWithChildren, ReactNode, Suspense, useEffect, useState } from 'react';
-import { ErrorBoundary, FallbackProps } from 'react-error-boundary';
-import { QueryErrorResetBoundary, useQueryErrorResetBoundary } from 'react-query';
+import { PropsWithChildren, ReactNode, Suspense } from 'react';
+import { ErrorBoundary } from 'react-error-boundary';
+import { QueryErrorResetBoundary } from 'react-query';
 
+import Error from './Error';
 import Loading from './Loading';
 
 interface AsyncBoundaryProps {
@@ -16,17 +17,16 @@ const isExpectedError = (res: unknown): res is Error => {
 };
 
 export function AsyncBoundary({ children, loadingFallback }: PropsWithChildren<AsyncBoundaryProps>) {
-  const { reset } = useQueryErrorResetBoundary();
-
   return (
     <QueryErrorResetBoundary>
       <ErrorBoundary
-        onReset={reset}
-        fallbackRender={({ resetErrorBoundary }) => (
-          <h1>
-            Unexpected Error !<button onClick={() => resetErrorBoundary()}>Try again</button>
-          </h1>
-        )}
+        FallbackComponent={(fallback) => {
+          console.log('fallback', fallback);
+          if (isExpectedError(fallback.error)) {
+            return <Error />;
+          }
+          return <h1>Unexpected Error !</h1>;
+        }}
       >
         <Suspense fallback={loadingFallback || <Loading />}>{children}</Suspense>
       </ErrorBoundary>
