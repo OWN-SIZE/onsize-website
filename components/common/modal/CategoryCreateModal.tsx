@@ -1,9 +1,11 @@
 import React from 'react';
+import { usePostCategory } from 'hooks/queries/category';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+
 import Modal from 'components/common/Modal';
+
 import ModalPortal from './ModalPortal';
-import { usePostCategory } from 'hooks/queries/category';
 
 type CategoryCreateModalProps = {
   changeInputValue: string;

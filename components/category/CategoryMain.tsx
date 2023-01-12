@@ -1,16 +1,18 @@
 import React, { useRef, useState } from 'react';
 import Add from 'assets/icon/add.png';
+import EmptyFolder from 'assets/icon/emptyFolder.png';
 import Folder from 'assets/icon/folder_filled.png';
+import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
 import { useFetchAllCategory } from 'hooks/queries/category';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
-import EmptyFolder from 'assets/icon/emptyFolder.png';
-import Category from './Category';
+import { AllCategory } from 'types/category/client';
+
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
-import { AllCategory } from 'types/category/client';
-import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
+
+import Category from './Category';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
@@ -55,15 +57,15 @@ export default function CategoryMain() {
           />
           <h1>{category && category.length}</h1>
           <Styled.AddButton>
-          <Image
-            src={Add}
-            alt="폴더 추가를 뜻하는 더하기 이미지"
-            width={30}
-            height={30}
-            placeholder="blur"
-            blurDataURL="assets/icon/folder_filled.png"
-            onClick={onClickCategoryCreateModal}
-          />
+            <Image
+              src={Add}
+              alt="폴더 추가를 뜻하는 더하기 이미지"
+              width={30}
+              height={30}
+              placeholder="blur"
+              blurDataURL="assets/icon/folder_filled.png"
+              onClick={onClickCategoryCreateModal}
+            />
           </Styled.AddButton>
         </Styled.CategoryStateBar>
         {category && category.length === 0 ? (

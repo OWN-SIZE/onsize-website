@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Hanger from 'assets/icon/total_clothes.png';
+import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
+import { useUpdateCategory } from 'hooks/queries/category';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
@@ -8,8 +10,6 @@ import { AllCategory } from 'types/category/client';
 import { ThumbNailData } from 'types/common';
 
 import ThumbNail from '../common/ThumbNail/ThumbNail';
-import { useFetchCategoryDetail } from 'hooks/queries/allCloset';
-import { useUpdateCategory } from 'hooks/queries/category';
 
 interface CategoryProps {
   categoryData: AllCategory;
@@ -36,12 +36,11 @@ export default function Category(props: CategoryProps) {
 
   const { mutate: updateIsPin } = useUpdateCategory();
 
-
   const ThumbNailData: ThumbNailData = {
     id: categoryData.id,
     isPin: categoryData.isPinCategory,
-    image: newArray, 
-    categoryName: categoryData.categoryName
+    image: newArray,
+    categoryName: categoryData.categoryName,
   };
 
   const handleOnMouseEnter = () => {
@@ -56,7 +55,16 @@ export default function Category(props: CategoryProps) {
     <Styled.Root>
       <Styled.Category>
         <Styled.CategoryImage>
-          <ThumbNail data={ThumbNailData} categoryData={ThumbNailData} width="45.2" height="30.0" page="category" noAddCategory updateIsPin={updateIsPin} setIsProductHovered={setIsProductHovered}/>
+          <ThumbNail
+            data={ThumbNailData}
+            categoryData={ThumbNailData}
+            width="45.2"
+            height="30.0"
+            page="category"
+            noAddCategory
+            updateIsPin={updateIsPin}
+            setIsProductHovered={setIsProductHovered}
+          />
         </Styled.CategoryImage>
         <Link
           href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}

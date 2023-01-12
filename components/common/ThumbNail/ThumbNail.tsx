@@ -15,11 +15,14 @@ import {
   RecommendedIcon,
   SizeIcon,
 } from 'assets/icon';
+import DefaultImage1 from 'assets/icon';
+import DefaultImage3 from 'assets/icon';
 import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
+import { UpdateCategoryRequest } from 'types/category/client';
 import { ThumbNailData } from 'types/common';
 
 import CategoryClosetDeleteModal from '@/components/category/detail/CategoryClosetDeleteModal';
@@ -28,11 +31,8 @@ import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
-import DefaultImage1 from 'assets/icon';
-import DefaultImage3 from 'assets/icon';
 
 import ModalPortal from '../modal/ModalPortal';
-import { UpdateCategoryRequest } from 'types/category/client';
 
 interface ThumbNailProps {
   data?: ThumbNailData;

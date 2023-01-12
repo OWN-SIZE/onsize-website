@@ -1,17 +1,18 @@
-import SizeForm from 'components/common/SizeForm/SizeForm';
 import React, { useState } from 'react';
-import styled from 'styled-components';
-import theme from 'styles/theme';
-import Image from 'next/image';
+import { useContext } from 'react';
+import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
+import TopRequestModal from 'assets/icon/topRequestModal.png';
 import { useFetchMysize } from 'hooks/queries/mySize';
-import useToast from 'components/common/Toast/useToast';
+import Image from 'next/image';
+import styled from 'styled-components';
+import theme from 'styles/theme';
+
+import SizeForm from 'components/common/SizeForm/SizeForm';
 import { Toast } from 'components/common/Toast/Toast';
 import { ToastContext } from 'components/common/Toast/ToastProvider';
-import { useContext } from 'react';
-import TopRequestModal from 'assets/icon/topRequestModal.png';
-import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
+import useToast from 'components/common/Toast/useToast';
 
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
@@ -114,7 +115,7 @@ export default function Mysize() {
           {inputRequest === '상의' ? null : (
             <Image
               src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
-              alt="상의가 클릭되었음을 나타내는 이미지"             
+              alt="상의가 클릭되었음을 나타내는 이미지"
               width={32}
               height={32}
             />
