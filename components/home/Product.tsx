@@ -56,6 +56,7 @@ function Product(props: ProductProps) {
           page="closet"
           updateIsPin={updateIsPIn}
           setIsProductHovered={setIsProductHovered}
+          showToast={showToast}
         />
       ) : (
         categoryId && (
@@ -68,6 +69,7 @@ function Product(props: ProductProps) {
             updateIsPin={updateIsInPin}
             setIsProductHovered={setIsProductHovered}
             noAddCategory
+            showToast={showToast}
           />
         )
       )}
