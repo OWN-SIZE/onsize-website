@@ -39,8 +39,7 @@ export default function CategoryMain() {
     category = pinData.concat(noPinData);
   }
 
-  if (!category ) return;
-  const product = category.map((item) => <Category key={item.id} categoryData={item} />);
+  const product = category && category.map((item) => <Category key={item.id} categoryData={item} />);
 
   return (
     <Styled.Root>
@@ -54,7 +53,7 @@ export default function CategoryMain() {
             placeholder="blur"
             blurDataURL="assets/icon/folder_filled.png"
           />
-          <h1>{category.length}</h1>
+          <h1>{category && category.length}</h1>
           <Styled.AddButton>
           <Image
             src={Add}
@@ -67,7 +66,7 @@ export default function CategoryMain() {
           />
           </Styled.AddButton>
         </Styled.CategoryStateBar>
-        {category.length === 0 ? (
+        {category && category.length === 0 ? (
           <Styled.ZeroCategory>
             <Image
               src={EmptyFolder}

@@ -36,8 +36,6 @@ export default function Category(props: CategoryProps) {
 
   const { mutate: updateIsPin } = useUpdateCategory();
 
-  if(!data) return;
-
 
   const ThumbNailData: ThumbNailData = {
     id: categoryData.id,
@@ -81,7 +79,7 @@ export default function Category(props: CategoryProps) {
             placeholder="blur"
             blurDataURL="assets/icon/total_clothes.png"
           />
-          <h1>{data.length}</h1>
+          <h1>{data && data.length}</h1>
         </Styled.ClothesAmount>
       </Styled.Category>
     </Styled.Root>
