@@ -23,3 +23,4 @@ export { default as CategoryEditIcon } from './categoryEdit.png';
 export { default as CategoryDeleteIcon } from './categoryDelete.png';
 export { default as OpenMySizeIcon } from './openMysize.png';
 export { default as CategoryDetailFirstClosetIcon } from './blankCategoryDetail.png';
+export { default as HoveredOpenMySizeIcon } from './mysize_hover_toggle.png';
