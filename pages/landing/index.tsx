@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { BigLogoImg, ChromeWebstoreImg } from 'assets/img';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -7,6 +7,10 @@ import theme from 'styles/theme';
 import Layout from 'components/common/Layout';
 
 function Lading() {
+  useEffect(() => {
+    localStorage.setItem('userId', 'null');
+    localStorage.setItem('isRegister', 'false');
+  }, []);
   return (
     <Layout noHeader noMenuBar>
       <Styled.Root>
