@@ -12,10 +12,11 @@ interface ProductProps {
   data: ClosetOutput;
   page: string;
   categoryId?: string;
+  showToast: (message: string) => void;
 }
 
 function Product(props: ProductProps) {
-  const { data, page, categoryId } = props;
+  const { data, page, categoryId, showToast } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
   let targetCategoryId = '';
   if (categoryId) {
@@ -34,7 +35,6 @@ function Product(props: ProductProps) {
     isInPin: data.isInPin,
     productUrl: data.productUrl,
   };
-
   const { mutate: updateIsPIn } = useUpdateAllClosetProductMutation('');
   const { mutate: updateIsInPin } = useUpdateIsInPinMutation(targetCategoryId);
 
@@ -56,6 +56,7 @@ function Product(props: ProductProps) {
           page="closet"
           updateIsPin={updateIsPIn}
           setIsProductHovered={setIsProductHovered}
+          showToast={showToast}
         />
       ) : (
         categoryId && (
@@ -68,6 +69,7 @@ function Product(props: ProductProps) {
             updateIsPin={updateIsInPin}
             setIsProductHovered={setIsProductHovered}
             noAddCategory
+            showToast={showToast}
           />
         )
       )}
@@ -83,19 +85,18 @@ function Product(props: ProductProps) {
       <Styled.Memo>{data.memo}</Styled.Memo>
       <a href={data.productUrl} target={'_blank'} rel="noreferrer">
         <Styled.BrandSection onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
-          <Styled.BrandLogo />
-          {/* 브랜드 로고 url */}
-          {/* {data.faviconUrl ? (
-          <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" />
-        ) : (
-          <Styled.BrandLogo />
-        )} */}
+          {data.faviconUrl ? (
+            <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" />
+          ) : (
+            <Styled.BrandLogo />
+          )}
           <Styled.BrandName>{data.mallName}</Styled.BrandName>
         </Styled.BrandSection>
       </a>
     </Styled.Root>
   );
 }
+
 export default Product;
 const Styled = {
   Root: styled.article`
@@ -155,6 +156,11 @@ const Styled = {
     margin-top: 4rem;
     width: 100%;
     height: 5rem;
+
+    & > img {
+      border-radius: 0.5rem;
+      margin-right: 1.2rem;
+    }
   `,
   BrandLogo: styled.div`
     width: 5rem;

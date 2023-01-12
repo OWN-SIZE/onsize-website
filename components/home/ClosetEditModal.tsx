@@ -14,10 +14,11 @@ interface ModalProps {
     memo?: string | null;
   };
   categoryId?: string;
+  showToast?: (message: string) => void;
 }
 
 function ClosetEditModal(props: ModalProps) {
-  const { setIsModalOpen, setImgHoveredTarget, data, categoryId } = props;
+  const { setIsModalOpen, setImgHoveredTarget, data, categoryId, showToast } = props;
   const { productName } = data;
   let { size, memo } = data;
   size = !size ? '' : size;
@@ -73,6 +74,7 @@ function ClosetEditModal(props: ModalProps) {
       editBody: { productName: productNameInput, size: sizeInput, memo: memoInput },
     });
     handleCloseOnClick();
+    showToast && showToast('수정되었습니다');
   };
 
   return (
@@ -123,7 +125,10 @@ function ClosetEditModal(props: ModalProps) {
                 ? 'disabled'
                 : 'abled'
             }
-            disabled={productNameInput.length === 0 || (productNameInput === productName && sizeInput === size && memoInput === memo)}
+            disabled={
+              productNameInput.length === 0 ||
+              (productNameInput === productName && sizeInput === size && memoInput === memo)
+            }
           >
             수정
           </Styled.SubmitButton>
