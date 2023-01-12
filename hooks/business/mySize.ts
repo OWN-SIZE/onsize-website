@@ -5,10 +5,9 @@ import { usePostMyBottomSizeMutation, usePostMyTopSizeMutation } from '../querie
 export const usePostMyTopSize = () => {
   const postMyTopSizeMutate = usePostMyTopSizeMutation();
 
-  const postMyTopSize = async (body: TopSizeInput, onSuccessPost: () => void) => {
-    const { data } = await postMyTopSizeMutate.mutateAsync(body, {
+  const postMyTopSize = (body: TopSizeInput, onSuccessPost: () => void) => {
+    postMyTopSizeMutate.mutate(body, {
       onSuccess() {
-        console.log(data);
         onSuccessPost();
       },
     });
@@ -20,10 +19,9 @@ export const usePostMyTopSize = () => {
 export const usePostMyBottomSize = () => {
   const postMyBottomSizeMutate = usePostMyBottomSizeMutation();
 
-  const postMyBottomSize = async (body: BottomSizeInput, onSuccessPost: () => void) => {
-    const { data } = await postMyBottomSizeMutate.mutateAsync(body, {
+  const postMyBottomSize = (body: BottomSizeInput, onSuccessPost: () => void) => {
+    postMyBottomSizeMutate.mutate(body, {
       onSuccess() {
-        console.log(data);
         onSuccessPost();
       },
     });

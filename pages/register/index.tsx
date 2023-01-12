@@ -45,6 +45,7 @@ function Register() {
       setIsNextActive(false);
     } else {
       router.push('/home');
+      localStorage.setItem('isRegister', 'true');
     }
   };
 
