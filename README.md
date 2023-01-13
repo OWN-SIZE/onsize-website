@@ -128,7 +128,317 @@
 
 ## 🕹 Convention
 
-## 🐾 Branch Strategy
+### ✏️ Coding Convention 
+Airbnb React Style guide
 
+<details><summary>
+명명규칙(Naming Conventions)
+</summary>
+
+1. 이름으로부터 의도가 읽혀질 수 있게 쓴다.
+- ex)
+    
+    ```jsx
+    // bad
+    function q() {
+      // ...stuff...
+    }
+    
+    // good
+    function query() {
+      // ..stuff..
+    }
+    
+    ```
+    
+1. 오브젝트, 함수, 그리고 인스턴스에는 `camelCase`를 사용한다. 카멜케이스 중에서도 맨 앞 글자 빼고 첫 글자는 대문자로 작성하는 `lowerCamelCase` 를 사용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    const OBJEcttsssss = {};
+    const this_is_my_object = {};
+    function c() {}
+    
+    // good
+    const thisIsMyObject = {};
+    function thisIsMyFunction() {}
+    
+    ```
+    
+1. 클래스나 constructor에는 `PascalCase`를 사용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    function user(options) {
+      this.name = options.name;
+    }
+    
+    const bad = new user({
+      name: 'nope',
+    });
+    
+    // good
+    class User {
+      constructor(options) {
+        this.name = options.name;
+      }
+    }
+    
+    const good = new User({
+      name: 'yup',
+    });
+    
+    ```
+    
+1. 함수 이름은 동사 + 명사 형태로 작성한다.
+ex) `postUserInformation( )`
+2. 약어 사용은 최대한 지양한다.
+3. 이름에 네 단어 이상이 들어가면 팀원과 상의를 거친 후 사용한다
+</details>
+
+<details><summary>블록(Blocks)</summary>
+
+1. 복수행의 블록에는 중괄호({})를 사용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    if (test)
+      return false;
+    
+    // good
+    if (test) return false;
+    
+    // good
+    if (test) {
+      return false;
+    }
+    
+    // bad
+    function() { return false; }
+    
+    // good
+    function() {
+      return false;
+    }
+    
+    ```
+    
+1. 복수행 블록의 `if` 와 `else` 를 이용하는 경우 `else` 는 `if` 블록 끝의 중괄호( } )와 같은 행에 위치시킨다.
+- ex)
+    
+    ```java
+    // bad
+    if (test) {
+      thing1();
+      thing2();
+    } 
+    else {
+      thing3();
+    }
+    
+    // good
+    if (test) {
+      thing1();
+      thing2();
+    } else {
+      thing3();
+    }
+    
+    ```
+  </details>  
+
+<details><summary>
+코멘트(Comments)
+</summary>
+1. 복수형의 코멘트는 `/** ... */` 를 사용한다.
+- ex)
+    
+    ```jsx
+    // good
+    /**
+     * @param {String} tag
+     * @return {Element} element
+     */
+    function make(tag) {
+      // ...stuff...
+    
+      return element;
+    }
+    
+    ```
+    
+1. 단일 행의 코멘트에는 `//` 을 사용하고 코멘트를 추가하고 싶은 코드의 **상부에 배치**한다. 그리고 코멘트의 앞에 빈 행을 넣는다.
+- ex)
+    
+    ```jsx
+    // bad
+    const active = true; // is current tab
+    
+    // good
+    // is current tab
+    const active = true;
+    
+    // good
+    function getType() {
+      console.log('fetching type...');
+    
+      // set the default type to 'no type'
+      const type = this._type || 'no type';
+    
+      return type;
+    }
+    
+    ```
+   </details> 
+
+<details><summary>
+문자열(Strings)
+</summary>
+1. 문자열에는 싱글쿼트 `''` 를 사용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    const name = "Capt. Janeway";
+    
+    // good
+    const name = 'Capt. Janeway';
+    ```
+    
+1. 프로그램에서 문자열을 생성하는 경우는 문자열 연결이 아닌 `template strings`를 이용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    function sayHi(name) {
+      return 'How are you, ' + name + '?';
+    }
+    
+    // bad
+    function sayHi(name) {
+      return ['How are you, ', name, '?'].join();
+    }
+    
+    // good
+    function sayHi(name) {
+      return `How are you, ${name}?`;
+    }
+    
+    ```
+  </details>  
+
+<details><summary>
+함수(Functions)
+</summary>
+1. 화살표 함수를 사용한다.
+- ex)
+    
+    ```jsx
+     var arr1 = [1, 2, 3];
+      var pow1 = arr.map(function (x) { // ES5 Not Good
+        return x * x;
+      });
+    
+      const arr2 = [1, 2, 3];
+      const pow2 = arr.map(x => x * x); // ES6 Good
+    ```
+   </details> 
+
+<details><summary>
+조건식과 등가식(Comparison Operators & Equality)
+</summary>
+1. `==` 이나 `!=` 보다 `===` 와 `!==` 을 사용한다.
+2. 단축형을 사용한다.
+- ex)
+    
+    ```jsx
+    // bad
+    if (name !== '') {
+      // ...stuff...
+    }
+    
+    // good
+    if (name) {
+      // ...stuff...
+    }
+    ```
+    
+1. 비동기 함수를 사용할 때 `Promise`함수의 사용은 지양하고 `async`, `await`를 쓰도록 한다
+
+</details>
+
+<details><summary>
+스타일 컴포넌트
+</summary>
+1. 페이지 내 가장 바깥을 감싸는 태그는 `Root` 를 사용한다.
+
+- ex)
+    
+    ```jsx
+    <Styled.Root>
+    		// ...contents
+    </Styled.Root>
+    ```
+    
+1. `Styled` 객체를 사용해서 스타일을 작성한다.
+
+- ex)
+    
+    ```jsx
+    const Styled = {
+      Root: styled.div`
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        padding: 0 40px;
+        height: calc(var(--vh, 1vh) * 100);
+      `,
+      BrandName: styled.h1`
+        font-size: 20px;
+        font-weight: bold;
+        margin-left: 16px;
+        ${({ theme }) => css`
+          color: ${theme.colors.primary_400};
+        `}
+      `,
+    }
+    ```
+    </details>
+    
+## 서비스 핵심 기능
+### 1. 구글 로그인 뷰
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/846ead9a-9a5c-4bbe-9dcb-cdbacfa64922/Untitled.png)
+- `@react-oauth/google` 라이브러리를 이용하여 구글 로그인 구현
+
+### 2. 사용자 실측치 입력 뷰
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8abf86f7-f341-4462-8318-4e2e85464a50/Untitled.png)
+- 사이즈 추천을 위해 사용자가 평소에 자주 입는 사이즈 실측치를 작성하는 뷰
+- `@react-hook-form` 라이브러리로 유효성 검사 및 폼 작성 구현 
+
+### 3. (메인 뷰) 나의 옷장
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8a03106e-ddb7-4061-9cb4-02fc334ff38c/Untitled.png)
+- 익스텐션을 통해 저장한 의류 및 추천 사이즈 정보를 한 눈에 확인할 수 있는 뷰
+- 아카이브 내 의류 관련 정보 디스플레이/카테고리 추가/고정/수정/삭제 및 의류 상세페이지 랜딩 기능
+
+### 4. (메인 뷰) 카테고리 뷰
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b3c8af7a-b8ee-4d4d-96e9-509d4aa8c764/Untitled.png)
+- 나의 옷장에 저장된 의류들을 나만의 분류로 카테고리화하여 확인할 수 있는 뷰
+- 카테고리 관련 정보 디스플레이/추가/고정/수정/삭제 및 카테고리 내부 랜딩 기능
+
+### 5. 마이페이지 뷰
+![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3f96b981-572d-4edf-aeff-d028107a0db6/Untitled.png)
+- 개인정보, 의류 아카이빙 히스토리 및 기타 정보들을 확인할 수 있는 뷰
+- 가입한 구글 로그인 계정 확인, 의류 아카이빙 히스토리 확인, 기타 페이지 랜딩 및 탈퇴/로그아웃 기능
+    
+## 🐾 Branch Strategy
+- github flow 사용
+- 작업 전에 이슈 생성
+- 이슈 번호로 브랜치를 파서 작업
+- 작업이 다 끝나면 feat 브랜치에서 main 브랜치로 Pull Request 작성
+- 같은 팀원 최소 1인의 Approve를 받아야 main 브랜치에 머지 가능
 
 
