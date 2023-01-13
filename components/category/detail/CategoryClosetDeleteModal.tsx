@@ -12,9 +12,10 @@ interface ModalProps {
   isModalOpen: boolean;
   setIsModalOpen: Dispatch<React.SetStateAction<boolean>>;
   setImgHoveredTarget: Dispatch<React.SetStateAction<string>>;
+  showToast?: (message: string) => void;
 }
 function CategoryClosetDeleteModal(props: ModalProps) {
-  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, categoryId } = props;
+  const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, categoryId, showToast } = props;
 
   const [isButtonActivated, setIsButtonActivated] = useState(true);
 
@@ -31,6 +32,7 @@ function CategoryClosetDeleteModal(props: ModalProps) {
     deleteClosetProduct({ categoryId: categoryId, productId: productId });
     setIsModalOpen(false);
     setImgHoveredTarget('');
+    if (showToast) showToast('삭제되었습니다');
   };
   return (
     <Styled.Root>
