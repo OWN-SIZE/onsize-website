@@ -21,34 +21,32 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
 
   const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName, showToast } = props;
 
-  const onClickCancel = () => {
-    onClickModifyCategoryModal();
-  };
-  const onClickModify = () => {
-    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName) {
-      mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
-      onClickModifyCategoryModal();
-      setCategoryName && setCategoryName(changeInputValue);
-      showToast('수정되었습니다.');
-    }
-  };
 
   const inputRef = useRef(null);
   const [changeInputValue, setChangeInputValue] = useState(props.categoryName);
-  const updateInputValue = (input: string) => {
-    setChangeInputValue(input);
+  const [defaultValue, setDefaultValue] = useState<undefined | string>(props.categoryName);
+
+
+  const onClickCancel = () => {
+    onClickModifyCategoryModal();
   };
 
-  const [defaultValue, setDefaultValue] = useState<undefined | string>("dfs");
+  const onClickModify = () => {
+    if (defaultValue && defaultValue.length > 0 && defaultValue !== props.categoryName) {
+      mutate({ targetId: categoryId, editBody: { categoryName: defaultValue } });
+      onClickModifyCategoryModal();
+      setCategoryName && setCategoryName(changeInputValue);
+    }
+  };
+
 
   useEffect(() => {
-    setDefaultValue(changeInputValue);
-    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName){
+    if (defaultValue && defaultValue.length > 0 && defaultValue !== props.categoryName) {
       setIsButtonActivated(true);
     } else {
       setIsButtonActivated(false);
     }
-  },[changeInputValue])
+  }, [defaultValue])
   
 
   //한글 글자수 제한 (서현이 것 쇽샥)
@@ -60,9 +58,6 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
       e.currentTarget.value = value.slice(0, maxLength);
     }
   };
-
-
-  
 
   return (
     <ModalPortal>
@@ -79,15 +74,17 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         <Styled.CategoryModifyModal>
           <h1>카테고리 이름</h1>
           <Styled.CategoryNameInput
-            placeholder='예) 2023 위시리스트'
+            placeholder="예) 2023 위시리스트"
             value={defaultValue}
             maxLength={20}
             ref={inputRef}
-            onChange={(e) => updateInputValue(e.target.value)}
+            onChange={(e) => {
+              setDefaultValue(e.target.value);
+            }}
             onInput={handleOnInput}
             autoFocus={true}
           ></Styled.CategoryNameInput>
-          <h6>{changeInputValue ? (changeInputValue.length > 20 ? 20 : changeInputValue.length) : 0}/20</h6>
+          <h6>{defaultValue ? (defaultValue.length > 20 ? 20 : defaultValue.length) : 0}/20</h6>
         </Styled.CategoryModifyModal>
       </Modal>
     </ModalPortal>
