@@ -35,7 +35,8 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     if (defaultValue && defaultValue.length > 0 && defaultValue !== props.categoryName) {
       mutate({ targetId: categoryId, editBody: { categoryName: defaultValue } });
       onClickModifyCategoryModal();
-      setCategoryName && setCategoryName(changeInputValue);
+      setCategoryName && setCategoryName(defaultValue);
+      showToast('수정되었습니다.');
     }
   };
 
