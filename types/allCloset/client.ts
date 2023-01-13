@@ -35,5 +35,6 @@ export interface PostClosetInput {
 }
 
 export interface isInPin {
+  productId: number;
   isInPin: boolean;
 }

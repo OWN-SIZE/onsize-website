@@ -41,17 +41,17 @@ function CategoryDetailLanding() {
 
   const data = useFetchCategoryDetail(categoryId);
   console.log(data);
-  const orderedData: ClosetOutput[] = [];
+  let orderedData: ClosetOutput[] = [];
 
   if (data) {
-    // const newArray: ClosetOutput[] = [];
+    const newArray: ClosetOutput[] = [];
     for (let index = 0; index < data[0].length; index++) {
-      orderedData.push(Object.assign({}, data[0][index], data[1][index]));
+      const isInPinObject = data[1].find((item) => item.productId === data[0][index].id);
+      newArray.push(Object.assign({}, data[0][index], { isInPin: isInPinObject?.isInPin }));
     }
-    // console.log('here');
-    // const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
-    // const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
-    // orderedData = pinData.concat(noPinData);
+    const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
+    orderedData = pinData.concat(noPinData);
   }
   console.log(orderedData);
 
