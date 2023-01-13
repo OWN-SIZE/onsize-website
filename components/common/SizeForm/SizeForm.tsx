@@ -26,9 +26,7 @@ interface FormProps {
   skip?: boolean;
   setSkip?: (prev: boolean) => void;
   onClickMeasure?: (measure: string) => void;
-  data?:
-    | { 총장: number; '어깨 너비': number; 가슴: number }
-    | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
+  data?: { 총장: number; '어깨 너비': number; 가슴: number } | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
 }
 
 // 상의 총장, 어깨너비
@@ -110,6 +108,7 @@ export default function SizeForm(props: FormProps) {
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
+  
   const {
     register,
     setValue,

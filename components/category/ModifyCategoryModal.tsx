@@ -16,6 +16,7 @@ type ModifyCategoryModalProps = {
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
+  const [isButtonActivated, setIsButtonActivated] = useState(false);
 
   const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName } = props;
 
@@ -23,12 +24,11 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    if (changeInputValue.length > 0) {
-      console.log(changeInputValue);
+    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName) {
       mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
+      onClickModifyCategoryModal();
+      setCategoryName && setCategoryName(changeInputValue);
     }
-    onClickModifyCategoryModal();
-    setCategoryName && setCategoryName(changeInputValue);
   };
 
   const inputRef = useRef(null);
@@ -37,15 +37,20 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     setChangeInputValue(input);
   };
 
-  const [defaultValue, setDefaultValue] = useState("dfs");
+  const [defaultValue, setDefaultValue] = useState<undefined | string>("dfs");
 
   useEffect(() => {
-      setDefaultValue(changeInputValue);
+    setDefaultValue(changeInputValue);
+    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName){
+      setIsButtonActivated(true);
+    } else {
+      setIsButtonActivated(false);
+    }
   },[changeInputValue])
   
 
   //한글 글자수 제한 (서현이 것 쇽샥)
-  const handleOnInput = (e) => {
+  const handleOnInput = (e: any) => {
     const {
       currentTarget: { value, maxLength },
     } = e;
@@ -67,6 +72,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
         leftButtonText="취소"
         rightButtonText="수정"
         width={74.3}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.CategoryModifyModal>
           <h1>카테고리 이름</h1>
@@ -79,7 +85,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
             onInput={handleOnInput}
             autoFocus={true}
           ></Styled.CategoryNameInput>
-          <h6>{changeInputValue.length > 20 ? 20 : changeInputValue.length}/20</h6>
+          <h6>{changeInputValue ? (changeInputValue.length > 20 ? 20 : changeInputValue.length) : 0}/20</h6>
         </Styled.CategoryModifyModal>
       </Modal>
     </ModalPortal>

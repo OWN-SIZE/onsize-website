@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -15,6 +15,9 @@ interface ModalProps {
 }
 function CategoryClosetDeleteModal(props: ModalProps) {
   const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, categoryId } = props;
+
+  const [isButtonActivated, setIsButtonActivated] = useState(true);
+
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
   };
@@ -39,6 +42,7 @@ function CategoryClosetDeleteModal(props: ModalProps) {
         leftButtonText="아니오"
         rightButtonText="예"
         width={53}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.Content>카테고리에서 삭제하시겠습니까?</Styled.Content>
       </Modal>
