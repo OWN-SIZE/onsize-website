@@ -22,13 +22,6 @@ function Register() {
   const [skip, setSkip] = useState<boolean>(false);
   const router = useRouter();
 
-  useEffect(() => {
-    const isRegister = localStorage.getItem('isRegister');
-    if (isRegister && !JSON.parse(isRegister)) {
-      router.push('/login');
-    }
-  }, []);
-
   const onClickSize = () => {
     if (progress === 3) {
       // 서버에 데이터 넘기고 home으로 이동
