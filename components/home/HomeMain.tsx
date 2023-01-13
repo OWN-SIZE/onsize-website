@@ -1,3 +1,4 @@
+import { useState } from 'react';
 import { ClosetIcon } from 'assets/icon';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -18,9 +19,17 @@ interface HomeMainProps {
 function HomeMain(props: HomeMainProps) {
   const { data, page, categoryId } = props;
   const { isOpenToast, message, showToast } = useToast();
+  const [isAddCategory, setIsCategory] = useState(false);
   const countProduct = data.length;
   const product = data.map((item) => (
-    <Product key={String(item.id)} data={item} categoryId={categoryId} page={page} showToast={showToast} />
+    <Product
+      key={String(item.id)}
+      data={item}
+      categoryId={categoryId}
+      page={page}
+      showToast={showToast}
+      setIsCategory={setIsCategory}
+    />
   ));
 
   return (
@@ -31,8 +40,8 @@ function HomeMain(props: HomeMainProps) {
       </Styled.CountSection>
       <Styled.Closet>{product}</Styled.Closet>
       {isOpenToast && (
-        <Styled.ToastContainer>
-          <Toast message={message} />
+        <Styled.ToastContainer isAddCategory={isAddCategory}>
+          <Toast width={isAddCategory ? '42.6' : '32.9'} message={message} />
         </Styled.ToastContainer>
       )}
     </Styled.Root>
@@ -60,13 +69,13 @@ const Styled = {
     flex-wrap: wrap;
     margin-top: 5rem;
   `,
-  ToastContainer: styled.div`
+  ToastContainer: styled.div<{ isAddCategory: boolean }>`
     position: fixed;
     bottom: 5.2rem;
 
     display: flex;
     align-items: center;
 
-    margin-left: 53.9rem;
+    margin-left: ${({ isAddCategory }) => (isAddCategory ? '49rem' : ' 53.9rem')};
   `,
 };

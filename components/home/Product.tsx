@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { Dispatch, SetStateAction, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -13,10 +13,11 @@ interface ProductProps {
   page: string;
   categoryId?: string;
   showToast: (message: string) => void;
+  setIsCategory: Dispatch<SetStateAction<boolean>>;
 }
 
 function Product(props: ProductProps) {
-  const { data, page, categoryId, showToast } = props;
+  const { data, page, categoryId, showToast, setIsCategory } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
   let targetCategoryId = '';
   if (categoryId) {
@@ -57,6 +58,7 @@ function Product(props: ProductProps) {
           updateIsPin={updateIsPIn}
           setIsProductHovered={setIsProductHovered}
           showToast={showToast}
+          setIsCategory={setIsCategory}
         />
       ) : (
         categoryId && (
@@ -70,6 +72,7 @@ function Product(props: ProductProps) {
             setIsProductHovered={setIsProductHovered}
             noAddCategory
             showToast={showToast}
+            setIsCategory={setIsCategory}
           />
         )
       )}
@@ -84,7 +87,7 @@ function Product(props: ProductProps) {
       </a>
       <Styled.Memo>{data.memo}</Styled.Memo>
       <a href={data.productUrl} target={'_blank'} rel="noreferrer">
-        <Styled.BrandSection onMouseEnter={handleOnMouseEnter} onMouseLeave={handleOnMouseLeave}>
+        <Styled.BrandSection>
           {data.faviconUrl ? (
             <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" />
           ) : (

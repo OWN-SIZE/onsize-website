@@ -3,15 +3,16 @@ import theme from 'styles/theme';
 
 interface ToastProps {
   message: string;
+  width: string;
 }
 
-export const Toast = ({ message }: ToastProps) => {
-  return <Styled.Root>{message}</Styled.Root>;
+export const Toast = ({ message, width }: ToastProps) => {
+  return <Styled.Root width={width}>{message}</Styled.Root>;
 };
 
 const Styled = {
-  Root: styled.div`
-    width: 32.9rem;
+  Root: styled.div<{ width: string }>`
+    width: ${({ width }) => `${width}rem`};
     height: 8rem;
     background-color: ${theme.colors.yellow01};
     color: ${theme.colors.gray550};

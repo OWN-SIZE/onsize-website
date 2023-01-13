@@ -80,6 +80,7 @@ function CategoryDetailLanding() {
           onClickModifyCategoryModal={onClickModifyCategoryModal}
           setCategoryName={setCategoryName}
           categoryId={categoryId}
+          categoryName={typeof categoryName === 'string' ? categoryName : ''}
         />
       )}
       {isDeleteModalOpen && (

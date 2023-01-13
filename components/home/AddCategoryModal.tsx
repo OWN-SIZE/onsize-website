@@ -13,9 +13,10 @@ import ModalPortal from '../common/modal/ModalPortal';
 interface AddCategoryModalProps {
   productId: string;
   setIsCategoryModalOpen: Dispatch<React.SetStateAction<boolean>>;
+  showToast?: (message: string) => void;
 }
 function AddCategoryModal(props: AddCategoryModalProps) {
-  const { productId, setIsCategoryModalOpen } = props;
+  const { productId, setIsCategoryModalOpen, showToast } = props;
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
@@ -31,6 +32,7 @@ function AddCategoryModal(props: AddCategoryModalProps) {
   const handleCategoryOnClick = (categoryId: string) => {
     postIncludeCategory({ postBody: { productId: productId, categoryId: categoryId } });
     setIsCategoryModalOpen(false);
+    if (showToast) showToast('카테고리가 추가되었습니다.');
   };
 
   const onClickCategoryCreateModal = () => {
