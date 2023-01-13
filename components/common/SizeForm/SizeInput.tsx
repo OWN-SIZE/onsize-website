@@ -46,7 +46,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          placeholder={data && `${data[inputKey]}`}
+          placeholder={data && `${data[inputKey]}` === '0' ? '' : data && `${data[inputKey]}`}
         />
         cm
       </div>
