@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginMouseImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -21,6 +21,13 @@ function Register() {
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
   const router = useRouter();
+
+  useEffect(() => {
+    const isRegister = localStorage.getItem('isRegister');
+    if (isRegister && !JSON.parse(isRegister)) {
+      router.push('/login');
+    }
+  }, []);
 
   const onClickSize = () => {
     if (progress === 3) {
