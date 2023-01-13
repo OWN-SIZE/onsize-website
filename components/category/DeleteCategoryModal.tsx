@@ -11,11 +11,12 @@ import ModalPortal from '../common/modal/ModalPortal';
 type DeleteCategoryModalProps = {
   onClickDeleteCategoryModal: () => void;
   deletedCategoryId: number;
+  showToast: (message: string) => void;
 };
 
 export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
-  const { onClickDeleteCategoryModal, deletedCategoryId } = props;
-  const { mutate } = useDeleteCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
+  const { onClickDeleteCategoryModal, deletedCategoryId, showToast } = props;
+  const { mutate } = useDeleteCategory(showToast); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
   const router = useRouter();
   const [isButtonActivated, setIsButtonActivated] = useState(true);
 
@@ -25,7 +26,6 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const onClickDelete = () => {
     onClickDeleteCategoryModal();
     mutate(deletedCategoryId);
-    
   };
   return (
     <ModalPortal>

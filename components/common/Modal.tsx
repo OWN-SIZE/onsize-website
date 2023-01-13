@@ -72,6 +72,7 @@ function Modal(props: PropsWithChildren<ModalProps>) {
             <Styled.RightButton onClick={onClickRightButton} isButtonActivated={isButtonActivated} >{rightButtonText}</Styled.RightButton>
             )}
             </Styled.ModalButtons>
+
         )}
       </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />

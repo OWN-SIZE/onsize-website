@@ -44,7 +44,7 @@ interface ThumbNailProps {
   updateIsCategoryPin?: ({ targetId, editBody }: UpdateCategoryRequest) => void;
   setIsProductHovered: Dispatch<SetStateAction<boolean>>;
   showToast?: (message: string) => void;
-  setIsCategory: Dispatch<SetStateAction<boolean>>;
+  setIsCategory?: Dispatch<SetStateAction<boolean>>;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -170,24 +170,30 @@ function ThumbNail(props: ThumbNailProps) {
           )}
           <Styled.SeparateImages>
             {data.image[1] && (
-              <Image
-                src={data.image[1]}
-                alt={'썸네일 이미지'}
-                width={226}
-                height={150}
-                placeholder="blur"
-                blurDataURL="assets/icon/folder_filled.png"
-              />
+              <div>
+                <Image
+                  src={data.image[1]}
+                  alt={'썸네일 이미지'}
+                  width={226}
+                  height={150}
+                  placeholder="blur"
+                  blurDataURL="assets/icon/folder_filled.png"
+                  className="secondImage"
+                />
+              </div>
             )}
             {data.image[2] && (
-              <Image
-                src={data.image[2]}
-                alt={'썸네일 이미지'}
-                width={226}
-                height={150}
-                placeholder="blur"
-                blurDataURL="assets/icon/folder_filled.png"
-              />
+              <div>
+                <Image
+                  src={data.image[2]}
+                  alt={'썸네일 이미지'}
+                  width={226}
+                  height={150}
+                  placeholder="blur"
+                  blurDataURL="assets/icon/folder_filled.png"
+                  className="thirdImage"
+                />
+              </div>
             )}
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
@@ -212,7 +218,7 @@ function ThumbNail(props: ThumbNailProps) {
           <button
             onClick={() => {
               setIsCategoryModalOpen(!isCategoryModalOpen);
-              setIsCategory(true);
+              setIsCategory && setIsCategory(true);
             }}
           >
             카테고리 추가
@@ -263,7 +269,7 @@ function ThumbNail(props: ThumbNailProps) {
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
               onClick={() => {
                 setIsEditModalOpen(!isEditModalOpen);
-                setIsCategory(false);
+                setIsCategory && setIsCategory(false);
               }}
               width={40}
               height={40}
@@ -273,23 +279,24 @@ function ThumbNail(props: ThumbNailProps) {
 
           {data.id && isEditModalOpen && (
             <ModalPortal>
-              {page === 'category' ? (
-                <ModifyCategoryModal
-                  onClickModifyCategoryModal={onClickModifyCategoryModal}
-                  categoryId={data.id}
-                  categoryName={data.categoryName}
-                ></ModifyCategoryModal>
-              ) : (
-                data.name && (
-                  <ClosetEditModal
-                    categoryId={categoryId}
-                    setIsModalOpen={setIsEditModalOpen}
-                    setImgHoveredTarget={setImgHoveredTarget}
-                    showToast={showToast}
-                    data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
-                  />
-                )
-              )}
+              {page === 'category'
+                ? showToast && (
+                    <ModifyCategoryModal
+                      onClickModifyCategoryModal={onClickModifyCategoryModal}
+                      categoryId={data.id}
+                      categoryName={data.categoryName}
+                      showToast={showToast}
+                    ></ModifyCategoryModal>
+                  )
+                : data.name && (
+                    <ClosetEditModal
+                      categoryId={categoryId}
+                      setIsModalOpen={setIsEditModalOpen}
+                      setImgHoveredTarget={setImgHoveredTarget}
+                      showToast={showToast}
+                      data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
+                    />
+                  )}
             </ModalPortal>
           )}
           {/* 삭제 */}
@@ -300,7 +307,7 @@ function ThumbNail(props: ThumbNailProps) {
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
               onClick={() => {
                 setIsDeleteModalOpen(!isDeleteModalOpen);
-                setIsCategory(false);
+                setIsCategory && setIsCategory(false);
               }}
               width={40}
               height={40}
@@ -329,10 +336,13 @@ function ThumbNail(props: ThumbNailProps) {
                   showToast={showToast}
                 />
               ) : (
-                <DeleteCategoryModal
-                  onClickDeleteCategoryModal={onClickDeleteCategoryModal}
-                  deletedCategoryId={Number(data.id)}
-                ></DeleteCategoryModal>
+                showToast && (
+                  <DeleteCategoryModal
+                    onClickDeleteCategoryModal={onClickDeleteCategoryModal}
+                    deletedCategoryId={Number(data.id)}
+                    showToast={showToast}
+                  ></DeleteCategoryModal>
+                )
               )}
             </ModalPortal>
           )}
@@ -391,12 +401,16 @@ const Styled = {
     border-radius: 1rem;
     &.closet {
       background-color: ${theme.colors.gray250};
-    }
-    &.category {
-      background-color: ${theme.colors.gray300};
-      display: flex;
       & > img {
         border-radius: 1rem;
+      }
+    }
+    &.category {
+      background-color: ${theme.colors.gray250};
+      display: flex;
+      & > img {
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
       }
     }
   `,
@@ -474,5 +488,28 @@ const Styled = {
     flex-wrap: wrap;
     background-color: ${theme.colors.gray250};
     border-radius: 1rem;
+
+    & > div {
+      position: relative;
+      width: 22.6rem;
+      height: 15rem;
+      & > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(50, 50);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: auto;
+        &.secondImage {
+          border-top-right-radius: 1rem;
+        }
+        &.thirdImage {
+          border-bottom-right-radius: 1rem;
+        }
+      }
+    }
   `,
+ 
 };

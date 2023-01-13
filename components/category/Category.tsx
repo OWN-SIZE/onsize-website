@@ -13,10 +13,11 @@ import ThumbNail from '../common/ThumbNail/ThumbNail';
 
 interface CategoryProps {
   categoryData: AllCategory;
+  showToast: (message: string) => void;
 }
 
 export default function Category(props: CategoryProps) {
-  const { categoryData } = props;
+  const { categoryData, showToast } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
 
   let data = useFetchCategoryDetail(categoryData.id);
@@ -63,10 +64,11 @@ export default function Category(props: CategoryProps) {
             noAddCategory
             updateIsCategoryPin={updateIsPin}
             setIsProductHovered={setIsProductHovered}
+            showToast = {showToast}
           />
         </Styled.CategoryImage>
         <Link
-          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
+          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName, } }}
           as={`/category/${categoryData.id}`}
         >
           <Styled.CategoryTitle
