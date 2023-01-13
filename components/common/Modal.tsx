@@ -68,10 +68,15 @@ function Modal(props: PropsWithChildren<ModalProps>) {
         {onClickLeftButton && onClickRightButton && (
           <Styled.ModalButtons>
             <Styled.LeftButton onClick={onClickLeftButton}>{leftButtonText}</Styled.LeftButton>
+<<<<<<< Updated upstream
             {isButtonActivated !== undefined && (
             <Styled.RightButton onClick={onClickRightButton} isButtonActivated={isButtonActivated} >{rightButtonText}</Styled.RightButton>
             )}
             </Styled.ModalButtons>
+=======
+            <Styled.RightButton onClick={onClickRightButton} isButtonActivated = {isButtonActivated} >{rightButtonText}</Styled.RightButton>
+          </Styled.ModalButtons>
+>>>>>>> Stashed changes
         )}
       </Styled.ModalContainer>
       <Styled.Backdrop onClick={closeModal} />
@@ -137,7 +142,12 @@ const Styled = {
   LeftButton: styled.button`
     background-color: ${theme.colors.gray200};
   `,
+<<<<<<< Updated upstream
   RightButton: styled.button<{isButtonActivated: boolean }>`
     background-color: ${(props) => props.isButtonActivated ? theme.colors.black : theme.colors.gray200};
+=======
+  RightButton: styled.button`
+    background-color: ${(props: any) => props.isButtonActivated ? theme.colors.black : theme.colors.gray200};
+>>>>>>> Stashed changes
   `,
 };

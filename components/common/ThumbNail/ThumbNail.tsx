@@ -477,7 +477,5 @@ const Styled = {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     overflow: hidden;
-
-   
   `
 };
