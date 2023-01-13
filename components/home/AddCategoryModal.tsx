@@ -49,6 +49,7 @@ function AddCategoryModal(props: AddCategoryModalProps) {
       key={data.id}
       className={includeCategoryData?.includes(Number(data.id)) ? 'disabled' : 'abled'}
       onClick={() => handleCategoryOnClick(data.id)}
+      disabled={includeCategoryData?.includes(Number(data.id))}
     >
       <Image
         src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
