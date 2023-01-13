@@ -5,8 +5,6 @@ import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'styles/GlobalStyle';
 
-import { AsyncBoundary } from 'components/common/AsyncBoundary';
-
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -20,13 +18,11 @@ export default function App({ Component, pageProps }: AppProps) {
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
         <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
-          <AsyncBoundary>
-            <Head>
-              <title>Own Size</title>
-            </Head>
-            <GlobalStyle />
-            <Component {...pageProps} />
-          </AsyncBoundary>
+          <Head>
+            <title>Own Size</title>
+          </Head>
+          <GlobalStyle />
+          <Component {...pageProps} />
         </GoogleOAuthProvider>
       </RecoilRoot>
     </QueryClientProvider>

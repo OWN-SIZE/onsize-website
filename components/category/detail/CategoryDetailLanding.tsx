@@ -11,10 +11,10 @@ import ModifyCategoryModal from '@/components/category/ModifyCategoryModal';
 import ModalPortal from '@/components/common/modal/ModalPortal';
 import HomeMain from '@/components/home/HomeMain';
 import { useFetchCategoryDetail } from '@/hooks/queries/allCloset';
+import { Toast } from 'components/common/Toast/Toast';
+import useToast from 'components/common/Toast/useToast';
 
 import CategoryDetailFirst from './CategoryDetailFirst';
-import useToast from 'components/common/Toast/useToast';
-import { Toast } from 'components/common/Toast/Toast';
 
 function CategoryDetailLanding() {
   const router = useRouter();
@@ -39,12 +39,23 @@ function CategoryDetailLanding() {
     });
   };
 
-  let data = useFetchCategoryDetail(categoryId);
+  const data = useFetchCategoryDetail(categoryId);
+  console.log(data);
+  let orderedData: ClosetOutput[] = [];
+
   if (data) {
-    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin));
-    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isInPin));
-    data = pinData.concat(noPinData);
+    const newArray: ClosetOutput[] = [];
+    for (let index = 0; index < data[0].length; index++) {
+      const isInPinObject = data[1].find((item) => item.productId === data[0][index].id);
+      newArray.push(Object.assign({}, data[0][index], { isInPin: isInPinObject?.isInPin }));
+    }
+    const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
+    orderedData = pinData.concat(noPinData);
   }
+  console.log(orderedData);
+
+  console;
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -74,9 +85,9 @@ function CategoryDetailLanding() {
           />
         </div>
       </Styled.categoryNameContainer>
-      {data && data.length !== 0 ? (
-        <HomeMain data={data} showToastDetail={showToast} categoryId={categoryId} page="categoryDetail" />
-) : (
+      {data && data[0].length !== 0 ? (
+        <HomeMain data={orderedData} showToastDetail={showToast} categoryId={categoryId} page="categoryDetail" />
+      ) : (
         <CategoryDetailFirst />
       )}
       {isEditModalOpen && (
@@ -85,7 +96,7 @@ function CategoryDetailLanding() {
           setCategoryName={setCategoryName}
           categoryId={categoryId}
           categoryName={typeof categoryName === 'string' ? categoryName : ''}
-          showToast = {showToast}
+          showToast={showToast}
         />
       )}
       {isDeleteModalOpen && (
@@ -132,11 +143,11 @@ const Styled = {
     ${theme.fonts.title2};
   `,
   ToastContainer: styled.div`
-  position: fixed;
-  bottom: 5.2rem;
+    position: fixed;
+    bottom: 5.2rem;
 
-  display: flex;
-  align-items: center;
-  margin-left: 50.4rem;
-`,
+    display: flex;
+    align-items: center;
+    margin-left: 50.4rem;
+  `,
 };

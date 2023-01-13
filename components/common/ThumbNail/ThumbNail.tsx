@@ -27,6 +27,7 @@ import CategoryClosetDeleteModal from '@/components/category/detail/CategoryClos
 import AddCategoryModal from '@/components/home/AddCategoryModal';
 import ClosetDeleteModal from '@/components/home/ClosetDeleteModal';
 import ClosetEditModal from '@/components/home/ClosetEditModal';
+import { useFetchAllCategory } from '@/hooks/queries/category';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
@@ -68,6 +69,11 @@ function ThumbNail(props: ThumbNailProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const { category: categoryData } = useFetchAllCategory();
+  const categoryIndex = categoryData?.findIndex((item) => {
+    return item.id === data.id;
+  });
+
   const handleImageMousehover = () => {
     setImgHoveredTarget(data.id);
     setIsProductHovered(true);
@@ -96,10 +102,11 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
+    console.log(categoryId, data.id, data.isInPin);
     if (page === 'categoryDetail') {
       updateIsPin &&
         updateIsPin({
-          categoryId,
+          categoryId: categoryId,
           targetId: data.id,
           editBody: { isInPin: !data.isInPin },
         });
@@ -233,8 +240,14 @@ function ThumbNail(props: ThumbNailProps) {
         {isCategoryModalOpen && (
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
         )}
-        {page === 'category' ? (
-          <Link href={`/category/${data.id}`}>
+        {page === 'category' && categoryData && categoryIndex ? (
+          <Link
+            href={{
+              pathname: `/category/${data.id}`,
+              query: { categoryName: categoryData[categoryIndex].categoryName },
+            }}
+            as={`/category/${data.id}`}
+          >
             <Styled.ClickZone />
           </Link>
         ) : (
@@ -294,7 +307,13 @@ function ThumbNail(props: ThumbNailProps) {
                       setIsModalOpen={setIsEditModalOpen}
                       setImgHoveredTarget={setImgHoveredTarget}
                       showToast={showToast}
-                      data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
+                      data={{
+                        id: data.id,
+                        productName: data.name,
+                        size: data.size,
+                        memo: data.memo,
+                        isRecommend: data.isRecommend,
+                      }}
                     />
                   )}
             </ModalPortal>
@@ -511,6 +530,4 @@ const Styled = {
       }
     }
   `,
- 
-
 };

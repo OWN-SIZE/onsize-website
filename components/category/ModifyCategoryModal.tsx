@@ -21,11 +21,9 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
 
   const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName, showToast } = props;
 
-
   const inputRef = useRef(null);
   const [changeInputValue, setChangeInputValue] = useState(props.categoryName);
   const [defaultValue, setDefaultValue] = useState<undefined | string>(props.categoryName);
-
 
   const onClickCancel = () => {
     onClickModifyCategoryModal();
@@ -40,15 +38,13 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     }
   };
 
-
   useEffect(() => {
     if (defaultValue && defaultValue.length > 0 && defaultValue !== props.categoryName) {
       setIsButtonActivated(true);
     } else {
       setIsButtonActivated(false);
     }
-  }, [defaultValue])
-  
+  }, [defaultValue]);
 
   //한글 글자수 제한 (서현이 것 쇽샥)
   const handleOnInput = (e: any) => {

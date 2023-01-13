@@ -4,9 +4,9 @@ import {
   AllCategoryResponse,
   CreateCategoryResponse,
   DeleteCategoryResponse,
+  OneCategoryResponse,
   UpdateCategoryBodyResponse,
   UpdateCategoryResponse,
-  OneCategoryResponse
 } from 'types/category/remote';
 
 export const fetchAllCategory = async () => {
