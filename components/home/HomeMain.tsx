@@ -14,10 +14,12 @@ interface HomeMainProps {
   data: ClosetOutput[];
   page: string;
   categoryId?: string;
+  showToastDetail?: (message: string) => void;
+
 }
 
 function HomeMain(props: HomeMainProps) {
-  const { data, page, categoryId } = props;
+  const { data, page, categoryId, showToastDetail } = props;
   const { isOpenToast, message, showToast } = useToast();
   const [isAddCategory, setIsCategory] = useState(false);
   const countProduct = data.length;
@@ -27,7 +29,7 @@ function HomeMain(props: HomeMainProps) {
       data={item}
       categoryId={categoryId}
       page={page}
-      showToast={showToast}
+      showToast={showToastDetail ? showToastDetail : showToast}
       setIsCategory={setIsCategory}
     />
   ));

@@ -75,8 +75,8 @@ function CategoryDetailLanding() {
         </div>
       </Styled.categoryNameContainer>
       {data && data.length !== 0 ? (
-        <HomeMain data={data} categoryId={categoryId} page="categoryDetail" />
-      ) : (
+        <HomeMain data={data} showToastDetail={showToast} categoryId={categoryId} page="categoryDetail" />
+) : (
         <CategoryDetailFirst />
       )}
       {isEditModalOpen && (
@@ -98,7 +98,7 @@ function CategoryDetailLanding() {
       )}
       {isOpenToast && (
         <Styled.ToastContainer>
-          <Toast width='42.6' message={message} />
+          <Toast width="42.6" message={message} />
         </Styled.ToastContainer>
       )}
     </Styled.Root>

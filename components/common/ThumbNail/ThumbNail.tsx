@@ -401,6 +401,9 @@ const Styled = {
     border-radius: 1rem;
     &.closet {
       background-color: ${theme.colors.gray250};
+      & > img {
+        border-radius: 1rem;
+      }
     }
     &.category {
       background-color: ${theme.colors.gray250};
