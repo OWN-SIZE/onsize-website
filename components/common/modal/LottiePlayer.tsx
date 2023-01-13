@@ -5,27 +5,40 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { lottieMapper } from './LottieModal';
+
 interface LottieProps {
   onClickArrow: (direction: 'left' | 'right') => void;
   lottie: object;
   page: number;
   isDarkMode?: boolean;
+  isTop?: boolean;
 }
 
 function LottiePlayer(props: LottieProps) {
-  const { onClickArrow, lottie, page, isDarkMode } = props;
+  const { onClickArrow, lottie, page, isDarkMode, isTop } = props;
   return (
     <Styled.Root>
       <Styled.ArrowButton onClick={() => onClickArrow('left')}>
         <Image src={isDarkMode ? WhiteLeftArrowIcon : LeftArrowIcon} width={60} height={60} alt="왼쪽 화살표 버튼" />
       </Styled.ArrowButton>
       <Styled.LottieContainer>
+        {isTop && (
+          <Styled.PageButtonContainer>
+            {[0, 1, 2, 3].map((lottie, index) => (
+              <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
+            ))}
+          </Styled.PageButtonContainer>
+        )}
         <Lottie animationData={lottie} />
-        <Styled.PageButtonContainer>
-          {[0, 1, 2, 3].map((lottie, index) => (
-            <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} />
-          ))}
-        </Styled.PageButtonContainer>
+        {!isTop && (
+          <Styled.PageButtonContainer>
+            {[0, 1, 2, 3].map((lottie, index) => (
+              <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
+            ))}
+          </Styled.PageButtonContainer>
+        )}
+        {isTop && <Styled.Message>{lottieMapper[page].message}</Styled.Message>}
       </Styled.LottieContainer>
       <Styled.ArrowButton onClick={() => onClickArrow('right')}>
         <Image
@@ -65,16 +78,30 @@ const Styled = {
     align-items: center;
     width: 65.4rem;
     margin: 0 2.4rem;
+    text-align: center;
+  `,
+  Message: styled.pre`
+    position: fixed;
+    margin-top: 47.2rem;
+    color: ${theme.colors.yellow01};
+    ${theme.fonts.body8}
   `,
   PageButtonContainer: styled.div`
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     gap: 0 2.6rem;
   `,
-  PageButton: styled.div<{ isSelected?: boolean; isDarkMode?: boolean }>`
+  PageButton: styled.div<{ isSelected?: boolean; isDarkMode?: boolean; isTop?: boolean }>`
     width: 1.5rem;
     height: 1.5rem;
-    margin-top: 1.7rem;
+    ${({ isTop }) =>
+      isTop
+        ? `
+            margin-bottom: 1.7rem;
+          `
+        : `
+            margin-top: 1.7rem;
+          `}
     background: ${({ isSelected, isDarkMode }) =>
       isSelected ? (isDarkMode ? theme.colors.gray000 : theme.colors.black) : theme.colors.gray200};
     border-radius: 50%;

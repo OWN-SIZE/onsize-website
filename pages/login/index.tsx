@@ -39,7 +39,7 @@ function Login() {
         <Styled.Header>
           <Image src={OwnSizeLogoImg} alt="로고 이미지" />
         </Styled.Header>
-        <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode />
+        <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode isTop />
         <Styled.LoginButton onClick={() => login()}>
           <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
         </Styled.LoginButton>
