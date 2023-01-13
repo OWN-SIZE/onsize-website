@@ -46,6 +46,8 @@
 )
 ![Recoil](https://img.shields.io/badge/google-oauth2-f2?style=for-the-badge&logo=google)
 ![React Query](https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+![React Hook Form](https://img.shields.io/badge/-React%20Query-FF4154?style=for-the-badge&logo=react%20query&logoColor=white)
+
 
 ## 🗂 Folder Architecture
 <details><summary>
@@ -411,26 +413,32 @@ ex) `postUserInformation( )`
     
 ## 서비스 핵심 기능
 ### 1. 구글 로그인 뷰
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/846ead9a-9a5c-4bbe-9dcb-cdbacfa64922/Untitled.png)
-- `@react-oauth/google` 라이브러리를 이용하여 구글 로그인 구현
+![image](https://user-images.githubusercontent.com/66051416/212226793-14408894-9975-4dbb-8548-59a9f57e281c.png)
+
+- 튜토리얼 안내 및 구글 계정으로 로그인 기능
+- `@react-oauth/google` 라이브러리를 이용하여 구현
 
 ### 2. 사용자 실측치 입력 뷰
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8abf86f7-f341-4462-8318-4e2e85464a50/Untitled.png)
+![image](https://user-images.githubusercontent.com/66051416/212226837-74c923a2-2c67-420a-b407-2026e4c3e93e.png)
+
 - 사이즈 추천을 위해 사용자가 평소에 자주 입는 사이즈 실측치를 작성하는 뷰
 - `@react-hook-form` 라이브러리로 유효성 검사 및 폼 작성 구현 
 
 ### 3. (메인 뷰) 나의 옷장
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/8a03106e-ddb7-4061-9cb4-02fc334ff38c/Untitled.png)
+![image](https://user-images.githubusercontent.com/66051416/212226907-e20bc6d6-5049-477a-aba2-64f42db8bede.png)
+
 - 익스텐션을 통해 저장한 의류 및 추천 사이즈 정보를 한 눈에 확인할 수 있는 뷰
 - 아카이브 내 의류 관련 정보 디스플레이/카테고리 추가/고정/수정/삭제 및 의류 상세페이지 랜딩 기능
 
 ### 4. (메인 뷰) 카테고리 뷰
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/b3c8af7a-b8ee-4d4d-96e9-509d4aa8c764/Untitled.png)
+![image](https://user-images.githubusercontent.com/66051416/212226968-c766c962-3257-416b-b2a0-b41c9b2cf9a4.png)
+
 - 나의 옷장에 저장된 의류들을 나만의 분류로 카테고리화하여 확인할 수 있는 뷰
 - 카테고리 관련 정보 디스플레이/추가/고정/수정/삭제 및 카테고리 내부 랜딩 기능
 
 ### 5. 마이페이지 뷰
-![Untitled](https://s3-us-west-2.amazonaws.com/secure.notion-static.com/3f96b981-572d-4edf-aeff-d028107a0db6/Untitled.png)
+![image](https://user-images.githubusercontent.com/66051416/212227000-76499bee-6b31-4811-8bb7-1a13a6f4b6ca.png)
+
 - 개인정보, 의류 아카이빙 히스토리 및 기타 정보들을 확인할 수 있는 뷰
 - 가입한 구글 로그인 계정 확인, 의류 아카이빙 히스토리 확인, 기타 페이지 랜딩 및 탈퇴/로그아웃 기능
     
