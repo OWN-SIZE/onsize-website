@@ -8,6 +8,6 @@ export const BASE_URL = `${process.env.NEXT_PUBLIC_END}`;
 export const client = axios.create({
   baseURL: BASE_URL,
   headers: {
-    Authorization: `Barer ${token}`,
+    Authorization: `${token}`,
   },
 });

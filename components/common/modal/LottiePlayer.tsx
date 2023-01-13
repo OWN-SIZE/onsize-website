@@ -5,6 +5,8 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import tutorialAnimation5 from '../../../assets/lottie/tutorial_white.json';
+
 import { lottieMapper } from './LottieModal';
 
 interface LottieProps {
@@ -30,7 +32,7 @@ function LottiePlayer(props: LottieProps) {
             ))}
           </Styled.PageButtonContainer>
         )}
-        <Lottie animationData={lottie} />
+        <Lottie animationData={isTop && page === 1 ? tutorialAnimation5 : lottie} />
         {!isTop && (
           <Styled.PageButtonContainer>
             {[0, 1, 2, 3].map((lottie, index) => (
