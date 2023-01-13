@@ -39,12 +39,18 @@ function CategoryDetailLanding() {
     });
   };
 
-  let data = useFetchCategoryDetail(categoryId);
+  const data = useFetchCategoryDetail(categoryId);
+  let orderedData: ClosetOutput[] = [];
   if (data) {
-    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isInPin));
-    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isInPin));
-    data = pinData.concat(noPinData);
+    const newArray: ClosetOutput[] = [];
+    data[0].map((item, index) => {
+      newArray.push(Object.assign({}, data[0][index], data[1][index]));
+    });
+    const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
+    orderedData = pinData.concat(noPinData);
   }
+
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -74,8 +80,8 @@ function CategoryDetailLanding() {
           />
         </div>
       </Styled.categoryNameContainer>
-      {data && data.length !== 0 ? (
-        <HomeMain data={data} showToastDetail={showToast} categoryId={categoryId} page="categoryDetail" />
+      {data && data[0].length !== 0 ? (
+        <HomeMain data={orderedData} showToastDetail={showToast} categoryId={categoryId} page="categoryDetail" />
       ) : (
         <CategoryDetailFirst />
       )}
