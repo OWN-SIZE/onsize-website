@@ -1,11 +1,11 @@
 import { client } from 'apis';
 import { ClosetOutput, PostClosetInput, UpdateClosetInput } from 'types/allCloset/client';
-import { ClosetResponse, IncludeCategoryResponse } from 'types/allCloset/remote';
+import { IncludeCategoryResponse, MyClosetResponse } from 'types/allCloset/remote';
 
 export const fetchAllCloset = async () => {
   const {
     data: { data },
-  } = await client.get<ClosetResponse>('/allCloset');
+  } = await client.get<MyClosetResponse>('/allCloset');
   return data;
 };
 

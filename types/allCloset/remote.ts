@@ -1,7 +1,10 @@
-import { ClosetOutput } from './client';
+import { ClosetOutput, isInPin } from './client';
 
-export interface ClosetResponse {
+export interface MyClosetResponse {
   data: ClosetOutput[];
+}
+export interface ClosetResponse {
+  data: [ClosetOutput[], isInPin[]];
 }
 
 export interface IncludeCategoryResponse {

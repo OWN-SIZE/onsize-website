@@ -40,17 +40,22 @@ function CategoryDetailLanding() {
   };
 
   const data = useFetchCategoryDetail(categoryId);
-  let orderedData: ClosetOutput[] = [];
-  if (data) {
-    const newArray: ClosetOutput[] = [];
-    data[0].map((item, index) => {
-      newArray.push(Object.assign({}, data[0][index], data[1][index]));
-    });
-    const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
-    const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
-    orderedData = pinData.concat(noPinData);
-  }
+  console.log(data);
+  const orderedData: ClosetOutput[] = [];
 
+  if (data) {
+    // const newArray: ClosetOutput[] = [];
+    for (let index = 0; index < data[0].length; index++) {
+      orderedData.push(Object.assign({}, data[0][index], data[1][index]));
+    }
+    // console.log('here');
+    // const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
+    // const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
+    // orderedData = pinData.concat(noPinData);
+  }
+  console.log(orderedData);
+
+  console;
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
