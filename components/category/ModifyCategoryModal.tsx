@@ -24,12 +24,11 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     onClickModifyCategoryModal();
   };
   const onClickModify = () => {
-    if (changeInputValue && changeInputValue.length > 0) {
-      console.log(changeInputValue);
+    if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName) {
       mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
+      onClickModifyCategoryModal();
+      setCategoryName && setCategoryName(changeInputValue);
     }
-    onClickModifyCategoryModal();
-    setCategoryName && setCategoryName(changeInputValue);
   };
 
   const inputRef = useRef(null);
@@ -44,7 +43,6 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
     setDefaultValue(changeInputValue);
     if (changeInputValue && changeInputValue.length > 0 && changeInputValue !== props.categoryName){
       setIsButtonActivated(true);
-      console.log(changeInputValue);
     } else {
       setIsButtonActivated(false);
     }

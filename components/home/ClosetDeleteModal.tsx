@@ -1,4 +1,4 @@
-import { Dispatch } from 'react';
+import { Dispatch, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -18,6 +18,9 @@ function ClosetDeleteModal(props: ModalProps) {
   const { isModalOpen, setIsModalOpen, setImgHoveredTarget, productId, showToast } = props;
 
   const { mutate: deleteClosetProduct } = useDeleteAllClosetProductMutation();
+
+  const [isButtonActivated, setIsButtonActivated] = useState(true);
+
 
   const onClickCategoryCreateModal = () => {
     setIsModalOpen(!isModalOpen);
@@ -44,6 +47,7 @@ function ClosetDeleteModal(props: ModalProps) {
         leftButtonText="아니오"
         rightButtonText="예"
         width={53}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.Content>나의 옷장에서 삭제하시겠습니까?</Styled.Content>
       </Modal>

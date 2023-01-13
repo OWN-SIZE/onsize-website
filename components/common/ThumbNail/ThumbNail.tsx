@@ -166,6 +166,7 @@ function ThumbNail(props: ThumbNailProps) {
               height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
+              className='image1'
             />
           )}
           </Styled.FirstImage>
@@ -466,6 +467,9 @@ const Styled = {
     background-color: ${theme.colors.gray250};
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
+    overflow: hidden;
+    object-fit: cover;
+
   `,
   FirstImage: styled.div`
     width: 22.6rem;
@@ -473,5 +477,8 @@ const Styled = {
     background-color: ${theme.colors.gray250};
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
+    overflow: hidden;
+    object-fit: cover;
+   
   `
 };

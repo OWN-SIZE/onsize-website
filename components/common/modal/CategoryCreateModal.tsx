@@ -25,6 +25,8 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
     if (changeInputValue.length > 0) {
       mutate({ categoryName: changeInputValue, isPinCategory: false, image: ['1', '2', '3'] });
       onClickCategoryCreateModal();
+      setIsButtonActivated(false);
+      updateInputValue('');
     }
   };
 

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import { useDeleteCategory, useFetchAllCategory } from 'hooks/queries/category';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -17,6 +17,7 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
   const { onClickDeleteCategoryModal, deletedCategoryId } = props;
   const { mutate } = useDeleteCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
   const router = useRouter();
+  const [isButtonActivated, setIsButtonActivated] = useState(true);
 
   const onClickCancel = () => {
     onClickDeleteCategoryModal();
@@ -36,6 +37,7 @@ export default function DeleteCategoryModal(props: DeleteCategoryModalProps) {
         leftButtonText="아니요"
         rightButtonText="예"
         width={53}
+        isButtonActivated={isButtonActivated}
       >
         <Styled.Alert>카테고리를 삭제하시겠습니까?</Styled.Alert>
       </Modal>
