@@ -178,6 +178,7 @@ function ThumbNail(props: ThumbNailProps) {
                   height={150}
                   placeholder="blur"
                   blurDataURL="assets/icon/folder_filled.png"
+                  className="secondImage"
                 />
               </div>
             )}
@@ -190,6 +191,7 @@ function ThumbNail(props: ThumbNailProps) {
                   height={150}
                   placeholder="blur"
                   blurDataURL="assets/icon/folder_filled.png"
+                  className="thirdImage"
                 />
               </div>
             )}
@@ -277,24 +279,24 @@ function ThumbNail(props: ThumbNailProps) {
 
           {data.id && isEditModalOpen && (
             <ModalPortal>
-              {page === 'category' ? showToast && (
-                <ModifyCategoryModal
-                  onClickModifyCategoryModal={onClickModifyCategoryModal}
-                  categoryId={data.id}
-                  categoryName={data.categoryName}
-                  showToast = {showToast}
-                ></ModifyCategoryModal>
-              ) : (
-                data.name && (
-                  <ClosetEditModal
-                    categoryId={categoryId}
-                    setIsModalOpen={setIsEditModalOpen}
-                    setImgHoveredTarget={setImgHoveredTarget}
-                    showToast={showToast}
-                    data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
-                  />
-                )
-              )}
+              {page === 'category'
+                ? showToast && (
+                    <ModifyCategoryModal
+                      onClickModifyCategoryModal={onClickModifyCategoryModal}
+                      categoryId={data.id}
+                      categoryName={data.categoryName}
+                      showToast={showToast}
+                    ></ModifyCategoryModal>
+                  )
+                : data.name && (
+                    <ClosetEditModal
+                      categoryId={categoryId}
+                      setIsModalOpen={setIsEditModalOpen}
+                      setImgHoveredTarget={setImgHoveredTarget}
+                      showToast={showToast}
+                      data={{ id: data.id, productName: data.name, size: data.size, memo: data.memo }}
+                    />
+                  )}
             </ModalPortal>
           )}
           {/* 삭제 */}
@@ -333,12 +335,14 @@ function ThumbNail(props: ThumbNailProps) {
                   setImgHoveredTarget={setImgHoveredTarget}
                   showToast={showToast}
                 />
-              ) : showToast && (
-                <DeleteCategoryModal
-                  onClickDeleteCategoryModal={onClickDeleteCategoryModal}
-                  deletedCategoryId={Number(data.id)}
-                  showToast = {showToast}
-                ></DeleteCategoryModal>
+              ) : (
+                showToast && (
+                  <DeleteCategoryModal
+                    onClickDeleteCategoryModal={onClickDeleteCategoryModal}
+                    deletedCategoryId={Number(data.id)}
+                    showToast={showToast}
+                  ></DeleteCategoryModal>
+                )
               )}
             </ModalPortal>
           )}
@@ -399,10 +403,11 @@ const Styled = {
       background-color: ${theme.colors.gray250};
     }
     &.category {
-      background-color: ${theme.colors.gray300};
+      background-color: ${theme.colors.gray250};
       display: flex;
       & > img {
-        border-radius: 1rem;
+        border-top-left-radius: 1rem;
+        border-bottom-left-radius: 1rem;
       }
     }
   `,
@@ -494,15 +499,14 @@ const Styled = {
         height: 100%;
         object-fit: cover;
         margin: auto;
+        &.secondImage {
+          border-top-right-radius: 1rem;
+        }
+        &.thirdImage {
+          border-bottom-right-radius: 1rem;
+        }
       }
     }
   `,
-  FirstImage: styled.div`
-    width: 22.6rem;
-    height: 30rem;
-    background-color: ${theme.colors.gray250};
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    overflow: hidden;
-  `,
+ 
 };
