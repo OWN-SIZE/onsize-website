@@ -468,7 +468,6 @@ const Styled = {
     border-top-right-radius: 1rem;
     border-bottom-right-radius: 1rem;
     overflow: hidden;
-    object-fit: cover;
 
   `,
   FirstImage: styled.div`
@@ -478,7 +477,7 @@ const Styled = {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     overflow: hidden;
-    object-fit: cover;
+
    
   `
 };
