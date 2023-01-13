@@ -30,7 +30,6 @@ import ClosetEditModal from '@/components/home/ClosetEditModal';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
-
 import ModalPortal from '../modal/ModalPortal';
 
 interface ThumbNailProps {
@@ -45,6 +44,7 @@ interface ThumbNailProps {
   updateIsCategoryPin?: ({ targetId, editBody }: UpdateCategoryRequest) => void;
   setIsProductHovered: Dispatch<SetStateAction<boolean>>;
   showToast?: (message: string) => void;
+  setIsCategory: Dispatch<SetStateAction<boolean>>;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -59,6 +59,7 @@ function ThumbNail(props: ThumbNailProps) {
     setIsProductHovered,
     updateIsCategoryPin,
     showToast,
+    setIsCategory,
   } = props;
   const [iconHoveredTarget, setIconHoveredTarget] = useState('');
   const [imgHoveredTarget, setImgHoveredTarget] = useState('');
@@ -157,7 +158,6 @@ function ThumbNail(props: ThumbNailProps) {
       {/* 기본 썸네일 */}
       {page === 'category' && (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
-          <Styled.FirstImage>
           {data.image[0] && (
             <Image
               src={data.image[0]}
@@ -166,10 +166,8 @@ function ThumbNail(props: ThumbNailProps) {
               height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
-              className='image1'
             />
           )}
-          </Styled.FirstImage>
           <Styled.SeparateImages>
             {data.image[1] && (
               <Image
@@ -211,7 +209,12 @@ function ThumbNail(props: ThumbNailProps) {
       >
         {/* 카테고리 추가 */}
         {!noAddCategory && (
-          <button onClick={() => setIsCategoryModalOpen(!isCategoryModalOpen)}>
+          <button
+            onClick={() => {
+              setIsCategoryModalOpen(!isCategoryModalOpen);
+              setIsCategory(true);
+            }}
+          >
             카테고리 추가
             <Image
               src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon}
@@ -222,7 +225,7 @@ function ThumbNail(props: ThumbNailProps) {
           </button>
         )}
         {isCategoryModalOpen && (
-          <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} />
+          <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
         )}
         {page === 'category' ? (
           <Link href={`/category/${data.id}`}>
@@ -258,7 +261,10 @@ function ThumbNail(props: ThumbNailProps) {
             <Image
               src={HoveredEditIcon}
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
-              onClick={() => setIsEditModalOpen(!isEditModalOpen)}
+              onClick={() => {
+                setIsEditModalOpen(!isEditModalOpen);
+                setIsCategory(false);
+              }}
               width={40}
               height={40}
               alt="호버된 수정 버튼 아이콘"
@@ -292,7 +298,10 @@ function ThumbNail(props: ThumbNailProps) {
             <Image
               src={HoveredDeleteIcon}
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
-              onClick={() => setIsDeleteModalOpen(!isDeleteModalOpen)}
+              onClick={() => {
+                setIsDeleteModalOpen(!isDeleteModalOpen);
+                setIsCategory(false);
+              }}
               width={40}
               height={40}
               alt="호버된 삭제 버튼 아이콘"
@@ -317,6 +326,7 @@ function ThumbNail(props: ThumbNailProps) {
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
+                  showToast={showToast}
                 />
               ) : (
                 <DeleteCategoryModal
@@ -386,8 +396,7 @@ const Styled = {
       background-color: ${theme.colors.gray300};
       display: flex;
       & > img {
-        border-top-right-radius: 0rem;
-        border-bottom-right-radius: 0rem;
+        border-radius: 1rem;
       }
     }
   `,
@@ -462,7 +471,6 @@ const Styled = {
   SeparateImages: styled.div`
     display: flex;
     width: 22.6rem;
-    height: 30rem;
     flex-wrap: wrap;
     background-color: ${theme.colors.gray250};
     border-top-right-radius: 1rem;

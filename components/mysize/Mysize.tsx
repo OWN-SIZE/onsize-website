@@ -11,14 +11,9 @@ import theme from 'styles/theme';
 
 import SizeForm from 'components/common/SizeForm/SizeForm';
 import { Toast } from 'components/common/Toast/Toast';
-<<<<<<< Updated upstream
 import useToast from 'components/common/Toast/useToast';
 
-=======
-import { useContext } from 'react';
-import TopRequestModal from 'assets/icon/topRequestModal.png';
-import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
->>>>>>> Stashed changes
+
 
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
@@ -68,10 +63,6 @@ export default function Mysize() {
     const shoulder = top?.shoulder;
     const chest = top?.chest;
     const isWidthOfTop = top?.isWidthOfTop;
-<<<<<<< Updated upstream
-    console.log(isWidthOfTop);
-=======
->>>>>>> Stashed changes
     const bottomLength = bottom?.bottomLength;
     const rise = bottom?.rise;
     const waist = bottom?.waist;
@@ -89,11 +80,8 @@ export default function Mysize() {
     ) {
       inputRequest = '하의';
     }
-<<<<<<< Updated upstream
     if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
-=======
-    if (topLength !== null && shoulder !== null && chest !== null && isWidthOfTop !== null) {
->>>>>>> Stashed changes
+
       inputRequest = '상의';
     }
 
@@ -101,15 +89,9 @@ export default function Mysize() {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
     } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-<<<<<<< Updated upstream
     } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
     } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
-=======
-    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '단면') {
-      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop === null && clickedMeasure === '둘레') {
->>>>>>> Stashed changes
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
     } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
       data = {
@@ -165,10 +147,6 @@ export default function Mysize() {
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
       <Styled.SizeFormContainer>
-<<<<<<< Updated upstream
-=======
-        {data && (
->>>>>>> Stashed changes
           <SizeForm
             noHeader
             formType={isTopClicked ? '상의' : '하의'}
@@ -181,10 +159,6 @@ export default function Mysize() {
           >
             <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
           </SizeForm>
-<<<<<<< Updated upstream
-=======
-        )}
->>>>>>> Stashed changes
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
         <Styled.TopRequestModalContainer>
