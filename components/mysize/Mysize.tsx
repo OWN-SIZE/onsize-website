@@ -13,8 +13,6 @@ import SizeForm from 'components/common/SizeForm/SizeForm';
 import { Toast } from 'components/common/Toast/Toast';
 import useToast from 'components/common/Toast/useToast';
 
-
-
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
   const [isAlertActive, setIsAlertActive] = useState(false);
@@ -81,7 +79,6 @@ export default function Mysize() {
       inputRequest = '하의';
     }
     if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
-
       inputRequest = '상의';
     }
 
