@@ -313,6 +313,7 @@ function ThumbNail(props: ThumbNailProps) {
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
+                  showToast={showToast}
                 />
               ) : (
                 <DeleteCategoryModal
