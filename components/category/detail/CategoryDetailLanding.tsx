@@ -93,6 +93,7 @@ function CategoryDetailLanding() {
           <DeleteCategoryModal
             onClickDeleteCategoryModal={onClickDeleteCategoryModal}
             deletedCategoryId={Number(categoryId)}
+            showToast={showToast}
           />
         </ModalPortal>
       )}
