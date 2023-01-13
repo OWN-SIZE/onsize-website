@@ -68,13 +68,14 @@ function AddCategoryModal(props: AddCategoryModalProps) {
       <Styled.addCategoryButton onClick={onClickCategoryCreateModal}>
         <Image src={Folder20Icon} width={20} height={20} alt="카테고리 아이콘" />새 카테고리 만들기
       </Styled.addCategoryButton>
-      {isCategoryCreateModalOpen && (
+      {isCategoryCreateModalOpen && showToast && (
         <ModalPortal>
           <CategoryCreateModal
             changeInputValue={changeInputValue}
             updateInputValue={updateInputValue}
             inputRef={inputRef}
             onClickCategoryCreateModal={onClickCategoryCreateModal}
+            showToast={showToast}
           />
         </ModalPortal>
       )}

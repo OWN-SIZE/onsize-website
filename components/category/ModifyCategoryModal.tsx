@@ -12,13 +12,14 @@ type ModifyCategoryModalProps = {
   categoryId: string;
   setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>>;
   categoryName?: string;
+  showToast: (message: string) => void;
 };
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
   const [isButtonActivated, setIsButtonActivated] = useState(false);
 
-  const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName } = props;
+  const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName, showToast } = props;
 
   const onClickCancel = () => {
     onClickModifyCategoryModal();
@@ -28,6 +29,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
       mutate({ targetId: categoryId, editBody: {categoryName: changeInputValue }});
       onClickModifyCategoryModal();
       setCategoryName && setCategoryName(changeInputValue);
+      showToast('수정되었습니다.');
     }
   };
 

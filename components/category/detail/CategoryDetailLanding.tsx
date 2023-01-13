@@ -13,12 +13,16 @@ import HomeMain from '@/components/home/HomeMain';
 import { useFetchCategoryDetail } from '@/hooks/queries/allCloset';
 
 import CategoryDetailFirst from './CategoryDetailFirst';
+import useToast from 'components/common/Toast/useToast';
+import { Toast } from 'components/common/Toast/Toast';
 
 function CategoryDetailLanding() {
   const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const [categoryName, setCategoryName] = useState(router.query.categoryName);
+
+  const { isOpenToast, message, showToast } = useToast();
 
   const [categoryId, setCategoryId] = useState('');
   const {
@@ -81,6 +85,7 @@ function CategoryDetailLanding() {
           setCategoryName={setCategoryName}
           categoryId={categoryId}
           categoryName={typeof categoryName === 'string' ? categoryName : ''}
+          showToast = {showToast}
         />
       )}
       {isDeleteModalOpen && (
@@ -90,6 +95,11 @@ function CategoryDetailLanding() {
             deletedCategoryId={Number(categoryId)}
           />
         </ModalPortal>
+      )}
+      {isOpenToast && (
+        <Styled.ToastContainer>
+          <Toast width='42.6' message={message} />
+        </Styled.ToastContainer>
       )}
     </Styled.Root>
   );
@@ -120,4 +130,12 @@ const Styled = {
   categoryName: styled.h1`
     ${theme.fonts.title2};
   `,
+  ToastContainer: styled.div`
+  position: fixed;
+  bottom: 5.2rem;
+
+  display: flex;
+  align-items: center;
+  margin-left: 50.4rem;
+`,
 };

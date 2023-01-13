@@ -44,7 +44,7 @@ interface ThumbNailProps {
   updateIsCategoryPin?: ({ targetId, editBody }: UpdateCategoryRequest) => void;
   setIsProductHovered: Dispatch<SetStateAction<boolean>>;
   showToast?: (message: string) => void;
-  setIsCategory: Dispatch<SetStateAction<boolean>>;
+  setIsCategory?: Dispatch<SetStateAction<boolean>>;
 }
 
 function ThumbNail(props: ThumbNailProps) {
@@ -170,24 +170,28 @@ function ThumbNail(props: ThumbNailProps) {
           )}
           <Styled.SeparateImages>
             {data.image[1] && (
-              <Image
-                src={data.image[1]}
-                alt={'썸네일 이미지'}
-                width={226}
-                height={150}
-                placeholder="blur"
-                blurDataURL="assets/icon/folder_filled.png"
-              />
+              <div>
+                <Image
+                  src={data.image[1]}
+                  alt={'썸네일 이미지'}
+                  width={226}
+                  height={150}
+                  placeholder="blur"
+                  blurDataURL="assets/icon/folder_filled.png"
+                />
+              </div>
             )}
             {data.image[2] && (
-              <Image
-                src={data.image[2]}
-                alt={'썸네일 이미지'}
-                width={226}
-                height={150}
-                placeholder="blur"
-                blurDataURL="assets/icon/folder_filled.png"
-              />
+              <div>
+                <Image
+                  src={data.image[2]}
+                  alt={'썸네일 이미지'}
+                  width={226}
+                  height={150}
+                  placeholder="blur"
+                  blurDataURL="assets/icon/folder_filled.png"
+                />
+              </div>
             )}
           </Styled.SeparateImages>
         </Styled.ThumbNailImg>
@@ -212,7 +216,7 @@ function ThumbNail(props: ThumbNailProps) {
           <button
             onClick={() => {
               setIsCategoryModalOpen(!isCategoryModalOpen);
-              setIsCategory(true);
+              setIsCategory && setIsCategory(true);
             }}
           >
             카테고리 추가
@@ -263,7 +267,7 @@ function ThumbNail(props: ThumbNailProps) {
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
               onClick={() => {
                 setIsEditModalOpen(!isEditModalOpen);
-                setIsCategory(false);
+                setIsCategory && setIsCategory(false);
               }}
               width={40}
               height={40}
@@ -273,11 +277,12 @@ function ThumbNail(props: ThumbNailProps) {
 
           {data.id && isEditModalOpen && (
             <ModalPortal>
-              {page === 'category' ? (
+              {page === 'category' ? showToast && (
                 <ModifyCategoryModal
                   onClickModifyCategoryModal={onClickModifyCategoryModal}
                   categoryId={data.id}
                   categoryName={data.categoryName}
+                  showToast = {showToast}
                 ></ModifyCategoryModal>
               ) : (
                 data.name && (
@@ -300,7 +305,7 @@ function ThumbNail(props: ThumbNailProps) {
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
               onClick={() => {
                 setIsDeleteModalOpen(!isDeleteModalOpen);
-                setIsCategory(false);
+                setIsCategory && setIsCategory(false);
               }}
               width={40}
               height={40}
@@ -328,10 +333,11 @@ function ThumbNail(props: ThumbNailProps) {
                   setImgHoveredTarget={setImgHoveredTarget}
                   showToast={showToast}
                 />
-              ) : (
+              ) : showToast && (
                 <DeleteCategoryModal
                   onClickDeleteCategoryModal={onClickDeleteCategoryModal}
                   deletedCategoryId={Number(data.id)}
+                  showToast = {showToast}
                 ></DeleteCategoryModal>
               )}
             </ModalPortal>
@@ -473,10 +479,23 @@ const Styled = {
     width: 22.6rem;
     flex-wrap: wrap;
     background-color: ${theme.colors.gray250};
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    overflow: hidden;
+    border-radius: 1rem;
 
+    & > div {
+      position: relative;
+      width: 22.6rem;
+      height: 15rem;
+      & > img {
+        position: absolute;
+        top: 0;
+        left: 0;
+        transform: translate(50, 50);
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        margin: auto;
+      }
+    }
   `,
   FirstImage: styled.div`
     width: 22.6rem;
@@ -485,5 +504,5 @@ const Styled = {
     border-top-left-radius: 1rem;
     border-bottom-left-radius: 1rem;
     overflow: hidden;
-  `
+  `,
 };

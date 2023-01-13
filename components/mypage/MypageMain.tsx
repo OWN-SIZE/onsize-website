@@ -15,6 +15,8 @@ import HistoryModal from './HistoryModal';
 function MyPageMain() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
+  const [isButtonActivated, setIsButtonActivated] = useState(true);
+
 
   const onClickHistoryModal = () => {
     setIsHistoryModalOpen(!isHistoryModalOpen);
@@ -120,6 +122,7 @@ function MyPageMain() {
             leftButtonText="아니오"
             rightButtonText="예"
             width={53}
+            isButtonActivated={isButtonActivated}
           >
             <Styled.LeaveModalContent>
               온사이즈를 탈퇴하시겠습니까?

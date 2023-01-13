@@ -38,7 +38,7 @@ export const useUpdateCategory = () => {
   });
 };
 
-export const useDeleteCategory = () => {
+export const useDeleteCategory = (showToast: (message: string) => void) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation(deleteCategory, {
@@ -46,7 +46,9 @@ export const useDeleteCategory = () => {
       queryClient.invalidateQueries([QUERY_KEY.category]);
       if (router.asPath.startsWith('/category/')) {
         router.push('/category');
+        //showToast('삭제되었습니다.');
       }
+      showToast('삭제되었습니다.');
     },
   });
 };

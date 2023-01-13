@@ -13,6 +13,8 @@ import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
 import Category from './Category';
+import useToast from 'components/common/Toast/useToast';
+import { Toast } from 'components/common/Toast/Toast';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
@@ -21,6 +23,8 @@ export default function CategoryMain() {
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
+
+  const { isOpenToast, message, showToast } = useToast();
 
   const onClickCategoryCreateModal = () => {
     setIsCategoryCreateModalOpen(!isCategoryCreateModalOpen);
@@ -41,7 +45,7 @@ export default function CategoryMain() {
     category = pinData.concat(noPinData);
   }
 
-  const product = category && category.map((item) => <Category key={item.id} categoryData={item} />);
+  const product = category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
 
   return (
     <Styled.Root>
@@ -91,8 +95,14 @@ export default function CategoryMain() {
             updateInputValue={updateInputValue}
             inputRef={inputRef}
             onClickCategoryCreateModal={onClickCategoryCreateModal}
+            showToast={showToast}
           />
         </ModalPortal>
+      )}
+      {isOpenToast && (
+        <Styled.ToastContainer>
+          <Toast width="42.6" message={message} />
+        </Styled.ToastContainer>
       )}
     </Styled.Root>
   );
@@ -100,8 +110,8 @@ export default function CategoryMain() {
 
 const Styled = {
   Root: styled.div`
-    width: 100vw;
     background-color: ${theme.colors.gray000};
+    margin: 0 auto;
   `,
   CategoryContainer: styled.div`
     width: 143.4rem;
@@ -200,5 +210,13 @@ const Styled = {
   `,
   AddButton: styled.div`
     cursor: pointer;
+  `,
+  ToastContainer: styled.div`
+    position: fixed;
+    bottom: 5.2rem;
+
+    display: flex;
+    align-items: center;
+    margin-left: 50.4rem;
   `,
 };

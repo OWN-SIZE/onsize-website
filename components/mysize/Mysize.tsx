@@ -177,7 +177,7 @@ export default function Mysize() {
       ) : null}
       {isOpenToast && (
         <Styled.ToastContainer>
-          <Toast message={message} />
+          <Toast message={message} width='32.9' />
         </Styled.ToastContainer>
       )}
     </Styled.Root>
