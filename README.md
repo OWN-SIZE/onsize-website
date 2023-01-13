@@ -19,19 +19,19 @@
 굳이 사이즈 추천을 받지 않아도 찜한 옷들을 저장하고 분류하여 한 눈에 확인할 수 있어요. <br/><br/>
 이제 **‘쇼핑 편의성 툴’ 온사이즈**와 함께 똑똑하고 편리한 온라인 패션 쇼핑을 경험해보세요🥰  </span><br/>
 ## ✨ OUR TEAM
-| <img src="https://user-images.githubusercontent.com/86764406/210495754-7e4222f9-24bd-4b0b-9a00-c1d406b7dce0.png" width="200" height="200"/> | 사진 | <img src="https://user-images.githubusercontent.com/86764406/210496134-3eff3383-3ab7-46d7-8056-2beffb2bd6b8.png" width="200" height="200"/> | <img src="https://user-images.githubusercontent.com/86764406/210496541-ce1cab95-a5f4-4709-b0a2-f92beea6022f.png" width="200" height="200"/> |
+| <img src="https://user-images.githubusercontent.com/86764406/210495754-7e4222f9-24bd-4b0b-9a00-c1d406b7dce0.png" width="200" height="200"/> | <img src="https://user-images.githubusercontent.com/86764406/212236317-358f3fa2-0036-4e5d-a60d-f9fb3b9e7a48.png" width="200" height="200" /> | <img src="https://user-images.githubusercontent.com/86764406/210496134-3eff3383-3ab7-46d7-8056-2beffb2bd6b8.png" width="200" height="200"/> | <img src="https://user-images.githubusercontent.com/86764406/210496541-ce1cab95-a5f4-4709-b0a2-f92beea6022f.png" width="200" height="200"/> |
 | :---: | :---: | :---: | :---: |
 | <div align = "center"><b>서영(리드)</b></div> | <div align = "center"><b>서현</b></div> | <div align = "center"><b>은형</b></div>  | <div align = "center"><b>현수</b></div> |
 | [@leeseooo](https://github.com/leeseooo) | [@seobbang](https://github.com/seobbang) | [@ilmerry](https://github.com/ilmerry) | [@borimong](https://github.com/borimong?tab=repositories) |
 
 #### 서영
-`익스텐션 사이즈표 `, `익스텐션 추천 로딩 및 결과 뷰`
+`익스텐션 사이즈표 `, `익스텐션 추천 로딩 및 결과 뷰`, `익스텐션 위시리스트 저장하기`
 #### 서현
 `웹사이트 아카이빙 뷰 `, `웹사이트 디렉터리 상세 뷰`, `웹사이트 헤더`, `웹사이트 메뉴바`, `웹사이트 푸터`
 #### 은형 
-`익스텐션 상하의 선택 뷰 `, `익스텐션 위시리스트 저장하기`, `웹사이트 로그인`, `웹사이트 튜토리얼`
+`익스텐션 상하의 선택 뷰 `, `익스텐션 수동입력 뷰`, `웹사이트 로그인`, `웹사이트 튜토리얼`
 #### 현수
-`웹사이트 마이사이즈 히스토리 뷰 `, `웹사이트 디렉터리 뷰`, `웹사이트 모달`, `웹사이트 토스트`
+`웹사이트 마이사이즈 히스토리 뷰 `, `웹사이트 디렉터리 뷰`, `웹사이트 모달`, `웹사이트 토스트`, `웹사이트 마이사이즈 뷰 데이터 패칭`
 
 ## 🛠 Tech Stack
 #### WEB

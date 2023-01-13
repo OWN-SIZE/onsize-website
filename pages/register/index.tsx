@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { LoginMouseImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
