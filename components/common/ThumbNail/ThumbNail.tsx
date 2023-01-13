@@ -30,7 +30,6 @@ import ClosetEditModal from '@/components/home/ClosetEditModal';
 import DeleteCategoryModal from 'components/category/DeleteCategoryModal';
 import ModifyCategoryModal from 'components/category/ModifyCategoryModal';
 
-
 import ModalPortal from '../modal/ModalPortal';
 
 interface ThumbNailProps {
@@ -157,7 +156,6 @@ function ThumbNail(props: ThumbNailProps) {
       {/* 기본 썸네일 */}
       {page === 'category' && (
         <Styled.ThumbNailImg className={'category'} width={width} height={height}>
-          <Styled.FirstImage>
           {data.image[0] && (
             <Image
               src={data.image[0]}
@@ -166,10 +164,8 @@ function ThumbNail(props: ThumbNailProps) {
               height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
-              className='image1'
             />
           )}
-          </Styled.FirstImage>
           <Styled.SeparateImages>
             {data.image[1] && (
               <Image
@@ -317,6 +313,7 @@ function ThumbNail(props: ThumbNailProps) {
                   isModalOpen={isDeleteModalOpen}
                   setIsModalOpen={setIsDeleteModalOpen}
                   setImgHoveredTarget={setImgHoveredTarget}
+                  showToast={showToast}
                 />
               ) : (
                 <DeleteCategoryModal
@@ -386,8 +383,7 @@ const Styled = {
       background-color: ${theme.colors.gray300};
       display: flex;
       & > img {
-        border-top-right-radius: 0rem;
-        border-bottom-right-radius: 0rem;
+        border-radius: 1rem;
       }
     }
   `,
@@ -462,23 +458,8 @@ const Styled = {
   SeparateImages: styled.div`
     display: flex;
     width: 22.6rem;
-    height: 30rem;
     flex-wrap: wrap;
     background-color: ${theme.colors.gray250};
-    border-top-right-radius: 1rem;
-    border-bottom-right-radius: 1rem;
-    overflow: hidden;
-    object-fit: cover;
-
+    border-radius: 1rem;
   `,
-  FirstImage: styled.div`
-    width: 22.6rem;
-    height: 30rem;
-    background-color: ${theme.colors.gray250};
-    border-top-left-radius: 1rem;
-    border-bottom-left-radius: 1rem;
-    overflow: hidden;
-    object-fit: cover;
-   
-  `
 };
