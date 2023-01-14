@@ -5,7 +5,7 @@ export interface ClosetOutput {
   productName: string;
   size: string | null;
   memo: string | null;
-  isInPin: boolean;
+  isInPin?: boolean;
   isPin: boolean;
   isRecommend: boolean;
   mallName: string;
@@ -23,6 +23,7 @@ export interface UpdateClosetInput {
     memo?: string | null;
     isPin?: boolean;
     isInPin?: boolean;
+    isRecommend?: boolean;
   };
 }
 
@@ -31,4 +32,9 @@ export interface PostClosetInput {
     productId: string;
     categoryId: string;
   };
+}
+
+export interface isInPin {
+  productId: number;
+  isInPin: boolean;
 }

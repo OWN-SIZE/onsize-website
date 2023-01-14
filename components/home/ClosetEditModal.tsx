@@ -12,6 +12,7 @@ interface ModalProps {
     productName: string;
     size?: string | null;
     memo?: string | null;
+    isRecommend?: boolean;
   };
   categoryId?: string;
   showToast?: (message: string) => void;
@@ -20,7 +21,7 @@ interface ModalProps {
 function ClosetEditModal(props: ModalProps) {
   const { setIsModalOpen, setImgHoveredTarget, data, categoryId, showToast } = props;
   const { productName } = data;
-  let { size, memo } = data;
+  let { size, memo, isRecommend } = data;
   size = !size ? '' : size;
   memo = !memo ? '' : memo;
 
@@ -67,11 +68,19 @@ function ClosetEditModal(props: ModalProps) {
     if (categoryId) setTargetCategoryId(categoryId);
   }, [categoryId]);
   const { mutate: updateCloset } = useUpdateAllClosetProductMutation(targetCategoryId);
+  const handleIsRecommend = () => {
+    if (isRecommend && size !== sizeInput) {
+      return false;
+    } else {
+      return isRecommend;
+    }
+  };
 
   const handleSubmitOnClick = () => {
+    isRecommend = handleIsRecommend();
     updateCloset({
       targetId: data.id,
-      editBody: { productName: productNameInput, size: sizeInput, memo: memoInput },
+      editBody: { productName: productNameInput, size: sizeInput, memo: memoInput, isRecommend: isRecommend },
     });
     handleCloseOnClick();
     showToast && showToast('수정되었습니다');

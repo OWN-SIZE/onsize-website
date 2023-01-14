@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+import { ClosetOutput } from 'types/allCloset/client';
 import { AllCategory } from 'types/category/client';
 import { ThumbNailData } from 'types/common';
 
@@ -20,18 +21,18 @@ export default function Category(props: CategoryProps) {
   const { categoryData, showToast } = props;
   const [isProductHovered, setIsProductHovered] = useState(false);
 
-  let data = useFetchCategoryDetail(categoryData.id);
+  const data = useFetchCategoryDetail(categoryData.id);
 
   const newArray: string[] | null = [];
-
+  let sortedData: ClosetOutput[] = [];
   if (data) {
-    data = data.sort((a: any, b: any) => {
+    sortedData = data[0].sort((a: any, b: any) => {
       return Number(b.id) - Number(a.id);
     });
   }
   [0, 1, 2].map((item) => {
     if (data) {
-      newArray.push(data[item]?.image);
+      newArray.push(data[0][item]?.image);
     }
   });
 
@@ -64,11 +65,11 @@ export default function Category(props: CategoryProps) {
             noAddCategory
             updateIsCategoryPin={updateIsPin}
             setIsProductHovered={setIsProductHovered}
-            showToast = {showToast}
+            showToast={showToast}
           />
         </Styled.CategoryImage>
         <Link
-          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName, } }}
+          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
           as={`/category/${categoryData.id}`}
         >
           <Styled.CategoryTitle
@@ -88,7 +89,7 @@ export default function Category(props: CategoryProps) {
             placeholder="blur"
             blurDataURL="assets/icon/total_clothes.png"
           />
-          <h1>{data && data.length}</h1>
+          <h1>{data && data[0].length}</h1>
         </Styled.ClothesAmount>
       </Styled.Category>
     </Styled.Root>
