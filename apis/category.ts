@@ -12,34 +12,54 @@ import {
 export const fetchAllCategory = async () => {
   const {
     data: { data },
-  } = await client.get<AllCategoryResponse>('/category');
+  } = await client.get<AllCategoryResponse>('/category', {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  });
   return data;
 };
 
 export const fetchOneCategory = async (categoryId: number) => {
   const {
     data: { data },
-  } = await client.get<OneCategoryResponse>(`/category/${categoryId}`);
+  } = await client.get<OneCategoryResponse>(`/category/${categoryId}`, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  });
   return data;
 };
 
 export const postCategory = async (props: CreateCategory): Promise<CreateCategory> => {
   const {
     data: { data },
-  } = await client.post<CreateCategoryResponse>('/category/createCategory', props);
+  } = await client.post<CreateCategoryResponse>('/category/createCategory', props, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  });
   return data;
 };
 
 export const updateCategory = async (props: UpdateCategoryRequest) => {
   const {
     data: { data },
-  } = await client.put<UpdateCategoryResponse>(`/category/${props.targetId}`, props.editBody);
+  } = await client.put<UpdateCategoryResponse>(`/category/${props.targetId}`, props.editBody, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  });
 
   return data;
 };
 
 export const deleteCategory = async (categoryId: number) => {
-  const { data } = await client.delete<DeleteCategoryResponse>(`/category/${categoryId}`);
+  const { data } = await client.delete<DeleteCategoryResponse>(`/category/${categoryId}`, {
+    headers: {
+      Authorization: localStorage.getItem('token'),
+    },
+  });
 
   return data;
 };
