@@ -6,8 +6,11 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import LottieModal from './modal/LottieModal';
+
 function Header() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
+  const [isTutorial, setIsTutorial] = useState(false);
   return (
     <Styled.Root>
       <Styled.Container>
@@ -17,9 +20,10 @@ function Header() {
           </Link>
 
           <Styled.RightSection>
-            <Styled.InfoButton>
+            <Styled.InfoButton onClick={() => setIsTutorial(true)}>
               <Image src={InfoIcon} width={50} height={50} alt="튜토리얼 보기 아이콘" />
             </Styled.InfoButton>
+            {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href="/mypage">
               <Styled.Profile></Styled.Profile>
