@@ -34,6 +34,7 @@ function Register() {
   const onClickNextButton = () => {
     if (skip) {
       router.push('/home');
+      localStorage.setItem('isRegister', 'true');
     } else {
       setIsAlertActive(true);
     }
@@ -48,6 +49,13 @@ function Register() {
       localStorage.setItem('isRegister', 'true');
     }
   };
+
+  useEffect(() => {
+    const isRegitser = localStorage.getItem('isRegister');
+    if (isRegitser === 'true') {
+      router.push('/home');
+    }
+  }, []);
 
   return (
     <Layout noHeader noMenuBar noFooter>

@@ -21,7 +21,14 @@ function Login() {
         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       });
 
-      authLogin(data, () => router.push('/register'));
+      authLogin(data, () => {
+        const isRegister = localStorage.getItem('isRegister');
+        if (isRegister === 'true') {
+          router.push('/home');
+        } else {
+          router.push('/register');
+        }
+      });
     },
   });
   const [page, setPage] = useState(0);

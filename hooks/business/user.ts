@@ -11,7 +11,7 @@ export const useAuth = () => {
     authMutate.mutate(body, {
       onSuccess({ userId, token }) {
         // isRegister, userId(isLogin), jwt token
-        localStorage.setItem('isRegister', 'false');
+        // localStorage.setItem('isRegister', 'false');
         localStorage.setItem('userId', `${userId}`);
         localStorage.setItem('token', token);
         client.defaults.headers.Authorization = `${token}`;
