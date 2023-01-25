@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
@@ -39,6 +39,17 @@ function Login() {
       setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
     }
   };
+
+  useEffect(() => {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const isRegister = localStorage.getItem('isRegister');
+    if (isRegister === 'true') {
+      router.push('/home');
+    } else if (userId && token) {
+      router.push('/register');
+    }
+  }, []);
 
   return (
     <Layout noHeader noMenuBar noFooter>

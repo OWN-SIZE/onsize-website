@@ -51,9 +51,13 @@ function Register() {
   };
 
   useEffect(() => {
-    const isRegitser = localStorage.getItem('isRegister');
-    if (isRegitser === 'true') {
+    const userId = localStorage.getItem('userId');
+    const token = localStorage.getItem('token');
+    const isRegister = localStorage.getItem('isRegister');
+    if (isRegister === 'true') {
       router.push('/home');
+    } else if (!userId || !token) {
+      router.push('/login');
     }
   }, []);
 
