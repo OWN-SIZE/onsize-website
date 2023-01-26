@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
@@ -10,6 +10,7 @@ import theme from 'styles/theme';
 import { lottieMapper } from '@/components/common/modal/LottieModal';
 import LottiePlayer from '@/components/common/modal/LottiePlayer';
 import { useAuth } from '@/hooks/business/user';
+import useRedirect from '@/hooks/common/useRedirect';
 import Layout from 'components/common/Layout';
 
 function Login() {
@@ -39,23 +40,43 @@ function Login() {
       setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
     }
   };
+  const { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage } = useRedirect({
+    onRedirect: () => {
+      if (isRegister === 'true') {
+        router.push('/home');
+      } else if (userId && token) {
+        router.push('/register');
+      } else {
+        // login
+        setIsLoading(false);
+      }
+    },
+  });
+
+  useEffect(() => {
+    getLocalStorage();
+  }, []);
 
   return (
     <Layout noHeader noMenuBar noFooter>
-      <Styled.Root>
-        <Styled.Header>
-          <Image src={OwnSizeLogoImg} alt="로고 이미지" />
-        </Styled.Header>
-        <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode isTop />
-        <Styled.LoginButton onClick={() => login()}>
-          <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
-        </Styled.LoginButton>
-        <Styled.Message>
-          로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
-          <br />
-          서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
-        </Styled.Message>
-      </Styled.Root>
+      {isLoading ? (
+        <></>
+      ) : (
+        <Styled.Root>
+          <Styled.Header>
+            <Image src={OwnSizeLogoImg} alt="로고 이미지" />
+          </Styled.Header>
+          <LottiePlayer page={page} onClickArrow={onClickArrow} lottie={lottieMapper[page].lottie} isDarkMode isTop />
+          <Styled.LoginButton onClick={() => login()}>
+            <Image src={GoogleLoginImg} alt="구글로그인 버튼 이미지" />
+          </Styled.LoginButton>
+          <Styled.Message>
+            로그인은 개인 정보 보호 정책 및 서비스 약관에 동의하는 것을 의미하며,
+            <br />
+            서비스 이용을 위해 이메일과 이름, 프로필 이미지를 수집합니다.
+          </Styled.Message>
+        </Styled.Root>
+      )}
     </Layout>
   );
 }
