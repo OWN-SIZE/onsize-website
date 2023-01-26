@@ -6,6 +6,7 @@ import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import NextButton from '@/components/register/NextButton';
+import useRedirect from '@/hooks/common/useRedirect';
 import Layout from 'components/common/Layout';
 import SizeForm from 'components/common/SizeForm/SizeForm';
 import Progress from 'components/register/Progress';
@@ -50,65 +51,75 @@ function Register() {
     }
   };
 
+  const { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage } = useRedirect({
+    onRedirect: () => {
+      if (isRegister === 'true') {
+        router.push('/home');
+      } else if (userId && token) {
+        router.push('/register');
+        setIsLoading(false);
+      } else {
+        router.push('/login');
+      }
+    },
+  });
+
   useEffect(() => {
-    const userId = localStorage.getItem('userId');
-    const token = localStorage.getItem('token');
-    const isRegister = localStorage.getItem('isRegister');
-    if (isRegister === 'true') {
-      router.push('/home');
-    } else if (!userId || !token) {
-      router.push('/login');
-    }
+    getLocalStorage();
   }, []);
 
   return (
     <Layout noHeader noMenuBar noFooter>
-      <Styled.Root>
-        <Styled.LeftConatiner>
-          <h1>Log In</h1>
-          <h2>
-            기존에 구매한 옷 중 가장 잘 맞는 제품의 사이즈를 찾아 입력해주세요.
-            <br />
-            입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
-          </h2>
-          <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
-        </Styled.LeftConatiner>
-        <Styled.RightContainer>
-          <Progress progress={progress} selectedOption={selectedOption} />
-          {progress === 1 ? (
-            <SizeOption
-              selectedOption={selectedOption}
-              setSelectedOption={setSelectedOption}
-              isNextActive={isNextActive}
-              setIsNextActive={setIsNextActive}
-              onClickNext={onClickSize}
-            />
-          ) : progress === 2 ? (
-            <SizeForm
-              isAlertActive={isAlertActive}
-              setIsAlertActive={setIsAlertActive}
-              formType={selectedOption === '하의' ? '하의' : '상의'}
-              setIsSubmitActive={setIsNextActive}
-              onSuccessSubmit={onSuccessSubmit}
-            >
-              <NextButton isActive={isNextActive} onClick={onClickNextButton} />
-            </SizeForm>
-          ) : (
-            <SizeForm
-              isAlertActive={isAlertActive}
-              setIsAlertActive={setIsAlertActive}
-              formType={selectedOption === '하의' ? '상의' : '하의'}
-              setIsSubmitActive={setIsNextActive}
-              onSuccessSubmit={onSuccessSubmit}
-              isOption={true}
-              skip={skip}
-              setSkip={setSkip}
-            >
-              <NextButton isActive={isNextActive} onClick={onClickNextButton} />
-            </SizeForm>
-          )}
-        </Styled.RightContainer>
-      </Styled.Root>
+      {isLoading ? (
+        <></>
+      ) : (
+        <Styled.Root>
+          <Styled.LeftConatiner>
+            <h1>Log In</h1>
+            <h2>
+              기존에 구매한 옷 중 가장 잘 맞는 제품의 사이즈를 찾아 입력해주세요.
+              <br />
+              입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
+            </h2>
+            <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
+          </Styled.LeftConatiner>
+          <Styled.RightContainer>
+            <Progress progress={progress} selectedOption={selectedOption} />
+            {progress === 1 ? (
+              <SizeOption
+                selectedOption={selectedOption}
+                setSelectedOption={setSelectedOption}
+                isNextActive={isNextActive}
+                setIsNextActive={setIsNextActive}
+                onClickNext={onClickSize}
+              />
+            ) : progress === 2 ? (
+              <SizeForm
+                isAlertActive={isAlertActive}
+                setIsAlertActive={setIsAlertActive}
+                formType={selectedOption === '하의' ? '하의' : '상의'}
+                setIsSubmitActive={setIsNextActive}
+                onSuccessSubmit={onSuccessSubmit}
+              >
+                <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+              </SizeForm>
+            ) : (
+              <SizeForm
+                isAlertActive={isAlertActive}
+                setIsAlertActive={setIsAlertActive}
+                formType={selectedOption === '하의' ? '상의' : '하의'}
+                setIsSubmitActive={setIsNextActive}
+                onSuccessSubmit={onSuccessSubmit}
+                isOption={true}
+                skip={skip}
+                setSkip={setSkip}
+              >
+                <NextButton isActive={isNextActive} onClick={onClickNextButton} />
+              </SizeForm>
+            )}
+          </Styled.RightContainer>
+        </Styled.Root>
+      )}
     </Layout>
   );
 }
