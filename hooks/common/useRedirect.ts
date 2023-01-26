@@ -1,4 +1,4 @@
-import React, { use, useEffect, useLayoutEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 type LocalStorageType = string | null;
 
@@ -12,15 +12,6 @@ function useRedirect(props: RedirectProps) {
   const [token, setToken] = useState<LocalStorageType>();
   const [isRegister, setIsRegister] = useState<LocalStorageType>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
-
-  //   useLayoutEffect(() => {
-  //     setIsLoading(true);
-  //     setUserId(localStorage.getItem('userId'));
-  //     setToken(localStorage.getItem('token'));
-  //     setIsRegister(localStorage.getItem('isRegister'));
-  //     onRedirect();
-  //     setIsLoading(false);
-  //   }, []);
 
   const getLocalStorage = () => {
     setIsLoading(true);
