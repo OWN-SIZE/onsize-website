@@ -87,6 +87,7 @@ const Styled = {
   Root: styled.section`
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
     width: 100vw;
     height: 100vh;
@@ -104,7 +105,7 @@ const Styled = {
   LoginButton: styled.button`
     width: 69.2rem;
     height: 7.2rem;
-    margin-top: 14.6rem;
+    margin-top: 10rem;
     border: 0;
     background: transparent;
     cursor: pointer;

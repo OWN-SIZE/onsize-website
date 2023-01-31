@@ -40,7 +40,7 @@ function LottiePlayer(props: LottieProps) {
             ))}
           </Styled.PageButtonContainer>
         )}
-        {isTop && <Styled.Message>{lottieMapper[page].message}</Styled.Message>}
+        <Styled.Message isTop={isTop}>{lottieMapper[page].message}</Styled.Message>
       </Styled.LottieContainer>
       <Styled.ArrowButton onClick={() => onClickArrow('right')}>
         <Image
@@ -62,7 +62,6 @@ const Styled = {
     align-items: center;
     width: 82.2rem;
     height: 44rem;
-    margin-top: 5rem;
   `,
   ArrowButton: styled.button`
     display: flex;
@@ -82,9 +81,9 @@ const Styled = {
     margin: 0 2.4rem;
     text-align: center;
   `,
-  Message: styled.pre`
-    position: fixed;
-    margin-top: 47.2rem;
+  Message: styled.pre<{ isTop?: boolean }>`
+    height: 7.6rem;
+    margin-top: ${({ isTop }) => (isTop ? 3.2 : 47.2)}rem;
     color: ${theme.colors.yellow01};
     ${theme.fonts.body8}
   `,
