@@ -1,27 +1,20 @@
-import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { ArrowImg, LandingPageImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
 
-function FirstSection() {
-  const [browserKind, setBrowserKind] = useState('');
-
-  useEffect(() => {
-    const resizeListener = () => {
-      if (window.innerWidth <= 600 && window.innerWidth >= 375) setBrowserKind('mobile');
-      else if (window.innerWidth <= 1728 && window.innerWidth >= 1024) setBrowserKind('desktop');
-      else setBrowserKind('');
-    };
-    window.addEventListener('resize', resizeListener);
-  });
+interface browserProps {
+  browser: string;
+}
+function FirstPart(props: browserProps) {
+  const { browser } = props;
 
   return (
     <Styled.Root>
       <Styled.Section>
         <Image src={OwnSizeLogoImg} className="logo" width={94} height={94} alt="온사이즈 로고" />
-        {browserKind === 'mobile' ? (
+        {browser === 'mobile' ? (
           <Image src={mobileBackgroundImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
         ) : (
           <Image src={LandingPageImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
@@ -29,7 +22,7 @@ function FirstSection() {
         <Styled.BackgroundBlur />
         <Styled.IntroText>나에게 맞는 의류 사이즈, OWNSIZE에서 클릭 한번으로</Styled.IntroText>
         <Styled.goToApply>사전신청 바로가기</Styled.goToApply>
-        {browserKind === 'mobile' ? (
+        {browser === 'mobile' ? (
           <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>
         ) : (
           <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" />
@@ -39,7 +32,7 @@ function FirstSection() {
   );
 }
 
-export default FirstSection;
+export default FirstPart;
 
 const Styled = {
   Root: styled.div`
