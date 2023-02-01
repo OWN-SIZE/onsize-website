@@ -5,7 +5,6 @@ type LocalStorageType = string | null;
 
 function useRedirect() {
   const [userId, setUserId] = useState<LocalStorageType>(null);
-  const [token, setToken] = useState<LocalStorageType>(null);
   const [isRegister, setIsRegister] = useState<LocalStorageType>(null);
   const [isLoading, setIsLoading] = useState<boolean>(true);
   const router = useRouter();
@@ -13,7 +12,6 @@ function useRedirect() {
   const getLocalStorage = () => {
     setIsLoading(true);
     setUserId(localStorage.getItem('userId'));
-    setToken(localStorage.getItem('token'));
     setIsRegister(localStorage.getItem('isRegister'));
   };
 
@@ -24,7 +22,7 @@ function useRedirect() {
     router.events.on('routeChangeStart', handleStart);
     if (isRegister === 'true') {
       router.push('/home');
-    } else if (!userId && !token) {
+    } else if (!userId) {
       router.push('/login');
     } else {
       router.push('/register');
@@ -39,7 +37,7 @@ function useRedirect() {
     };
   }, []);
 
-  return { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage };
+  return { isLoading, setIsLoading, getLocalStorage };
 }
 
 export default useRedirect;
