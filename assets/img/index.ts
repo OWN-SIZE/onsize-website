@@ -13,3 +13,5 @@ export { default as MouseHoverImg } from './mouse_hover.png';
 export { default as LandingPageImg } from './image_web.png';
 export { default as ArrowImg } from './arrow.png';
 export { default as mobileBackgroundImg } from './mobileBackground.png';
+export { default as speechBubbleImg } from './speech bubble.png';
+export { default as mobileFaceImg } from './mobileFace.png';
