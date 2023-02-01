@@ -24,7 +24,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const token = Cookies.get('token');
+  const token = Cookies.get('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
