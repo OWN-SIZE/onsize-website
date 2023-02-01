@@ -24,7 +24,6 @@ export default function Mysize() {
     setIsAlertActive(true);
   };
   const onSuccessSubmit = () => {
-    console.log('저장 성공');
     showToast('저장되었습니다.');
   };
 
@@ -52,7 +51,6 @@ export default function Mysize() {
     }
   };
 
-
   if (allMysize) {
     const { bottom } = allMysize;
     const { top } = allMysize;
@@ -68,7 +66,8 @@ export default function Mysize() {
     const hem = bottom?.hem;
     const isWidthOfBottom = bottom?.isWidthOfBottom;
 
-    if (
+    // 사용자가 상의만 입력한 경우
+    if ( 
       bottomLength === null &&
       hem === null &&
       isWidthOfBottom === null &&
@@ -78,19 +77,30 @@ export default function Mysize() {
     ) {
       inputRequest = '하의';
     }
+
+    // 사용자가 하의만 입력한 경우
     if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
       inputRequest = '상의';
     }
 
+    //상의 클릭, 입력값은 둘레, 클릭값도 둘레
     if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
+    } 
+    //상의 클릭, 입력값은 둘레, 클릭값은 단면
+    else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
+    } 
+    //상의 클릭, 입력값은 단면, 클릭값도 단면
+    else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
+    } 
+    //상의 클릭, 입력값은 단면, 클릭값은 둘레
+    else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
       data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
+    } 
+    //하의 클릭, 입력값은 둘레, 클릭값도 둘레
+    else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
       data = {
         총장: bottomLength,
         밑위: rise,
@@ -98,9 +108,13 @@ export default function Mysize() {
         허벅지: thigh,
         밑단: hem,
       };
-    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
+    } 
+    //하의 클릭, 입력값은 둘레, 클릭값은 단면
+    else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
       data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
-    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '단면') {
+    } 
+    //하의 클릭, 입력값은 단면, 클릭값도 단면
+    else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '단면') {
       data = {
         총장: bottomLength,
         밑위: rise,
@@ -108,10 +122,11 @@ export default function Mysize() {
         허벅지: thigh,
         밑단: hem,
       };
-    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
+    } 
+    //하의 클릭, 입력값은 단면, 클릭값은 둘레
+    else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
       data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
     }
-  
   }
   return (
     <Styled.Root>
@@ -144,18 +159,18 @@ export default function Mysize() {
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
       <Styled.SizeFormContainer>
-          <SizeForm
-            noHeader
-            formType={isTopClicked ? '상의' : '하의'}
-            isAlertActive={isAlertActive}
-            setIsAlertActive={setIsAlertActive}
-            setIsSubmitActive={setIsSubmitActive}
-            onSuccessSubmit={onSuccessSubmit}
-            onClickMeasure={onClickMeasure}
-            data={data}
-          >
-            <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
-          </SizeForm>
+        <SizeForm
+          noHeader
+          formType={isTopClicked ? '상의' : '하의'}
+          isAlertActive={isAlertActive}
+          setIsAlertActive={setIsAlertActive}
+          setIsSubmitActive={setIsSubmitActive}
+          onSuccessSubmit={onSuccessSubmit}
+          onClickMeasure={onClickMeasure}
+          data={data}
+        >
+          <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
+        </SizeForm>
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
         <Styled.TopRequestModalContainer>
@@ -174,7 +189,7 @@ export default function Mysize() {
       ) : null}
       {isOpenToast && (
         <Styled.ToastContainer>
-          <Toast message={message} width='32.9' />
+          <Toast message={message} width="32.9" />
         </Styled.ToastContainer>
       )}
     </Styled.Root>
