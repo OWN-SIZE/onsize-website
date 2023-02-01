@@ -37,7 +37,7 @@ function useRedirect() {
       router.events.off('routeChangeComplete', handleComplete);
       router.events.off('routeChangeError', handleComplete);
     };
-  });
+  }, []);
 
   return { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage };
 }
