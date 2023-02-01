@@ -94,7 +94,7 @@ const Styled = {
   LoginButton: styled.button`
     width: 69.2rem;
     height: 7.2rem;
-    margin-top: 10rem;
+    margin-top: 3.8rem;
     border: 0;
     background: transparent;
     cursor: pointer;

@@ -21,35 +21,37 @@ function LottiePlayer(props: LottieProps) {
   const { onClickArrow, lottie, page, isDarkMode, isTop } = props;
   return (
     <Styled.Root isTop={isTop}>
-      <Styled.ArrowButton onClick={() => onClickArrow('left')}>
-        <Image src={isDarkMode ? WhiteLeftArrowIcon : LeftArrowIcon} width={60} height={60} alt="왼쪽 화살표 버튼" />
-      </Styled.ArrowButton>
-      <Styled.LottieContainer>
-        {isTop && (
-          <Styled.PageButtonContainer>
-            {[0, 1, 2, 3].map((lottie, index) => (
-              <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
-            ))}
-          </Styled.PageButtonContainer>
-        )}
-        <Lottie animationData={isTop && page === 1 ? tutorialAnimation5 : lottie} />
-        {!isTop && (
-          <Styled.PageButtonContainer>
-            {[0, 1, 2, 3].map((lottie, index) => (
-              <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
-            ))}
-          </Styled.PageButtonContainer>
-        )}
-        {isTop && <Styled.Message>{lottieMapper[page].message}</Styled.Message>}
-      </Styled.LottieContainer>
-      <Styled.ArrowButton onClick={() => onClickArrow('right')}>
-        <Image
-          src={isDarkMode ? WhiteRightArrowIcon : RightArrowIcon}
-          width={60}
-          height={60}
-          alt="오른쪽 화살표 버튼"
-        />
-      </Styled.ArrowButton>
+      <div>
+        <Styled.ArrowButton onClick={() => onClickArrow('left')}>
+          <Image src={isDarkMode ? WhiteLeftArrowIcon : LeftArrowIcon} width={60} height={60} alt="왼쪽 화살표 버튼" />
+        </Styled.ArrowButton>
+        <Styled.LottieContainer>
+          {isTop && (
+            <Styled.PageButtonContainer>
+              {[0, 1, 2, 3].map((lottie, index) => (
+                <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
+              ))}
+            </Styled.PageButtonContainer>
+          )}
+          <Lottie animationData={isTop && page === 1 ? tutorialAnimation5 : lottie} />
+          {!isTop && (
+            <Styled.PageButtonContainer>
+              {[0, 1, 2, 3].map((lottie, index) => (
+                <Styled.PageButton key={index} isSelected={page === index} isDarkMode={isDarkMode} isTop={isTop} />
+              ))}
+            </Styled.PageButtonContainer>
+          )}
+        </Styled.LottieContainer>
+        <Styled.ArrowButton onClick={() => onClickArrow('right')}>
+          <Image
+            src={isDarkMode ? WhiteRightArrowIcon : RightArrowIcon}
+            width={60}
+            height={60}
+            alt="오른쪽 화살표 버튼"
+          />
+        </Styled.ArrowButton>
+      </div>
+      {isTop && <Styled.Message>{lottieMapper[page].message}</Styled.Message>}
     </Styled.Root>
   );
 }
@@ -60,9 +62,15 @@ const Styled = {
   Root: styled.div<{ isTop?: boolean }>`
     display: flex;
     align-items: center;
+    flex-direction: column;
     width: 82.2rem;
-    height: 44rem;
     margin-top: ${({ isTop }) => (isTop ? 0 : 5)}rem;
+    > div {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      text-align: center;
+    }
   `,
   ArrowButton: styled.button`
     display: flex;
@@ -79,12 +87,14 @@ const Styled = {
     flex-direction: column;
     align-items: center;
     width: 65.4rem;
+    height: 44rem;
     margin: 0 2.4rem;
     text-align: center;
   `,
   Message: styled.pre`
     height: 7.6rem;
     margin-top: 3.2rem;
+    text-align: center;
     color: ${theme.colors.yellow01};
     ${theme.fonts.body8}
   `,
