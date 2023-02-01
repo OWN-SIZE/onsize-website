@@ -312,5 +312,7 @@ const Styled = {
     display: flex;
     align-items: center;
     margin-left: 22.4rem;
+    z-index: 15;
+
   `,
 };

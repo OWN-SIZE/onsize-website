@@ -77,6 +77,7 @@ const Styled = {
 
     display: flex;
     align-items: center;
+    z-index: 15;
 
     margin-left: ${({ isAddCategory }) => (isAddCategory ? '49rem' : ' 53.9rem')};
   `,
