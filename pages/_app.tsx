@@ -5,6 +5,8 @@ import Head from 'next/head';
 import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'styles/GlobalStyle';
 
+import { AxiosInterceptor } from '../apis';
+
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
     defaultOptions: {
@@ -17,13 +19,15 @@ export default function App({ Component, pageProps }: AppProps) {
   return (
     <QueryClientProvider client={queryClient}>
       <RecoilRoot>
-        <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
-          <Head>
-            <title>Own Size</title>
-          </Head>
-          <GlobalStyle />
-          <Component {...pageProps} />
-        </GoogleOAuthProvider>
+        <AxiosInterceptor>
+          <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
+            <Head>
+              <title>Own Size</title>
+            </Head>
+            <GlobalStyle />
+            <Component {...pageProps} />
+          </GoogleOAuthProvider>
+        </AxiosInterceptor>
       </RecoilRoot>
     </QueryClientProvider>
   );
