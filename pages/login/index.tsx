@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
-import Cookies from 'js-cookie';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import styled from 'styled-components';
@@ -21,7 +20,6 @@ function Login() {
       const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       });
-      Cookies.set('token', tokenResponse.access_token);
 
       authLogin(data, () => {
         const isRegister = localStorage.getItem('isRegister');

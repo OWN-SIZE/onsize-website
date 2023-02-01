@@ -1,8 +1,6 @@
 import Cookies from 'js-cookie';
 import { AuthInput } from 'types/user/client';
 
-import { client } from '@/apis/index';
-
 import { useAuthMutation } from '../queries/user';
 
 export const useAuth = () => {
@@ -11,10 +9,10 @@ export const useAuth = () => {
   const authLogin = (body: AuthInput, onSuccessLogin: () => void) => {
     authMutate.mutate(body, {
       onSuccess({ userId, token }) {
-        // isRegister, userId(isLogin), jwt token
         // localStorage.setItem('isRegister', 'false');
         localStorage.setItem('userId', `${userId}`);
         Cookies.set('token', token);
+
         // 초기 사이즈 설정 페이지로 이동하기
         onSuccessLogin();
       },
