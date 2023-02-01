@@ -40,18 +40,7 @@ function Login() {
       setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
     }
   };
-  const { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage } = useRedirect({
-    onRedirect: () => {
-      if (isRegister === 'true') {
-        router.push('/home');
-      } else if (userId && token) {
-        router.push('/register');
-      } else {
-        // login
-        setIsLoading(false);
-      }
-    },
-  });
+  const { isLoading, getLocalStorage } = useRedirect();
 
   useEffect(() => {
     getLocalStorage();

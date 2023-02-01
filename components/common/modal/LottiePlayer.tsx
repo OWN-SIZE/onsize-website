@@ -20,7 +20,7 @@ interface LottieProps {
 function LottiePlayer(props: LottieProps) {
   const { onClickArrow, lottie, page, isDarkMode, isTop } = props;
   return (
-    <Styled.Root>
+    <Styled.Root isTop={isTop}>
       <Styled.ArrowButton onClick={() => onClickArrow('left')}>
         <Image src={isDarkMode ? WhiteLeftArrowIcon : LeftArrowIcon} width={60} height={60} alt="왼쪽 화살표 버튼" />
       </Styled.ArrowButton>
@@ -40,7 +40,7 @@ function LottiePlayer(props: LottieProps) {
             ))}
           </Styled.PageButtonContainer>
         )}
-        <Styled.Message isTop={isTop}>{lottieMapper[page].message}</Styled.Message>
+        {isTop && <Styled.Message>{lottieMapper[page].message}</Styled.Message>}
       </Styled.LottieContainer>
       <Styled.ArrowButton onClick={() => onClickArrow('right')}>
         <Image
@@ -57,11 +57,12 @@ function LottiePlayer(props: LottieProps) {
 export default LottiePlayer;
 
 const Styled = {
-  Root: styled.div`
+  Root: styled.div<{ isTop?: boolean }>`
     display: flex;
     align-items: center;
     width: 82.2rem;
     height: 44rem;
+    margin-top: ${({ isTop }) => (isTop ? 0 : 5)}rem;
   `,
   ArrowButton: styled.button`
     display: flex;
@@ -81,9 +82,9 @@ const Styled = {
     margin: 0 2.4rem;
     text-align: center;
   `,
-  Message: styled.pre<{ isTop?: boolean }>`
+  Message: styled.pre`
     height: 7.6rem;
-    margin-top: ${({ isTop }) => (isTop ? 3.2 : 47.2)}rem;
+    margin-top: 3.2rem;
     color: ${theme.colors.yellow01};
     ${theme.fonts.body8}
   `,

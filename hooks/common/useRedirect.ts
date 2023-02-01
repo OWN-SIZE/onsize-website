@@ -3,12 +3,7 @@ import { useRouter } from 'next/router';
 
 type LocalStorageType = string | null;
 
-interface RedirectProps {
-  onRedirect: () => void;
-}
-
-function useRedirect(props: RedirectProps) {
-  const { onRedirect } = props;
+function useRedirect() {
   const [userId, setUserId] = useState<LocalStorageType>(null);
   const [token, setToken] = useState<LocalStorageType>(null);
   const [isRegister, setIsRegister] = useState<LocalStorageType>(null);
@@ -20,7 +15,6 @@ function useRedirect(props: RedirectProps) {
     setUserId(localStorage.getItem('userId'));
     setToken(localStorage.getItem('token'));
     setIsRegister(localStorage.getItem('isRegister'));
-    onRedirect();
   };
 
   useEffect(() => {
@@ -28,6 +22,13 @@ function useRedirect(props: RedirectProps) {
     const handleComplete = (url: string) => url === router.asPath && setIsLoading(false);
 
     router.events.on('routeChangeStart', handleStart);
+    if (isRegister === 'true') {
+      router.push('/home');
+    } else if (!userId && !token) {
+      router.push('/login');
+    } else {
+      router.push('/register');
+    }
     router.events.on('routeChangeComplete', handleComplete);
     router.events.on('routeChangeError', handleComplete);
 

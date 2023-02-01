@@ -51,18 +51,7 @@ function Register() {
     }
   };
 
-  const { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage } = useRedirect({
-    onRedirect: () => {
-      if (isRegister === 'true') {
-        router.push('/home');
-      } else if (userId && token) {
-        router.push('/register');
-        setIsLoading(false);
-      } else {
-        router.push('/login');
-      }
-    },
-  });
+  const { isLoading, getLocalStorage } = useRedirect();
 
   useEffect(() => {
     getLocalStorage();
