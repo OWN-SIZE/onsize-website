@@ -24,7 +24,6 @@ export default function Mysize() {
     setIsAlertActive(true);
   };
   const onSuccessSubmit = () => {
-    console.log('저장 성공');
     showToast('저장되었습니다.');
   };
 
