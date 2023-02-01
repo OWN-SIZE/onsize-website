@@ -29,6 +29,7 @@ function Login() {
         } else {
           router.push('/register');
         }
+        router.push('/register');
       });
     },
   });

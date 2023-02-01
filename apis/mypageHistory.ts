@@ -4,21 +4,13 @@ import { MyPageHistoryResponse, MyPageUserInformationResponse } from 'types/mypa
 export const fetchUserInformation = async () => {
   const {
     data: { data },
-  } = await client.get<MyPageUserInformationResponse>('/mypage', {
-    headers: {
-      Authorization: localStorage.getItem('token'),
-    },
-  });
+  } = await client.get<MyPageUserInformationResponse>('/mypage');
   return data;
 };
 
 export const fetchMyPageHistory = async () => {
   const {
     data: { data },
-  } = await client.get<MyPageHistoryResponse>('/mypage/history', {
-    headers: {
-      Authorization: localStorage.getItem('token'),
-    },
-  });
+  } = await client.get<MyPageHistoryResponse>('/mypage/history');
   return data;
 };
