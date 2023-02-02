@@ -1,8 +1,12 @@
+import Lottie from 'lottie-react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { mobileFaceImg, speechBubbleImg } from '@/assets/img';
+
+import saveLottie from '../../assets/lottie/save.json';
+import sizeLottie from '../../assets/lottie/size.json';
 
 interface browserProps {
   browser: string;
@@ -25,10 +29,12 @@ function SecondPart(props: browserProps) {
       <Styled.Section className="second">
         <Styled.coreFunction>사이즈 추천</Styled.coreFunction>
         <Styled.Title className="second">쉽게 추천받는 나의 사이즈</Styled.Title>
+        <Lottie animationData={sizeLottie} className="lottie" width={283} height={176} />
       </Styled.Section>
       <Styled.Section className="third">
         <Styled.coreFunction>나의 옷장</Styled.coreFunction>
         <Styled.Title className="third">클릭 한번으로 저장하는 관심 의류</Styled.Title>
+        <Lottie animationData={saveLottie} className="lottie" />
       </Styled.Section>
     </Styled.Root>
   );
@@ -49,6 +55,10 @@ const Styled = {
     & > span {
       position: absolute;
       z-index: 2;
+    }
+
+    & > .lottie {
+      margin-top: 4rem;
     }
 
     &.first {
@@ -82,9 +92,11 @@ const Styled = {
     }
     &.second {
       background-color: #fffcce;
+      height: 36.8rem;
     }
     &.third {
       background-color: ${theme.colors.gray000};
+      height: 36.8rem;
     }
 
     @media (min-width: 375px) and (max-width: 600px) {

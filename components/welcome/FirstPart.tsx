@@ -57,12 +57,12 @@ const Styled = {
 
     /* 모바일 */
     @media (min-width: 375px) and (max-width: 600px) {
-      width: 100%;
       height: 57rem;
 
       & > img {
         position: absolute;
         &.backgroundImg {
+          width: 100%;
           left: 0;
           margin-top: 10.8rem; //수정 필요
         }
@@ -85,6 +85,8 @@ const Styled = {
       & > img {
         position: absolute;
         &.backgroundImg {
+          width: 100vh;
+
           left: 0;
           margin-top: 12.6rem;
         }

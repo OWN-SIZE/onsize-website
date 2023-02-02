@@ -1,4 +1,4 @@
-import WelcomeLanding from '@/components/welcome/welcomeLanding';
+import WelcomeLanding from '@/components/welcome/WelcomeLanding';
 
 function Welcome() {
   return (
