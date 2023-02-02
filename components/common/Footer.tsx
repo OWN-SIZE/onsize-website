@@ -5,7 +5,7 @@ function Footer() {
   const FEEDBACK_URL =
     'https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform?usp=sf_link';
   const ABOUT_OWNSIZE_URL = 'https://golden-rib-2f1.notion.site/Help-Support-9db0af92af7949d2b251e3be5dfdde98';
-  const PRIVACY_URL = 'https://golden-rib-2f1.notion.site/fe544d3a20054510b8acb233179e0d87';
+  const PRIVACY_URL = 'https://golden-rib-2f1.notion.site/7171b098f7c94b04b136702f24e198b6';
   const INSTAGRAM_URL = 'https://www.instagram.com/ownsize_official/';
   const linkProduct = [
     { url: FEEDBACK_URL, text: '피드백' },
