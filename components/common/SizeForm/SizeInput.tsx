@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useCallback, useState } from 'react';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 type DataType =
-   {
+  | {
       [key: string]: number;
       총장: number;
       '어깨 너비': number;
@@ -17,7 +17,8 @@ type DataType =
       허리: number;
       허벅지: number;
       밑단: number;
-    };
+    }
+  ;
 
 interface InputProps {
   inputKey: string;
@@ -31,6 +32,9 @@ interface InputProps {
 function SizeInput(props: InputProps) {
   const { inputKey, measure, register, setValue, valid, data } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
+
+  const [inputValue, setInputValue] = useState('');
+
   return (
     <Styled.InputContainer key={inputKey}>
       <label>{label}</label>
@@ -46,7 +50,10 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          placeholder={data && `${data[inputKey]}` === '0' ? '' : data && `${data[inputKey]}`}
+          defaultValue={data && `${data[inputKey]}` === '0' ? '' : data && `${data[inputKey]}`}
+          onChange={(e) => {
+            setInputValue(e.target.value);
+          }}
         />
         cm
       </div>
@@ -85,6 +92,9 @@ const Styled = {
     ${theme.fonts.body1};
     :focus {
       outline: none;
+    }
+    ::placeholder {
+      color: #000000;
     }
   `,
 };

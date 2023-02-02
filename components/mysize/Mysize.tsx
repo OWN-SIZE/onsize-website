@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
@@ -12,6 +12,21 @@ import theme from 'styles/theme';
 import SizeForm from 'components/common/SizeForm/SizeForm';
 import { Toast } from 'components/common/Toast/Toast';
 import useToast from 'components/common/Toast/useToast';
+
+type DataType =
+  | {
+      총장: number;
+      '어깨 너비': number;
+      가슴: number;
+    }
+  | {
+      총장: number;
+      밑위: number;
+      허리: number;
+      허벅지: number;
+      밑단: number;
+    }
+  | object;
 
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
@@ -38,7 +53,8 @@ export default function Mysize() {
   };
 
   let inputRequest = '없음';
-  let data;
+
+  const [data, setData] = useState<DataType>({});
 
   const changeBorderColor = (clicked: string) => {
     if (clicked === '상의') {
@@ -52,67 +68,73 @@ export default function Mysize() {
     }
   };
 
+useEffect(() => {
+  if (allMysize){
+  const { bottom } = allMysize;
+  const { top } = allMysize;
 
-  if (allMysize) {
-    const { bottom } = allMysize;
-    const { top } = allMysize;
+  const topLength = top?.topLength;
+  const shoulder = top?.shoulder;
+  const chest = top?.chest;
+  const isWidthOfTop = top?.isWidthOfTop;
+  const bottomLength = bottom?.bottomLength;
+  const rise = bottom?.rise;
+  const waist = bottom?.waist;
+  const thigh = bottom?.thigh;
+  const hem = bottom?.hem;
+  const isWidthOfBottom = bottom?.isWidthOfBottom;
 
-    const topLength = top?.topLength;
-    const shoulder = top?.shoulder;
-    const chest = top?.chest;
-    const isWidthOfTop = top?.isWidthOfTop;
-    const bottomLength = bottom?.bottomLength;
-    const rise = bottom?.rise;
-    const waist = bottom?.waist;
-    const thigh = bottom?.thigh;
-    const hem = bottom?.hem;
-    const isWidthOfBottom = bottom?.isWidthOfBottom;
-
-    if (
-      bottomLength === null &&
-      hem === null &&
-      isWidthOfBottom === null &&
-      rise === null &&
-      thigh === null &&
-      waist === null
-    ) {
-      inputRequest = '하의';
-    }
-    if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
-      inputRequest = '상의';
-    }
-
-    if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
-      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
-      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
-      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: chest };
-    } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
-      data = { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 };
-    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
-      data = {
-        총장: bottomLength,
-        밑위: rise,
-        허리: waist,
-        허벅지: thigh,
-        밑단: hem,
-      };
-    } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
-      data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
-    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '단면') {
-      data = {
-        총장: bottomLength,
-        밑위: rise,
-        허리: waist,
-        허벅지: thigh,
-        밑단: hem,
-      };
-    } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
-      data = { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 };
-    }
-  
+  if (
+    bottomLength === null &&
+    hem === null &&
+    isWidthOfBottom === null &&
+    rise === null &&
+    thigh === null &&
+    waist === null
+  ) {
+    inputRequest = '하의';
   }
+  if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
+    inputRequest = '상의';
+  }
+
+  if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
+    setData( { 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+  } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
+    setData( { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 });
+  } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
+    setData( { 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+  } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
+    setData( { 총장: topLength, '어깨 너비': shoulder, 가슴: 0 });
+  } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
+    setData( {
+      총장: bottomLength,
+      밑위: rise,
+      허리: waist,
+      허벅지: thigh,
+      밑단: hem,
+    });
+  } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
+    setData( { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 });
+  } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '단면') {
+    setData( {
+      총장: bottomLength,
+      밑위: rise,
+      허리: waist,
+      허벅지: thigh,
+      밑단: hem,
+    });
+  } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
+    setData( { 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 });
+  }
+
+  console.log(data);
+}
+}, [allMysize, isTopClicked])
+ 
+
+
+
   return (
     <Styled.Root>
       <Styled.TitleBar>
