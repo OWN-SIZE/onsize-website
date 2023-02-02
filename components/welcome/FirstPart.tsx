@@ -79,14 +79,12 @@ const Styled = {
     }
     /* 데스크탑 */
     @media (min-width: 1024px) and (max-width: 1728px) {
-      width: 172.8rem;
       height: 111.7rem;
 
       & > img {
         position: absolute;
         &.backgroundImg {
-          width: 100vh;
-
+          width: 100%;
           left: 0;
           margin-top: 12.6rem;
         }
@@ -169,7 +167,6 @@ const Styled = {
     }
 
     @media (min-width: 1024px) and (max-width: 1728px) {
-      left: 28.9rem;
       top: 71rem;
 
       font-family: 'Noto Sans';
