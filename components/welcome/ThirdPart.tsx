@@ -5,6 +5,7 @@ import theme from 'styles/theme';
 interface browserProps {
   browser: string;
 }
+
 function ThirdPart(props: browserProps) {
   const [isActive, setIsActive] = useState(false);
   const { browser } = props;
