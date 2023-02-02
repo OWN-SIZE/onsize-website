@@ -10,14 +10,16 @@ function ThirdPart(props: browserProps) {
   const { browser } = props;
   return (
     <Styled.Root>
-      <Styled.Section>
-        <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
-        <Styled.emailContainer>
-          <Styled.emailLabel>Email</Styled.emailLabel>
-          <Styled.emailInput type="text" />
-        </Styled.emailContainer>
-        <Styled.submitButton type={'submit'} value="신청하기" className={isActive ? 'active' : 'inactive'} />
-      </Styled.Section>
+      <Styled.Container>
+        <Styled.Section>
+          <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
+          <Styled.emailContainer>
+            <Styled.emailLabel>Email</Styled.emailLabel>
+            <Styled.emailInput type="text" />
+          </Styled.emailContainer>
+          <Styled.submitButton type={'submit'} value="신청하기" className={isActive ? 'active' : 'inactive'} />
+        </Styled.Section>
+      </Styled.Container>
     </Styled.Root>
   );
 }
@@ -27,10 +29,24 @@ export default ThirdPart;
 const Styled = {
   Root: styled.div`
     display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    width: 100%;
+
+    background-color: ${theme.colors.lightGrey};
+    @media (min-width: 375px) and (max-width: 600px) {
+      height: 38.8rem;
+    }
+    @media (min-width: 1024px) and (max-width: 1728px) {
+      height: 100.4rem;
+    }
+  `,
+  Container: styled.div`
+    display: flex;
     justify-content: center;
+    background-color: ${theme.colors.black};
 
     width: 100%;
-    background-color: ${theme.colors.black};
 
     @media (min-width: 375px) and (max-width: 600px) {
       height: 37.6rem;
@@ -82,7 +98,7 @@ const Styled = {
       margin-top: 4.2rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      width: 93rem;
+      width: 100%;
       height: 22rem;
 
       margin-top: 15.7rem;
