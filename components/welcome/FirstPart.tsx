@@ -63,8 +63,9 @@ const Styled = {
         position: absolute;
         &.backgroundImg {
           width: 100%;
+          height: calc(100vw / 1.6);
           left: 0;
-          margin-top: 10.8rem; //수정 필요
+          margin-top: 13.4rem; //수정 필요
         }
         &.logo {
           z-index: 3;
@@ -85,8 +86,10 @@ const Styled = {
         position: absolute;
         &.backgroundImg {
           width: 100%;
+          height: calc(100vw / 2.07);
+
           left: 0;
-          margin-top: 12.6rem;
+          margin-top: 24.1rem;
         }
         &.logo {
           z-index: 3;
@@ -95,7 +98,7 @@ const Styled = {
         }
         &.arrow {
           z-index: 3;
-          top: 102.5rem;
+          top: 94.7rem;
         }
       }
     }
@@ -122,7 +125,7 @@ const Styled = {
     @media (min-width: 1024px) and (max-width: 1728px) {
       width: 45.3rem;
       height: 9.2rem;
-      top: 87rem;
+      top: 79.2rem;
 
       border-radius: 10px;
       ${theme.fonts.title2};
@@ -167,13 +170,13 @@ const Styled = {
     }
 
     @media (min-width: 1024px) and (max-width: 1728px) {
-      top: 71rem;
+      top: 64.9rem;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 600;
-      font-size: 5rem;
-      line-height: 6.8rem;
+      font-size: 44px;
+      line-height: 60px;
     }
   `,
 };

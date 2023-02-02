@@ -52,7 +52,7 @@ const Styled = {
       height: 38.8rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      height: 100.4rem;
+      height: 89.7rem;
     }
   `,
   Container: styled.div`
@@ -66,7 +66,7 @@ const Styled = {
       height: 37.6rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      height: 100.4rem;
+      height: 87rem;
     }
   `,
   Section: styled.div`
@@ -75,6 +75,7 @@ const Styled = {
     }
     display: flex;
     flex-direction: column;
+    align-items: center;
 
     @media (min-width: 375px) and (max-width: 600px) {
       width: 33.5rem;
@@ -98,13 +99,13 @@ const Styled = {
       line-height: 38px;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      margin-top: 17.2rem;
+      margin-top: 14.5rem;
 
       font-family: 'Arial';
       font-style: normal;
       font-weight: 700;
-      font-size: 50px;
-      line-height: 57px;
+      font-size: 40px;
+      line-height: 46px;
     }
   `,
   emailContainer: styled.div`
@@ -115,10 +116,10 @@ const Styled = {
       margin-top: 4.2rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      width: 100%;
+      width: 93rem;
       height: 22rem;
 
-      margin-top: 15.7rem;
+      margin-top: 11rem;
     }
   `,
   emailLabel: styled.label`

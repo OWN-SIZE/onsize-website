@@ -69,7 +69,7 @@ const Styled = {
         height: 32.9rem;
       }
       @media (min-width: 1024px) and (max-width: 1728px) {
-        height: 76.2rem;
+        height: 84rem;
       }
     }
 
@@ -100,15 +100,6 @@ const Styled = {
     &.first {
       align-items: center;
       background-color: ${theme.colors.lightGrey};
-
-      & > .lottie {
-        @media (min-width: 375px) and (max-width: 600px) {
-          margin-top: 4rem;
-        }
-        @media (min-width: 1024px) and (max-width: 1728px) {
-          margin: 9.3rem auto 0;
-        }
-      }
 
       @media (min-width: 375px) and (max-width: 600px) {
         & > img {
@@ -142,7 +133,7 @@ const Styled = {
           }
         }
         & > span {
-          top: 27.4rem;
+          top: 31.3rem;
 
           font-family: 'Noto Sans KR';
           font-style: normal;
@@ -175,7 +166,7 @@ const Styled = {
     @media (min-width: 1024px) and (max-width: 1728px) {
       width: 93rem;
       height: 53rem;
-      margin-top: 9.3rem;
+      margin-top: 14.4rem;
     }
   `,
   Title: styled.h1`
@@ -187,15 +178,22 @@ const Styled = {
       }
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 600;
-      font-size: 50px;
-      line-height: 68px;
-
-      margin-top: 5.3rem;
       &.first {
-        margin-top: 9.1rem;
+        margin-top: 13rem;
+        font-family: 'Noto Sans KR';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 50px;
+        line-height: 68px;
+      }
+      &.second,
+      &.third {
+        margin-top: 2.7rem;
+        font-family: 'Noto Sans KR';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 40px;
+        line-height: 54px;
       }
     }
   `,
@@ -207,8 +205,12 @@ const Styled = {
       margin-top: 4.2rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
-      ${theme.fonts.title1};
-      margin-top: 10rem;
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 30px;
+      line-height: 41px;
+      margin-top: 10.2rem;
     }
   `,
 };

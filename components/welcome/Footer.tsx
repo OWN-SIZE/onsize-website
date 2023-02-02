@@ -41,10 +41,10 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
-      font-size: 70px;
-      line-height: 95px;
+      font-size: 44px;
+      line-height: 60px;
 
-      margin-top: 11.7rem;
+      margin-top: 16.9rem;
     }
   `,
   Email: styled.span`
@@ -58,10 +58,10 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 600;
-      font-size: 50px;
-      line-height: 68px;
+      font-size: 44px;
+      line-height: 60px;
 
-      margin-top: 7.8rem;
+      margin-top: 5.7rem;
     }
   `,
 };
