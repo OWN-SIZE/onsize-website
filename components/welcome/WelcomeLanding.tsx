@@ -7,23 +7,24 @@ import SecondPart from './SecondPart';
 import ThirdPart from './ThirdPart';
 
 function WelcomeLanding() {
-  const [browserKind, setBrowserKind] = useState<string>('mobile');
+  const [browserKind, setBrowserKind] = useState('');
 
-  //   useEffect(() => {
-  //     const resizeListener = () => {
-  //       if (window.innerWidth <= 600 && window.innerWidth >= 375) setBrowserKind('mobile');
-  //       else if (window.innerWidth <= 1728 && window.innerWidth >= 1024) setBrowserKind('desktop');
-  //       else setBrowserKind('');
-  //     };
-  //     window.addEventListener('resize', resizeListener);
-  //   });
+  useEffect(() => {
+    const browserWidth = () => {
+      if (window.innerWidth <= 600 && window.innerWidth >= 375) return 'mobile';
+      else if (window.innerWidth <= 1728 && window.innerWidth >= 1024) return 'desktop';
+      else return '';
+    };
+
+    window.addEventListener('resize', () => setBrowserKind(browserWidth));
+  }, []);
 
   return (
     <Styled.Root>
-      <FirstPart browser={'mobile'} />
-      <SecondPart browser={'mobile'} />
-      <ThirdPart browser={'mobile'} />
-      <Footer browser={'mobile'} />
+      <FirstPart browser={browserKind} />
+      <SecondPart browser={browserKind} />
+      <ThirdPart browser={browserKind} />
+      <Footer browser={browserKind} />
     </Styled.Root>
   );
 }

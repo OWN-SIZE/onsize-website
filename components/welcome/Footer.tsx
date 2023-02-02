@@ -20,12 +20,17 @@ const Styled = {
   Root: styled.div`
     display: flex;
     flex-direction: column;
-
     align-items: center;
 
-    width: 100%;
-    height: 17rem;
     background-color: ${theme.colors.gray100};
+
+    width: 100%;
+    @media (min-width: 375px) and (max-width: 600px) {
+      height: 17rem;
+    }
+    @media (min-width: 1024px) and (max-width: 1728px) {
+      height: 53.1rem;
+    }
   `,
   Title: styled.h1`
     @media (min-width: 375px) and (max-width: 600px) {
@@ -33,15 +38,30 @@ const Styled = {
       margin-top: 4.8rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
+      font-family: 'Noto Sans';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 70px;
+      line-height: 95px;
+
+      margin-top: 11.7rem;
     }
   `,
   Email: styled.span`
+    color: ${theme.colors.gray400};
+
     @media (min-width: 375px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
-      color: ${theme.colors.gray400};
       margin-top: 2rem;
     }
     @media (min-width: 1024px) and (max-width: 1728px) {
+      font-family: 'Noto Sans';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 50px;
+      line-height: 68px;
+
+      margin-top: 7.8rem;
     }
   `,
 };

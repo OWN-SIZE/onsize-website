@@ -159,7 +159,7 @@ const Styled = {
 
       text-align: center;
 
-      font-family: 'Noto Sans';
+      font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
       font-size: 2rem;
@@ -169,7 +169,7 @@ const Styled = {
     @media (min-width: 1024px) and (max-width: 1728px) {
       top: 71rem;
 
-      font-family: 'Noto Sans';
+      font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 600;
       font-size: 5rem;
