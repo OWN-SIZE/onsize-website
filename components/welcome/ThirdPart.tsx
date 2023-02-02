@@ -1,25 +1,38 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-interface browserProps {
-  browser: string;
-}
+function ThirdPart() {
+  const [email, setEmail] = useState('');
+  const [isSubmitted, setIsSubmitted] = useState(false);
 
-function ThirdPart(props: browserProps) {
-  const [isActive, setIsActive] = useState(false);
-  const { browser } = props;
+  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
+    setEmail(e.currentTarget.value);
+  };
+
+  const handleOnClick = () => {
+    setIsSubmitted(true);
+  };
+
   return (
     <Styled.Root>
       <Styled.Container>
-        <Styled.Section>
+        <Styled.Section className={isSubmitted ? 'hidden' : 'show'}>
           <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
           <Styled.emailContainer>
             <Styled.emailLabel>Email</Styled.emailLabel>
-            <Styled.emailInput type="text" />
+            <Styled.emailInput type="text" value={email} onChange={handleOnChange} />
           </Styled.emailContainer>
-          <Styled.submitButton type={'submit'} value="신청하기" className={isActive ? 'active' : 'inactive'} />
+          <Styled.submitButton
+            type={'submit'}
+            value="신청하기"
+            className={email !== '' ? 'active' : 'inactive'}
+            onClick={handleOnClick}
+          />
         </Styled.Section>
+        <Styled.SubmitFinished className={isSubmitted ? 'show' : 'hidden'}>
+          사전신청이 완료됐어요!
+        </Styled.SubmitFinished>
       </Styled.Container>
     </Styled.Root>
   );
@@ -57,6 +70,9 @@ const Styled = {
     }
   `,
   Section: styled.div`
+    &.hidden {
+      display: none;
+    }
     display: flex;
     flex-direction: column;
 
@@ -162,6 +178,7 @@ const Styled = {
       color: ${theme.colors.black};
       background-color: ${theme.colors.yellow01};
       border: none;
+      cursor: pointer;
     }
     @media (min-width: 375px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
@@ -181,6 +198,27 @@ const Styled = {
       width: 23.9rem;
       height: 10.8rem;
       border-radius: 1rem;
+    }
+  `,
+  SubmitFinished: styled.div`
+    &.hidden {
+      display: none;
+    }
+    color: ${theme.colors.yellow01};
+    margin: auto 0;
+    @media (min-width: 375px) and (max-width: 600px) {
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 20px;
+      line-height: 38px;
+    }
+    @media (min-width: 1024px) and (max-width: 1728px) {
+      font-family: 'Arial';
+      font-style: normal;
+      font-weight: 700;
+      font-size: 40px;
+      line-height: 46px;
     }
   `,
 };

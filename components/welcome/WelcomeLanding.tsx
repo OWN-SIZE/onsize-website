@@ -23,7 +23,7 @@ function WelcomeLanding() {
     <Styled.Root>
       <FirstPart browser={browserKind} />
       <SecondPart browser={browserKind} />
-      <ThirdPart browser={browserKind} />
+      <ThirdPart />
       <Footer browser={browserKind} />
     </Styled.Root>
   );
