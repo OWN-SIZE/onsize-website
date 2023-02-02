@@ -12,11 +12,13 @@ function WelcomeLanding() {
   useEffect(() => {
     const browserWidth = () => {
       if (window.innerWidth <= 600 && window.innerWidth >= 375) return 'mobile';
-      else if (window.innerWidth <= 1728 && window.innerWidth >= 1024) return 'desktop';
+      else if (window.innerWidth <= 3000 && window.innerWidth >= 1024) return 'desktop';
       else return '';
     };
 
     window.addEventListener('resize', () => setBrowserKind(browserWidth));
+
+    console.log(browserKind);
   }, []);
 
   return (

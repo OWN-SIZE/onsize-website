@@ -51,7 +51,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       height: 38.8rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 89.7rem;
     }
   `,
@@ -65,7 +65,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       height: 37.6rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 87rem;
     }
   `,
@@ -83,7 +83,7 @@ const Styled = {
 
       margin-top: 4.3rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 100.4rem;
     }
   `,
@@ -98,7 +98,7 @@ const Styled = {
       font-size: 20px;
       line-height: 38px;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       margin-top: 14.5rem;
 
       font-family: 'Arial';
@@ -115,7 +115,7 @@ const Styled = {
 
       margin-top: 4.2rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       width: 93rem;
       height: 22rem;
 
@@ -127,7 +127,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
@@ -153,7 +153,7 @@ const Styled = {
       margin-top: 2rem;
       padding: 0 1.4rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 500;
@@ -188,7 +188,7 @@ const Styled = {
       height: 4.2rem;
       border-radius: 0.5rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 600;
@@ -214,7 +214,7 @@ const Styled = {
       font-size: 20px;
       line-height: 38px;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Arial';
       font-style: normal;
       font-weight: 700;

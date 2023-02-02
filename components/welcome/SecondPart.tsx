@@ -68,7 +68,7 @@ const Styled = {
       @media (min-width: 375px) and (max-width: 600px) {
         height: 32.9rem;
       }
-      @media (min-width: 1024px) and (max-width: 1728px) {
+      @media (min-width: 1024px) {
         height: 84rem;
       }
     }
@@ -83,7 +83,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       height: 36.8rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 104.8rem;
     }
   `,
@@ -121,7 +121,7 @@ const Styled = {
           text-align: center;
         }
       }
-      @media (min-width: 1024px) and (max-width: 1728px) {
+      @media (min-width: 1024px) {
         & > img {
           &.speechBubble {
             width: 57.2rem;
@@ -150,7 +150,7 @@ const Styled = {
           width: 28.3rem;
           margin-top: 4.2rem;
         }
-        @media (min-width: 1024px) and (max-width: 1728px) {
+        @media (min-width: 1024px) {
           width: 140.8rem;
           margin-top: 10rem;
         }
@@ -163,7 +163,7 @@ const Styled = {
       height: 17.6rem;
       margin-top: 4rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       width: 93rem;
       height: 53rem;
       margin-top: 14.4rem;
@@ -177,7 +177,7 @@ const Styled = {
         margin-top: 4rem;
       }
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       &.first {
         margin-top: 13rem;
         font-family: 'Noto Sans KR';
@@ -204,7 +204,7 @@ const Styled = {
       ${theme.fonts.body2_DSB};
       margin-top: 4.2rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;

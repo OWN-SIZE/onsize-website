@@ -28,7 +28,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       height: 17rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 53.1rem;
     }
   `,
@@ -37,7 +37,7 @@ const Styled = {
       ${theme.fonts.title3};
       margin-top: 4.8rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
@@ -54,7 +54,7 @@ const Styled = {
       ${theme.fonts.body2_DSB};
       margin-top: 2rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 600;

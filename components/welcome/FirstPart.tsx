@@ -42,7 +42,7 @@ const Styled = {
     @media (min-width: 375px) and (max-width: 600px) {
       height: 57rem;
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 111.7rem;
     }
   `,
@@ -79,15 +79,20 @@ const Styled = {
       }
     }
     /* 데스크탑 */
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       height: 111.7rem;
 
       & > img {
         position: absolute;
         &.backgroundImg {
-          width: 100%;
-          height: calc(100vw / 2.07);
-
+          @media (max-width: 1649px) {
+            width: 100%;
+            height: calc(100vw / 2.07);
+          }
+          @media (min-width: 1650px) {
+            width: 165rem;
+            height: 79.7rem;
+          }
           left: 0;
           margin-top: 24.1rem;
         }
@@ -122,7 +127,7 @@ const Styled = {
       border-radius: 5px;
       ${theme.fonts.card1};
     }
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       width: 45.3rem;
       height: 9.2rem;
       top: 79.2rem;
@@ -169,7 +174,7 @@ const Styled = {
       line-height: 3.2rem;
     }
 
-    @media (min-width: 1024px) and (max-width: 1728px) {
+    @media (min-width: 1024px) {
       top: 64.9rem;
 
       font-family: 'Noto Sans KR';
