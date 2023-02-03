@@ -3,24 +3,19 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { mobileFaceImg, speechBubbleImg } from '@/assets/img';
+import { FaceImg, speechBubbleImg } from '@/assets/img';
 
 import saveLottie from '../../assets/lottie/save.json';
 import sizeLottie from '../../assets/lottie/size.json';
 
-interface browserProps {
-  browser: string;
-}
-function SecondPart(props: browserProps) {
-  const { browser } = props;
-
+function SecondPart() {
   return (
     <Styled.Root>
       <Styled.Section className="first">
         <Styled.Container className="first">
           <Styled.Title className="first">온라인 쇼핑, 무엇이 제일 불편했나요?</Styled.Title>
           <Image src={speechBubbleImg} className="speechBubble" alt="말풍선" />
-          <Image src={mobileFaceImg} className="face" alt="고민하는 얼굴" />
+          <Image src={FaceImg} className="face" alt="고민하는 얼굴" />
           <span>
             반복되는 사이즈 실패,
             <br />
@@ -107,11 +102,13 @@ const Styled = {
             margin-top: 2.8rem;
           }
           &.face {
+            width: 9rem;
+            height: 9rem;
             margin-top: 1.2rem;
           }
         }
         & > span {
-          top: 11.25rem;
+          top: 11.3rem;
 
           font-family: 'Noto Sans KR';
           font-style: normal;
@@ -125,11 +122,13 @@ const Styled = {
         & > img {
           &.speechBubble {
             width: 57.2rem;
-            height: 20.4rem;
+            height: 20.3rem;
             margin-top: 7.5rem;
           }
           &.face {
-            margin-top: 1.3rem;
+            width: 22rem;
+            height: 22rem;
+            margin-top: 1.4rem;
           }
         }
         & > span {

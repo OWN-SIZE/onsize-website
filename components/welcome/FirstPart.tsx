@@ -63,9 +63,10 @@ const Styled = {
         position: absolute;
         &.backgroundImg {
           width: 100%;
-          height: calc(100vw / 1.6);
+          height: 100%;
+          top: 0;
           left: 0;
-          margin-top: 13.4rem; //수정 필요
+          object-fit: cover;
         }
         &.logo {
           z-index: 3;
@@ -85,16 +86,14 @@ const Styled = {
       & > img {
         position: absolute;
         &.backgroundImg {
-          @media (max-width: 1649px) {
+          @media (min-width: 1024px) {
             width: 100%;
-            height: calc(100vw / 2.07);
-          }
-          @media (min-width: 1650px) {
-            width: 165rem;
-            height: 79.7rem;
+            height: 100%;
+            top: 0;
+            left: 0;
+            object-fit: cover;
           }
           left: 0;
-          margin-top: 24.1rem;
         }
         &.logo {
           z-index: 3;
