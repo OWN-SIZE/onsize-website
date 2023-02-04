@@ -189,7 +189,7 @@ const Styled = {
       border-radius: 0.5rem;
     }
     @media (min-width: 1024px) {
-      font-family: 'Noto Sans';
+      font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 600;
       font-size: 38px;

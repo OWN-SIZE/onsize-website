@@ -86,14 +86,11 @@ const Styled = {
       & > img {
         position: absolute;
         &.backgroundImg {
-          @media (min-width: 1024px) {
-            width: 100%;
-            height: 100%;
-            top: 0;
-            left: 0;
-            object-fit: cover;
-          }
+          width: 100%;
+          height: 100%;
+          top: 0;
           left: 0;
+          object-fit: cover;
         }
         &.logo {
           z-index: 3;

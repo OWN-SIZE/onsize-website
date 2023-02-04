@@ -17,8 +17,6 @@ function WelcomeLanding() {
     };
 
     window.addEventListener('resize', () => setBrowserKind(browserWidth));
-
-    console.log(browserKind);
   }, []);
 
   return (
