@@ -39,7 +39,6 @@ export default function Mysize() {
     setIsAlertActive(true);
   };
   const onSuccessSubmit = () => {
-    console.log('저장 성공');
     showToast('저장되었습니다.');
   };
 
@@ -165,18 +164,18 @@ useEffect(() => {
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
       <Styled.SizeFormContainer>
-          <SizeForm
-            noHeader
-            formType={isTopClicked ? '상의' : '하의'}
-            isAlertActive={isAlertActive}
-            setIsAlertActive={setIsAlertActive}
-            setIsSubmitActive={setIsSubmitActive}
-            onSuccessSubmit={onSuccessSubmit}
-            onClickMeasure={onClickMeasure}
-            data={data}
-          >
-            <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
-          </SizeForm>
+        <SizeForm
+          noHeader
+          formType={isTopClicked ? '상의' : '하의'}
+          isAlertActive={isAlertActive}
+          setIsAlertActive={setIsAlertActive}
+          setIsSubmitActive={setIsSubmitActive}
+          onSuccessSubmit={onSuccessSubmit}
+          onClickMeasure={onClickMeasure}
+          data={data}
+        >
+          <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
+        </SizeForm>
       </Styled.SizeFormContainer>
       {inputRequest === '상의' ? (
         <Styled.TopRequestModalContainer>
@@ -195,7 +194,7 @@ useEffect(() => {
       ) : null}
       {isOpenToast && (
         <Styled.ToastContainer>
-          <Toast message={message} width='32.9' />
+          <Toast message={message} width="32.9" />
         </Styled.ToastContainer>
       )}
     </Styled.Root>
@@ -334,5 +333,7 @@ const Styled = {
     display: flex;
     align-items: center;
     margin-left: 22.4rem;
+    z-index: 15;
+
   `,
 };
