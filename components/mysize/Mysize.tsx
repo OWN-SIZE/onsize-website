@@ -117,7 +117,7 @@ export default function Mysize() {
       if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
         setEmptyClothesType('상의');
       }
-      
+
       if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
       } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
