@@ -41,11 +41,7 @@ function Login() {
       setPage((prev) => (prev === lottieMapper.length - 1 ? 0 : prev + 1));
     }
   };
-  const { isLoading, getLocalStorage } = useRedirect();
-
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  const { isLoading } = useRedirect();
 
   return (
     <Layout noHeader noMenuBar noFooter>

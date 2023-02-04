@@ -51,11 +51,7 @@ function Register() {
     }
   };
 
-  const { isLoading, getLocalStorage } = useRedirect();
-
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  const { isLoading } = useRedirect();
 
   return (
     <Layout noHeader noMenuBar noFooter>
