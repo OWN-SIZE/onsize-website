@@ -26,7 +26,7 @@ type DataType =
       허벅지: number;
       밑단: number;
     }
-  | object;
+  ;
 
 export default function Mysize() {
   const { allMysize } = useFetchMysize();
@@ -54,7 +54,7 @@ export default function Mysize() {
 
   let inputRequest = '없음';
 
-  const [data, setData] = useState<DataType>({});
+  const [data, setData] = useState<DataType>({총장: 0, '어깨 너비': 0, 가슴: 0});
 
   const changeBorderColor = (clicked: string) => {
     if (clicked === '상의') {
@@ -132,7 +132,6 @@ useEffect(() => {
 }
 }, [allMysize, isTopClicked])
  
-
 
 
   return (
