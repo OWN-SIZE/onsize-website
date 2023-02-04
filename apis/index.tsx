@@ -46,6 +46,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
 
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
+
           const result = confirm('로그인 후 이용해 주세요');
           result ? window.open('https://ownsize.me') : window.close();
         } else {
