@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -17,8 +17,7 @@ type DataType =
       허리: number;
       허벅지: number;
       밑단: number;
-    }
-  ;
+    };
 
 interface InputProps {
   inputKey: string;
@@ -35,6 +34,16 @@ function SizeInput(props: InputProps) {
 
   const [inputValue, setInputValue] = useState('');
 
+  useEffect(() => {
+    if (data) {
+      if (`${data[inputKey]}` === '0') {
+        setInputValue('');
+      } else {
+        setInputValue(`${data[inputKey]}`);
+      }
+    }
+  }, [data]);
+
   return (
     <Styled.InputContainer key={inputKey}>
       <label>{label}</label>
@@ -50,7 +59,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          defaultValue={data && `${data[inputKey]}` === '0' ? '' : data && `${data[inputKey]}`}
+          value={data && inputValue === '0' ? '' : inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
           }}
