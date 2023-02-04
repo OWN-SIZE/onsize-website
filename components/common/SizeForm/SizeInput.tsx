@@ -33,16 +33,21 @@ function SizeInput(props: InputProps) {
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
+  const [secondaryChange, setSecondaryChange] = useState(false);
 
   useEffect(() => {
     if (data) {
       if (`${data[inputKey]}` === '0') {
         setInputValue('');
-      } else {
+      } else if (!secondaryChange){
         setInputValue(`${data[inputKey]}`);
       }
+      else {
+        setInputValue(inputValue);
+      }
     }
-  }, [data]);
+  }, [data, inputKey]);
+
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -62,6 +67,7 @@ function SizeInput(props: InputProps) {
           value={data && inputValue === '0' ? '' : inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
+            setSecondaryChange(true);
           }}
         />
         cm
