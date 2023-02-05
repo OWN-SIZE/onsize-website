@@ -82,6 +82,7 @@ function CategoryDetailLanding() {
       {isEditModalOpen && (
         <ModifyCategoryModal
           onClickModifyCategoryModal={onClickModifyCategoryModal}
+          setCategoryName={setCategoryName}
           categoryId={categoryId}
           categoryName={typeof categoryName === 'string' ? categoryName : ''}
           showToast={showToast}
