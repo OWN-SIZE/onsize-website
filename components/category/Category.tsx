@@ -68,10 +68,7 @@ export default function Category(props: CategoryProps) {
             showToast={showToast}
           />
         </Styled.CategoryImage>
-        <Link
-          href={{ pathname: `/category/${categoryData.id}`, query: { categoryName: categoryData.categoryName } }}
-          as={`/category/${categoryData.id}`}
-        >
+        <Link href={{ pathname: `/category/${categoryData.id}` }} as={`/category/${categoryData.id}`}>
           <Styled.CategoryTitle
             onMouseEnter={handleOnMouseEnter}
             onMouseLeave={handleOnMouseLeave}

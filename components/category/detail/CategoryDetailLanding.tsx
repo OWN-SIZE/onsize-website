@@ -1,7 +1,8 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CategoryDeleteIcon, CategoryEditIcon } from 'assets/icon';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
+import { useRecoilState, useRecoilValue } from 'recoil';
+import { categoryIdState, categoryNameState } from 'states/categoryDetail';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
@@ -17,21 +18,12 @@ import useToast from 'components/common/Toast/useToast';
 import CategoryDetailFirst from './CategoryDetailFirst';
 
 function CategoryDetailLanding() {
-  const router = useRouter();
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [categoryName, setCategoryName] = useState(router.query.categoryName);
-
   const { isOpenToast, message, showToast } = useToast();
 
-  const [categoryId, setCategoryId] = useState('');
-  const {
-    query: { id },
-  } = useRouter();
-
-  useEffect(() => {
-    if (typeof id == 'string') setCategoryId(id);
-  }, [id]);
+  const categoryId = useRecoilValue(categoryIdState);
+  const [categoryName, setCategoryName] = useRecoilState(categoryNameState);
 
   const orderSort = (item: ClosetOutput[]) => {
     return item.sort((a, b) => {
@@ -40,7 +32,6 @@ function CategoryDetailLanding() {
   };
 
   const data = useFetchCategoryDetail(categoryId);
-  console.log(data);
   let orderedData: ClosetOutput[] = [];
 
   if (data) {
@@ -53,9 +44,7 @@ function CategoryDetailLanding() {
     const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
     orderedData = pinData.concat(noPinData);
   }
-  console.log(orderedData);
 
-  console;
   const onClickDeleteCategoryModal = () => {
     setIsDeleteModalOpen(!isDeleteModalOpen);
   };
@@ -93,7 +82,6 @@ function CategoryDetailLanding() {
       {isEditModalOpen && (
         <ModifyCategoryModal
           onClickModifyCategoryModal={onClickModifyCategoryModal}
-          setCategoryName={setCategoryName}
           categoryId={categoryId}
           categoryName={typeof categoryName === 'string' ? categoryName : ''}
           showToast={showToast}

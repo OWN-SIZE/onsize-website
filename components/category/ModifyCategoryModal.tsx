@@ -1,5 +1,6 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import { useUpdateCategory } from 'hooks/queries/category';
+import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -10,7 +11,7 @@ import ModalPortal from '../common/modal/ModalPortal';
 type ModifyCategoryModalProps = {
   onClickModifyCategoryModal: () => void;
   categoryId: string;
-  setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>>;
+  setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>> | SetterOrUpdater<string>;
   categoryName?: string;
   showToast: (message: string) => void;
 };
@@ -19,7 +20,7 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
   const { mutate } = useUpdateCategory();
   const [isButtonActivated, setIsButtonActivated] = useState(false);
 
-  const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName, showToast } = props;
+  const { onClickModifyCategoryModal, categoryId, setCategoryName, showToast } = props;
 
   const inputRef = useRef(null);
   const [changeInputValue, setChangeInputValue] = useState(props.categoryName);
