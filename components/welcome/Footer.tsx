@@ -41,8 +41,8 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
-      font-size: 44px;
-      line-height: 60px;
+      font-size: 4.4rem;
+      line-height: 6rem;
 
       margin-top: 16.9rem;
     }
@@ -58,8 +58,8 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 600;
-      font-size: 44px;
-      line-height: 60px;
+      font-size: 4.4rem;
+      line-height: 6rem;
 
       margin-top: 5.7rem;
     }

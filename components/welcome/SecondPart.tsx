@@ -137,8 +137,8 @@ const Styled = {
           font-family: 'Noto Sans KR';
           font-style: normal;
           font-weight: 500;
-          font-size: 28px;
-          line-height: 45px;
+          font-size: 2.8rem;
+          line-height: 4.5rem;
           text-align: center;
         }
       }
@@ -182,8 +182,8 @@ const Styled = {
         font-family: 'Noto Sans KR';
         font-style: normal;
         font-weight: 600;
-        font-size: 50px;
-        line-height: 68px;
+        font-size: 5rem;
+        line-height: 6.8rem;
       }
       &.second,
       &.third {
@@ -191,8 +191,8 @@ const Styled = {
         font-family: 'Noto Sans KR';
         font-style: normal;
         font-weight: 600;
-        font-size: 40px;
-        line-height: 54px;
+        font-size: 4rem;
+        line-height: 5.4rem;
       }
     }
   `,
@@ -207,8 +207,8 @@ const Styled = {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 30px;
-      line-height: 41px;
+      font-size: 3rem;
+      line-height: 4.1rem;
       margin-top: 10.2rem;
     }
   `,

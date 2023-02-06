@@ -120,7 +120,7 @@ const Styled = {
       height: 4.8rem;
       top: 44.6rem;
 
-      border-radius: 5px;
+      border-radius: 0.5rem;
       ${theme.fonts.card1};
     }
     @media (min-width: 1024px) {
@@ -128,7 +128,7 @@ const Styled = {
       height: 9.2rem;
       top: 79.2rem;
 
-      border-radius: 10px;
+      border-radius: 1rem;
       ${theme.fonts.title2};
     }
   `,
@@ -176,8 +176,8 @@ const Styled = {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 600;
-      font-size: 44px;
-      line-height: 60px;
+      font-size: 4.4rem;
+      line-height: 6rem;
     }
   `,
 };

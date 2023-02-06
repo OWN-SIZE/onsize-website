@@ -95,8 +95,8 @@ const Styled = {
       font-family: 'Arial';
       font-style: normal;
       font-weight: 700;
-      font-size: 20px;
-      line-height: 38px;
+      font-size: 2rem;
+      line-height: 3.8rem;
     }
     @media (min-width: 1024px) {
       margin-top: 14.5rem;
@@ -104,8 +104,8 @@ const Styled = {
       font-family: 'Arial';
       font-style: normal;
       font-weight: 700;
-      font-size: 40px;
-      line-height: 46px;
+      font-size: 4rem;
+      line-height: 4.6rem;
     }
   `,
   emailContainer: styled.div`
@@ -131,8 +131,8 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
-      font-size: 38px;
-      line-height: 52px;
+      font-size: 3.8rem;
+      line-height: 5.2rem;
     }
   `,
   emailInput: styled.input`
@@ -157,8 +157,8 @@ const Styled = {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 500;
-      font-size: 38px;
-      line-height: 52px;
+      font-size: 3.8rem;
+      line-height: 5.2rem;
 
       width: 100%;
       height: 10.8rem;
@@ -192,8 +192,8 @@ const Styled = {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 600;
-      font-size: 38px;
-      line-height: 52px;
+      font-size: 3.8rem;
+      line-height: 5.2rem;
 
       margin-top: 11.8rem;
       width: 23.9rem;
@@ -211,15 +211,15 @@ const Styled = {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 20px;
-      line-height: 38px;
+      font-size: 2rem;
+      line-height: 3.8rem;
     }
     @media (min-width: 1024px) {
       font-family: 'Arial';
       font-style: normal;
       font-weight: 700;
-      font-size: 40px;
-      line-height: 46px;
+      font-size: 4rem;
+      line-height: 4.6rem;
     }
   `,
 };
