@@ -9,10 +9,6 @@ export const fetchEmail = async () => {
   return data;
 };
 export const postEmail = async (emailData: EmailInput) => {
-  const { data } = await client.post(`/user`, emailData, {
-    headers: {
-      'content-type': 'application/json',
-    },
-  });
+  const { data } = await client.post<EmailResponse>(`/user`, emailData);
   return data;
 };
