@@ -134,7 +134,7 @@ const Styled = {
   ToastContainer: styled.div`
     position: fixed;
     bottom: 5.2rem;
-
+    z-index: 15;
     display: flex;
     align-items: center;
     margin-left: 50.4rem;

@@ -118,6 +118,7 @@ export default function SizeForm(props: FormProps) {
     resetField,
   } = useForm<FieldValues>({
     shouldFocusError: false,
+    defaultValues: data,
   });
 
   const { postMyTopSize } = usePostMyTopSize();
