@@ -35,23 +35,25 @@ function SizeInput(props: InputProps) {
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
-  const [secondaryChange, setSecondaryChange] = useState(false);
+  const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
 
   useEffect(() => {
-    if (data) {
-      if (`${data[inputKey]}` === '0') {
-        setInputValue('');
-      }
-      else if (!secondaryChange) {
-        setInputValue(`${data[inputKey]}`);
-      } else {
-        setInputValue(inputValue);
-      }
+    if (!data) return;
+
+    if (data[inputKey] === null || data[inputKey] === 0) {
+      //저장된 값이 없을 때
+      setInputValue('');
+    } else if (!hasInputValueChanged) {
+      //유저가 저장된 값을 변경한 적이 없을 때
+      setInputValue(`${data[inputKey]}`);
+    } else {
+      //유저가 저장된 값을 변경했을 때
+      setInputValue(inputValue);
     }
   }, [data, inputKey]);
 
   useEffect(() => {
-    setSecondaryChange(false);
+    setHasInputValueChanged(false);
   }, [isTopClicked, measure]);
 
   return (
@@ -69,10 +71,10 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          value={data && inputValue === '0' ? '' : inputValue}
+          value={data && inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
-            setSecondaryChange(true);
+            setHasInputValueChanged(true);
           }}
         />
         cm
