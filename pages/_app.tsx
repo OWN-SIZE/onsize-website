@@ -12,13 +12,14 @@ export default function App({ Component, pageProps }: AppProps) {
     defaultOptions: {
       queries: {
         retry: 0,
+        refetchOnWindowFocus: false,
       },
     },
   });
 
   return (
-    <QueryClientProvider client={queryClient}>
-      <RecoilRoot>
+    <RecoilRoot>
+      <QueryClientProvider client={queryClient}>
         <AxiosInterceptor>
           <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
             <Head>
@@ -28,7 +29,7 @@ export default function App({ Component, pageProps }: AppProps) {
             <Component {...pageProps} />
           </GoogleOAuthProvider>
         </AxiosInterceptor>
-      </RecoilRoot>
-    </QueryClientProvider>
+      </QueryClientProvider>
+    </RecoilRoot>
   );
 }
