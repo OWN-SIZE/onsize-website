@@ -29,6 +29,8 @@ interface FormProps {
   data?:
     | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
+  isTopClicked?: boolean;
+  hasToastOpened?: boolean;
 }
 
 // 상의 총장, 어깨너비
@@ -86,9 +88,9 @@ const mutateMapper = {
   },
   bottom: {
     총장: 'bottomLength',
-    밑위: 'waist',
-    허리: 'thigh',
-    허벅지: 'rise',
+    밑위: 'rise',
+    허리: 'waist',
+    허벅지: 'thigh',
     밑단: 'hem',
   },
 };
@@ -107,6 +109,8 @@ export default function SizeForm(props: FormProps) {
     setSkip,
     onClickMeasure,
     data,
+    isTopClicked,
+    hasToastOpened,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -194,7 +198,7 @@ export default function SizeForm(props: FormProps) {
     } else {
       setSkip && setSkip(false);
     }
-  }, [isOption]);
+  }, []);
 
   const sendMeasureValue = (measure: string) => {
     onClickMeasure && onClickMeasure(measure);
@@ -214,6 +218,8 @@ export default function SizeForm(props: FormProps) {
               setValue={setValue}
               valid={{ min, max }}
               data={data}
+              isTopClicked={isTopClicked}
+              hasToastOpened={hasToastOpened}
             />
           ))}
           <Styled.RadioContainer>
@@ -243,6 +249,8 @@ export default function SizeForm(props: FormProps) {
               measure={measure}
               valid={{ min: scope[measure].min, max: scope[measure].max }}
               data={data}
+              isTopClicked={isTopClicked}
+              hasToastOpened={hasToastOpened}
             />
           ))}
           {children}
@@ -258,6 +266,8 @@ export default function SizeForm(props: FormProps) {
               setValue={setValue}
               valid={{ min, max }}
               data={data}
+              isTopClicked={isTopClicked}
+              hasToastOpened={hasToastOpened}
             />
           ))}
           <Styled.RadioContainer>
@@ -285,6 +295,8 @@ export default function SizeForm(props: FormProps) {
             measure={measure}
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
             data={data}
+            isTopClicked={isTopClicked}
+            hasToastOpened={hasToastOpened}
           />
           {children}
         </Styled.Form>

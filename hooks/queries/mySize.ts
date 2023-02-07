@@ -10,9 +10,10 @@ const QUERY_KEY = {
 };
 
 export const useFetchMysize = () => {
-  const { data } = useQuery([QUERY_KEY.allMysize], fetchMysize);
+  const { data, refetch } = useQuery([QUERY_KEY.allMysize], fetchMysize);
   return {
     allMysize: data,
+    refetch
   };
 }
 

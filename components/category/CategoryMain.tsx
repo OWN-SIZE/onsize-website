@@ -46,6 +46,7 @@ export default function CategoryMain() {
 
   const product = category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
 
+  console.log(category);
   return (
     <Styled.Root>
       <Styled.CategoryContainer>

@@ -26,10 +26,12 @@ interface InputProps {
   setValue: UseFormSetValue<FieldValues>;
   valid: { min: number; max: number };
   data?: DataType;
+  isTopClicked?: boolean;
+  hasToastOpened?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, hasToastOpened } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
@@ -39,15 +41,18 @@ function SizeInput(props: InputProps) {
     if (data) {
       if (`${data[inputKey]}` === '0') {
         setInputValue('');
-      } else if (!secondaryChange){
-        setInputValue(`${data[inputKey]}`);
       }
-      else {
+      else if (!secondaryChange) {
+        setInputValue(`${data[inputKey]}`);
+      } else {
         setInputValue(inputValue);
       }
     }
   }, [data, inputKey]);
 
+  useEffect(() => {
+    setSecondaryChange(false);
+  }, [isTopClicked, measure]);
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -107,9 +112,6 @@ const Styled = {
     ${theme.fonts.body1};
     :focus {
       outline: none;
-    }
-    ::placeholder {
-      color: #000000;
     }
   `,
 };
