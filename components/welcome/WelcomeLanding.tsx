@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
+import { useFetchEmail } from '@/hooks/queries/welcome';
+
 import FirstPart from './FirstPart';
 import Footer from './Footer';
 import SecondPart from './SecondPart';
@@ -8,6 +10,8 @@ import ThirdPart from './ThirdPart';
 
 function WelcomeLanding() {
   const [browserKind, setBrowserKind] = useState('');
+  const data = useFetchEmail();
+  console.log(data);
 
   useEffect(() => {
     const browserWidth = () => {

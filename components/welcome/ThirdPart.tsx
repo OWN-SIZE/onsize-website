@@ -2,15 +2,19 @@ import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { usePostEmail } from '@/hooks/queries/welcome';
+
 function ThirdPart() {
-  const [email, setEmail] = useState('');
+  const [emailValue, setEmail] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
 
   const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
     setEmail(e.currentTarget.value);
   };
 
+  const { mutate: postEmail } = usePostEmail();
   const handleOnClick = () => {
+    postEmail({ email: emailValue });
     setIsSubmitted(true);
   };
 
@@ -21,12 +25,12 @@ function ThirdPart() {
           <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
           <Styled.emailContainer>
             <Styled.emailLabel>Email</Styled.emailLabel>
-            <Styled.emailInput type="text" value={email} onChange={handleOnChange} />
+            <Styled.emailInput type="text" value={emailValue} onChange={handleOnChange} />
           </Styled.emailContainer>
           <Styled.submitButton
-            type={'submit'}
+            type={'button'}
             value="신청하기"
-            className={email !== '' ? 'active' : 'inactive'}
+            className={emailValue !== '' ? 'active' : 'inactive'}
             onClick={handleOnClick}
           />
         </Styled.Section>
