@@ -1,11 +1,7 @@
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-interface browserProps {
-  browser: string;
-}
-function Footer(props: browserProps) {
-  const { browser } = props;
+function Footer() {
   return (
     <Styled.Root>
       <Styled.Title>Contact</Styled.Title>

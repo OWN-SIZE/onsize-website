@@ -11,14 +11,13 @@ import { AllCategory } from 'types/category/client';
 
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
+import { Toast } from 'components/common/Toast/Toast';
+import useToast from 'components/common/Toast/useToast';
 
 import Category from './Category';
-import useToast from 'components/common/Toast/useToast';
-import { Toast } from 'components/common/Toast/Toast';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
-  console.log(category);
 
   const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
   const [changeInputValue, setChangeInputValue] = useState('');
@@ -45,7 +44,8 @@ export default function CategoryMain() {
     category = pinData.concat(noPinData);
   }
 
-  const product = category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
+  const product =
+    category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
 
   return (
     <Styled.Root>
@@ -204,6 +204,7 @@ const Styled = {
     padding-top: 9.5rem;
     margin: 0 auto;
     text-align: center;
+    padding-bottom: 34.1rem;
     & > p {
       margin-top: 4rem;
     }
@@ -214,7 +215,7 @@ const Styled = {
   ToastContainer: styled.div`
     position: fixed;
     bottom: 5.2rem;
-
+    z-index: 15;
     display: flex;
     align-items: center;
     margin-left: 50.4rem;

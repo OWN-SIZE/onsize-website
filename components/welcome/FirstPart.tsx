@@ -1,20 +1,36 @@
+import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { ArrowImg, LandingPageImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
 
-interface browserProps {
-  browser: string;
-}
-function FirstPart(props: browserProps) {
-  const { browser } = props;
+function FirstPart() {
+  const [windowWidth, setWindowWidth] = useState(0);
+
+  const resizeWindow = () => {
+    setWindowWidth(window.innerWidth);
+  };
+
+  useEffect(() => {
+    setWindowWidth(window.innerWidth);
+    window.addEventListener('resize', resizeWindow);
+    return () => {
+      window.removeEventListener('resize', resizeWindow);
+    };
+  }, [windowWidth]);
+
+  const browserWidth = () => {
+    if (windowWidth <= 600 && windowWidth >= 375) return 'mobile';
+    else if (windowWidth <= 3000 && windowWidth >= 1024) return 'desktop';
+    else return '';
+  };
 
   return (
     <Styled.Root>
       <Styled.Section>
         <Image src={OwnSizeLogoImg} className="logo" width={94} height={94} alt="온사이즈 로고" />
-        {browser === 'mobile' ? (
+        {browserWidth() === 'mobile' ? (
           <Image src={mobileBackgroundImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
         ) : (
           <Image src={LandingPageImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
@@ -22,7 +38,7 @@ function FirstPart(props: browserProps) {
         <Styled.BackgroundBlur />
         <Styled.IntroText>나에게 맞는 의류 사이즈, OWNSIZE에서 클릭 한번으로</Styled.IntroText>
         <Styled.goToApply>사전신청 바로가기</Styled.goToApply>
-        {browser === 'mobile' ? (
+        {browserWidth() === 'mobile' ? (
           <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>
         ) : (
           <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" />
