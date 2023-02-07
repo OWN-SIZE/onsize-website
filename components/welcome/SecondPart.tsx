@@ -51,7 +51,15 @@ export default SecondPart;
 
 const Styled = {
   Root: styled.div`
-    width: 100%;
+    @media (min-width: 375px) and (max-width: 600px) {
+      width: 100%;
+    }
+    @media (min-width: 1024px) {
+      width: 100%;
+    }
+    @media (min-width: 1600px) {
+      width: 85%;
+    }
   `,
   Section: styled.div`
     display: flex;

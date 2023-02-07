@@ -49,14 +49,19 @@ const Styled = {
     display: flex;
     flex-direction: column;
     justify-content: flex-end;
-    width: 100%;
 
     background-color: ${theme.colors.lightGrey};
     @media (min-width: 375px) and (max-width: 600px) {
       height: 38.8rem;
+      width: 100%;
     }
     @media (min-width: 1024px) {
       height: 89.7rem;
+      width: 100%;
+    }
+    @media (min-width: 1600px) {
+      height: 89.7rem;
+      width: 85%;
     }
   `,
   Container: styled.div`

@@ -24,12 +24,17 @@ const Styled = {
 
     background-color: ${theme.colors.gray100};
 
-    width: 100%;
     @media (min-width: 375px) and (max-width: 600px) {
       height: 17rem;
+      width: 100%;
     }
     @media (min-width: 1024px) {
       height: 53.1rem;
+      width: 100%;
+    }
+    @media (min-width: 1600px) {
+      height: 53.1rem;
+      width: 85%;
     }
   `,
   Title: styled.h1`

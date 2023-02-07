@@ -36,14 +36,19 @@ export default FirstPart;
 
 const Styled = {
   Root: styled.div`
-    width: 100%;
     background-color: ${theme.colors.black};
 
     @media (min-width: 375px) and (max-width: 600px) {
       height: 57rem;
+      width: 100%;
     }
     @media (min-width: 1024px) {
       height: 111.7rem;
+      width: 100%;
+    }
+    @media (min-width: 1600px) {
+      height: 111.7rem;
+      width: 85%;
     }
   `,
 
@@ -94,8 +99,8 @@ const Styled = {
         }
         &.logo {
           z-index: 3;
-          top: 2.3rem;
-          left: 16rem;
+          top: 2.4rem;
+          left: 7rem;
         }
         &.arrow {
           z-index: 3;

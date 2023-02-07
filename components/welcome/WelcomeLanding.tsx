@@ -36,5 +36,9 @@ function WelcomeLanding() {
 export default WelcomeLanding;
 
 const Styled = {
-  Root: styled.div``,
+  Root: styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  `,
 };
