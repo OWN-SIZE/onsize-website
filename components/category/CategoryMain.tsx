@@ -11,10 +11,10 @@ import { AllCategory } from 'types/category/client';
 
 import CategoryCreateModal from 'components/common/modal/CategoryCreateModal';
 import ModalPortal from 'components/common/modal/ModalPortal';
+import { Toast } from 'components/common/Toast/Toast';
+import useToast from 'components/common/Toast/useToast';
 
 import Category from './Category';
-import useToast from 'components/common/Toast/useToast';
-import { Toast } from 'components/common/Toast/Toast';
 
 export default function CategoryMain() {
   let { category } = useFetchAllCategory();
@@ -44,7 +44,8 @@ export default function CategoryMain() {
     category = pinData.concat(noPinData);
   }
 
-  const product = category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
+  const product =
+    category && category.map((item) => <Category key={item.id} categoryData={item} showToast={showToast} />);
 
   return (
     <Styled.Root>

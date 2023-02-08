@@ -17,8 +17,7 @@ type DataType =
       허리: number;
       허벅지: number;
       밑단: number;
-    }
-  ;
+    };
 
 interface InputProps {
   inputKey: string;
