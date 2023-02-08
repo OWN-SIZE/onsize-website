@@ -15,7 +15,6 @@ import { fetchMyPageHistory, fetchUserInformation } from '../../apis/mypageHisto
 import { useFetchMyPageHistory, useFetchUserInformation } from '../../hooks/queries/mypageHistory';
 
 function MyPage() {
-  const { isLoading } = useRedirect();
   return (
     <Layout noMenuBar>
       <MyPageMain></MyPageMain>

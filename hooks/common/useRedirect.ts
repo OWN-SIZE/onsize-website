@@ -14,22 +14,27 @@ function useRedirect() {
   }, []);
 
   const onRedirect = () => {
-    if (isRegister) {
+    if (isRegister === true) {
       router.asPath === '/login' || router.asPath === '/register'
         ? router.push('/home').then(() => setIsLoading(false))
         : router.push(router.asPath).then(() => setIsLoading(false));
+      if (router.asPath === '/category') {
+        router.push('/category').then(() => setIsLoading(false));
+      }
     } else if (!userId) {
       router.push('/login').then(() => setIsLoading(false));
-    } else if (userId && !isRegister) {
+    } else if (userId && isRegister === null) {
       router.push('/register').then(() => setIsLoading(false));
     }
   };
 
   useEffect(() => {
+    console.log(userId);
     if (userId === -99) {
       router.push('/login').then(() => setIsLoading(false));
+    } else {
+      userId && onRedirect();
     }
-    isRegister !== null && userId && onRedirect();
   }, [userId, isRegister]);
 
   return { isLoading };
