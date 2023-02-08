@@ -6,6 +6,7 @@ import SizeForm from 'components/common/SizeForm/SizeForm';
 import Mysize from 'components/mysize/Mysize';
 
 export default function MySize() {
+  const { isLoading } = useRedirect();
   return (
     <Layout noMenuBar noFooter>
       <Mysize></Mysize>
