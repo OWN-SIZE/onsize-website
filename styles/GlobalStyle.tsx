@@ -16,18 +16,7 @@ const GlobalStyle = createGlobalStyle`
     }
 
     html {
-        @media (min-width: 1024px) {
-            font-size: 35%;
-        }
-        @media (min-width: 1280px) {
-            font-size: 45%;
-        }
-        @media (min-width: 1600px) {
-            font-size: 50%;
-        }
-        @media (min-width: 2000px) {
-            font-size: 62.5%;
-        }
+        font-size: 62.5%;
     }
     
 

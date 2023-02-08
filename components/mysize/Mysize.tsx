@@ -28,7 +28,6 @@ type DataType =
     };
 
 export default function Mysize() {
-  const { allMysize, refetch } = useFetchMysize();
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
   const handleClick = () => {
@@ -52,6 +51,9 @@ export default function Mysize() {
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
 
+  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
+
+
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
   };
@@ -67,11 +69,6 @@ export default function Mysize() {
       setIsTopClicked(false);
     }
   };
-
-  //데이터 저장 후 최신 상태로 리패칭
-  useEffect(() => {
-    refetch();
-  }, [isTopClicked, clickedMeasure]);
 
   //데이터 상태 관리
   const [data, setData] = useState<DataType>({ 총장: 0, '어깨 너비': 0, 가슴: 0 });
