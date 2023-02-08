@@ -26,8 +26,8 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
-  const token = Cookies.get('token');
   const router = useRouter();
+  const token = Cookies.get('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
@@ -46,7 +46,6 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     (config) => config,
     async (error) => {
       const config = error.config;
-
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           alert('로그인 후 이용해 주세요');
@@ -59,7 +58,6 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
           return client(config);
         }
       }
-
       return Promise.reject(error);
     }
   );

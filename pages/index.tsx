@@ -1,5 +1,11 @@
-function Home() {
-  return <div>Home</div>;
+import WelcomeLanding from '@/components/welcome/WelcomeLanding';
+
+function Welcome() {
+  return (
+    <>
+      <WelcomeLanding />
+    </>
+  );
 }
 
-export default Home;
+export default Welcome;
