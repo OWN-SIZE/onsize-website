@@ -21,22 +21,23 @@ function ThirdPart() {
   return (
     <Styled.Root>
       <Styled.Container>
-        <Styled.Section className={isSubmitted ? 'hidden' : 'show'}>
-          <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
-          <Styled.emailContainer>
-            <Styled.emailLabel>Email</Styled.emailLabel>
-            <Styled.emailInput type="text" value={emailValue} onChange={handleOnChange} />
-          </Styled.emailContainer>
-          <Styled.submitButton
-            type={'button'}
-            value="신청하기"
-            className={emailValue !== '' ? 'active' : 'inactive'}
-            onClick={handleOnClick}
-          />
-        </Styled.Section>
-        <Styled.SubmitFinished className={isSubmitted ? 'show' : 'hidden'}>
-          사전신청이 완료됐어요!
-        </Styled.SubmitFinished>
+        {!isSubmitted ? (
+          <Styled.Section>
+            <Styled.H1>OWNSIZE가 준비되면 가장 먼저 알려드릴게요</Styled.H1>
+            <Styled.EmailContainer>
+              <Styled.EmailLabel>Email</Styled.EmailLabel>
+              <Styled.EmailInput type="text" value={emailValue} onChange={handleOnChange} />
+            </Styled.EmailContainer>
+            <Styled.submitButton
+              type={'button'}
+              value="신청하기"
+              className={emailValue ? 'active' : 'inactive'}
+              onClick={handleOnClick}
+            />
+          </Styled.Section>
+        ) : (
+          <Styled.SubmitFinished>사전신청이 완료됐어요!</Styled.SubmitFinished>
+        )}
       </Styled.Container>
     </Styled.Root>
   );
@@ -79,9 +80,6 @@ const Styled = {
     }
   `,
   Section: styled.div`
-    &.hidden {
-      display: none;
-    }
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -117,7 +115,7 @@ const Styled = {
       line-height: 4.6rem;
     }
   `,
-  emailContainer: styled.div`
+  EmailContainer: styled.div`
     @media (min-width: 375px) and (max-width: 600px) {
       width: 33.5rem;
       height: 8.5rem;
@@ -131,7 +129,7 @@ const Styled = {
       margin-top: 11rem;
     }
   `,
-  emailLabel: styled.label`
+  EmailLabel: styled.label`
     color: ${theme.colors.yellow01};
     @media (min-width: 375px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
@@ -144,7 +142,7 @@ const Styled = {
       line-height: 5.2rem;
     }
   `,
-  emailInput: styled.input`
+  EmailInput: styled.input`
     display: flex;
     align-items: center;
 
@@ -211,9 +209,6 @@ const Styled = {
     }
   `,
   SubmitFinished: styled.div`
-    &.hidden {
-      display: none;
-    }
     color: ${theme.colors.yellow01};
     margin: auto 0;
     @media (min-width: 375px) and (max-width: 600px) {

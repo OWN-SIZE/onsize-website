@@ -1,47 +1,49 @@
 import { useEffect, useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { ArrowImg, LandingPageImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
+import { ArrowImg, desktopBackgroundImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
 
 function FirstPart() {
-  const [windowWidth, setWindowWidth] = useState(0);
-
-  const resizeWindow = () => {
-    setWindowWidth(window.innerWidth);
-  };
+  const [isMobile, setIsMobile] = useState(false);
+  const mobile = useMediaQuery({
+    query: '(min-width : 375px) and (max-width:600px)',
+  });
 
   useEffect(() => {
-    setWindowWidth(window.innerWidth);
-    window.addEventListener('resize', resizeWindow);
-    return () => {
-      window.removeEventListener('resize', resizeWindow);
-    };
-  }, [windowWidth]);
-
-  const browserWidth = () => {
-    if (windowWidth <= 600 && windowWidth >= 375) return 'mobile';
-    else if (windowWidth <= 3000 && windowWidth >= 1024) return 'desktop';
-    else return '';
-  };
+    setIsMobile(mobile);
+  }, [mobile]);
 
   return (
     <Styled.Root>
       <Styled.Section>
-        <Image src={OwnSizeLogoImg} className="logo" width={94} height={94} alt="온사이즈 로고" />
-        {browserWidth() === 'mobile' ? (
-          <Image src={mobileBackgroundImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
+        <Image src={OwnSizeLogoImg} className="logo" alt="온사이즈 로고" placeholder="blur" priority />
+        {isMobile ? (
+          <Image
+            src={mobileBackgroundImg}
+            className="backgroundImg"
+            alt="랜딩 페이지 배경화면"
+            placeholder="blur"
+            priority
+          />
         ) : (
-          <Image src={LandingPageImg} className="backgroundImg" alt="랜딩 페이지 배경화면" />
+          <Image
+            src={desktopBackgroundImg}
+            className="backgroundImg"
+            alt="랜딩 페이지 배경화면"
+            placeholder="blur"
+            priority
+          />
         )}
         <Styled.BackgroundBlur />
         <Styled.IntroText>나에게 맞는 의류 사이즈, OWNSIZE에서 클릭 한번으로</Styled.IntroText>
         <Styled.goToApply>사전신청 바로가기</Styled.goToApply>
-        {browserWidth() === 'mobile' ? (
+        {isMobile ? (
           <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>
         ) : (
-          <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" />
+          <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" placeholder="blur" priority />
         )}
       </Styled.Section>
     </Styled.Root>
@@ -117,6 +119,9 @@ const Styled = {
           z-index: 3;
           top: 2.4rem;
           left: 7rem;
+
+          width: 9.4rem;
+          height: 9.4rem;
         }
         &.arrow {
           z-index: 3;

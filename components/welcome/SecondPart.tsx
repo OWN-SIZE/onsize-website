@@ -14,8 +14,8 @@ function SecondPart() {
       <Styled.Section className="first">
         <Styled.Container className="first">
           <Styled.Title className="first">온라인 쇼핑, 무엇이 제일 불편했나요?</Styled.Title>
-          <Image src={speechBubbleImg} className="speechBubble" alt="말풍선" />
-          <Image src={FaceImg} className="face" alt="고민하는 얼굴" />
+          <Image src={speechBubbleImg} className="speechBubble" alt="말풍선" placeholder="blur" priority />
+          <Image src={FaceImg} className="face" alt="고민하는 얼굴" placeholder="blur" priority />
           <span>
             반복되는 사이즈 실패,
             <br />
@@ -26,7 +26,7 @@ function SecondPart() {
 
       <Styled.Section className="second">
         <Styled.Container className="second">
-          <Styled.coreFunction>사이즈 추천</Styled.coreFunction>
+          <Styled.CoreFunction>사이즈 추천</Styled.CoreFunction>
           <Styled.Title className="second">쉽게 추천받는 나의 사이즈</Styled.Title>
           <Styled.LottieContainer>
             <Lottie animationData={sizeLottie} className="lottie" />
@@ -36,7 +36,7 @@ function SecondPart() {
 
       <Styled.Section className="third">
         <Styled.Container className="third">
-          <Styled.coreFunction>나의 옷장</Styled.coreFunction>
+          <Styled.CoreFunction>나의 옷장</Styled.CoreFunction>
           <Styled.Title className="third">클릭 한번으로 저장하는 관심 의류</Styled.Title>
           <Styled.LottieContainer>
             <Lottie animationData={saveLottie} className="lottie" />
@@ -204,7 +204,7 @@ const Styled = {
       }
     }
   `,
-  coreFunction: styled.header`
+  CoreFunction: styled.header`
     color: ${theme.colors.gray400};
 
     @media (min-width: 375px) and (max-width: 600px) {
