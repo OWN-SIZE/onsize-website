@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-empty-function */
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
+import { useRouter } from 'next/router';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_END ?? '';
 
@@ -24,6 +26,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 }
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
+  const router = useRouter();
   const token = Cookies.get('token') || '';
 
   const requestIntercept = client.interceptors.request.use(
@@ -43,18 +46,19 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
     (config) => config,
     async (error) => {
       const config = error.config;
-
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
-
-          const result = confirm('로그인 후 이용해 주세요');
-          result ? window.open('https://ownsize.me') : window.close();
+          alert('로그인 후 이용해 주세요');
+          router.push('/login').then(() => {
+            localStorage.removeItem('isRegister');
+            localStorage.removeItem('userId');
+          });
+          return new Promise(() => {});
         } else {
           /** TODO : refresh token */
           return client(config);
         }
       }
-
       return Promise.reject(error);
     }
   );

@@ -17,7 +17,6 @@ function MyPageMain() {
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [isButtonActivated, setIsButtonActivated] = useState(true);
 
-
   const onClickHistoryModal = () => {
     setIsHistoryModalOpen(!isHistoryModalOpen);
   };

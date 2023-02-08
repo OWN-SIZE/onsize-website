@@ -71,7 +71,7 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          value={data && inputValue}
+          value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
             setHasInputValueChanged(true);
