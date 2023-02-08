@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
+import { Link } from 'react-scroll';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -38,8 +39,14 @@ function FirstPart() {
           />
         )}
         <Styled.BackgroundBlur />
-        <Styled.IntroText>나에게 맞는 의류 사이즈, OWNSIZE에서 클릭 한번으로</Styled.IntroText>
-        <Styled.goToApply>사전신청 바로가기</Styled.goToApply>
+        <Styled.IntroText>
+          나에게 맞는 의류 사이즈, <span className="ownsizeText">OWNSIZE</span>에서 클릭 한번으로
+        </Styled.IntroText>
+
+        <Link className="scrollButton" to="scrollToInput" smooth={true}>
+          사전신청 바로가기
+        </Link>
+
         {isMobile ? (
           <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>
         ) : (
@@ -56,17 +63,13 @@ const Styled = {
   Root: styled.div`
     background-color: ${theme.colors.black};
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       height: 57rem;
       width: 100%;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       height: 111.7rem;
       width: 100%;
-    }
-    @media (min-width: 1600px) {
-      height: 111.7rem;
-      width: 85%;
     }
   `,
 
@@ -78,8 +81,39 @@ const Styled = {
     position: relative;
     margin: 0 auto;
 
+    & > a {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      position: absolute;
+      z-index: 3;
+
+      background: ${theme.colors.yellow01};
+      box-shadow: 0 0 1rem rgba(251, 242, 108, 0.5);
+
+      @media (min-width: 350px) and (max-width: 600px) {
+        width: 23.4rem;
+        height: 4.8rem;
+        top: 44.6rem;
+
+        border-radius: 0.5rem;
+        ${theme.fonts.card1};
+      }
+      @media (min-width: 601px) {
+        width: 45.3rem;
+        height: 9.2rem;
+        top: 79.2rem;
+
+        border-radius: 1rem;
+        ${theme.fonts.title2};
+      }
+
+      cursor: pointer;
+    }
+
     /* 모바일 */
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       height: 57rem;
 
       & > img {
@@ -103,7 +137,7 @@ const Styled = {
       }
     }
     /* 데스크탑 */
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       height: 111.7rem;
 
       & > img {
@@ -130,34 +164,6 @@ const Styled = {
       }
     }
   `,
-  goToApply: styled.div`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    position: absolute;
-    z-index: 3;
-
-    background: ${theme.colors.yellow01};
-    box-shadow: 0 0 1rem rgba(251, 242, 108, 0.5);
-
-    @media (min-width: 375px) and (max-width: 600px) {
-      width: 23.4rem;
-      height: 4.8rem;
-      top: 44.6rem;
-
-      border-radius: 0.5rem;
-      ${theme.fonts.card1};
-    }
-    @media (min-width: 1024px) {
-      width: 45.3rem;
-      height: 9.2rem;
-      top: 79.2rem;
-
-      border-radius: 1rem;
-      ${theme.fonts.title2};
-    }
-  `,
   guideToDesktop: styled.div`
     position: absolute;
     z-index: 3;
@@ -181,7 +187,7 @@ const Styled = {
     z-index: 3;
     color: ${theme.colors.yellow};
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       width: 28rem;
       top: 34rem;
 
@@ -194,9 +200,37 @@ const Styled = {
       font-weight: 700;
       font-size: 2rem;
       line-height: 3.2rem;
+
+      & > .ownsizeText {
+        font-family: 'Arial';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 2rem;
+        line-height: 3.2rem;
+      }
     }
 
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) and (max-width: 1040px) {
+      width: 60rem;
+      top: 64.9rem;
+
+      text-align: center;
+
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      font-weight: 600;
+      font-size: 4.4rem;
+      line-height: 6rem;
+
+      & > .ownsizeText {
+        font-family: 'Arial';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 4.4rem;
+        line-height: 5.1rem;
+      }
+    }
+    @media (min-width: 1041px) {
       top: 64.9rem;
 
       font-family: 'Noto Sans KR';
@@ -204,6 +238,14 @@ const Styled = {
       font-weight: 600;
       font-size: 4.4rem;
       line-height: 6rem;
+
+      & > .ownsizeText {
+        font-family: 'Arial';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 4.4rem;
+        line-height: 5.1rem;
+      }
     }
   `,
 };
