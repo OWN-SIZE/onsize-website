@@ -10,19 +10,23 @@ function useRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    setUserId(localStorage.getItem('userId'));
-    setIsRegister(localStorage.getItem('isRegister'));
-  }, [router]);
+    setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
+    setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'false'));
+  }, []);
 
-  useEffect(() => {
-    if (isRegister === 'true') {
-      router.push('/home');
+  const onRedirect = () => {
+    if (isRegister) {
+      router.asPath === '/login' || router.asPath === '/register' ? router.push('/home') : router.push(router.asPath);
     } else if (!userId) {
       router.push('/login');
     } else {
       router.push('/register');
     }
     setIsLoading(false);
+  };
+
+  useEffect(() => {
+    isRegister && userId && onRedirect();
   }, [userId, isRegister]);
 
   return { isLoading };

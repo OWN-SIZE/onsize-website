@@ -9,6 +9,7 @@ export const useAuth = () => {
   const authLogin = (body: AuthInput, onSuccessLogin: () => void) => {
     authMutate.mutate(body, {
       onSuccess({ userId, token }) {
+        localStorage.setItem('isRegister', 'false');
         localStorage.setItem('userId', `${userId}`);
         Cookies.set('token', token);
 
