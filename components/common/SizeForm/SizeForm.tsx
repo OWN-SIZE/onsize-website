@@ -176,11 +176,15 @@ export default function SizeForm(props: FormProps) {
     watch((formObject) => {
       if (!Object.values(formObject).includes('')) {
         // input이 다 채워졌으면 다음 버튼 활성화
+        setSkip && setSkip(false);
         setIsSubmitActive && setIsSubmitActive(true);
       } else if (Object.values(formObject).filter((value) => value !== undefined && value !== '').length) {
         // 하나라도 입력했다면 스킵 못함
         setSkip && setSkip(false);
         setIsSubmitActive && setIsSubmitActive(false);
+      } else {
+        setSkip && setSkip(false);
+        setIsSubmitActive && setIsSubmitActive(true);
       }
     });
   }, [watch]);
@@ -192,7 +196,7 @@ export default function SizeForm(props: FormProps) {
     } else {
       setSkip && setSkip(false);
     }
-  }, []);
+  }, [isOption]);
 
   const sendMeasureValue = (measure: string) => {
     onClickMeasure && onClickMeasure(measure);

@@ -34,8 +34,8 @@ function Register() {
 
   const onClickNextButton = () => {
     if (skip) {
-      router.push('/home');
       localStorage.setItem('isRegister', 'true');
+      router.push('/home');
     } else {
       setIsAlertActive(true);
     }
@@ -46,8 +46,8 @@ function Register() {
       setProgress(progress + 1);
       setIsNextActive(false);
     } else {
-      router.push('/home');
       localStorage.setItem('isRegister', 'true');
+      router.push('/home');
     }
   };
 
