@@ -15,7 +15,6 @@ interface HomeMainProps {
   page: string;
   categoryId?: string;
   showToastDetail?: (message: string) => void;
-
 }
 
 function HomeMain(props: HomeMainProps) {
