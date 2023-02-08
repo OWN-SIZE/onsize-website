@@ -1,30 +1,35 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
 type LocalStorageType = string | null;
 
-interface RedirectProps {
-  onRedirect: () => void;
-}
-
-function useRedirect(props: RedirectProps) {
-  const { onRedirect } = props;
+function useRedirect() {
   const [userId, setUserId] = useState<LocalStorageType>();
-  const [token, setToken] = useState<LocalStorageType>();
   const [isRegister, setIsRegister] = useState<LocalStorageType>();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
 
-  const getLocalStorage = () => {
-    setIsLoading(true);
-    setUserId(localStorage.getItem('userId'));
-    setToken(localStorage.getItem('token'));
-    setIsRegister(localStorage.getItem('isRegister'));
+  useEffect(() => {
+    setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
+    setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'false'));
+  }, []);
+
+  const onRedirect = () => {
+    if (isRegister) {
+      router.asPath === '/login' || router.asPath === '/register' ? router.push('/home') : router.push(router.asPath);
+    } else if (!userId) {
+      router.push('/login');
+    } else {
+      router.push('/register');
+    }
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    onRedirect();
-  }, [userId, token, isRegister]);
+    isRegister && userId && onRedirect();
+  }, [userId, isRegister]);
 
-  return { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage };
+  return { isLoading };
 }
 
 export default useRedirect;

@@ -6,6 +6,7 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import useRedirect from '@/hooks/common/useRedirect';
 import Layout from 'components/common/Layout';
 import Modal from 'components/common/Modal';
 import MyPageMain from 'components/mypage/MypageMain';
@@ -14,6 +15,7 @@ import { fetchMyPageHistory, fetchUserInformation } from '../../apis/mypageHisto
 import { useFetchMyPageHistory, useFetchUserInformation } from '../../hooks/queries/mypageHistory';
 
 function MyPage() {
+  const { isLoading } = useRedirect();
   return (
     <Layout noMenuBar>
       <MyPageMain></MyPageMain>
