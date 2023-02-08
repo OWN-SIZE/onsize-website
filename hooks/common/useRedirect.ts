@@ -28,8 +28,9 @@ function useRedirect() {
   useEffect(() => {
     if (userId === -99) {
       router.push('/login').then(() => setIsLoading(false));
+    } else {
+      onRedirect();
     }
-    isRegister !== null && userId && onRedirect();
   }, [userId, isRegister]);
 
   return { isLoading };
