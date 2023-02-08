@@ -20,7 +20,7 @@ function useRedirect() {
         : router.push(router.asPath).then(() => setIsLoading(false));
     } else if (!userId) {
       router.push('/login').then(() => setIsLoading(false));
-    } else {
+    } else if (userId && !isRegister) {
       router.push('/register').then(() => setIsLoading(false));
     }
   };
