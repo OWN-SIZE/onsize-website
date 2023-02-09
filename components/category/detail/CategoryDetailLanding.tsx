@@ -1,8 +1,7 @@
 import { useState } from 'react';
 import { CategoryDeleteIcon, CategoryEditIcon } from 'assets/icon';
 import Image from 'next/image';
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { categoryIdState, categoryNameState } from 'states/categoryDetail';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
@@ -22,8 +21,10 @@ function CategoryDetailLanding() {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { isOpenToast, message, showToast } = useToast();
 
-  const categoryId = useRecoilValue(categoryIdState);
-  const [categoryName, setCategoryName] = useRecoilState(categoryNameState);
+  const {
+    query: { id },
+  } = useRouter();
+  const categoryId: string = id as string;
 
   const orderSort = (item: ClosetOutput[]) => {
     return item.sort((a, b) => {
@@ -32,9 +33,12 @@ function CategoryDetailLanding() {
   };
 
   const data = useFetchCategoryDetail(categoryId);
+
   let orderedData: ClosetOutput[] = [];
+  let categoryName = '';
 
   if (data) {
+    categoryName = data[2].categoryName;
     const newArray: ClosetOutput[] = [];
     for (let index = 0; index < data[0].length; index++) {
       const isInPinObject = data[1].find((item) => item.productId === data[0][index].id);
@@ -82,7 +86,6 @@ function CategoryDetailLanding() {
       {isEditModalOpen && (
         <ModifyCategoryModal
           onClickModifyCategoryModal={onClickModifyCategoryModal}
-          setCategoryName={setCategoryName}
           categoryId={categoryId}
           categoryName={typeof categoryName === 'string' ? categoryName : ''}
           showToast={showToast}

@@ -7,6 +7,7 @@ import {
   postIncludeCategory,
   updateAllClosetProduct,
 } from '@/apis/allCloset';
+import { updateCategory } from '@/apis/category';
 import { deleteCategoryClosetProduct, fetchCategoryDetail, updateIsInPin } from '@/apis/categoryDetail';
 const QUERY_KEY = {
   allCloset: 'allCloset',
@@ -76,6 +77,15 @@ export const useUpdateIsInPinMutation = (categoryId: string) => {
 export const useDeleteCategoryClosetProductMutation = (categoryId: string) => {
   const queryClient = useQueryClient();
   return useMutation(deleteCategoryClosetProduct, {
+    onSuccess() {
+      queryClient.invalidateQueries([QUERY_KEY.categoryDetail(categoryId)]);
+    },
+  });
+};
+
+export const useUpdateCategoryInDetail = (categoryId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation(updateCategory, {
     onSuccess() {
       queryClient.invalidateQueries([QUERY_KEY.categoryDetail(categoryId)]);
     },
