@@ -2,7 +2,11 @@ import CategoryDetailLanding from '@/components/category/detail/CategoryDetailLa
 import Layout from 'components/common/Layout';
 
 function Detail() {
-  return <Layout noMenuBar>{<CategoryDetailLanding /> ? <CategoryDetailLanding /> : null}</Layout>;
+  return (
+    <Layout noMenuBar>
+      <CategoryDetailLanding />
+    </Layout>
+  );
 }
 
 export default Detail;

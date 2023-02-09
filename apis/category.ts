@@ -5,7 +5,6 @@ import {
   CreateCategoryResponse,
   DeleteCategoryResponse,
   OneCategoryResponse,
-  UpdateCategoryBodyResponse,
   UpdateCategoryResponse,
 } from 'types/category/remote';
 

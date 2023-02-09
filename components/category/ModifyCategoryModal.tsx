@@ -1,8 +1,11 @@
 import React, { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
-import { useUpdateCategory } from 'hooks/queries/category';
+import { useRouter } from 'next/router';
+import { SetterOrUpdater } from 'recoil';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { useUpdateCategoryInDetail } from '@/hooks/queries/allCloset';
+import { useUpdateCategory } from '@/hooks/queries/category';
 import Modal from 'components/common/Modal';
 
 import ModalPortal from '../common/modal/ModalPortal';
@@ -10,16 +13,18 @@ import ModalPortal from '../common/modal/ModalPortal';
 type ModifyCategoryModalProps = {
   onClickModifyCategoryModal: () => void;
   categoryId: string;
-  setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>>;
+  setCategoryName?: Dispatch<SetStateAction<string | string[] | undefined>> | SetterOrUpdater<string>;
   categoryName?: string;
   showToast: (message: string) => void;
 };
 
 export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
-  const { mutate } = useUpdateCategory();
-  const [isButtonActivated, setIsButtonActivated] = useState(false);
+  const { onClickModifyCategoryModal, categoryId, setCategoryName, showToast } = props;
 
-  const { onClickModifyCategoryModal, categoryId, setCategoryName, categoryName, showToast } = props;
+  const router = useRouter();
+  const { mutate: updateInCategory } = useUpdateCategory();
+  const { mutate: updateInCategoryDetail } = useUpdateCategoryInDetail(categoryId);
+  const [isButtonActivated, setIsButtonActivated] = useState(false);
 
   const inputRef = useRef(null);
   const [changeInputValue, setChangeInputValue] = useState(props.categoryName);
@@ -31,7 +36,9 @@ export default function ModifyCategoryModal(props: ModifyCategoryModalProps) {
 
   const onClickModify = () => {
     if (defaultValue && defaultValue.length > 0 && defaultValue !== props.categoryName) {
-      mutate({ targetId: categoryId, editBody: { categoryName: defaultValue } });
+      if (router.asPath === '/category')
+        updateInCategory({ targetId: categoryId, editBody: { categoryName: defaultValue } });
+      else updateInCategoryDetail({ targetId: categoryId, editBody: { categoryName: defaultValue } });
       onClickModifyCategoryModal();
       setCategoryName && setCategoryName(defaultValue);
       showToast('수정되었습니다.');

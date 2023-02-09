@@ -18,9 +18,11 @@ function HomeLanding() {
     const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin));
     const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isPin));
     data = pinData.concat(noPinData);
+  } else {
+    data = [];
   }
 
-  return <Styled.Root>{data ? <HomeMain data={data} page="closet" /> : <HomeFirst />}</Styled.Root>;
+  return <Styled.Root>{data.length !== 0 ? <HomeMain data={data} page="closet" /> : <HomeFirst />}</Styled.Root>;
 }
 
 export default HomeLanding;

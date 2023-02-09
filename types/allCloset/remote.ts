@@ -4,7 +4,7 @@ export interface MyClosetResponse {
   data: ClosetOutput[];
 }
 export interface ClosetResponse {
-  data: [ClosetOutput[], isInPin[]];
+  data: [ClosetOutput[], isInPin[], { categoryName: string }];
 }
 
 export interface IncludeCategoryResponse {
