@@ -50,8 +50,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
         if (!config.headers['Authorization']) {
           alert('로그인 후 이용해 주세요');
           router.push('/login').then(() => {
-            localStorage.removeItem('isRegister');
-            localStorage.removeItem('userId');
+            localStorage.setItem('isRegister', 'false');
           });
           return new Promise(() => {});
         } else {

@@ -1,30 +1,43 @@
 import React, { useEffect, useState } from 'react';
+import { useRouter } from 'next/router';
 
-type LocalStorageType = string | null;
-
-interface RedirectProps {
-  onRedirect: () => void;
-}
-
-function useRedirect(props: RedirectProps) {
-  const { onRedirect } = props;
-  const [userId, setUserId] = useState<LocalStorageType>();
-  const [token, setToken] = useState<LocalStorageType>();
-  const [isRegister, setIsRegister] = useState<LocalStorageType>();
+function useRedirect() {
+  const [userId, setUserId] = useState();
+  const [isRegister, setIsRegister] = useState();
   const [isLoading, setIsLoading] = useState<boolean>(true);
+  const router = useRouter();
 
-  const getLocalStorage = () => {
+  useEffect(() => {
     setIsLoading(true);
-    setUserId(localStorage.getItem('userId'));
-    setToken(localStorage.getItem('token'));
-    setIsRegister(localStorage.getItem('isRegister'));
+    setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
+    setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'null'));
+  }, []);
+
+  const onRedirect = () => {
+    if (isRegister === true) {
+      router.asPath === '/login' || router.asPath === '/register'
+        ? router.push('/home').then(() => setIsLoading(false))
+        : router.push(router.asPath).then(() => setIsLoading(false));
+      if (router.asPath === '/category') {
+        router.push('/category').then(() => setIsLoading(false));
+      }
+    } else if (!userId) {
+      router.push('/login').then(() => setIsLoading(false));
+    } else if (userId && isRegister === null) {
+      router.push('/register').then(() => setIsLoading(false));
+    }
   };
 
   useEffect(() => {
-    onRedirect();
-  }, [userId, token, isRegister]);
+    console.log(userId);
+    if (userId === -99) {
+      router.push('/login').then(() => setIsLoading(false));
+    } else {
+      userId && onRedirect();
+    }
+  }, [userId, isRegister]);
 
-  return { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage };
+  return { isLoading };
 }
 
 export default useRedirect;

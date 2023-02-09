@@ -51,14 +51,11 @@ export default SecondPart;
 
 const Styled = {
   Root: styled.div`
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       width: 100%;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       width: 100%;
-    }
-    @media (min-width: 1600px) {
-      width: 85%;
     }
   `,
   Section: styled.div`
@@ -68,10 +65,10 @@ const Styled = {
     &.first {
       background-color: ${theme.colors.lightGrey};
 
-      @media (min-width: 375px) and (max-width: 600px) {
+      @media (min-width: 350px) and (max-width: 600px) {
         height: 32.9rem;
       }
-      @media (min-width: 1024px) {
+      @media (min-width: 601px) {
         height: 84rem;
       }
     }
@@ -83,10 +80,10 @@ const Styled = {
       background-color: ${theme.colors.gray000};
     }
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       height: 36.8rem;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       height: 104.8rem;
     }
   `,
@@ -104,7 +101,7 @@ const Styled = {
       align-items: center;
       background-color: ${theme.colors.lightGrey};
 
-      @media (min-width: 375px) and (max-width: 600px) {
+      @media (min-width: 350px) and (max-width: 600px) {
         & > img {
           &.speechBubble {
             margin-top: 2.8rem;
@@ -126,7 +123,7 @@ const Styled = {
           text-align: center;
         }
       }
-      @media (min-width: 1024px) {
+      @media (min-width: 601px) {
         & > img {
           &.speechBubble {
             width: 57.2rem;
@@ -153,11 +150,11 @@ const Styled = {
 
       &.second,
       &.third {
-        @media (min-width: 375px) and (max-width: 600px) {
+        @media (min-width: 350px) and (max-width: 600px) {
           width: 28.3rem;
           margin-top: 4.2rem;
         }
-        @media (min-width: 1024px) {
+        @media (min-width: 601px) {
           width: 140.8rem;
           margin-top: 10rem;
         }
@@ -165,27 +162,30 @@ const Styled = {
     }
   `,
   LottieContainer: styled.div`
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       width: 28.3rem;
       height: 17.6rem;
       margin-top: 4rem;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       width: 93rem;
       height: 53rem;
       margin-top: 14.4rem;
     }
   `,
   Title: styled.h1`
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       ${theme.fonts.caption1};
       margin-top: 2rem;
       &.first {
         margin-top: 4rem;
       }
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       &.first {
+        @media (max-width: 830px) {
+          font-size: 3.7rem;
+        }
         margin-top: 13rem;
         font-family: 'Noto Sans KR';
         font-style: normal;
@@ -195,6 +195,9 @@ const Styled = {
       }
       &.second,
       &.third {
+        @media (max-width: 830px) {
+          font-size: 3.7rem;
+        }
         margin-top: 2.7rem;
         font-family: 'Noto Sans KR';
         font-style: normal;
@@ -207,11 +210,11 @@ const Styled = {
   CoreFunction: styled.header`
     color: ${theme.colors.gray400};
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
       margin-top: 4.2rem;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
