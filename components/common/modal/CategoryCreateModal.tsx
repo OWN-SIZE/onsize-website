@@ -21,7 +21,7 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   const { changeInputValue, updateInputValue, inputRef, onClickCategoryCreateModal, showToast } = props;
   const { mutate } = usePostCategory(); // hook 은 늘 상위에 두자..! 안 그러면 more rendered 에러 남.
   const [isButtonActivated, setIsButtonActivated] = useState(false);
-
+  const [isCategoryMade, setIsCategoryMade] = useState(false);
   const onClickCancel = () => {
     onClickCategoryCreateModal();
   };
@@ -32,6 +32,7 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
       setIsButtonActivated(false);
       updateInputValue('');
       showToast('카테고리가 생성되었습니다.');
+      setIsCategoryMade(true);
     }
   };
 
@@ -48,7 +49,6 @@ export default function CategoryCreateModal(props: CategoryCreateModalProps) {
   useEffect(() => {
     if (changeInputValue.length > 0) {
       setIsButtonActivated(true);
-      console.log(changeInputValue);
     } else {
       setIsButtonActivated(false);
     }
