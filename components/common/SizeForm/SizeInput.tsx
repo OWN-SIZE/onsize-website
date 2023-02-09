@@ -46,6 +46,7 @@ function SizeInput(props: InputProps) {
     } else if (!hasInputValueChanged) {
       //유저가 저장된 값을 변경한 적이 없을 때
       setInputValue(`${data[inputKey]}`);
+      setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
     } else {
       //유저가 저장된 값을 변경했을 때
       setInputValue(inputValue);
@@ -63,6 +64,7 @@ function SizeInput(props: InputProps) {
         <Styled.Input
           type="number"
           step="0.1"
+          value={data && inputValue}
           {...register(inputKey, {
             required: true,
             validate: (value) =>
@@ -71,7 +73,6 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          value={inputValue}
           onChange={(e) => {
             setInputValue(e.target.value);
             setHasInputValueChanged(true);

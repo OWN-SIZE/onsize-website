@@ -42,7 +42,7 @@ export const useDeleteCategory = (showToast: (message: string) => void) => {
   const queryClient = useQueryClient();
   const router = useRouter();
   return useMutation(deleteCategory, {
-    onSuccess() {
+    onSuccess: () => {
       queryClient.invalidateQueries([QUERY_KEY.category]);
       if (router.asPath.startsWith('/category/')) {
         router.push('/category');

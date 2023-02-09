@@ -244,7 +244,6 @@ function ThumbNail(props: ThumbNailProps) {
           <Link
             href={{
               pathname: `/category/${data.id}`,
-              query: { categoryName: categoryData[categoryIndex].categoryName },
             }}
             as={`/category/${data.id}`}
           >

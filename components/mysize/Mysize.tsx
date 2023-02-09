@@ -28,6 +28,7 @@ type DataType =
     };
 
 export default function Mysize() {
+  //경고창 및 저장 이벤트
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
   const handleClick = () => {
@@ -51,6 +52,7 @@ export default function Mysize() {
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
 
+  //데이터 패칭
   const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
 
 
