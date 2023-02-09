@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useContext } from 'react';
 import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
@@ -28,31 +28,37 @@ type DataType =
     };
 
 export default function Mysize() {
-  const { allMysize } = useFetchMysize();
+  //경고창 및 저장 이벤트
   const [isAlertActive, setIsAlertActive] = useState(false);
   const [isSubmitActive, setIsSubmitActive] = useState(false);
-
-  //토스트
-  const { isOpenToast, message, showToast } = useToast();
   const handleClick = () => {
     setIsAlertActive(true);
   };
+
+
+  //토스트
+  const { isOpenToast, message, showToast } = useToast();
+  const [hasToastOpened, setHasToastOpened] = useState(false);
   const onSuccessSubmit = () => {
     showToast('저장되었습니다.');
+    setHasToastOpened(true);
   };
 
+
+  //클릭 상태 관리
   const [topColor, setTopColor] = useState(`${theme.colors.black}`);
   const [bottomColor, setBottomColor] = useState(`${theme.colors.gray200}`);
   const [isTopClicked, setIsTopClicked] = useState(true);
   const [clickedMeasure, setClickedMeasure] = useState('단면');
+  const [emptyClothesType, setEmptyClothesType] = useState('없음');
+
+  //데이터 패칭
+  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
+
 
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
   };
-
-  let inputRequest = '없음';
-
-  const [data, setData] = useState<DataType>({ 총장: 0, '어깨 너비': 0, 가슴: 0 });
 
   const changeBorderColor = (clicked: string) => {
     if (clicked === '상의') {
@@ -66,21 +72,44 @@ export default function Mysize() {
     }
   };
 
+  //데이터 상태 관리
+  const [data, setData] = useState<DataType>({ 총장: 0, '어깨 너비': 0, 가슴: 0 });
+
+  //데이터 초기
+  useEffect(() => {
+    if (allMysize) {
+      const { bottom } = allMysize;
+      const { top } = allMysize;
+      if (emptyClothesType === '하의') {
+        setData({ 총장: top.topLength, '어깨 너비': top.shoulder, 가슴: top.chest });
+      } else if (emptyClothesType === '상의') {
+        setData({
+          총장: bottom.bottomLength,
+          밑위: bottom.rise,
+          허리: bottom.waist,
+          허벅지: bottom.thigh,
+          밑단: bottom.hem,
+        });
+      }
+    }
+  }, [allMysize, emptyClothesType]);
+
   useEffect(() => {
     if (allMysize) {
       const { bottom } = allMysize;
       const { top } = allMysize;
 
-      const topLength = top?.topLength;
-      const shoulder = top?.shoulder;
-      const chest = top?.chest;
-      const isWidthOfTop = top?.isWidthOfTop;
-      const bottomLength = bottom?.bottomLength;
-      const rise = bottom?.rise;
-      const waist = bottom?.waist;
-      const thigh = bottom?.thigh;
-      const hem = bottom?.hem;
-      const isWidthOfBottom = bottom?.isWidthOfBottom;
+      const topLength = top.topLength;
+      const shoulder = top.shoulder;
+      const chest = top.chest;
+      const isWidthOfTop = top.isWidthOfTop;
+
+      const bottomLength = bottom.bottomLength;
+      const rise = bottom.rise;
+      const waist = bottom.waist;
+      const thigh = bottom.thigh;
+      const hem = bottom.hem;
+      const isWidthOfBottom = bottom.isWidthOfBottom;
 
       if (
         bottomLength === null &&
@@ -90,52 +119,51 @@ export default function Mysize() {
         thigh === null &&
         waist === null
       ) {
-        inputRequest = '하의';
+        setEmptyClothesType('하의');
       }
       if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
-        inputRequest = '상의';
+        setEmptyClothesType('상의');
       }
 
       if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
-        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest * 2 });
       } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
-        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: 0 });
-      } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+      } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest / 2 });
       } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
-        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: 0 });
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
         setData({
           총장: bottomLength,
           밑위: rise,
-          허리: waist,
-          허벅지: thigh,
-          밑단: hem,
+          허리: waist * 2,
+          허벅지: thigh * 2,
+          밑단: hem * 2,
         });
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
-        setData({ 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 });
-      } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '단면') {
+        setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+      } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '단면') {
         setData({
           총장: bottomLength,
           밑위: rise,
-          허리: waist,
-          허벅지: thigh,
-          밑단: hem,
+          허리: waist / 2,
+          허벅지: thigh / 2,
+          밑단: hem / 2,
         });
-      } else if (isTopClicked === false && isWidthOfBottom === null && clickedMeasure === '둘레') {
-        setData({ 총장: bottomLength, 밑위: rise, 허리: 0, 허벅지: 0, 밑단: 0 });
+      } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
+        setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       }
-
-      console.log(data);
     }
-  }, [allMysize, isTopClicked]);
+  }, [allMysize, isTopClicked, clickedMeasure]);
+
 
   return (
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
           <p>상의</p>
-          {inputRequest === '상의' ? null : (
+          {emptyClothesType === '상의' ? null : (
             <Image
               src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
               alt="상의가 클릭되었음을 나타내는 이미지"
@@ -147,7 +175,7 @@ export default function Mysize() {
         <Styled.Blank></Styled.Blank>
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
           <p>하의</p>
-          {inputRequest === '하의' ? (
+          {emptyClothesType === '하의' ? (
             <Styled.CheckBlank></Styled.CheckBlank>
           ) : (
             <Image
@@ -170,18 +198,22 @@ export default function Mysize() {
           onSuccessSubmit={onSuccessSubmit}
           onClickMeasure={onClickMeasure}
           data={data}
+          isTopClicked={isTopClicked}
+          hasToastOpened={hasToastOpened}
         >
-          <Styled.SaveButton onClick={handleClick}>저장</Styled.SaveButton>
+          <Styled.SaveButton onClick={handleClick} type="submit">
+            저장
+          </Styled.SaveButton>
         </SizeForm>
       </Styled.SizeFormContainer>
-      {inputRequest === '상의' ? (
+      {emptyClothesType === '상의' ? (
         <Styled.TopRequestModalContainer>
           <Styled.TopRequestModal>
             상의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
           </Styled.TopRequestModal>
           <Styled.TopModalTriangle />
         </Styled.TopRequestModalContainer>
-      ) : inputRequest === '하의' ? (
+      ) : emptyClothesType === '하의' ? (
         <Styled.BottomRequestModalContainer>
           <Styled.BottomModalTriangle />
           <Styled.BottomRequestModal>

@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -26,13 +26,36 @@ interface InputProps {
   setValue: UseFormSetValue<FieldValues>;
   valid: { min: number; max: number };
   data?: DataType;
+  isTopClicked?: boolean;
+  hasToastOpened?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, hasToastOpened } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
+  const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
+
+  useEffect(() => {
+    if (!data) return;
+
+    if (data[inputKey] === null || data[inputKey] === 0) {
+      //저장된 값이 없을 때
+      setInputValue('');
+    } else if (!hasInputValueChanged) {
+      //유저가 저장된 값을 변경한 적이 없을 때
+      setInputValue(`${data[inputKey]}`);
+      setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
+    } else {
+      //유저가 저장된 값을 변경했을 때
+      setInputValue(inputValue);
+    }
+  }, [data, inputKey]);
+
+  useEffect(() => {
+    setHasInputValueChanged(false);
+  }, [isTopClicked, measure]);
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -41,6 +64,7 @@ function SizeInput(props: InputProps) {
         <Styled.Input
           type="number"
           step="0.1"
+          value={data && inputValue}
           {...register(inputKey, {
             required: true,
             validate: (value) =>
@@ -49,9 +73,9 @@ function SizeInput(props: InputProps) {
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}
-          defaultValue={data && `${data[inputKey]}` === '0' ? '' : data && `${data[inputKey]}`}
           onChange={(e) => {
             setInputValue(e.target.value);
+            setHasInputValueChanged(true);
           }}
         />
         cm
@@ -91,9 +115,6 @@ const Styled = {
     ${theme.fonts.body1};
     :focus {
       outline: none;
-    }
-    ::placeholder {
-      color: #000000;
     }
   `,
 };
