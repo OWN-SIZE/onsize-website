@@ -20,25 +20,21 @@ const Styled = {
 
     background-color: ${theme.colors.gray100};
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       height: 17rem;
       width: 100%;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       height: 53.1rem;
       width: 100%;
     }
-    @media (min-width: 1600px) {
-      height: 53.1rem;
-      width: 85%;
-    }
   `,
   Title: styled.h1`
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       ${theme.fonts.title3};
       margin-top: 4.8rem;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 700;
@@ -51,11 +47,11 @@ const Styled = {
   Email: styled.span`
     color: ${theme.colors.gray400};
 
-    @media (min-width: 375px) and (max-width: 600px) {
+    @media (min-width: 350px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};
       margin-top: 2rem;
     }
-    @media (min-width: 1024px) {
+    @media (min-width: 601px) {
       font-family: 'Noto Sans';
       font-style: normal;
       font-weight: 600;

@@ -34,8 +34,8 @@ function Register() {
 
   const onClickNextButton = () => {
     if (skip) {
-      router.push('/home');
       localStorage.setItem('isRegister', 'true');
+      router.push('/home');
     } else {
       setIsAlertActive(true);
     }
@@ -46,27 +46,12 @@ function Register() {
       setProgress(progress + 1);
       setIsNextActive(false);
     } else {
-      router.push('/home');
       localStorage.setItem('isRegister', 'true');
+      router.push('/home');
     }
   };
 
-  const { userId, token, isRegister, isLoading, setIsLoading, getLocalStorage } = useRedirect({
-    onRedirect: () => {
-      if (isRegister === 'true') {
-        router.push('/home');
-      } else if (userId && token) {
-        router.push('/register');
-        setIsLoading(false);
-      } else {
-        router.push('/login');
-      }
-    },
-  });
-
-  useEffect(() => {
-    getLocalStorage();
-  }, []);
+  const { isLoading } = useRedirect();
 
   return (
     <Layout noHeader noMenuBar noFooter>
