@@ -8,20 +8,25 @@ import theme from 'styles/theme';
 import { ArrowImg, desktopBackgroundImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
 
 function FirstPart() {
-  const [isMobile, setIsMobile] = useState(false);
+  const [browserKind, setBrowserKind] = useState('');
   const mobile = useMediaQuery({
     query: '(min-width : 375px) and (max-width:600px)',
   });
+  const desktop = useMediaQuery({
+    query: '(min-width : 601px)',
+  });
 
   useEffect(() => {
-    setIsMobile(mobile);
-  }, [mobile]);
+    if (mobile) setBrowserKind('mobile');
+    else if (desktop) setBrowserKind('desktop');
+    else setBrowserKind('');
+  }, [mobile, desktop]);
 
   return (
     <Styled.Root>
       <Styled.Section>
         <Image src={OwnSizeLogoImg} className="logo" alt="온사이즈 로고" placeholder="blur" priority />
-        {isMobile ? (
+        {browserKind === 'mobile' ? (
           <Image
             src={mobileBackgroundImg}
             className="backgroundImg"
@@ -47,9 +52,8 @@ function FirstPart() {
           사전신청 바로가기
         </Link>
 
-        {isMobile ? (
-          <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>
-        ) : (
+        {browserKind === 'mobile' && <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>}
+        {browserKind === 'desktop' && (
           <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" placeholder="blur" priority />
         )}
       </Styled.Section>

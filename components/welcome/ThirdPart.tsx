@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
