@@ -22,7 +22,7 @@ export const usePostCategory = () => {
   const queryClient = useQueryClient();
 
   return useMutation(postCategory, {
-    onSuccess: () => {
+    onSuccess() {
       queryClient.invalidateQueries([QUERY_KEY.category]);
     },
   });
@@ -30,9 +30,8 @@ export const usePostCategory = () => {
 
 export const useUpdateCategory = () => {
   const queryClient = useQueryClient();
-
   return useMutation(updateCategory, {
-    onSuccess: () => {
+    onSuccess() {
       queryClient.invalidateQueries([QUERY_KEY.category]);
     },
   });
