@@ -55,7 +55,7 @@ function ThirdPart() {
             </Styled.submitButton>
           </Styled.Section>
         ) : (
-          <Styled.SubmitFinished>사전신청이 완료됐어요!</Styled.SubmitFinished>
+          <Styled.SubmitFinished>사전 신청이 완료됐어요!</Styled.SubmitFinished>
         )}
       </Styled.Container>
     </Styled.Root>
