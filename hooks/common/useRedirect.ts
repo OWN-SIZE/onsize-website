@@ -4,11 +4,11 @@ import { useRouter } from 'next/router';
 function useRedirect() {
   const [userId, setUserId] = useState();
   const [isRegister, setIsRegister] = useState();
-  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
-    setIsLoading(true);
+    // setIsLoading(true);
     setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
     setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'null'));
   }, []);
