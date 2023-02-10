@@ -2,39 +2,38 @@ import React, { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 
 function useRedirect() {
-  const [userId, setUserId] = useState();
-  const [isRegister, setIsRegister] = useState();
+  const [userId, setUserId] = useState<string>();
+  const [isRegister, setIsRegister] = useState<string>();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const router = useRouter();
 
   useEffect(() => {
     // setIsLoading(true);
-    setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
-    setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'null'));
+    // setUserId(JSON.parse(localStorage.getItem('userId') ?? '-99'));
+    // setIsRegister(JSON.parse(localStorage.getItem('isRegister') ?? 'null'));
+    setUserId(localStorage.getItem('userId') ?? '-99');
+    setIsRegister(localStorage.getItem('isRegister') ?? 'null');
   }, []);
 
   const onRedirect = () => {
-    if (isRegister === true) {
+    console.log(isRegister);
+    if (isRegister === 'true') {
       router.asPath === '/login' || router.asPath === '/register'
-        ? router.push('/home').then(() => setIsLoading(false))
-        : router.push(router.asPath).then(() => setIsLoading(false));
-      if (router.asPath === '/category') {
-        router.push('/category').then(() => setIsLoading(false));
-      }
+        ? router.replace('/home').then(() => setIsLoading(false))
+        : router.replace(router.asPath).then(() => setIsLoading(false));
     } else if (!userId) {
-      router.push('/login').then(() => setIsLoading(false));
+      router.replace('/login').then(() => setIsLoading(false));
     } else if (userId && isRegister === null) {
-      router.push('/register').then(() => setIsLoading(false));
+      router.replace('/register').then(() => setIsLoading(false));
     }
   };
 
   useEffect(() => {
-    console.log(userId);
-    if (userId === -99) {
-      router.push('/login').then(() => setIsLoading(false));
-    } else {
-      userId && onRedirect();
-    }
+    // if (userId === ' -99') {
+    //   router.replace('/login').then(() => setIsLoading(false));
+    // } else {
+    //   userId && onRedirect();
+    // }
   }, [userId, isRegister]);
 
   return { isLoading };
