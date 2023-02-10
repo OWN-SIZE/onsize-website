@@ -53,12 +53,12 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       const config = error.config;
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
-          alert('로그인 후 이용해 주세요');
           router.replace('/login').then(() => {
             localStorage.setItem('userId', '');
             localStorage.setItem('token', '');
+            alert('로그인 후 이용해 주세요');
           });
-          return new Promise(() => {});
+          return Promise.reject(error);
         } else {
           const token = await refresh();
           if (token) {
@@ -66,6 +66,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
 
             return client(config);
           }
+          return;
         }
       }
       return Promise.reject(error);
@@ -77,7 +78,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       client.interceptors.request.eject(requestIntercept);
       client.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  }, [requestIntercept, responseIntercept]);
 
   return <>{children}</>;
 }
