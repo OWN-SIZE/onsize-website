@@ -45,14 +45,14 @@ function FirstPart() {
         )}
         <Styled.BackgroundBlur />
         <Styled.IntroText>
-          나에게 맞는 의류 사이즈, <span className="ownsizeText">OWNSIZE</span>에서 클릭 한번으로
+          나에게 맞는 의류 사이즈, <span className="ownsizeText">OWNSIZE</span>에서 클릭 한 번으로
         </Styled.IntroText>
 
         <Link className="scrollButton" to="scrollToInput" smooth={true}>
-          사전신청 바로가기
+          사전 신청 바로가기
         </Link>
 
-        {browserKind === 'mobile' && <Styled.guideToDesktop>온사이즈는 PC에서 이용해주세요</Styled.guideToDesktop>}
+        {browserKind === 'mobile' && <Styled.guideToDesktop>온사이즈는 PC에서 이용해 주세요</Styled.guideToDesktop>}
         {browserKind === 'desktop' && (
           <Image src={ArrowImg} className="arrow" alt="회색 화살표 이미지" placeholder="blur" priority />
         )}
@@ -214,7 +214,7 @@ const Styled = {
       }
     }
 
-    @media (min-width: 601px) and (max-width: 1040px) {
+    @media (min-width: 601px) and (max-width: 1054px) {
       width: 60rem;
       top: 64.9rem;
 
@@ -234,7 +234,7 @@ const Styled = {
         line-height: 5.1rem;
       }
     }
-    @media (min-width: 1041px) {
+    @media (min-width: 1055px) {
       top: 64.9rem;
 
       font-family: 'Noto Sans KR';
