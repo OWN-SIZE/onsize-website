@@ -48,6 +48,7 @@
     "prettier": "^2.8.1",
     "react-error-boundary": "^3.1.4",
     "react-query": "^3.39.2",
+    "recoil-persist": "^4.2.0",
     "styled-components": "^5.3.6"
   },
   "lint-staged": {
