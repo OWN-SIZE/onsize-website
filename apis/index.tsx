@@ -53,12 +53,11 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       const config = error.config;
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
-          router.replace('/login').then(() => {
-            localStorage.setItem('userId', '');
-            localStorage.setItem('token', '');
-            alert('로그인 후 이용해 주세요');
-          });
-          return Promise.reject(error);
+          alert('로그인 후 이용해 주세요');
+          localStorage.setItem('userId', '');
+          localStorage.setItem('token', '');
+          router.replace('/login');
+          return;
         } else {
           const token = await refresh();
           if (token) {

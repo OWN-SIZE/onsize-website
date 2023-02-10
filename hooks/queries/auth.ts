@@ -23,13 +23,11 @@ export const useRefresh = (token: RefreshInput) => {
         switch (error.response?.status) {
           case 400:
           case 401: {
+            alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
             localStorage.setItem('userId', '');
             localStorage.setItem('token', '');
             resetToken();
-
-            router.replace('/login').then(() => {
-              alert('세션이 만료되었습니다. 다시 로그인 해주세요.');
-            });
+            router.replace('/login');
             return;
           }
           default:
