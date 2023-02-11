@@ -29,7 +29,8 @@ export const useAuth = () => {
     setToken('');
     setUserId('');
     router.replace('/login');
-    console.log(userId, token);
+    localStorage.setItem('userId', '');
+    localStorage.setItem('token', '');
   };
 
   return { authLogin, authLogout };
