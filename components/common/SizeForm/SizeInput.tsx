@@ -39,7 +39,6 @@ function SizeInput(props: InputProps) {
 
   useEffect(() => {
     if (!data) return;
-
     if (data[inputKey] === null || data[inputKey] === 0) {
       //저장된 값이 없을 때
       setInputValue('');
