@@ -8,3 +8,15 @@ export const tokenState = atom({
   default: '',
   effects_UNSTABLE: [persistAtom],
 });
+
+export const userIdState = atom({
+  key: 'userId',
+  default: '',
+  effects_UNSTABLE: [persistAtom],
+});
+
+export const isRegisterState = atom({
+  key: 'isRegister',
+  default: null,
+  effects_UNSTABLE: [persistAtom],
+});
