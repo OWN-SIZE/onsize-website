@@ -7,8 +7,8 @@ import { useAuthMutation } from '../queries/user';
 
 export const useAuth = () => {
   const authMutate = useAuthMutation();
-  const [token, setToken] = useRecoilState(tokenState);
-  const [userId, setUserId] = useRecoilState(userIdState);
+  const [, setToken] = useRecoilState(tokenState);
+  const [, setUserId] = useRecoilState(userIdState);
   const router = useRouter();
 
   const authLogin = (body: AuthInput, onSuccessLogin: () => void) => {
