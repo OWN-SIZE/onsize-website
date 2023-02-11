@@ -1,4 +1,4 @@
-import { PropsWithChildren, ReactNode, Suspense } from 'react';
+import { PropsWithChildren, ReactNode, Suspense, useState } from 'react';
 import { ErrorBoundary } from 'react-error-boundary';
 import { QueryErrorResetBoundary } from 'react-query';
 
@@ -14,6 +14,25 @@ const isExpectedError = (res: unknown): res is Error => {
     return false;
   }
   return true;
+};
+
+export const useErrorBubbling = () => {
+  const [isError, setIsError] = useState<Error | string | null>(null);
+
+  if (isError !== null) {
+    throw isError;
+  }
+
+  return {
+    reportError: (error: unknown) => {
+      try {
+        isExpectedError(error) ? setIsError(error) : setIsError(JSON.stringify(error));
+      } catch (error) {
+        setIsError(String(error));
+      }
+    },
+    isError,
+  };
 };
 
 export function AsyncBoundary({ children, loadingFallback }: PropsWithChildren<AsyncBoundaryProps>) {

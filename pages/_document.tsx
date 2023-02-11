@@ -1,6 +1,8 @@
 import { useRef } from 'react';
 import { Head, Html, Main, NextScript } from 'next/document';
 
+import * as gtm from '../lib/gtm';
+
 export default function Document() {
   return (
     <Html lang="ko">
@@ -20,6 +22,14 @@ export default function Document() {
         <meta name="description" content="Own Size" />
       </Head>
       <body>
+        <noscript>
+          <iframe
+            src={`https://www.googletagmanager.com/ns.html?id=${gtm.GTM_ID}`}
+            height="0"
+            width="0"
+            style={{ display: 'none', visibility: 'hidden' }}
+          />
+        </noscript>
         <div id="modal-root"></div>
         <Main />
         <NextScript />

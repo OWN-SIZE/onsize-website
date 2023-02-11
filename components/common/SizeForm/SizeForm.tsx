@@ -27,7 +27,7 @@ interface FormProps {
   setSkip?: (prev: boolean) => void;
   onClickMeasure?: (measure: string) => void;
   data?:
-    | { 총장: number; '어깨 너비': number; 가슴: number; }
+    | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
   isTopClicked?: boolean;
   hasToastOpened?: boolean;
@@ -201,7 +201,7 @@ export default function SizeForm(props: FormProps) {
     } else {
       setSkip && setSkip(false);
     }
-  }, []);
+  }, [isOption]);
 
   const sendMeasureValue = (measure: string) => {
     onClickMeasure && onClickMeasure(measure);

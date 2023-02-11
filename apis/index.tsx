@@ -3,6 +3,10 @@ import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
+import { useRecoilValue } from 'recoil';
+import { tokenState } from 'states/user';
+
+import { useRefresh } from '@/hooks/queries/auth';
 
 export const BASE_URL = process.env.NEXT_PUBLIC_END ?? '';
 
@@ -27,12 +31,13 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
   const router = useRouter();
-  const token = Cookies.get('token') || '';
+  const accessToken = useRecoilValue(tokenState);
+  const refresh = useRefresh({ accessToken });
 
   const requestIntercept = client.interceptors.request.use(
     (config: AxiosRequestConfig) => {
       if (config.headers && !config.headers['Authorization']) {
-        config.headers['Authorization'] = `${token}`;
+        config.headers['Authorization'] = `${accessToken}`;
 
         return config;
       }
@@ -49,13 +54,18 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       if (error.response.status === 401) {
         if (!config.headers['Authorization']) {
           alert('로그인 후 이용해 주세요');
-          router.push('/login').then(() => {
-            localStorage.setItem('isRegister', 'false');
-          });
-          return new Promise(() => {});
+          localStorage.setItem('userId', '');
+          localStorage.setItem('token', '');
+          router.replace('/login');
+          return;
         } else {
-          /** TODO : refresh token */
-          return client(config);
+          const token = await refresh();
+          if (token) {
+            config.headers['Authorization'] = `${token}`;
+
+            return client(config);
+          }
+          return;
         }
       }
       return Promise.reject(error);
@@ -67,7 +77,7 @@ function AxiosInterceptor({ children }: PropsWithChildren) {
       client.interceptors.request.eject(requestIntercept);
       client.interceptors.response.eject(responseIntercept);
     };
-  }, []);
+  }, [requestIntercept, responseIntercept]);
 
   return <>{children}</>;
 }

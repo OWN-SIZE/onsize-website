@@ -9,7 +9,7 @@ import { RecoilRoot } from 'recoil';
 import GlobalStyle from 'styles/GlobalStyle';
 
 import { AxiosInterceptor } from '../apis';
-import * as gtag from '../lib/gtag';
+import * as gtm from '../lib/gtm';
 
 export default function App({ Component, pageProps }: AppProps) {
   const queryClient = new QueryClient({
@@ -24,7 +24,7 @@ export default function App({ Component, pageProps }: AppProps) {
   const router = useRouter();
   useEffect(() => {
     const handleRouteChange = (url: URL) => {
-      gtag.pageview(url);
+      gtm.pageview(url);
     };
     router.events.on('routeChangeComplete', handleRouteChange);
     return () => {
@@ -38,25 +38,21 @@ export default function App({ Component, pageProps }: AppProps) {
         <AxiosInterceptor>
           <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
             <Head>
-              <script
-                dangerouslySetInnerHTML={{
-                  __html: `
-                  window.dataLayer = window.dataLayer || [];
-                  function gtag(){dataLayer.push(arguments);}
-                  gtag('js', new Date());
-
-                  gtag('config', '${gtag.GA_TRACKING_ID}', { 
-                    page_path: window.location.pathname,
-                  });`,
-                }}
-              />
               <title>Own Size</title>
             </Head>
             <Script
+              id="gtag-base"
               strategy="afterInteractive"
-              src={`https://www.googletagmanager.com/gtag/js?id=${gtag.GA_TRACKING_ID}`}
+              dangerouslySetInnerHTML={{
+                __html: `
+                (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+                new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+                j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+                'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+                })(window,document,'script','dataLayer','${gtm.GTM_ID}');
+          `,
+              }}
             />
-
             <GlobalStyle />
             <Component {...pageProps} />
           </GoogleOAuthProvider>

@@ -37,7 +37,7 @@ function SecondPart() {
       <Styled.Section className="third">
         <Styled.Container className="third">
           <Styled.CoreFunction>나의 옷장</Styled.CoreFunction>
-          <Styled.Title className="third">클릭 한번으로 저장하는 관심 의류</Styled.Title>
+          <Styled.Title className="third">클릭 한 번으로 저장하는 관심 의류</Styled.Title>
           <Styled.LottieContainer>
             <Lottie animationData={saveLottie} className="lottie" />
           </Styled.LottieContainer>
