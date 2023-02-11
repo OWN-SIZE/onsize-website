@@ -10,7 +10,7 @@ function useRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    if (isRegister) {
+    if (userId && isRegister) {
       router.asPath === '/login' || router.asPath === '/register'
         ? router.replace('/home').then(() => setIsLoading(false))
         : console.log('stay');
@@ -19,7 +19,7 @@ function useRedirect() {
     } else if (userId && isRegister === 'null') {
       router.replace('/register').then(() => setIsLoading(false));
     }
-  }, [userId, isRegister]);
+  }, []);
 
   return { isLoading };
 }

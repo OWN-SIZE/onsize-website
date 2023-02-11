@@ -1,3 +1,4 @@
+import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
 import { tokenState, userIdState } from 'states/user';
 import { AuthInput } from 'types/user/client';
@@ -6,8 +7,9 @@ import { useAuthMutation } from '../queries/user';
 
 export const useAuth = () => {
   const authMutate = useAuthMutation();
-  const [, setToken] = useRecoilState(tokenState);
-  const [, setUserId] = useRecoilState(userIdState);
+  const [token, setToken] = useRecoilState(tokenState);
+  const [userId, setUserId] = useRecoilState(userIdState);
+  const router = useRouter();
 
   const authLogin = (body: AuthInput, onSuccessLogin: () => void) => {
     authMutate.mutate(body, {
@@ -23,5 +25,12 @@ export const useAuth = () => {
     });
   };
 
-  return { authLogin };
+  const authLogout = () => {
+    setToken('');
+    setUserId('');
+    router.replace('/login');
+    console.log(userId, token);
+  };
+
+  return { authLogin, authLogout };
 };
