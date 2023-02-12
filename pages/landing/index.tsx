@@ -7,10 +7,6 @@ import theme from 'styles/theme';
 import Layout from 'components/common/Layout';
 
 function Lading() {
-  useEffect(() => {
-    localStorage.setItem('userId', 'null');
-    localStorage.setItem('isRegister', 'false');
-  }, []);
   return (
     <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
