@@ -1,4 +1,4 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, SetStateAction, useEffect, useRef, useState } from 'react';
 import React from 'react';
 import {
   AddCategoryCloseIcon,
@@ -69,6 +69,8 @@ function ThumbNail(props: ThumbNailProps) {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const wrapperRef = useRef<HTMLDivElement>(null);
+
   const { category: categoryData } = useFetchAllCategory();
   const categoryIndex = categoryData?.findIndex((item) => {
     return item.id === data.id;
@@ -124,6 +126,19 @@ function ThumbNail(props: ThumbNailProps) {
         });
     }
   };
+
+  const handleClickOutside = (event: MouseEvent) => {
+    if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+      setIsCategoryModalOpen(false);
+    }
+  };
+
+  useEffect(() => {
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  });
 
   return (
     <Styled.Root
@@ -216,26 +231,29 @@ function ThumbNail(props: ThumbNailProps) {
       {/* 썸네일 호버시 코드 */}
 
       <Styled.HoverThumbNail
+        ref={wrapperRef}
         className={isCategoryModalOpen || imgHoveredTarget === data.id ? 'show' : 'hide'}
         width={width}
         height={height}
       >
         {/* 카테고리 추가 */}
         {!noAddCategory && (
-          <button
-            onClick={() => {
-              setIsCategoryModalOpen(!isCategoryModalOpen);
-              setIsCategory && setIsCategory(true);
-            }}
-          >
-            카테고리 추가
-            <Image
-              src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon}
-              width={16}
-              height={9}
-              alt="카테고리 추가 버튼 아이콘"
-            />
-          </button>
+          <Styled.CategoryModalContainer>
+            <button
+              onClick={() => {
+                setIsCategoryModalOpen(!isCategoryModalOpen);
+                setIsCategory && setIsCategory(true);
+              }}
+            >
+              카테고리 추가
+              <Image
+                src={isCategoryModalOpen ? AddCategoryCloseIcon : AddCategoryIcon}
+                width={16}
+                height={9}
+                alt="카테고리 추가 버튼 아이콘"
+              />
+            </button>
+          </Styled.CategoryModalContainer>
         )}
         {isCategoryModalOpen && (
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
@@ -250,9 +268,11 @@ function ThumbNail(props: ThumbNailProps) {
             <Styled.ClickZone />
           </Link>
         ) : (
-          <a href={data.productUrl} target={'_blank'} rel="noreferrer">
-            <Styled.ClickZone />
-          </a>
+          !isCategoryModalOpen && (
+            <a href={data.productUrl} target={'_blank'} rel="noreferrer">
+              <Styled.ClickZone />
+            </a>
+          )
         )}
         {/* 아이콘 */}
         <div className="iconContainer">
@@ -460,31 +480,7 @@ const Styled = {
       height: ${({ height }) => `${height}rem`};
       border-radius: 1rem;
       background-color: ${theme.colors.card_hover};
-      & > button {
-        position: absolute;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
 
-        width: 14.2rem;
-        height: 2.7rem;
-
-        top: 2rem;
-        left: 2.6rem;
-        z-index: 2;
-
-        border: none;
-        background: none;
-
-        ${theme.fonts.title3};
-        color: ${theme.colors.gray000};
-
-        cursor: pointer;
-        & > img {
-          width: 1.6rem;
-          height: 0.9rem;
-        }
-      }
       & > .iconContainer {
         position: absolute;
         bottom: 1.6rem;
@@ -493,6 +489,40 @@ const Styled = {
         justify-content: space-between;
         width: 13.6rem;
         height: 4rem;
+      }
+    }
+  `,
+  CategoryModalContainer: styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    position: absolute;
+    top: 0;
+    width: 19.4rem;
+    height: 5.7rem;
+
+    padding-top: 1rem;
+    & > button {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      width: 14.2rem;
+      height: 100%;
+
+      z-index: 2;
+
+      border: none;
+      background: none;
+
+      ${theme.fonts.title3};
+      color: ${theme.colors.gray000};
+
+      cursor: pointer;
+      & > img {
+        width: 1.6rem;
+        height: 0.9rem;
       }
     }
   `,
