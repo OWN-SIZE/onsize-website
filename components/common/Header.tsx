@@ -3,6 +3,7 @@ import { AddCategoryIcon, HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from
 import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -11,6 +12,7 @@ import LottieModal from './modal/LottieModal';
 function Header() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [isTutorial, setIsTutorial] = useState(false);
+  const router = useRouter();
   return (
     <Styled.Root>
       <Styled.Container>
@@ -25,7 +27,7 @@ function Header() {
             </Styled.InfoButton>
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
-            <Link href="/mypage">
+            <Link href={'/mypage'}>
               <Styled.Profile></Styled.Profile>
             </Link>
           </Styled.RightSection>
@@ -36,7 +38,7 @@ function Header() {
           alt="마우스 이미지"
         />
         <Styled.MySizeButtonBackGround>
-          <Link href="/mysize">
+          <Link href={router.asPath !== '/mysize' ? '/mysize' : 'javascript:history.back()'}>
             <Styled.MySizeButton
               onMouseEnter={() => setIsButtonHovered(!isButtonHovered)}
               onMouseLeave={() => setIsButtonHovered(!isButtonHovered)}
