@@ -223,6 +223,7 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               hasToastOpened={hasToastOpened}
+              formType={formType}
             />
           ))}
           <Styled.RadioContainer>
@@ -271,6 +272,7 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               hasToastOpened={hasToastOpened}
+              formType={formType}
             />
           ))}
           <Styled.RadioContainer>

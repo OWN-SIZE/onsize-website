@@ -28,15 +28,15 @@ interface InputProps {
   data?: DataType;
   isTopClicked?: boolean;
   hasToastOpened?: boolean;
+  formType?: string | null;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, hasToastOpened } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
   const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
-
   useEffect(() => {
     if (!data) return;
 
@@ -57,6 +57,12 @@ function SizeInput(props: InputProps) {
     setHasInputValueChanged(false);
   }, [isTopClicked, measure]);
 
+  useEffect(() => {
+    if(!data){
+    setInputValue('');
+    }
+  }, [measure, formType])
+
   return (
     <Styled.InputContainer key={inputKey}>
       <label>{label}</label>
@@ -64,7 +70,7 @@ function SizeInput(props: InputProps) {
         <Styled.Input
           type="number"
           step="0.1"
-          value={data && inputValue}
+          value={inputValue}
           {...register(inputKey, {
             required: true,
             validate: (value) =>
