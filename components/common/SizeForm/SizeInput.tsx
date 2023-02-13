@@ -29,10 +29,11 @@ interface InputProps {
   isTopClicked?: boolean;
   hasToastOpened?: boolean;
   formType?: string | null;
+  isAlertActive?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
@@ -45,13 +46,14 @@ function SizeInput(props: InputProps) {
       setInputValue('');
     } else if (!hasInputValueChanged) {
       //유저가 저장된 값을 변경한 적이 없을 때
-      setInputValue(`${data[inputKey]}`);
+      setInputValue(parseFloat(`${data[inputKey]}`).toFixed(1));
       setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
     } else {
       //유저가 저장된 값을 변경했을 때
-      setInputValue(inputValue);
+      setInputValue(parseFloat(inputValue).toFixed(1));
+      setValue(inputKey, parseFloat(inputValue).toFixed(1));
     }
-  }, [data, inputKey]);
+  }, [data, inputKey, isAlertActive]);
 
   useEffect(() => {
     setHasInputValueChanged(false);
