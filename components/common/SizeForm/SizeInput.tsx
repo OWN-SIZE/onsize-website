@@ -28,15 +28,16 @@ interface InputProps {
   data?: DataType;
   isTopClicked?: boolean;
   hasToastOpened?: boolean;
+  formType?: string | null;
+  isAlertActive?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, hasToastOpened } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
   const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
-
   useEffect(() => {
     if (!data) return;
 
@@ -45,17 +46,24 @@ function SizeInput(props: InputProps) {
       setInputValue('');
     } else if (!hasInputValueChanged) {
       //유저가 저장된 값을 변경한 적이 없을 때
-      setInputValue(`${data[inputKey]}`);
+      setInputValue(parseFloat(`${data[inputKey]}`).toFixed(1));
       setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
     } else {
       //유저가 저장된 값을 변경했을 때
-      setInputValue(inputValue);
+      setInputValue(parseFloat(inputValue).toFixed(1));
+      setValue(inputKey, parseFloat(inputValue).toFixed(1));
     }
-  }, [data, inputKey]);
+  }, [data, inputKey, isAlertActive]);
 
   useEffect(() => {
     setHasInputValueChanged(false);
   }, [isTopClicked, measure]);
+
+  useEffect(() => {
+    if(!data){
+    setInputValue('');
+    }
+  }, [measure, formType])
 
   return (
     <Styled.InputContainer key={inputKey}>
@@ -64,7 +72,7 @@ function SizeInput(props: InputProps) {
         <Styled.Input
           type="number"
           step="0.1"
-          value={data && inputValue}
+          value={inputValue}
           {...register(inputKey, {
             required: true,
             validate: (value) =>

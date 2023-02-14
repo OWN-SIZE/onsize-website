@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { LoginMouseImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { isRegisterState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -21,6 +23,7 @@ function Register() {
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
+  const [, setIsRegister] = useRecoilState(isRegisterState);
   const router = useRouter();
 
   const onClickSize = () => {
@@ -35,6 +38,7 @@ function Register() {
   const onClickNextButton = () => {
     if (skip) {
       localStorage.setItem('isRegister', 'true');
+      setIsRegister(true);
       router.push('/home');
     } else {
       setIsAlertActive(true);
@@ -47,6 +51,7 @@ function Register() {
       setIsNextActive(false);
     } else {
       localStorage.setItem('isRegister', 'true');
+      setIsRegister(true);
       router.push('/home');
     }
   };

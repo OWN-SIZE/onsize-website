@@ -121,6 +121,9 @@ const Styled = {
     padding-left: 2.4rem;
     ${theme.fonts.body1};
     color: ${theme.colors.gray550};
+    :focus {
+      outline: none;
+    }
     ::-webkit-input-placeholder {
       ${theme.fonts.body1};
       color: ${theme.colors.gray250};
