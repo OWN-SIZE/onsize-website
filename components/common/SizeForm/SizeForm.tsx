@@ -42,7 +42,7 @@ const topScopeMapper = {
 // 가슴
 const chestScopeMapper = {
   단면: { min: 30, max: 100 },
-  둘레: { min: 25, max: 80 },
+  둘레: { min: 60, max: 200 },
 };
 
 // 하의 총장, 밑위
