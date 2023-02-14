@@ -258,7 +258,7 @@ function ThumbNail(props: ThumbNailProps) {
         {isCategoryModalOpen && (
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
         )}
-        {page === 'category' && categoryData && categoryIndex ? (
+        {page === 'category' ? (
           <Link
             href={{
               pathname: `/category/${data.id}`,
