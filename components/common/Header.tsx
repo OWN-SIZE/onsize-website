@@ -7,12 +7,16 @@ import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { useFetchUserInformation } from '@/hooks/queries/mypageHistory';
+
 import LottieModal from './modal/LottieModal';
 
 function Header() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [isTutorial, setIsTutorial] = useState(false);
   const router = useRouter();
+
+  const { userInformation } = useFetchUserInformation();
   return (
     <Styled.Root>
       <Styled.Container>
@@ -28,7 +32,7 @@ function Header() {
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href={'/mypage'}>
-              <Styled.Profile></Styled.Profile>
+              <Image src={userInformation?.picture || ''} width={60} height={60} alt="사용자 프로필" />
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
@@ -106,22 +110,22 @@ const Styled = {
     height: 7rem;
 
     margin-top: 3.5rem;
+
+    & > a {
+      img {
+        border-radius: 4.7rem;
+
+        border: none;
+        background-color: #c2c2c2;
+
+        cursor: pointer;
+      }
+    }
   `,
 
   InfoButton: styled.button`
     background: none;
     border: none;
-
-    cursor: pointer;
-  `,
-
-  Profile: styled.button`
-    width: 6rem;
-    height: 6rem;
-    border-radius: 4.7rem;
-
-    border: none;
-    background-color: #c2c2c2;
 
     cursor: pointer;
   `,
