@@ -104,7 +104,6 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleOnClickPin = () => {
-    console.log(categoryId, data.id, data.isInPin);
     if (page === 'categoryDetail') {
       updateIsPin &&
         updateIsPin({

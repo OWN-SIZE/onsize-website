@@ -12,6 +12,9 @@ export interface ClosetOutput {
   topOrBottom: number;
   productUrl: string;
   faviconUrl: string | null;
+  createdAt: string;
+  updateAt: string;
+  updateInPinAt?: string;
 }
 
 export interface UpdateClosetInput {
@@ -37,4 +40,5 @@ export interface PostClosetInput {
 export interface isInPin {
   productId: number;
   isInPin: boolean;
+  updateInPinAt: string;
 }

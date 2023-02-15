@@ -7,16 +7,22 @@ import HomeFirst from './HomeFirst';
 import HomeMain from './HomeMain';
 
 function HomeLanding() {
-  const orderSort = (item: ClosetOutput[]) => {
+  const orderSortById = (item: ClosetOutput[]) => {
     return item.sort((a, b) => {
       return Number(b.id) - Number(a.id);
     });
   };
+  const orderSortByTime = (item: ClosetOutput[]) => {
+    return item.sort((a, b) => {
+      return Number(b.updateAt) - Number(a.updateAt);
+    });
+  };
 
   let data = useFetchAllCloset();
+
   if (data) {
-    const pinData: ClosetOutput[] = orderSort(data.filter((data) => data.isPin));
-    const noPinData: ClosetOutput[] = orderSort(data.filter((data) => !data.isPin));
+    const pinData: ClosetOutput[] = orderSortByTime(data.filter((data) => data.isPin));
+    const noPinData: ClosetOutput[] = orderSortById(data.filter((data) => !data.isPin));
     data = pinData.concat(noPinData);
   } else {
     data = [];
