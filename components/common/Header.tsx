@@ -22,7 +22,7 @@ function Header() {
       <Styled.Container>
         <Styled.TopSection>
           <Link href="/home">
-            <Image src={OwnSizeLogoImg} width={94} height={94} alt="온사이즈 로고 / 홈 이동" />
+            <Image src={OwnSizeLogoImg} width={94} height={94} alt="온사이즈 로고 / 홈 이동" priority />
           </Link>
 
           <Styled.RightSection>
@@ -32,7 +32,11 @@ function Header() {
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href={'/mypage'}>
-              <Image src={userInformation?.picture || ''} width={60} height={60} alt="사용자 프로필" />
+              {userInformation ? (
+                <Image src={userInformation.picture} width={60} height={60} alt="사용자 프로필" />
+              ) : (
+                <div />
+              )}
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
@@ -112,7 +116,11 @@ const Styled = {
     margin-top: 3.5rem;
 
     & > a {
+      & > div,
       img {
+        width: 6rem;
+        height: 6rem;
+
         border-radius: 4.7rem;
 
         border: none;
