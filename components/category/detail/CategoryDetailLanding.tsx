@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { CategoryDeleteIcon, CategoryEditIcon } from 'assets/icon';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
@@ -16,14 +16,15 @@ import useToast from 'components/common/Toast/useToast';
 
 import CategoryDetailFirst from './CategoryDetailFirst';
 
-interface categoryDetailProps {
-  categoryId: string;
-}
-function CategoryDetailLanding(props: categoryDetailProps) {
+function CategoryDetailLanding() {
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const { isOpenToast, message, showToast } = useToast();
-  const { categoryId } = props;
+
+  const {
+    query: { id },
+  } = useRouter();
+  const categoryId = id as string;
 
   const orderSortById = (item: ClosetOutput[]) => {
     return item.sort((a, b) => {

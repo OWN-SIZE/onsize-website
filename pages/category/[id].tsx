@@ -1,20 +1,17 @@
 import CategoryDetailLanding from '@/components/category/detail/CategoryDetailLanding';
 import Layout from 'components/common/Layout';
 
-function Detail({ id }: any) {
-  const categoryId = id as string;
+function Detail() {
   return (
     <Layout noMenuBar>
-      <CategoryDetailLanding categoryId={categoryId} />
+      <CategoryDetailLanding />
     </Layout>
   );
 }
 
-export async function getServerSideProps({ query: { id } }: any) {
+export async function getServerSideProps(context: any) {
   return {
-    props: {
-      id,
-    },
+    props: {},
   };
 }
 
