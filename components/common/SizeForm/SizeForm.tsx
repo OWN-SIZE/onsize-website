@@ -66,20 +66,6 @@ const bottomSwitchMapper = {
   },
 };
 
-type TopFormType = {
-  총장: string;
-  '어깨 너비': string;
-  가슴: string;
-};
-
-type BottomFormType = {
-  총장: string;
-  밑위: string;
-  허리: string;
-  허벅지: string;
-  밑단: string;
-};
-
 const mutateMapper = {
   top: {
     총장: 'topLength',
@@ -130,7 +116,6 @@ export default function SizeForm(props: FormProps) {
   const { postMyBottomSize } = usePostMyBottomSize();
 
   const onValid: SubmitHandler<FieldValues> = async (data: FieldValues) => {
-    console.log(data);
     setIsAlertActive(false);
     if (formType === '상의') {
       const inputData: TopSizeInput = {
@@ -138,6 +123,7 @@ export default function SizeForm(props: FormProps) {
         shoulder: 0,
         chest: 0,
         isWidthOfTop: true,
+        isAlreadyUser: 'done',
       };
 
       Object.entries(mutateMapper.top).map(([kor, eng]) => {
@@ -160,6 +146,7 @@ export default function SizeForm(props: FormProps) {
         rise: 0,
         hem: 0,
         isWidthOfBottom: true,
+        isAlreadyUser: 'done',
       };
 
       Object.entries(mutateMapper.bottom).map(([kor, eng]) => {

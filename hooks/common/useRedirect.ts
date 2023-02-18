@@ -10,15 +10,15 @@ function useRedirect() {
   const router = useRouter();
 
   useEffect(() => {
-    if (userId && isRegister) {
-      router.asPath === '/login' || router.asPath === '/register'
-        ? router.replace('/home').then(() => setIsLoading(false))
-        : console.log('stay');
-    } else if (!userId) {
-      router.replace('/login').then(() => setIsLoading(false));
-    } else if (userId && isRegister === 'null') {
-      router.replace('/register').then(() => setIsLoading(false));
-    }
+    // if (userId && isRegister) {
+    //   router.asPath === '/login' || router.asPath === '/register'
+    //     ? router.replace('/home').then(() => setIsLoading(false))
+    //     : console.log('stay');
+    // } else if (!userId) {
+    //   router.replace('/login').then(() => setIsLoading(false));
+    // } else if (userId && isRegister === 'null') {
+    //   router.replace('/register').then(() => setIsLoading(false));
+    // }
   }, []);
 
   return { isLoading };
