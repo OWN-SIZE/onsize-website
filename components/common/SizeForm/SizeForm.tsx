@@ -14,6 +14,7 @@ import RadioButton from './RadioButton';
 import SizeInput from './SizeInput';
 
 interface FormProps {
+  progress?: number;
   noHeader?: boolean;
   formType: OptionType;
   isAlertActive: boolean;
@@ -83,6 +84,7 @@ const mutateMapper = {
 
 export default function SizeForm(props: FormProps) {
   const {
+    progress,
     noHeader,
     formType,
     setIsSubmitActive,
@@ -123,7 +125,7 @@ export default function SizeForm(props: FormProps) {
         shoulder: 0,
         chest: 0,
         isWidthOfTop: true,
-        isAlreadyUser: 'done',
+        isAlreadyUser: 'pending',
       };
 
       Object.entries(mutateMapper.top).map(([kor, eng]) => {
@@ -132,6 +134,10 @@ export default function SizeForm(props: FormProps) {
 
       if (measure === '둘레') {
         inputData.isWidthOfTop = false;
+      }
+
+      if (progress === 3) {
+        inputData.isAlreadyUser = 'done';
       }
 
       postMyTopSize(inputData, () => {
@@ -146,7 +152,7 @@ export default function SizeForm(props: FormProps) {
         rise: 0,
         hem: 0,
         isWidthOfBottom: true,
-        isAlreadyUser: 'done',
+        isAlreadyUser: 'pending',
       };
 
       Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
@@ -155,6 +161,10 @@ export default function SizeForm(props: FormProps) {
 
       if (measure === '둘레') {
         inputData.isWidthOfBottom = false;
+      }
+
+      if (progress === 3) {
+        inputData.isAlreadyUser = 'done';
       }
 
       postMyBottomSize(inputData, () => {

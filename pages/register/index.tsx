@@ -95,6 +95,7 @@ function Register() {
               </SizeForm>
             ) : (
               <SizeForm
+                progress={3}
                 isAlertActive={isAlertActive}
                 setIsAlertActive={setIsAlertActive}
                 formType={selectedOption === '하의' ? '상의' : '하의'}
