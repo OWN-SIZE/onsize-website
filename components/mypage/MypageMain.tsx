@@ -5,7 +5,6 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { useAuth } from '@/hooks/business/user';
 import Modal from 'components/common/Modal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
@@ -17,7 +16,6 @@ function MyPageMain() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [isButtonActivated, setIsButtonActivated] = useState(true);
-  const { authLogout } = useAuth();
 
   const onClickHistoryModal = () => {
     setIsHistoryModalOpen(!isHistoryModalOpen);
@@ -78,9 +76,7 @@ function MyPageMain() {
           <button className="withdrawal" onClick={onClickLeaveModal}>
             탈퇴하기
           </button>
-          <button className="signOut" onClick={authLogout}>
-            로그아웃
-          </button>
+          <button className="signOut">로그아웃</button>
         </Styled.UserLeaveContainer>
       </Styled.MySizeContainer>
       {isHistoryModalOpen && (

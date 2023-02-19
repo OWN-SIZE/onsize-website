@@ -4,13 +4,14 @@ export interface AllCategory {
   isPinCategory: boolean;
   productNum: number;
   image: string[];
+  updateCategoryAt: string;
 }
 
 export interface OneCategory {
   id: string;
-  userId: string; 
+  userId: string;
   image: string;
-  productName: string; 
+  productName: string;
   size: string;
   memo: string;
   isRecommend: boolean;
@@ -38,4 +39,3 @@ export interface UpdateCategoryRequest {
 export interface UpdateCategoryRequestBody {
   categoryName: string;
 }
-

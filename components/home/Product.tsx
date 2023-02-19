@@ -140,10 +140,13 @@ const Styled = {
     }
   `,
   Title: styled.h1<{ isProductHovered: boolean }>`
+    width: 33.2rem;
     height: 6.4rem;
     margin-top: 1.6rem;
     color: ${theme.colors.gray550};
     ${theme.fonts.title3};
+
+    word-break: break-all;
 
     text-decoration: ${({ isProductHovered }) => (isProductHovered ? 'underline 0.2rem' : 'none')};
   `,

@@ -156,7 +156,7 @@ export default function SizeForm(props: FormProps) {
       };
 
       Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
-        inputData[eng] = parseFloat(data[kor]);
+        inputData[eng] = Number(parseFloat(data[kor]).toFixed(1));
       });
 
       if (measure === '둘레') {
@@ -221,6 +221,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               hasToastOpened={hasToastOpened}
               formType={formType}
+              isAlertActive={isAlertActive}
             />
           ))}
           <Styled.RadioContainer>
@@ -252,6 +253,7 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               hasToastOpened={hasToastOpened}
+              isAlertActive={isAlertActive}
             />
           ))}
           {children}
@@ -270,6 +272,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               hasToastOpened={hasToastOpened}
               formType={formType}
+              isAlertActive={isAlertActive}
             />
           ))}
           <Styled.RadioContainer>
@@ -299,6 +302,7 @@ export default function SizeForm(props: FormProps) {
             data={data}
             isTopClicked={isTopClicked}
             hasToastOpened={hasToastOpened}
+            isAlertActive={isAlertActive}
           />
           {children}
         </Styled.Form>

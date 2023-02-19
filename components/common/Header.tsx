@@ -3,14 +3,20 @@ import { AddCategoryIcon, HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from
 import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/router';
 import styled from 'styled-components';
 import theme from 'styles/theme';
+
+import { useFetchUserInformation } from '@/hooks/queries/mypageHistory';
 
 import LottieModal from './modal/LottieModal';
 
 function Header() {
   const [isButtonHovered, setIsButtonHovered] = useState(false);
   const [isTutorial, setIsTutorial] = useState(false);
+  const router = useRouter();
+
+  const { userInformation } = useFetchUserInformation();
   return (
     <Styled.Root>
       <Styled.Container>
@@ -25,8 +31,8 @@ function Header() {
             </Styled.InfoButton>
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
-            <Link href="/mypage">
-              <Styled.Profile></Styled.Profile>
+            <Link href={'/mypage'}>
+              <Image src={userInformation?.picture || ''} width={60} height={60} alt="사용자 프로필" />
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
@@ -36,7 +42,7 @@ function Header() {
           alt="마우스 이미지"
         />
         <Styled.MySizeButtonBackGround>
-          <Link href="/mysize">
+          <Link href={router.asPath !== '/mysize' ? '/mysize' : 'javascript:history.back()'}>
             <Styled.MySizeButton
               onMouseEnter={() => setIsButtonHovered(!isButtonHovered)}
               onMouseLeave={() => setIsButtonHovered(!isButtonHovered)}
@@ -104,22 +110,22 @@ const Styled = {
     height: 7rem;
 
     margin-top: 3.5rem;
+
+    & > a {
+      img {
+        border-radius: 4.7rem;
+
+        border: none;
+        background-color: #c2c2c2;
+
+        cursor: pointer;
+      }
+    }
   `,
 
   InfoButton: styled.button`
     background: none;
     border: none;
-
-    cursor: pointer;
-  `,
-
-  Profile: styled.button`
-    width: 6rem;
-    height: 6rem;
-    border-radius: 4.7rem;
-
-    border: none;
-    background-color: #c2c2c2;
 
     cursor: pointer;
   `,

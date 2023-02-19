@@ -32,15 +32,20 @@ export default function CategoryMain() {
     setChangeInputValue(input);
   };
 
-  const orderSort = (item: AllCategory[]) => {
+  const orderSortById = (item: AllCategory[]) => {
     return item.sort((a, b) => {
       return Number(b.id) - Number(a.id);
     });
   };
+  const orderSortByTime = (item: AllCategory[]) => {
+    return item.sort((a, b) => {
+      return Number(b.updateCategoryAt) - Number(a.updateCategoryAt);
+    });
+  };
 
   if (category) {
-    const pinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === true));
-    const noPinData: AllCategory[] = orderSort(category.filter((category) => category.isPinCategory === false));
+    const pinData: AllCategory[] = orderSortByTime(category.filter((category) => category.isPinCategory === true));
+    const noPinData: AllCategory[] = orderSortById(category.filter((category) => category.isPinCategory === false));
     category = pinData.concat(noPinData);
   }
 

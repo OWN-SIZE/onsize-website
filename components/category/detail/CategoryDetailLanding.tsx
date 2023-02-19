@@ -26,9 +26,14 @@ function CategoryDetailLanding() {
   } = useRouter();
   const categoryId: string = id as string;
 
-  const orderSort = (item: ClosetOutput[]) => {
+  const orderSortById = (item: ClosetOutput[]) => {
     return item.sort((a, b) => {
       return Number(b.id) - Number(a.id);
+    });
+  };
+  const orderSortByTime = (item: ClosetOutput[]) => {
+    return item.sort((a, b) => {
+      return Number(b.updateInPinAt) - Number(a.updateInPinAt);
     });
   };
 
@@ -42,10 +47,17 @@ function CategoryDetailLanding() {
     const newArray: ClosetOutput[] = [];
     for (let index = 0; index < data[0].length; index++) {
       const isInPinObject = data[1].find((item) => item.productId === data[0][index].id);
-      newArray.push(Object.assign({}, data[0][index], { isInPin: isInPinObject?.isInPin }));
+      newArray.push(
+        Object.assign(
+          {},
+          data[0][index],
+          { isInPin: isInPinObject?.isInPin },
+          { updateInPinAt: isInPinObject?.updateInPinAt }
+        )
+      );
     }
-    const pinData: ClosetOutput[] = orderSort(newArray.filter((data) => data.isInPin));
-    const noPinData: ClosetOutput[] = orderSort(newArray.filter((data) => !data.isInPin));
+    const pinData: ClosetOutput[] = orderSortByTime(newArray.filter((data) => data.isInPin));
+    const noPinData: ClosetOutput[] = orderSortById(newArray.filter((data) => !data.isInPin));
     orderedData = pinData.concat(noPinData);
   }
 
