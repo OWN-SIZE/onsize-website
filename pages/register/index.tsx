@@ -101,7 +101,7 @@ function Register() {
                 formType={selectedOption === '하의' ? '상의' : '하의'}
                 setIsSubmitActive={setIsNextActive}
                 onSuccessSubmit={onSuccessSubmit}
-                isOption={true}
+                isOption={selectedOption === '상/하의' ? false : true}
                 skip={skip}
                 setSkip={setSkip}
               >

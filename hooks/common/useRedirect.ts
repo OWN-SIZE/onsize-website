@@ -12,7 +12,16 @@ function useRedirect() {
   const router = useRouter();
   const { userInformation } = useFetchUserInformation();
   const userState = userInformation?.isAlreadyUser;
-  console.log(userState);
+
+  const onRedirect = () => {
+    if (userState === 'pending') {
+      router.replace('/login');
+    } else if (userState === 'done') {
+      router.replace('/home');
+    } else {
+      router.replace('/register');
+    }
+  };
 
   useEffect(() => {
     // if (userId && isRegister) {
@@ -24,13 +33,7 @@ function useRedirect() {
     // } else if (userId && isRegister === 'null') {
     //   router.replace('/register').then(() => setIsLoading(false));
     // }
-    if (userState === 'pending') {
-      router.replace('/login');
-    } else if (userState === 'done') {
-      router.replace('/home');
-    } else {
-      router.replace('/register');
-    }
+    userState && onRedirect;
   }, []);
 
   return { isLoading };
