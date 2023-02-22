@@ -222,7 +222,7 @@ function ThumbNail(props: ThumbNailProps) {
       {page !== 'category' && (
         <Styled.ThumbNailImg className={'closet'} width={width} height={height}>
           {data.image && typeof data.image === 'string' && (
-            <Image src={data.image} width={332} height={332} alt="상품 대표 이미지" />
+            <Image src={data.image} width={332} height={332} loading="eager" alt="상품 대표 이미지" priority />
           )}
         </Styled.ThumbNailImg>
       )}
@@ -258,12 +258,7 @@ function ThumbNail(props: ThumbNailProps) {
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
         )}
         {page === 'category' ? (
-          <Link
-            href={{
-              pathname: `/category/${data.id}`,
-            }}
-            as={`/category/${data.id}`}
-          >
+          <Link href={`/category/${data.id}`}>
             <Styled.ClickZone />
           </Link>
         ) : (

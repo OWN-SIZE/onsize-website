@@ -1,4 +1,3 @@
-import { useRef } from 'react';
 import { Head, Html, Main, NextScript } from 'next/document';
 
 import * as gtm from '../lib/gtm';
@@ -7,7 +6,7 @@ export default function Document() {
   return (
     <Html lang="ko">
       <Head>
-        <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
+        <meta name="viewport" content="initial-scale=1.0,maximum-scale=3,width=device-width" />
         <meta name="description" content="쉽고 똑똑한 나만의 쇼핑 도우미, 온사이즈" />
         <link rel="shortcut icon" href="/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
