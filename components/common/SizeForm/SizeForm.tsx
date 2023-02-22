@@ -14,6 +14,7 @@ import RadioButton from './RadioButton';
 import SizeInput from './SizeInput';
 
 interface FormProps {
+  progress?: number;
   noHeader?: boolean;
   formType: OptionType;
   isAlertActive: boolean;
@@ -42,7 +43,7 @@ const topScopeMapper = {
 // 가슴
 const chestScopeMapper = {
   단면: { min: 30, max: 100 },
-  둘레: { min: 25, max: 80 },
+  둘레: { min: 60, max: 200 },
 };
 
 // 하의 총장, 밑위
@@ -66,20 +67,6 @@ const bottomSwitchMapper = {
   },
 };
 
-type TopFormType = {
-  총장: string;
-  '어깨 너비': string;
-  가슴: string;
-};
-
-type BottomFormType = {
-  총장: string;
-  밑위: string;
-  허리: string;
-  허벅지: string;
-  밑단: string;
-};
-
 const mutateMapper = {
   top: {
     총장: 'topLength',
@@ -97,6 +84,7 @@ const mutateMapper = {
 
 export default function SizeForm(props: FormProps) {
   const {
+    progress,
     noHeader,
     formType,
     setIsSubmitActive,
@@ -137,6 +125,7 @@ export default function SizeForm(props: FormProps) {
         shoulder: 0,
         chest: 0,
         isWidthOfTop: true,
+        isAlreadyUser: 'pending',
       };
 
       Object.entries(mutateMapper.top).map(([kor, eng]) => {
@@ -145,6 +134,10 @@ export default function SizeForm(props: FormProps) {
 
       if (measure === '둘레') {
         inputData.isWidthOfTop = false;
+      }
+
+      if (progress === 3) {
+        inputData.isAlreadyUser = 'done';
       }
 
       postMyTopSize(inputData, () => {
@@ -159,6 +152,7 @@ export default function SizeForm(props: FormProps) {
         rise: 0,
         hem: 0,
         isWidthOfBottom: true,
+        isAlreadyUser: 'pending',
       };
 
       Object.entries(mutateMapper.bottom).map(([kor, eng]) => {
@@ -167,6 +161,10 @@ export default function SizeForm(props: FormProps) {
 
       if (measure === '둘레') {
         inputData.isWidthOfBottom = false;
+      }
+
+      if (progress === 3) {
+        inputData.isAlreadyUser = 'done';
       }
 
       postMyBottomSize(inputData, () => {
