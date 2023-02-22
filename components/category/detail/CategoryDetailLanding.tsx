@@ -80,6 +80,8 @@ function CategoryDetailLanding() {
             width={58}
             height={58}
             alt="카테고리 제목 편집 아이콘"
+            placeholder="blur"
+            priority
           />
           <Image
             src={CategoryDeleteIcon}
@@ -87,6 +89,8 @@ function CategoryDetailLanding() {
             width={58}
             height={58}
             alt="카테고리 삭제 아이콘"
+            placeholder="blur"
+            priority
           />
         </div>
       </Styled.categoryNameContainer>

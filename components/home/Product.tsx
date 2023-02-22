@@ -89,7 +89,7 @@ function Product(props: ProductProps) {
       <a href={data.productUrl} target={'_blank'} rel="noreferrer">
         <Styled.BrandSection>
           {data.faviconUrl ? (
-            <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" />
+            <Image src={data.faviconUrl} width={50} height={50} alt="쇼핑몰 로고" priority />
           ) : (
             <Styled.BrandLogo />
           )}
