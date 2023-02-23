@@ -15,7 +15,7 @@ function Layout(props: LayoutProps) {
   const { children, noHeader, noMenuBar, noFooter } = props;
 
   return (
-    <Root>
+    <Root className={!noFooter ? 'minHeight' : ''}>
       {!noHeader && <Header />}
       {!noMenuBar && <MenuBar />}
       {children}
@@ -28,6 +28,9 @@ export default Layout;
 
 const Root = styled.div`
   width: 100vw;
+  &.minHeight {
+    min-height: 136.7rem;
+  }
   height: 100vh;
   display: flex;
   flex-direction: column;
