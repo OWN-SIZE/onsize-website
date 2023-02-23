@@ -7,6 +7,7 @@ export interface AuthInput {
 export interface AuthOutput {
   token: string;
   userId: number;
+  isAlreadyUser: 'pending' | 'done';
 }
 
 export interface LogoutInput {
