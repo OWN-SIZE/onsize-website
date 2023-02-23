@@ -8,7 +8,7 @@ import { tokenState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { postLogoutData } from '@/apis/user';
+import { postLogoutData, postWithDrawData } from '@/apis/user';
 import Modal from 'components/common/Modal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
@@ -27,14 +27,20 @@ function MyPageMain() {
   const onClickLeaveModal = () => {
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
-  const onClickWithdraw = () => {
-    setIsLeaveModalOpen(!isLeaveModalOpen);
-  };
   const onClickCancel = () => {
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
   const onClickLogout = async () => {
     const response = await postLogoutData();
+    if (response) {
+      router.replace('/login');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('token');
+      resetToken();
+    }
+  };
+  const onClickWithdraw = async () => {
+    const response = await postWithDrawData();
     if (response) {
       router.replace('/login');
       localStorage.removeItem('userId');

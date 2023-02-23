@@ -20,3 +20,8 @@ export interface LogoutOutput {
   email: string;
   name: string;
 }
+export interface WithdrawOutput {
+  userId: number;
+  email: string;
+  name: string;
+}

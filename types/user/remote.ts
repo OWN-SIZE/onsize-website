@@ -1,4 +1,4 @@
-import { AuthOutput, LogoutOutput } from './client';
+import { AuthOutput, LogoutOutput, WithdrawOutput } from './client';
 
 export interface AuthResponse {
   data: AuthOutput;
@@ -6,4 +6,7 @@ export interface AuthResponse {
 
 export interface LogoutResponse {
   data: LogoutOutput;
+}
+export interface WithdrawResponse {
+  data: WithdrawOutput;
 }
