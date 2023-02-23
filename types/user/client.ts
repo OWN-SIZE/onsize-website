@@ -8,3 +8,15 @@ export interface AuthOutput {
   token: string;
   userId: number;
 }
+
+export interface LogoutInput {
+  userId: number;
+  email: string;
+  name: string;
+}
+
+export interface LogoutOutput {
+  userId: number;
+  email: string;
+  name: string;
+}

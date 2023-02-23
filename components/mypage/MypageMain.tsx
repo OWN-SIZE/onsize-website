@@ -2,9 +2,13 @@ import { useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useResetRecoilState } from 'recoil';
+import { tokenState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { postLogoutData } from '@/apis/user';
 import Modal from 'components/common/Modal';
 import ModalPortal from 'components/common/modal/ModalPortal';
 
@@ -29,7 +33,18 @@ function MyPageMain() {
   const onClickCancel = () => {
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
+  const onClickLogout = async () => {
+    const response = await postLogoutData();
+    if (response) {
+      router.replace('/login');
+      localStorage.removeItem('userId');
+      localStorage.removeItem('token');
+      resetToken();
+    }
+  };
 
+  const router = useRouter();
+  const resetToken = useResetRecoilState(tokenState);
   const { userInformation } = useFetchUserInformation();
   const { history } = useFetchMyPageHistory();
 
@@ -76,7 +91,9 @@ function MyPageMain() {
           <button className="withdrawal" onClick={onClickLeaveModal}>
             탈퇴하기
           </button>
-          <button className="signOut">로그아웃</button>
+          <button className="signOut" onClick={onClickLogout}>
+            로그아웃
+          </button>
         </Styled.UserLeaveContainer>
       </Styled.MySizeContainer>
       {isHistoryModalOpen && (
