@@ -28,3 +28,4 @@ export { default as WhiteLeftArrowIcon } from './white-arrow-left.png';
 export { default as WhiteRightArrowIcon } from './white-arrow-right.png';
 export { default as CategoryDetailFirstClosetIcon } from './blankCategoryDetail.png';
 export { default as HoveredOpenMySizeIcon } from './mysize_hover_toggle.png';
+export { default as profileDefault } from './profileDefault.svg';

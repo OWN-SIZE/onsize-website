@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AddCategoryIcon, HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from 'assets/icon';
+import { HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon, profileDefault } from 'assets/icon';
 import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -32,11 +32,12 @@ function Header() {
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href={'/mypage'}>
-              {userInformation ? (
-                <Image src={userInformation.picture} width={60} height={60} alt="사용자 프로필" />
-              ) : (
-                <div />
-              )}
+              <Image
+                src={userInformation ? userInformation.picture : profileDefault}
+                width={60}
+                height={60}
+                alt="사용자 프로필"
+              />
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
