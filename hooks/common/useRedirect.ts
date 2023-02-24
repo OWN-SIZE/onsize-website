@@ -11,16 +11,14 @@ function useRedirect() {
 
   const onRedirect = () => {
     if (userState === 'pending') {
-      router.replace('/login');
+      router.replace('/register');
     } else if (userState === 'done') {
       router.replace('/home');
-    } else {
-      router.replace('/register');
     }
   };
 
   useEffect(() => {
-    userState && onRedirect;
+    userState && onRedirect();
   }, []);
 
   return { isLoading };
