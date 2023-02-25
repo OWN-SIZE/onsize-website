@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { LoginMouseImg } from 'assets/img';
+import { LoginMouseImg, SizeGuideImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
@@ -71,7 +71,30 @@ function Register() {
               <br />
               입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
             </h2>
-            <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
+            <Styled.SizeGuide>
+              <span>💡 상의 사이즈 입력을 위한 팁</span>
+              <div>
+                <h1>
+                  정확한 사이즈 추천을 위해 추천받고 싶은 상의 <br />
+                  유형과 비슷한 실측치를 입력해주세요
+                </h1>
+                <h2>
+                  ex. 반팔 사이즈를 입력하고 니트를 사이즈를 추천받을
+                  <br /> 경우 오차가 생길 수 있어요 😢
+                </h2>
+                <h3>
+                  1. 반소매/긴소매/민소매/카라티
+                  <br />
+                  2. 니트/스웨터
+                  <br />
+                  3. 맨투맨/후드
+                  <br />
+                  4. 셔츠/블라우스
+                </h3>
+                <Image src={SizeGuideImg} alt="사이즈 가이드 배경 이미지" placeholder="blur" />
+              </div>
+              {/* <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} /> */}
+            </Styled.SizeGuide>
           </Styled.LeftConatiner>
           <Styled.RightContainer>
             <Progress progress={progress} selectedOption={selectedOption} />
@@ -141,10 +164,65 @@ const Styled = {
       color: ${theme.colors.gray000};
       ${theme.fonts.body4};
     }
-    img {
+    /* img {
       position: fixed;
       left: 41.5rem;
       top: 4.6rem;
+    } */
+  `,
+  SizeGuide: styled.div`
+    display: flex;
+    width: 38.6rem;
+    height: 34.529rem;
+    margin-top: 8.3rem;
+    > span {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 23.4rem;
+      height: 4rem;
+      border-radius: 5rem;
+      background: #fffaad;
+      text-align: center;
+      ${theme.fonts.body4};
+      color: black;
+      z-index: 10;
+    }
+    > div {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      width: 37rem;
+      height: 32.529rem;
+      padding-left: 2.8rem;
+      transform: translate(1.6rem, 2rem);
+      color: white;
+      font-family: 'Noto Sans KR';
+      font-style: normal;
+      > h1 {
+        margin-top: 3rem;
+        font-weight: 600;
+        font-size: 1.6rem;
+        line-height: 3rem;
+      }
+      > h2 {
+        margin-top: 0.2rem;
+        font-weight: 400;
+        font-size: 1.4rem;
+        line-height: 2.5rem;
+      }
+      > h3 {
+        margin-top: 2.6rem;
+        font-weight: 700;
+        font-size: 1.6rem;
+        line-height: 3rem;
+      }
+      > img {
+        position: absolute;
+        left: 0;
+        z-index: -10;
+      }
     }
   `,
   RightContainer: styled.article`
