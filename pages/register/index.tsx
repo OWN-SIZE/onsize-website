@@ -93,8 +93,8 @@ function Register() {
                 </h3>
                 <Image src={SizeGuideImg} alt="사이즈 가이드 배경 이미지" placeholder="blur" />
               </div>
-              {/* <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} /> */}
             </Styled.SizeGuide>
+            <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
           </Styled.LeftConatiner>
           <Styled.RightContainer>
             <Progress progress={progress} selectedOption={selectedOption} />
@@ -164,11 +164,11 @@ const Styled = {
       color: ${theme.colors.gray000};
       ${theme.fonts.body4};
     }
-    /* img {
-      position: fixed;
+    > img:last-child {
+      position: absolute;
       left: 41.5rem;
       top: 4.6rem;
-    } */
+    }
   `,
   SizeGuide: styled.div`
     display: flex;
