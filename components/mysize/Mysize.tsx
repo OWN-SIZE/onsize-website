@@ -150,11 +150,9 @@ export default function Mysize() {
         });
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
-      } 
-      else if (isTopClicked === false && isWidthOfBottom === null) {
+      } else if (isTopClicked === false && isWidthOfBottom === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
-      }
-      else if (isTopClicked && isWidthOfTop === null) {
+      } else if (isTopClicked && isWidthOfTop === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       }
     }
@@ -277,7 +275,7 @@ const Styled = {
     border-bottom: 0.4rem solid ${theme.colors.gray200};
   `,
   SaveButton: styled.button`
-    position: fixed;
+    position: absolute;
     border: none;
     width: 14.4rem;
     height: 4rem;
