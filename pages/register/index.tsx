@@ -22,9 +22,22 @@ function Register() {
   const [selectedOption, setSelectedOption] = useState<OptionType>(null);
   const [isNextActive, setIsNextActive] = useState<boolean>(false);
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
+  const [isTip, setIsTip] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
   const [, setIsRegister] = useRecoilState(isRegisterState);
   const router = useRouter();
+
+  useEffect(() => {
+    if (selectedOption === '하의' && progress === 3) {
+      // 하의 선택시 마지막 입력은 상의
+      setIsTip(true);
+    } else if (selectedOption !== '하의' && progress === 2) {
+      // 상의, 또는 상하의 선택시 첫번째 입력이 상의
+      setIsTip(true);
+    } else {
+      setIsTip(false);
+    }
+  }, [progress, selectedOption]);
 
   const onClickSize = () => {
     if (progress === 3) {
@@ -71,29 +84,31 @@ function Register() {
               <br />
               입력하신 사이즈 기준으로 가장 유사한 사이즈의 제품을 추천해드려요.
             </h2>
-            <Styled.SizeGuide>
-              <span>💡 상의 사이즈 입력을 위한 팁</span>
-              <div>
-                <h1>
-                  정확한 사이즈 추천을 위해 추천받고 싶은 상의 <br />
-                  유형과 비슷한 실측치를 입력해주세요
-                </h1>
-                <h2>
-                  ex. 반팔 사이즈를 입력하고 니트를 사이즈를 추천받을
-                  <br /> 경우 오차가 생길 수 있어요 😢
-                </h2>
-                <h3>
-                  1. 반소매/긴소매/민소매/카라티
-                  <br />
-                  2. 니트/스웨터
-                  <br />
-                  3. 맨투맨/후드
-                  <br />
-                  4. 셔츠/블라우스
-                </h3>
-                <Image src={SizeGuideImg} alt="사이즈 가이드 배경 이미지" placeholder="blur" />
-              </div>
-            </Styled.SizeGuide>
+            {isTip && (
+              <Styled.SizeGuide>
+                <span>💡 상의 사이즈 입력을 위한 팁</span>
+                <div>
+                  <h1>
+                    정확한 사이즈 추천을 위해 추천받고 싶은 상의 <br />
+                    유형과 비슷한 실측치를 입력해주세요
+                  </h1>
+                  <h2>
+                    ex. 반팔 사이즈를 입력하고 니트를 사이즈를 추천받을
+                    <br /> 경우 오차가 생길 수 있어요 😢
+                  </h2>
+                  <h3>
+                    1. 반소매/긴소매/민소매/카라티
+                    <br />
+                    2. 니트/스웨터
+                    <br />
+                    3. 맨투맨/후드
+                    <br />
+                    4. 셔츠/블라우스
+                  </h3>
+                  <Image src={SizeGuideImg} alt="사이즈 가이드 배경 이미지" placeholder="blur" />
+                </div>
+              </Styled.SizeGuide>
+            )}
             <Image src={LoginMouseImg} alt="로그인 배경 이미지" placeholder="blur" height={1000} width={172} />
           </Styled.LeftConatiner>
           <Styled.RightContainer>
