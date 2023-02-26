@@ -136,7 +136,7 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfTop = false;
       }
 
-      if (progress === 3) {
+      if (isOption || progress === 3) {
         inputData.isAlreadyUser = 'done';
       }
 
@@ -163,7 +163,7 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfBottom = false;
       }
 
-      if (progress === 3) {
+      if (isOption || progress === 3) {
         inputData.isAlreadyUser = 'done';
       }
 
@@ -198,7 +198,7 @@ export default function SizeForm(props: FormProps) {
     } else {
       setSkip && setSkip(false);
     }
-  }, [isOption]);
+  }, [progress]);
 
   const sendMeasureValue = (measure: string) => {
     onClickMeasure && onClickMeasure(measure);

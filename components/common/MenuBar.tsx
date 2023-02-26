@@ -47,7 +47,5 @@ const Styled = {
 
     color: ${({ isClicked }) => (isClicked ? theme.colors.gray550 : theme.colors.gray300)};
     border-bottom: ${({ isClicked }) => (isClicked ? `0.3rem solid ${theme.colors.gray500}` : 0)};
-
-    cursor: pointer;
   `,
 };

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { AddCategoryIcon, HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from 'assets/icon';
+import { HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from 'assets/icon';
 import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -17,6 +17,7 @@ function Header() {
   const router = useRouter();
 
   const { userInformation } = useFetchUserInformation();
+
   return (
     <Styled.Root>
       <Styled.Container>
@@ -32,7 +33,11 @@ function Header() {
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href={'/mypage'}>
-              <Image src={userInformation?.picture || ''} width={60} height={60} alt="사용자 프로필" />
+              {userInformation ? (
+                <Image src={userInformation.picture} loading="lazy" width={60} height={60} alt="사용자 프로필" />
+              ) : (
+                <Styled.ProfileImage />
+              )}
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
@@ -101,6 +106,13 @@ const Styled = {
     }
   `,
 
+  ProfileImage: styled.div`
+    width: 6rem;
+    height: 6rem;
+    background-color: #c2c2c2;
+    border-radius: 50%;
+  `,
+
   RightSection: styled.div`
     display: flex;
     justify-content: space-between;
@@ -126,8 +138,6 @@ const Styled = {
   InfoButton: styled.button`
     background: none;
     border: none;
-
-    cursor: pointer;
   `,
 
   MySizeButtonBackGround: styled.div`

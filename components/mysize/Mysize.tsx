@@ -1,9 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useContext } from 'react';
-import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
+import React, { useEffect, useState } from 'react';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
-import TopRequestModal from 'assets/icon/topRequestModal.png';
 import { useFetchMysize } from 'hooks/queries/mySize';
 import Image from 'next/image';
 import styled from 'styled-components';
