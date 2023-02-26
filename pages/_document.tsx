@@ -59,7 +59,6 @@ class MyDocument extends Document {
           <div id="modal-root"></div>
           <Main />
           <NextScript />
-          {/* <div id="modal-root"></div> */}
         </body>
       </Html>
     );

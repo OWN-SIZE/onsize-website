@@ -89,7 +89,6 @@ const Styled = {
 
     border-radius: 1rem;
     background-color: ${theme.colors.gray100};
-    cursor: pointer;
     > p {
       margin-top: 2.4rem;
       color: ${theme.colors.gray550};

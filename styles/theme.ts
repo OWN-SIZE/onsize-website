@@ -1,5 +1,3 @@
-import { css, CSSProp } from 'styled-components';
-
 const colors = {
   yellow: '#FBF26C',
   yellow01: '#FFFAAD',

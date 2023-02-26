@@ -1,12 +1,12 @@
 import { useMutation, useQuery, useQueryClient } from 'react-query';
+import { fetchMysize } from 'apis/mySize';
 
 import { postMyBottomSize, postMyTopSize } from '@/apis/mySize';
-import { fetchMysize } from 'apis/mySize';
 
 const QUERY_KEY = {
   myTopSize: 'myTopSize',
   myBottomSize: 'myBottomSize',
-  allMysize: 'allMysize'
+  allMysize: 'allMysize',
 };
 
 export const useFetchMysize = (...args: unknown[]) => {
@@ -14,8 +14,7 @@ export const useFetchMysize = (...args: unknown[]) => {
   return {
     allMysize: data,
   };
-}
-
+};
 
 /** Mutation */
 

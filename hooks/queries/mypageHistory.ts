@@ -1,5 +1,6 @@
-import { useMutation, useQuery, useQueryClient } from 'react-query';
-import { fetchUserInformation, fetchMyPageHistory } from '../../apis/mypageHistory';
+import { useQuery } from 'react-query';
+
+import { fetchMyPageHistory, fetchUserInformation } from '../../apis/mypageHistory';
 
 const QUERY_KEY = {
   mypage: 'mypage',

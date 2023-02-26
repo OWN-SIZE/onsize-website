@@ -140,8 +140,6 @@ const Styled = {
     ${theme.fonts.body2};
     color: ${theme.colors.gray550};
 
-    cursor: pointer;
-
     & > img {
       margin-right: 1.2rem;
     }
@@ -171,8 +169,6 @@ const Styled = {
 
     ${theme.fonts.card1};
     background-color: ${theme.colors.yellow01};
-
-    cursor: pointer;
 
     & > img {
       margin-right: 1.2rem;

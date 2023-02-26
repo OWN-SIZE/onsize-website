@@ -66,29 +66,30 @@ function MyPageMain() {
             placeholder="blur"
             blurDataURL="assets/icon/profileDefault.svg"
           />
-          <Styled.UserInformation>
-            {userInformation && userInformation.name} <div>{userInformation && userInformation.email}</div>
-          </Styled.UserInformation>
+          {userInformation && (
+            <Styled.UserInformation>
+              {userInformation.name} <div>{userInformation.email}</div>
+            </Styled.UserInformation>
+          )}
         </Styled.UserInformationContainer>
         <Styled.History>
-          지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>{history && history.recCount}번</button> 받았어요
+          지금까지 사이즈 추천을 <button onClick={onClickHistoryModal}>{history ? history.recCount : 0}번</button>{' '}
+          받았어요
         </Styled.History>
         <Styled.InformationContainer>
           <h1>정보</h1>
           <p
-            onClick={() => {
+            onClick={() =>
               window.open(
                 'https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform',
                 '_blank'
-              );
-            }}
+              )
+            }
           >
             피드백 및 버그 제보
           </p>
           <p
-            onClick={() => {
-              window.open('https://golden-rib-2f1.notion.site/7171b098f7c94b04b136702f24e198b6', '_blank');
-            }}
+            onClick={() => window.open('https://golden-rib-2f1.notion.site/7171b098f7c94b04b136702f24e198b6', '_blank')}
           >
             개인 정보 보호 정책
           </p>
@@ -122,13 +123,7 @@ function MyPageMain() {
                   ) : (
                     <h5>{history.recommendSize}</h5>
                   )}
-                  <p
-                    onClick={() => {
-                      window.open(history.url, '_blank');
-                    }}
-                  >
-                    {history.url.substr(0, 17)}
-                  </p>
+                  <p onClick={() => window.open(history.url, '_blank')}>{history.url.substr(0, 17)}</p>
                 </Styled.HistoryModalLink>
               ))}
           </HistoryModal>
@@ -247,6 +242,7 @@ const Styled = {
     & > button {
       ${theme.fonts.body6};
       border: none;
+      cursor: pointer;
     }
     & > .withdrawal {
       color: ${theme.colors.gray250};
