@@ -29,11 +29,10 @@ interface InputProps {
   isTopClicked?: boolean;
   formType?: string | null;
   isAlertActive?: boolean;
-  isSaveButtonClicked?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive, isSaveButtonClicked } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');

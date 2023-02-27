@@ -31,7 +31,6 @@ interface FormProps {
     | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
   isTopClicked?: boolean;
-  isSaveButtonClicked?: boolean;
 }
 
 // 상의 총장, 어깨너비
@@ -98,7 +97,6 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure,
     data,
     isTopClicked,
-    isSaveButtonClicked
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -221,7 +219,6 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
-              isSaveButtonClicked={isSaveButtonClicked}
             />
           ))}
           <Styled.RadioContainer>
@@ -253,7 +250,6 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               isAlertActive={isAlertActive}
-              isSaveButtonClicked={isSaveButtonClicked}
             />
           ))}
           {children}
@@ -272,7 +268,6 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
-              isSaveButtonClicked={isSaveButtonClicked}
             />
           ))}
           <Styled.RadioContainer>
@@ -302,7 +297,6 @@ export default function SizeForm(props: FormProps) {
             data={data}
             isTopClicked={isTopClicked}
             isAlertActive={isAlertActive}
-            isSaveButtonClicked={isSaveButtonClicked}
           />
           {children}
         </Styled.Form>

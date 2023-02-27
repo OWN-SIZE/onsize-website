@@ -44,7 +44,6 @@ export default function Mysize() {
   const [isTopClicked, setIsTopClicked] = useState(true);
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
-  const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false);
 
   //데이터 패칭
   const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure, isAlertActive);
@@ -198,7 +197,6 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
-          isSaveButtonClicked={isSaveButtonClicked}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장
