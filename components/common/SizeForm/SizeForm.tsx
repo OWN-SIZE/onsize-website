@@ -31,7 +31,6 @@ interface FormProps {
     | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
   isTopClicked?: boolean;
-  hasToastOpened?: boolean;
 }
 
 // 상의 총장, 어깨너비
@@ -98,7 +97,6 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure,
     data,
     isTopClicked,
-    hasToastOpened,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -219,7 +217,6 @@ export default function SizeForm(props: FormProps) {
               valid={{ min, max }}
               data={data}
               isTopClicked={isTopClicked}
-              hasToastOpened={hasToastOpened}
               formType={formType}
               isAlertActive={isAlertActive}
             />
@@ -252,7 +249,6 @@ export default function SizeForm(props: FormProps) {
               valid={{ min: scope[measure].min, max: scope[measure].max }}
               data={data}
               isTopClicked={isTopClicked}
-              hasToastOpened={hasToastOpened}
               isAlertActive={isAlertActive}
             />
           ))}
@@ -270,7 +266,6 @@ export default function SizeForm(props: FormProps) {
               valid={{ min, max }}
               data={data}
               isTopClicked={isTopClicked}
-              hasToastOpened={hasToastOpened}
               formType={formType}
               isAlertActive={isAlertActive}
             />
@@ -301,7 +296,6 @@ export default function SizeForm(props: FormProps) {
             valid={{ min: chestScopeMapper[measure].min, max: chestScopeMapper[measure].max }}
             data={data}
             isTopClicked={isTopClicked}
-            hasToastOpened={hasToastOpened}
             isAlertActive={isAlertActive}
           />
           {children}
