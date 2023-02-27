@@ -158,10 +158,14 @@ function ThumbNail(props: ThumbNailProps) {
               width={70}
               height={36}
               alt="사이즈 표시"
+              placeholder="blur"
+              priority
             />
             <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
               <span>{data.size}</span>
-              {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" />}
+              {data.isRecommend && (
+                <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" placeholder="blur" priority />
+              )}
             </Styled.SizeContainer>
           </>
         )}
@@ -173,6 +177,8 @@ function ThumbNail(props: ThumbNailProps) {
             width={25}
             height={25}
             alt="고정된 상품 핀 아이콘"
+            placeholder="blur"
+            priority
           />
         )}
       </Styled.HoverHideContainer>
@@ -187,6 +193,7 @@ function ThumbNail(props: ThumbNailProps) {
               height={300}
               placeholder="blur"
               blurDataURL="assets/icon/folder_filled.png"
+              priority
             />
           )}
           <Styled.SeparateImages>
@@ -200,6 +207,7 @@ function ThumbNail(props: ThumbNailProps) {
                   placeholder="blur"
                   blurDataURL="assets/icon/folder_filled.png"
                   className="secondImage"
+                  priority
                 />
               </div>
             )}
@@ -213,6 +221,7 @@ function ThumbNail(props: ThumbNailProps) {
                   placeholder="blur"
                   blurDataURL="assets/icon/folder_filled.png"
                   className="thirdImage"
+                  priority
                 />
               </div>
             )}
@@ -222,7 +231,7 @@ function ThumbNail(props: ThumbNailProps) {
       {page !== 'category' && (
         <Styled.ThumbNailImg className={'closet'} width={width} height={height}>
           {data.image && typeof data.image === 'string' && (
-            <Image src={data.image} width={332} height={332} alt="상품 대표 이미지" />
+            <Image src={data.image} width={332} height={332} loading="eager" alt="상품 대표 이미지" priority />
           )}
         </Styled.ThumbNailImg>
       )}
@@ -250,6 +259,8 @@ function ThumbNail(props: ThumbNailProps) {
                 width={16}
                 height={9}
                 alt="카테고리 추가 버튼 아이콘"
+                placeholder="blur"
+                priority
               />
             </button>
           </Styled.CategoryModalContainer>
@@ -258,12 +269,7 @@ function ThumbNail(props: ThumbNailProps) {
           <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
         )}
         {page === 'category' ? (
-          <Link
-            href={{
-              pathname: `/category/${data.id}`,
-            }}
-            as={`/category/${data.id}`}
-          >
+          <Link href={`/category/${data.id}`}>
             <Styled.ClickZone />
           </Link>
         ) : (
@@ -282,6 +288,8 @@ function ThumbNail(props: ThumbNailProps) {
               width={40}
               height={40}
               alt="고정 버튼 아이콘"
+              priority
+              placeholder="blur"
             />
             <Image
               src={(page === 'categoryDetail' ? data.isInPin : data.isPin) ? HoveredPinFillIcon : HoveredPinIcon}
@@ -290,11 +298,13 @@ function ThumbNail(props: ThumbNailProps) {
               width={40}
               height={40}
               alt="호버된 고정 버튼 아이콘"
+              placeholder="blur"
+              priority
             />
           </Styled.IconCotainer>
           {/* 수정 */}
           <Styled.IconCotainer id={`Edit`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={EditIcon} width={40} height={40} alt="수정 버튼 아이콘" />
+            <Image src={EditIcon} width={40} height={40} alt="수정 버튼 아이콘" placeholder="blur" priority />
             <Image
               src={HoveredEditIcon}
               className={iconHoveredTarget === `Edit` ? 'show' : 'hide'}
@@ -305,6 +315,8 @@ function ThumbNail(props: ThumbNailProps) {
               width={40}
               height={40}
               alt="호버된 수정 버튼 아이콘"
+              placeholder="blur"
+              priority
             />
           </Styled.IconCotainer>
 
@@ -338,7 +350,7 @@ function ThumbNail(props: ThumbNailProps) {
           )}
           {/* 삭제 */}
           <Styled.IconCotainer id={`Delete`} onMouseEnter={handleIconMousehover} onMouseLeave={handleIconMouseLeave}>
-            <Image src={DeleteIcon} width={40} height={40} alt="삭제 버튼 아이콘" />
+            <Image src={DeleteIcon} width={40} height={40} alt="삭제 버튼 아이콘" placeholder="blur" priority />
             <Image
               src={HoveredDeleteIcon}
               className={iconHoveredTarget === `Delete` ? 'show' : 'hide'}
@@ -349,6 +361,8 @@ function ThumbNail(props: ThumbNailProps) {
               width={40}
               height={40}
               alt="호버된 삭제 버튼 아이콘"
+              placeholder="blur"
+              priority
             />
           </Styled.IconCotainer>
           {isDeleteModalOpen && (

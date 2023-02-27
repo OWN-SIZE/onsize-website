@@ -1,4 +1,4 @@
-import { useState, lazy, Suspense } from 'react';
+import { lazy, Suspense,useState } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';

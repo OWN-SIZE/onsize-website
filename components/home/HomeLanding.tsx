@@ -1,10 +1,11 @@
+import { lazy, Suspense } from 'react';
 import styled from 'styled-components';
 import { ClosetOutput } from 'types/allCloset/client';
 
 import { useFetchAllCloset } from '@/hooks/queries/allCloset';
 
-import HomeFirst from './HomeFirst';
-import HomeMain from './HomeMain';
+const HomeFirst = lazy(() => import('./HomeFirst'));
+const HomeMain = lazy(() => import('./HomeMain'));
 
 function HomeLanding() {
   const orderSortById = (item: ClosetOutput[]) => {
@@ -24,11 +25,15 @@ function HomeLanding() {
     const pinData: ClosetOutput[] = orderSortByTime(data.filter((data) => data.isPin));
     const noPinData: ClosetOutput[] = orderSortById(data.filter((data) => !data.isPin));
     data = pinData.concat(noPinData);
-  } else {
-    data = [];
   }
 
-  return <Styled.Root>{data.length !== 0 ? <HomeMain data={data} page="closet" /> : <HomeFirst />}</Styled.Root>;
+  return (
+    <Styled.Root>
+      <Suspense fallback={<div></div>}>
+        {data && (data.length !== 0 ? <HomeMain data={data} page="closet" /> : <HomeFirst />)}
+      </Suspense>
+    </Styled.Root>
+  );
 }
 
 export default HomeLanding;

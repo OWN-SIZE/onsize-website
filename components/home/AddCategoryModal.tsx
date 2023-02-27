@@ -53,9 +53,11 @@ function AddCategoryModal(props: AddCategoryModalProps) {
     >
       <Image
         src={includeCategoryData?.includes(Number(data.id)) ? GrayFolderIcon : BlackFolderIcon}
+        placeholder={'blur'}
         width={15}
         height={15}
         alt="카테고리 아이콘"
+        priority
       />
       {data.categoryName.length > 12 ? `${data.categoryName.substring(0, 12)}...` : `${data.categoryName}`}
     </Styled.Category>
@@ -66,7 +68,8 @@ function AddCategoryModal(props: AddCategoryModalProps) {
       <Styled.MyCategory>나의 카테고리</Styled.MyCategory>
       <Styled.CategoryList>{categoryProduct}</Styled.CategoryList>
       <Styled.addCategoryButton onClick={onClickCategoryCreateModal}>
-        <Image src={Folder20Icon} width={20} height={20} alt="카테고리 아이콘" />새 카테고리 만들기
+        <Image src={Folder20Icon} placeholder={'blur'} width={20} height={20} alt="카테고리 아이콘" priority />새
+        카테고리 만들기
       </Styled.addCategoryButton>
       {isCategoryCreateModalOpen && showToast && (
         <ModalPortal>
