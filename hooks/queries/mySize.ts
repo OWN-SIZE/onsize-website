@@ -10,9 +10,7 @@ const QUERY_KEY = {
 };
 
 export const useFetchMysize = (...args: unknown[]) => {
-  const { data } = useQuery([QUERY_KEY.allMysize, args], fetchMysize, {
-    refetchOnWindowFocus: true,
-  });
+  const { data } = useQuery([QUERY_KEY.allMysize, args], fetchMysize);
   return {
     allMysize: data,
   };
