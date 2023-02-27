@@ -1,11 +1,11 @@
 import React from 'react';
 import { BottomImg, TopBottomImg, TopImg } from 'assets/img';
 import Image from 'next/image';
-import { OptionType } from 'pages/register';
 import styled, { css } from 'styled-components';
 import theme from 'styles/theme';
 
 import NextButton from './NextButton';
+import { OptionType } from './Register';
 
 interface ButtonProps {
   selectedOption?: OptionType;
@@ -89,7 +89,6 @@ const Styled = {
 
     border-radius: 1rem;
     background-color: ${theme.colors.gray100};
-    cursor: pointer;
     > p {
       margin-top: 2.4rem;
       color: ${theme.colors.gray550};

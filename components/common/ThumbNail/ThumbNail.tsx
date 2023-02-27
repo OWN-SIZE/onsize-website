@@ -532,7 +532,6 @@ const Styled = {
       ${theme.fonts.title3};
       color: ${theme.colors.gray000};
 
-      cursor: pointer;
       & > img {
         width: 1.6rem;
         height: 0.9rem;

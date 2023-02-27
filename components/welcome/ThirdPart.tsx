@@ -217,7 +217,6 @@ const Styled = {
       color: ${theme.colors.black};
       background-color: ${theme.colors.yellow01};
       border: none;
-      cursor: pointer;
     }
     @media (min-width: 350px) and (max-width: 600px) {
       ${theme.fonts.body2_DSB};

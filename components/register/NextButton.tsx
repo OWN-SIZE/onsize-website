@@ -18,7 +18,7 @@ export default function NextButton(props: ButtonProps) {
 
 const Styled = {
   NextButton: styled.button<{ isActive?: boolean }>`
-    position: fixed;
+    position: absolute;
     width: 46.2rem;
     height: 6.3rem;
     bottom: 9.8rem;

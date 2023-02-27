@@ -1,9 +1,6 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { useContext } from 'react';
-import BottomRequestModal from 'assets/icon/bottomRequestModal.png';
+import React, { useEffect, useState } from 'react';
 import TopBottomClicked from 'assets/icon/topBottomClicked.png';
 import TopBottomUnclicked from 'assets/icon/topBottomUnclicked.png';
-import TopRequestModal from 'assets/icon/topRequestModal.png';
 import { useFetchMysize } from 'hooks/queries/mySize';
 import Image from 'next/image';
 import styled from 'styled-components';
@@ -37,10 +34,8 @@ export default function Mysize() {
 
   //토스트
   const { isOpenToast, message, showToast } = useToast();
-  const [hasToastOpened, setHasToastOpened] = useState(false);
   const onSuccessSubmit = () => {
     showToast('저장되었습니다.');
-    setHasToastOpened(true);
   };
 
   //클릭 상태 관리
@@ -150,11 +145,9 @@ export default function Mysize() {
         });
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
-      } 
-      else if (isTopClicked === false && isWidthOfBottom === null) {
+      } else if (isTopClicked === false && isWidthOfBottom === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
-      }
-      else if (isTopClicked && isWidthOfTop === null) {
+      } else if (isTopClicked && isWidthOfTop === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       }
     }
@@ -201,7 +194,6 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
-          hasToastOpened={hasToastOpened}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장
@@ -277,7 +269,7 @@ const Styled = {
     border-bottom: 0.4rem solid ${theme.colors.gray200};
   `,
   SaveButton: styled.button`
-    position: fixed;
+    position: absolute;
     border: none;
     width: 14.4rem;
     height: 4rem;

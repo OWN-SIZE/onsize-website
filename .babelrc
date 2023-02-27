@@ -6,7 +6,7 @@
       {
         "ssr": true,
         "displayName": true,
-        "preprocess": false
+        "preprocess": true
       }
     ]
   ]

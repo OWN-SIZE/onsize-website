@@ -17,6 +17,7 @@ function Header() {
   const router = useRouter();
 
   const { userInformation } = useFetchUserInformation();
+
   return (
     <Styled.Root>
       <Styled.Container>
@@ -106,6 +107,13 @@ const Styled = {
     }
   `,
 
+  ProfileImage: styled.div`
+    width: 6rem;
+    height: 6rem;
+    background-color: #c2c2c2;
+    border-radius: 50%;
+  `,
+
   RightSection: styled.div`
     display: flex;
     justify-content: space-between;
@@ -135,8 +143,6 @@ const Styled = {
   InfoButton: styled.button`
     background: none;
     border: none;
-
-    cursor: pointer;
   `,
 
   MySizeButtonBackGround: styled.div`

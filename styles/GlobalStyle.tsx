@@ -28,6 +28,10 @@ const GlobalStyle = createGlobalStyle`
     .non-clickable {
         pointer-events: none;
     }
+
+    button{
+        cursor: pointer;
+    }
 `;
 
 export default GlobalStyle;

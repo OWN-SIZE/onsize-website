@@ -80,7 +80,6 @@ const Styled = {
     width: 6rem;
     height: 6rem;
     border: 0;
-    cursor: pointer;
   `,
   LottieContainer: styled.div`
     display: flex;

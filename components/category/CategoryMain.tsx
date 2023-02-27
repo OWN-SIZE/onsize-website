@@ -120,6 +120,7 @@ const Styled = {
   `,
   CategoryContainer: styled.div`
     width: 143.4rem;
+    min-height: 66rem;
     margin: 0 auto;
     display: flex;
     flex-wrap: wrap;
