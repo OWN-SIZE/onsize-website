@@ -34,10 +34,8 @@ export default function Mysize() {
 
   //토스트
   const { isOpenToast, message, showToast } = useToast();
-  const [hasToastOpened, setHasToastOpened] = useState(false);
   const onSuccessSubmit = () => {
     showToast('저장되었습니다.');
-    setHasToastOpened(true);
   };
 
   //클릭 상태 관리
@@ -196,7 +194,6 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
-          hasToastOpened={hasToastOpened}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장

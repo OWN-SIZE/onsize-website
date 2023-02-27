@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, lazy, Suspense } from 'react';
 import profileDefault from 'assets/icon/profileDefault.svg';
 import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
@@ -14,7 +14,7 @@ import ModalPortal from 'components/common/modal/ModalPortal';
 
 import { useFetchMyPageHistory, useFetchUserInformation } from '../../hooks/queries/mypageHistory';
 
-import HistoryModal from './HistoryModal';
+const HistoryModal = lazy(() => import('./HistoryModal'));
 
 function MyPageMain() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
@@ -59,8 +59,8 @@ function MyPageMain() {
       <Styled.MySizeContainer>
         <Styled.UserInformationContainer>
           <Image
-            src={profileDefault}
-            alt="사용자 지정 프로필 이미지가 없는 경우의 디폴트 프로필 이미지"
+            src={userInformation ? userInformation.picture : profileDefault}
+            alt="사용자 프로필 이미지"
             width={82}
             height={82}
             placeholder="blur"
@@ -78,20 +78,26 @@ function MyPageMain() {
         </Styled.History>
         <Styled.InformationContainer>
           <h1>정보</h1>
-          <p
-            onClick={() =>
-              window.open(
-                'https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform',
-                '_blank'
-              )
-            }
-          >
-            피드백 및 버그 제보
+          <p>
+            <span
+              onClick={() => {
+                window.open(
+                  'https://docs.google.com/forms/d/e/1FAIpQLSfHXvABOrKUtbROS1Qm3pm-YdQG4_9QwoXMiucclvOsz7VrMQ/viewform',
+                  '_blank'
+                );
+              }}
+            >
+              피드백 및 버그 제보
+            </span>
           </p>
-          <p
-            onClick={() => window.open('https://golden-rib-2f1.notion.site/7171b098f7c94b04b136702f24e198b6', '_blank')}
-          >
-            개인 정보 보호 정책
+          <p>
+            <span
+              onClick={() => {
+                window.open('https://golden-rib-2f1.notion.site/7171b098f7c94b04b136702f24e198b6', '_blank');
+              }}
+            >
+              개인 정보 보호 정책
+            </span>
           </p>
         </Styled.InformationContainer>
         <Styled.UserLeaveContainer>
@@ -104,30 +110,38 @@ function MyPageMain() {
         </Styled.UserLeaveContainer>
       </Styled.MySizeContainer>
       {isHistoryModalOpen && (
-        <ModalPortal>
-          <HistoryModal onClickHistoryModal={onClickHistoryModal}>
-            {history &&
-              history.recData.map((history) => (
-                <Styled.HistoryModalLink key={history.id}>
-                  {history.recommendSize === '-' ? (
-                    <div>
-                      <Image
-                        src={sizeReplacement}
-                        alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
-                        width={6}
-                        height={6}
-                        placeholder="blur"
-                        blurDataURL="assets/icon/sizeReplacement.png"
-                      ></Image>
-                    </div>
-                  ) : (
-                    <h5>{history.recommendSize}</h5>
-                  )}
-                  <p onClick={() => window.open(history.url, '_blank')}>{history.url.substr(0, 17)}</p>
-                </Styled.HistoryModalLink>
-              ))}
-          </HistoryModal>
-        </ModalPortal>
+        <Suspense fallback={<div>로딩중</div>}>
+          <ModalPortal>
+            <HistoryModal onClickHistoryModal={onClickHistoryModal}>
+              {history &&
+                history.recData.map((history) => (
+                  <Styled.HistoryModalLink key={history.id}>
+                    {history.recommendSize === '-' ? (
+                      <div>
+                        <Image
+                          src={sizeReplacement}
+                          alt="추천받은 사이즈가 없는 경우, 없음을 나타내는 이미지"
+                          width={6}
+                          height={6}
+                          placeholder="blur"
+                          blurDataURL="assets/icon/sizeReplacement.png"
+                        ></Image>
+                      </div>
+                    ) : (
+                      <h5>{history.recommendSize}</h5>
+                    )}
+                    <p
+                      onClick={() => {
+                        window.open(history.url, '_blank');
+                      }}
+                    >
+                      {history.url.substr(0, 17)}
+                    </p>
+                  </Styled.HistoryModalLink>
+                ))}
+            </HistoryModal>
+          </ModalPortal>
+        </Suspense>
       )}
       {isLeaveModalOpen && (
         <ModalPortal>
@@ -175,6 +189,9 @@ const Styled = {
     margin-bottom: 5.4rem;
     display: flex;
     flex-wrap: wrap;
+    & > img {
+      border-radius: 70%;
+    }
   `,
   UserInformation: styled.div`
     ${theme.fonts.title2}
@@ -230,7 +247,9 @@ const Styled = {
       ${theme.fonts.body7};
       color: ${theme.colors.gray550};
       margin-bottom: 3rem;
-      cursor: pointer;
+      & > span {
+        cursor: pointer;
+      }
     }
   `,
   UserLeaveContainer: styled.div`
