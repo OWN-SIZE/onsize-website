@@ -1,10 +1,10 @@
 import React, { ReactNode, use, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { OptionType } from 'pages/register';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
 
+import { OptionType } from '@/components/register/Register';
 import { usePostMyBottomSize, usePostMyTopSize } from '@/hooks/business/mySize';
 
 import ModalPortal from '../modal/ModalPortal';
