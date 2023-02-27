@@ -70,6 +70,7 @@ function ThumbNail(props: ThumbNailProps) {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const noWrapperRef = useRef<HTMLDivElement>(null);
 
   const { category: categoryData } = useFetchAllCategory();
   const categoryIndex = categoryData?.findIndex((item) => {
@@ -127,7 +128,7 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
+    if (wrapperRef.current && !noWrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
       setIsCategoryModalOpen(false);
     }
   };
@@ -266,7 +267,13 @@ function ThumbNail(props: ThumbNailProps) {
           </Styled.CategoryModalContainer>
         )}
         {isCategoryModalOpen && (
-          <AddCategoryModal productId={data.id} setIsCategoryModalOpen={setIsCategoryModalOpen} showToast={showToast} />
+          <div ref={noWrapperRef}>
+            <AddCategoryModal
+              productId={data.id}
+              setIsCategoryModalOpen={setIsCategoryModalOpen}
+              showToast={showToast}
+            />
+          </div>
         )}
         {page === 'category' ? (
           <Link href={`/category/${data.id}`}>
