@@ -35,7 +35,6 @@ export default HomeLanding;
 const Styled = {
   Root: styled.div`
     width: 140.8rem;
-    min-height: 66rem;
     margin: 0 auto;
   `,
 };
