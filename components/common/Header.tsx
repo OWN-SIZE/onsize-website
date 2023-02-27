@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon } from 'assets/icon';
+import { HoveredOpenMySizeIcon, InfoIcon, OpenMySizeIcon, profileDefault } from 'assets/icon';
 import { MouseHoverImg, MouseImg, OwnSizeLogoImg } from 'assets/img';
 import Image from 'next/image';
 import Link from 'next/link';
@@ -23,7 +23,7 @@ function Header() {
       <Styled.Container>
         <Styled.TopSection>
           <Link href="/home">
-            <Image src={OwnSizeLogoImg} width={94} height={94} alt="온사이즈 로고 / 홈 이동" />
+            <Image src={OwnSizeLogoImg} width={94} height={94} alt="온사이즈 로고 / 홈 이동" priority />
           </Link>
 
           <Styled.RightSection>
@@ -33,11 +33,12 @@ function Header() {
             {isTutorial && <LottieModal onClickCloseButton={() => setIsTutorial(false)} />}
 
             <Link href={'/mypage'}>
-              {userInformation ? (
-                <Image src={userInformation.picture} loading="lazy" width={60} height={60} alt="사용자 프로필" />
-              ) : (
-                <Styled.ProfileImage />
-              )}
+              <Image
+                src={userInformation ? userInformation.picture : profileDefault}
+                width={60}
+                height={60}
+                alt="사용자 프로필"
+              />
             </Link>
           </Styled.RightSection>
         </Styled.TopSection>
@@ -124,7 +125,11 @@ const Styled = {
     margin-top: 3.5rem;
 
     & > a {
+      & > div,
       img {
+        width: 6rem;
+        height: 6rem;
+
         border-radius: 4.7rem;
 
         border: none;

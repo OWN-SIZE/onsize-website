@@ -36,7 +36,7 @@ function HomeMain(props: HomeMainProps) {
   return (
     <Styled.Root>
       <Styled.CountSection>
-        <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" />
+        <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" placeholder="blur" priority />
         <Styled.Count>{countProduct}</Styled.Count>
       </Styled.CountSection>
       <Styled.Closet>{product}</Styled.Closet>

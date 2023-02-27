@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { FieldValues, UseFormRegister, UseFormSetValue } from 'react-hook-form';
 import styled from 'styled-components';
 import theme from 'styles/theme';
@@ -27,7 +27,6 @@ interface InputProps {
   valid: { min: number; max: number };
   data?: DataType;
   isTopClicked?: boolean;
-  hasToastOpened?: boolean;
   formType?: string | null;
   isAlertActive?: boolean;
 }
@@ -60,10 +59,10 @@ function SizeInput(props: InputProps) {
   }, [isTopClicked, measure]);
 
   useEffect(() => {
-    if(!data){
-    setInputValue('');
+    if (!data) {
+      setInputValue('');
     }
-  }, [measure, formType])
+  }, [measure, formType]);
 
   return (
     <Styled.InputContainer key={inputKey}>

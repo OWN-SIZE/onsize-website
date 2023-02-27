@@ -36,6 +36,7 @@ export default Footer;
 
 const Styled = {
   Root: styled.footer`
+    margin-top: auto;
     width: 100%;
 
     background-color: ${theme.colors.gray100};
