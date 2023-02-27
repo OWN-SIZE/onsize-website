@@ -1,12 +1,14 @@
-import { Dispatch, SetStateAction, useState } from 'react';
+import { Dispatch, lazy, SetStateAction, useState } from 'react';
+import { Suspense } from 'react';
 import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { ClosetOutput } from 'types/allCloset/client';
 import { ThumbNailData } from 'types/common';
 
-import ThumbNail from '@/components/common/ThumbNail/ThumbNail';
 import { useUpdateAllClosetProductMutation, useUpdateIsInPinMutation } from '@/hooks/queries/allCloset';
+
+const ThumbNail = lazy(() => import('@/components/common/ThumbNail/ThumbNail'));
 
 interface ProductProps {
   data: ClosetOutput;
@@ -49,33 +51,35 @@ function Product(props: ProductProps) {
 
   return (
     <Styled.Root>
-      {page === 'closet' ? (
-        <ThumbNail
-          data={ThumbNailData}
-          width="33.2"
-          height="33.2"
-          page="closet"
-          updateIsPin={updateIsPIn}
-          setIsProductHovered={setIsProductHovered}
-          showToast={showToast}
-          setIsCategory={setIsCategory}
-        />
-      ) : (
-        categoryId && (
+      <Suspense fallback={<div></div>}>
+        {page === 'closet' ? (
           <ThumbNail
             data={ThumbNailData}
             width="33.2"
             height="33.2"
-            page="categoryDetail"
-            categoryId={categoryId}
-            updateIsPin={updateIsInPin}
+            page="closet"
+            updateIsPin={updateIsPIn}
             setIsProductHovered={setIsProductHovered}
-            noAddCategory
             showToast={showToast}
             setIsCategory={setIsCategory}
           />
-        )
-      )}
+        ) : (
+          categoryId && (
+            <ThumbNail
+              data={ThumbNailData}
+              width="33.2"
+              height="33.2"
+              page="categoryDetail"
+              categoryId={categoryId}
+              updateIsPin={updateIsInPin}
+              setIsProductHovered={setIsProductHovered}
+              noAddCategory
+              showToast={showToast}
+              setIsCategory={setIsCategory}
+            />
+          )
+        )}
+      </Suspense>
       <a href={data.productUrl} target={'_blank'} rel="noreferrer">
         <Styled.Title
           onMouseEnter={handleOnMouseEnter}
