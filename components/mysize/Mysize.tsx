@@ -83,7 +83,7 @@ export default function Mysize() {
         });
       }
     }
-  }, [allMysize, emptyClothesType, isAlertActive]);
+  }, [allMysize, isAlertActive]);
 
   useEffect(() => {
     if (allMysize) {
@@ -152,8 +152,7 @@ export default function Mysize() {
         setData({ 총장: 0, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       }
     }
-    console.log(allMysize);
-  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
+  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive]);
 
 
   return (
