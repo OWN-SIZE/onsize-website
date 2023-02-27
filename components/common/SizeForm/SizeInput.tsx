@@ -29,17 +29,18 @@ interface InputProps {
   isTopClicked?: boolean;
   formType?: string | null;
   isAlertActive?: boolean;
+  isSaveButtonClicked?: boolean;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive } = props;
+  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive, isSaveButtonClicked } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
   const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
+
   useEffect(() => {
     if (!data) return;
-
     if (data[inputKey] === null || data[inputKey] === 0) {
       //저장된 값이 없을 때
       setInputValue('');
@@ -56,7 +57,7 @@ function SizeInput(props: InputProps) {
 
   useEffect(() => {
     setHasInputValueChanged(false);
-  }, [isTopClicked, measure]);
+  }, [isTopClicked, measure, isAlertActive]);
 
   useEffect(() => {
     if (!data) {

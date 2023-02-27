@@ -44,10 +44,10 @@ export default function Mysize() {
   const [isTopClicked, setIsTopClicked] = useState(true);
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
+  const [isSaveButtonClicked, setIsSaveButtonClicked] = useState(false);
 
   //데이터 패칭
-  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
-
+  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure, isAlertActive);
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
   };
@@ -84,10 +84,11 @@ export default function Mysize() {
         });
       }
     }
-  }, [allMysize, emptyClothesType]);
+  }, [allMysize, emptyClothesType, isAlertActive]);
 
   useEffect(() => {
     if (allMysize) {
+
       const { bottom } = allMysize;
       const { top } = allMysize;
 
@@ -112,9 +113,10 @@ export default function Mysize() {
         waist === null
       ) {
         setEmptyClothesType('하의');
-      }
-      if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
+      } else if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
         setEmptyClothesType('상의');
+      } else {
+        setEmptyClothesType('없음');
       }
 
       if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
@@ -151,7 +153,8 @@ export default function Mysize() {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       }
     }
-  }, [allMysize, isTopClicked, clickedMeasure]);
+  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
+
 
   return (
     <Styled.Root>
@@ -194,6 +197,7 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
+          isSaveButtonClicked={isSaveButtonClicked}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장

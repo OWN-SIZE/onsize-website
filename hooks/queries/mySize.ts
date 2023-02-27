@@ -23,7 +23,7 @@ export const usePostMyTopSizeMutation = () => {
 
   return useMutation(postMyTopSize, {
     onSuccess() {
-      queryClient.invalidateQueries([QUERY_KEY.myTopSize]);
+      queryClient.invalidateQueries([QUERY_KEY.allMysize]);
     },
   });
 };
@@ -33,7 +33,7 @@ export const usePostMyBottomSizeMutation = () => {
 
   return useMutation(postMyBottomSize, {
     onSuccess() {
-      queryClient.invalidateQueries([QUERY_KEY.myBottomSize]);
+      queryClient.invalidateQueries([QUERY_KEY.allMysize]);
     },
   });
 };
