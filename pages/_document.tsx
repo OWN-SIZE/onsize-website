@@ -1,4 +1,3 @@
-import { CSSProperties } from 'react';
 import Document, { DocumentContext, DocumentInitialProps, Head, Html, Main, NextScript } from 'next/document';
 import { ServerStyleSheet } from 'styled-components';
 
@@ -31,9 +30,6 @@ class MyDocument extends Document {
   }
 
   render() {
-    const bodyStyle: CSSProperties = {
-      overflow: 'hidden',
-    };
     return (
       <Html lang="ko">
         <Head>
