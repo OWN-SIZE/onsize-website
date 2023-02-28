@@ -134,7 +134,7 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfTop = false;
       }
 
-      if (isOption || progress === 3) {
+      if (progress === 2) {
         inputData.isAlreadyUser = 'done';
       }
 
@@ -161,7 +161,7 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfBottom = false;
       }
 
-      if (isOption || progress === 3) {
+      if (progress === 2) {
         inputData.isAlreadyUser = 'done';
       }
 

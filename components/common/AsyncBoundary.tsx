@@ -40,7 +40,6 @@ export function AsyncBoundary({ children, loadingFallback }: PropsWithChildren<A
     <QueryErrorResetBoundary>
       <ErrorBoundary
         FallbackComponent={(fallback) => {
-          console.log('fallback', fallback);
           if (isExpectedError(fallback.error)) {
             return <Error />;
           }
