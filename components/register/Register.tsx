@@ -115,6 +115,7 @@ function RegisterLanding() {
           />
         ) : progress === 2 ? (
           <SizeForm
+            progress={progress}
             isAlertActive={isAlertActive}
             setIsAlertActive={setIsAlertActive}
             formType={selectedOption === '하의' ? '하의' : '상의'}
