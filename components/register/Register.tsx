@@ -160,7 +160,6 @@ const Styled = {
     align-items: center;
     flex-direction: column;
     min-width: 61.2rem;
-    height: 100%;
     background-color: #1e2025;
     > h1 {
       margin-top: 16.2rem;
