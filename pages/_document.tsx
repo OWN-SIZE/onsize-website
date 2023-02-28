@@ -47,7 +47,7 @@ class MyDocument extends Document {
           />
           <meta name="description" content="Own Size" />
         </Head>
-        <body>
+        <body style={{ overflow: 'hidden' }}>
           <noscript>
             <iframe
               src={`https://www.googletagmanager.com/ns.html?id=${gtm.GTM_ID}`}
