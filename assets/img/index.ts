@@ -16,3 +16,4 @@ export { default as mobileBackgroundImg } from './mobile_main.webp';
 export { default as speechBubbleImg } from './speech bubble.webp';
 export { default as FaceImg } from './face.webp';
 export { default as SizeGuideImg } from './size-guide.png';
+export { default as Landing3rdImg } from './landing3rdSection.webp';

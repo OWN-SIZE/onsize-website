@@ -5,9 +5,11 @@ import Image from 'next/image';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
+import { chromeWebStoreIcon } from '@/assets/icon';
 import { ArrowImg, desktopBackgroundImg, mobileBackgroundImg, OwnSizeLogoImg } from '@/assets/img';
 
 function FirstPart() {
+  const [isHovered, setIsHovered] = useState(false);
   const [browserKind, setBrowserKind] = useState('');
   const mobile = useMediaQuery({
     query: '(min-width : 375px) and (max-width:600px)',
@@ -48,8 +50,15 @@ function FirstPart() {
           나에게 맞는 의류 사이즈, <span className="ownsizeText">OWNSIZE</span>에서 클릭 한 번으로
         </Styled.IntroText>
 
-        <Link className="scrollButton" to="scrollToInput" smooth={true}>
-          사전 신청 바로가기
+        <Link
+          className={isHovered ? 'hovered' : ''}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          to="scrollToInput"
+          smooth={true}
+        >
+          <Image src={chromeWebStoreIcon} alt="크롬 웹스토어 아이콘" width={36} height={34} />
+          Chrome 웹스토어 바로가기
         </Link>
 
         {browserKind === 'mobile' && <Styled.guideToDesktop>온사이즈는 PC에서 이용해 주세요</Styled.guideToDesktop>}
@@ -93,8 +102,15 @@ const Styled = {
       position: absolute;
       z-index: 3;
 
+      &.hovered {
+        background-color: ${theme.colors.yellow};
+        box-shadow: 0rem 0.4rem 1.6rem rgba(251, 242, 108, 0.45);
+      }
       background: ${theme.colors.yellow01};
-      box-shadow: 0 0 1rem rgba(251, 242, 108, 0.5);
+
+      & > img {
+        margin-right: 1.5rem;
+      }
 
       @media (min-width: 350px) and (max-width: 600px) {
         width: 23.4rem;
@@ -105,12 +121,17 @@ const Styled = {
         ${theme.fonts.card1};
       }
       @media (min-width: 601px) {
-        width: 45.3rem;
-        height: 9.2rem;
-        top: 79.2rem;
+        width: 34.7rem;
+        height: 6.4rem;
+        top: 75.7rem;
 
-        border-radius: 1rem;
-        ${theme.fonts.title2};
+        border-radius: 2rem;
+
+        font-family: 'Noto Sans KR';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.8rem;
+        line-height: 2.5rem;
       }
 
       cursor: pointer;
