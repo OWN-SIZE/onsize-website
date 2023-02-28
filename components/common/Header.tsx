@@ -50,8 +50,8 @@ function Header() {
         <Styled.MySizeButtonBackGround>
           <Link href={router.asPath !== '/mysize' ? '/mysize' : 'javascript:history.back()'}>
             <Styled.MySizeButton
-              onMouseEnter={() => setIsButtonHovered(!isButtonHovered)}
-              onMouseLeave={() => setIsButtonHovered(!isButtonHovered)}
+              onMouseEnter={() => setIsButtonHovered(true)}
+              onMouseLeave={() => setIsButtonHovered(false)}
               className={isButtonHovered ? 'hovered' : ''}
             >
               MY SIZE
