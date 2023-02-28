@@ -163,7 +163,6 @@ export default function Mysize() {
         setIsInitialValueWidth(true);
       }
     }
-    console.log(allMysize);
   }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
 
 
@@ -208,9 +207,7 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
-          isOpenToast={isOpenToast}
           emptyClothesType={emptyClothesType}
-          isSubmitActive={isSubmitActive}
           isInitialValueWidth={isInitialValueWidth}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">

@@ -31,9 +31,7 @@ interface FormProps {
     | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
   isTopClicked?: boolean;
-  isOpenToast?: boolean;
   emptyClothesType?: string;
-  isSubmitActive?: boolean;
   isInitialValueWidth?: boolean;
 }
 
@@ -101,9 +99,7 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure,
     data,
     isTopClicked,
-    isOpenToast,
     emptyClothesType,
-    isSubmitActive,
     isInitialValueWidth,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
@@ -248,9 +244,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
-              isOpenToast={isOpenToast}
               emptyClothesType={emptyClothesType}
-              isSubmitActive={isSubmitActive}
             />
           ))}
           <Styled.RadioContainer>
@@ -282,9 +276,7 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               isAlertActive={isAlertActive}
-              isOpenToast={isOpenToast}
               emptyClothesType={emptyClothesType}
-              isSubmitActive={isSubmitActive}
             />
           ))}
           {children}
@@ -303,9 +295,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
-              isOpenToast={isOpenToast}
               emptyClothesType={emptyClothesType}
-              isSubmitActive={isSubmitActive}
             />
           ))}
           <Styled.RadioContainer>
@@ -335,9 +325,7 @@ export default function SizeForm(props: FormProps) {
             data={data}
             isTopClicked={isTopClicked}
             isAlertActive={isAlertActive}
-            isOpenToast={isOpenToast}
             emptyClothesType={emptyClothesType}
-            isSubmitActive={isSubmitActive}
           />
           {children}
         </Styled.Form>

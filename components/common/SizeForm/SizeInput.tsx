@@ -29,15 +29,22 @@ interface InputProps {
   isTopClicked?: boolean;
   formType?: string | null;
   isAlertActive?: boolean;
-  isOpenToast?: boolean;
-  emptyClothesType?:string;
-  isSubmitActive?:boolean;
-
-
+  emptyClothesType?: string;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive, isOpenToast, emptyClothesType, isSubmitActive } = props;
+  const {
+    inputKey,
+    measure,
+    register,
+    setValue,
+    valid,
+    data,
+    isTopClicked,
+    formType,
+    isAlertActive,
+    emptyClothesType,
+  } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
@@ -47,10 +54,9 @@ function SizeInput(props: InputProps) {
     if (!data) return;
     if (!hasInputValueChanged) {
       //유저가 저장된 값을 변경한 적이 없을 때
-     
+
       setInputValue(parseFloat(`${data[inputKey]}`).toFixed(1));
       setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
-  
     } else {
       //유저가 저장된 값을 변경했을 때
       setInputValue(parseFloat(inputValue).toFixed(1));
