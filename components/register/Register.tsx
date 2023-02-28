@@ -151,7 +151,7 @@ const Styled = {
     margin: 0 auto;
     display: flex;
     width: 100vw;
-    height: 100vh;
+    min-height: 109.2rem;
   `,
   LeftConatiner: styled.article`
     display: flex;
