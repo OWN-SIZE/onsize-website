@@ -154,6 +154,7 @@ const Styled = {
     min-height: 109.2rem;
   `,
   LeftConatiner: styled.article`
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
@@ -177,6 +178,7 @@ const Styled = {
     }
   `,
   SizeGuide: styled.div`
+    position: relative;
     display: flex;
     width: 38.6rem;
     height: 34.529rem;
@@ -232,6 +234,7 @@ const Styled = {
     }
   `,
   RightContainer: styled.article`
+    position: relative;
     display: flex;
     align-items: center;
     flex-direction: column;
