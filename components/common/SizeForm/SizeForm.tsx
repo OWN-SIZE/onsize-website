@@ -34,6 +34,7 @@ interface FormProps {
   isOpenToast?: boolean;
   emptyClothesType?: string;
   isSubmitActive?: boolean;
+  isInitialValueWidth?: boolean;
 }
 
 // 상의 총장, 어깨너비
@@ -103,6 +104,7 @@ export default function SizeForm(props: FormProps) {
     isOpenToast,
     emptyClothesType,
     isSubmitActive,
+    isInitialValueWidth,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -214,6 +216,21 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure && onClickMeasure(measure);
   };
 
+  //마이사이즈 단면 / 둘레 최초 활성화
+  useEffect(() => {
+    if (isInitialValueWidth) {
+      setMeasure('단면');
+      sendMeasureValue('단면');
+    } else if(isInitialValueWidth === false){
+      setMeasure('둘레');
+      sendMeasureValue('둘레');
+    } 
+    else {
+      setMeasure('단면');
+      sendMeasureValue('단면');
+    }
+  }, [isTopClicked, formType, isInitialValueWidth]);
+
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
@@ -268,7 +285,6 @@ export default function SizeForm(props: FormProps) {
               isOpenToast={isOpenToast}
               emptyClothesType={emptyClothesType}
               isSubmitActive={isSubmitActive}
-
             />
           ))}
           {children}
@@ -290,7 +306,6 @@ export default function SizeForm(props: FormProps) {
               isOpenToast={isOpenToast}
               emptyClothesType={emptyClothesType}
               isSubmitActive={isSubmitActive}
-
             />
           ))}
           <Styled.RadioContainer>
@@ -323,7 +338,6 @@ export default function SizeForm(props: FormProps) {
             isOpenToast={isOpenToast}
             emptyClothesType={emptyClothesType}
             isSubmitActive={isSubmitActive}
-
           />
           {children}
         </Styled.Form>
