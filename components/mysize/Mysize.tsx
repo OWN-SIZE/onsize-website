@@ -12,12 +12,12 @@ import useToast from 'components/common/Toast/useToast';
 
 type DataType =
   | {
-      총장: number;
+      총장: number | null;
       '어깨 너비': number;
       가슴: number;
     }
   | {
-      총장: number;
+      총장: number | null;
       밑위: number;
       허리: number;
       허벅지: number;
@@ -149,10 +149,11 @@ export default function Mysize() {
       } else if (isTopClicked === false && isWidthOfBottom === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
       } else if (isTopClicked && isWidthOfTop === null) {
-        setData({ 총장: 0, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
       }
     }
-  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive]);
+    console.log(allMysize);
+  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
 
 
   return (
@@ -196,6 +197,9 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
+          isOpenToast={isOpenToast}
+          emptyClothesType={emptyClothesType}
+          isSubmitActive={isSubmitActive}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장
