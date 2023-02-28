@@ -31,7 +31,6 @@ const Root = styled.div`
   &.minHeight {
     min-height: 136.7rem;
   }
-  height: 100vh;
   display: flex;
   flex-direction: column;
 `;

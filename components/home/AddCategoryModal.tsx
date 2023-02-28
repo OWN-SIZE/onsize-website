@@ -1,6 +1,8 @@
 import { Dispatch, useRef, useState } from 'react';
 import { BlackFolderIcon, Folder20Icon, GrayFolderIcon } from 'assets/icon';
 import Image from 'next/image';
+import { useRecoilState } from 'recoil';
+import { addCategoryModalState } from 'states/home';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -17,7 +19,7 @@ interface AddCategoryModalProps {
 }
 function AddCategoryModal(props: AddCategoryModalProps) {
   const { productId, setIsCategoryModalOpen, showToast } = props;
-  const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useState(false);
+  const [isCategoryCreateModalOpen, setIsCategoryCreateModalOpen] = useRecoilState(addCategoryModalState);
   const [changeInputValue, setChangeInputValue] = useState('');
   const inputRef = useRef(null);
 

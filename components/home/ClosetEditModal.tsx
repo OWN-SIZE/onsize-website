@@ -30,6 +30,19 @@ function ClosetEditModal(props: ModalProps) {
   const [memoInput, setMemoInput] = useState(memo);
   const [targetCategoryId, setTargetCategoryId] = useState('');
 
+  useEffect(() => {
+    document.body.style.cssText = `
+      position: fixed; 
+      top: -${window.scrollY}px;
+      overflow-y: scroll;
+      width: 100%;`;
+    return () => {
+      const scrollY = document.body.style.top;
+      document.body.style.cssText = '';
+      window.scrollTo(0, parseInt(scrollY || '0', 10) * -1);
+    };
+  }, []);
+
   const handleOnChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const newValue = e.currentTarget.value;
 
@@ -149,10 +162,10 @@ function ClosetEditModal(props: ModalProps) {
 export default ClosetEditModal;
 const Styled = {
   Root: styled.div`
+    position: fixed;
     display: flex;
     justify-content: center;
     align-items: center;
-    position: absolute;
     top: 0;
     z-index: 3;
     width: 100vw;

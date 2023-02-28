@@ -17,6 +17,8 @@ import {
 } from 'assets/icon';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRecoilValue } from 'recoil';
+import { addCategoryModalState } from 'states/home';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { UpdateClosetInput } from 'types/allCloset/client';
@@ -68,6 +70,7 @@ function ThumbNail(props: ThumbNailProps) {
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const isCategoryCreateModalOpen = useRecoilValue(addCategoryModalState);
 
   const wrapperRef = useRef<HTMLDivElement>(null);
 
@@ -127,6 +130,7 @@ function ThumbNail(props: ThumbNailProps) {
   };
 
   const handleClickOutside = (event: MouseEvent) => {
+    if (isCategoryCreateModalOpen) return;
     if (wrapperRef.current && !wrapperRef.current.contains(event.target as Node)) {
       setIsCategoryModalOpen(false);
     }
