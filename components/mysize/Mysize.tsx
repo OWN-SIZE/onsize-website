@@ -170,7 +170,7 @@ export default function Mysize() {
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
-          <p>상의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>상의</p>
           {emptyClothesType === '상의' ? null : (
             <Image
               src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
@@ -179,10 +179,18 @@ export default function Mysize() {
               height={32}
             />
           )}
+          {emptyClothesType === '상의' ? (
+        <Styled.TopRequestModalContainer>
+          <Styled.TopRequestModal>
+            상의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
+          </Styled.TopRequestModal>
+          <Styled.TopModalTriangle />
+        </Styled.TopRequestModalContainer>
+      ) : null}
         </Styled.TopSize>
         <Styled.Blank></Styled.Blank>
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
-          <p>하의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>하의</p>
           {emptyClothesType === '하의' ? (
             <Styled.CheckBlank></Styled.CheckBlank>
           ) : (
@@ -193,6 +201,14 @@ export default function Mysize() {
               height={32}
             />
           )}
+          {emptyClothesType === '하의' ? (
+        <Styled.BottomRequestModalContainer>
+          <Styled.BottomModalTriangle />
+          <Styled.BottomRequestModal>
+            하의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
+          </Styled.BottomRequestModal>
+        </Styled.BottomRequestModalContainer>
+      ) : null}
         </Styled.BottomSize>
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
@@ -215,21 +231,6 @@ export default function Mysize() {
           </Styled.SaveButton>
         </SizeForm>
       </Styled.SizeFormContainer>
-      {emptyClothesType === '상의' ? (
-        <Styled.TopRequestModalContainer>
-          <Styled.TopRequestModal>
-            상의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
-          </Styled.TopRequestModal>
-          <Styled.TopModalTriangle />
-        </Styled.TopRequestModalContainer>
-      ) : emptyClothesType === '하의' ? (
-        <Styled.BottomRequestModalContainer>
-          <Styled.BottomModalTriangle />
-          <Styled.BottomRequestModal>
-            하의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
-          </Styled.BottomRequestModal>
-        </Styled.BottomRequestModalContainer>
-      ) : null}
       {isOpenToast && (
         <Styled.ToastContainer>
           <Toast message={message} width="32.9" />
@@ -260,6 +261,7 @@ const Styled = {
       margin-left: 1rem;
       margin-right: 1.4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
     }
   `,
   Blank: styled.div`
@@ -273,9 +275,14 @@ const Styled = {
     border-bottom: 0.4rem solid ${(props) => props.color};
     display: flex;
     & > p {
+      min-width: 4.8rem;
       margin-left: 1rem;
-      margin-right: 1.4rem;
+      margin-right: 4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
+    }
+    & > img {
+      margin-left: -2.6rem;
     }
   `,
   SaveButtonContainer: styled.div`
@@ -303,9 +310,6 @@ const Styled = {
     margin-top: 7.4rem;
   `,
   BottomRequestModalContainer: styled.div`
-    position: fixed;
-    top: 35.5rem;
-    margin-left: 27.6rem;
     width: 13.5rem;
     height: 4.8rem;
     display: flex;
