@@ -170,7 +170,7 @@ export default function Mysize() {
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
-          <p>상의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>상의</p>
           {emptyClothesType === '상의' ? null : (
             <Image
               src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
@@ -190,7 +190,7 @@ export default function Mysize() {
         </Styled.TopSize>
         <Styled.Blank></Styled.Blank>
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
-          <p>하의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>하의</p>
           {emptyClothesType === '하의' ? (
             <Styled.CheckBlank></Styled.CheckBlank>
           ) : (
@@ -261,6 +261,7 @@ const Styled = {
       margin-left: 1rem;
       margin-right: 1.4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
     }
   `,
   Blank: styled.div`
@@ -278,6 +279,10 @@ const Styled = {
       margin-left: 1rem;
       margin-right: 4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
+    }
+    & > img {
+      margin-left: -2.6rem;
     }
   `,
   SaveButtonContainer: styled.div`
