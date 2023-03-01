@@ -10,9 +10,11 @@ import theme from 'styles/theme';
 import { lottieMapper } from '@/components/common/modal/LottieModal';
 import LottiePlayer from '@/components/common/modal/LottiePlayer';
 import { useAuth } from '@/hooks/business/user';
+import useRedirect from '@/hooks/business/useRedirect';
 import Layout from 'components/common/Layout';
 
 function Login() {
+  const { isLoading } = useRedirect();
   const { authLogin } = useAuth();
   const router = useRouter();
   const login = useGoogleLogin({
