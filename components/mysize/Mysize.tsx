@@ -44,10 +44,10 @@ export default function Mysize() {
   const [isTopClicked, setIsTopClicked] = useState(true);
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
+  const [isInitialValueWidth, setIsInitialValueWidth] = useState(true);
 
   //데이터 패칭
-  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
-
+  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure, isAlertActive);
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
   };
@@ -84,10 +84,11 @@ export default function Mysize() {
         });
       }
     }
-  }, [allMysize, emptyClothesType]);
+  }, [allMysize, isAlertActive]);
 
   useEffect(() => {
     if (allMysize) {
+
       const { bottom } = allMysize;
       const { top } = allMysize;
 
@@ -112,19 +113,24 @@ export default function Mysize() {
         waist === null
       ) {
         setEmptyClothesType('하의');
-      }
-      if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
+      } else if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
         setEmptyClothesType('상의');
+      } else {
+        setEmptyClothesType('없음');
       }
 
       if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest * 2 });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest / 2 });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
         setData({
           총장: bottomLength,
@@ -133,8 +139,10 @@ export default function Mysize() {
           허벅지: thigh * 2,
           밑단: hem * 2,
         });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '단면') {
         setData({
           총장: bottomLength,
@@ -143,15 +151,20 @@ export default function Mysize() {
           허벅지: thigh / 2,
           밑단: hem / 2,
         });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop === null) {
-        setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(true);
       }
     }
-  }, [allMysize, isTopClicked, clickedMeasure]);
+  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
+
 
   return (
     <Styled.Root>
@@ -194,6 +207,8 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
+          emptyClothesType={emptyClothesType}
+          isInitialValueWidth={isInitialValueWidth}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장

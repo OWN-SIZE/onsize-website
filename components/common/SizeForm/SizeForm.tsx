@@ -31,6 +31,8 @@ interface FormProps {
     | { 총장: number; '어깨 너비': number; 가슴: number }
     | { 총장: number; 밑위: number; 허리: number; 허벅지: number; 밑단: number };
   isTopClicked?: boolean;
+  emptyClothesType?: string;
+  isInitialValueWidth?: boolean;
 }
 
 // 상의 총장, 어깨너비
@@ -97,6 +99,8 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure,
     data,
     isTopClicked,
+    emptyClothesType,
+    isInitialValueWidth,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -208,6 +212,21 @@ export default function SizeForm(props: FormProps) {
     onClickMeasure && onClickMeasure(measure);
   };
 
+  //마이사이즈 단면 / 둘레 최초 활성화
+  useEffect(() => {
+    if (isInitialValueWidth) {
+      setMeasure('단면');
+      sendMeasureValue('단면');
+    } else if(isInitialValueWidth === false){
+      setMeasure('둘레');
+      sendMeasureValue('둘레');
+    } 
+    else {
+      setMeasure('단면');
+      sendMeasureValue('단면');
+    }
+  }, [isTopClicked, formType, isInitialValueWidth]);
+
   return (
     <Styled.Root>
       {!noHeader && formType && <Styled.Header>{formType} 사이즈를 입력해주세요</Styled.Header>}
@@ -225,6 +244,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
+              emptyClothesType={emptyClothesType}
             />
           ))}
           <Styled.RadioContainer>
@@ -256,6 +276,7 @@ export default function SizeForm(props: FormProps) {
               data={data}
               isTopClicked={isTopClicked}
               isAlertActive={isAlertActive}
+              emptyClothesType={emptyClothesType}
             />
           ))}
           {children}
@@ -274,6 +295,7 @@ export default function SizeForm(props: FormProps) {
               isTopClicked={isTopClicked}
               formType={formType}
               isAlertActive={isAlertActive}
+              emptyClothesType={emptyClothesType}
             />
           ))}
           <Styled.RadioContainer>
@@ -303,6 +325,7 @@ export default function SizeForm(props: FormProps) {
             data={data}
             isTopClicked={isTopClicked}
             isAlertActive={isAlertActive}
+            emptyClothesType={emptyClothesType}
           />
           {children}
         </Styled.Form>

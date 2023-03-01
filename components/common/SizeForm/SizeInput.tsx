@@ -29,22 +29,32 @@ interface InputProps {
   isTopClicked?: boolean;
   formType?: string | null;
   isAlertActive?: boolean;
+  emptyClothesType?: string;
 }
 
 function SizeInput(props: InputProps) {
-  const { inputKey, measure, register, setValue, valid, data, isTopClicked, formType, isAlertActive } = props;
+  const {
+    inputKey,
+    measure,
+    register,
+    setValue,
+    valid,
+    data,
+    isTopClicked,
+    formType,
+    isAlertActive,
+    emptyClothesType,
+  } = props;
   const label = measure ? `${inputKey} ${measure}` : `${inputKey}`;
 
   const [inputValue, setInputValue] = useState('');
   const [hasInputValueChanged, setHasInputValueChanged] = useState(false);
+
   useEffect(() => {
     if (!data) return;
-
-    if (data[inputKey] === null || data[inputKey] === 0) {
-      //저장된 값이 없을 때
-      setInputValue('');
-    } else if (!hasInputValueChanged) {
+    if (!hasInputValueChanged) {
       //유저가 저장된 값을 변경한 적이 없을 때
+
       setInputValue(parseFloat(`${data[inputKey]}`).toFixed(1));
       setValue(inputKey, parseFloat(`${data[inputKey]}`).toFixed(1));
     } else {
@@ -52,11 +62,11 @@ function SizeInput(props: InputProps) {
       setInputValue(parseFloat(inputValue).toFixed(1));
       setValue(inputKey, parseFloat(inputValue).toFixed(1));
     }
-  }, [data, inputKey, isAlertActive]);
+  }, [data, inputKey, isAlertActive, emptyClothesType]);
 
   useEffect(() => {
     setHasInputValueChanged(false);
-  }, [isTopClicked, measure]);
+  }, [isTopClicked, measure, emptyClothesType]);
 
   useEffect(() => {
     if (!data) {
