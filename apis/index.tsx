@@ -1,7 +1,5 @@
-/* eslint-disable @typescript-eslint/no-empty-function */
 import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
-import Cookies from 'js-cookie';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
 import { tokenState } from 'states/user';
