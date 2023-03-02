@@ -134,7 +134,7 @@ const Styled = {
     padding-bottom: 5rem;
 
     & > h1 {
-      ${theme.fonts.title4}
+      ${theme.fonts.title4};
       color: ${theme.colors.gray350};
       margin-left: 1.6rem;
       margin-right: 127.3rem;
