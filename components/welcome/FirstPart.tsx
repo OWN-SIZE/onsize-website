@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useMediaQuery } from 'react-responsive';
-import { Link } from 'react-scroll';
 import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -11,6 +11,10 @@ import { ArrowImg, desktopBackgroundImg, mobileBackgroundImg, OwnSizeLogoImg } f
 function FirstPart() {
   const [isHovered, setIsHovered] = useState(false);
   const [browserKind, setBrowserKind] = useState('');
+
+  const STORE_LINK =
+    'https://chrome.google.com/webstore/detail/%EC%98%A8%EC%82%AC%EC%9D%B4%EC%A6%88-ownsize/bnidejblffigjfdilnppamoabdpdhmfh?hl=ko&authuser=1';
+
   const mobile = useMediaQuery({
     query: '(min-width : 375px) and (max-width:600px)',
   });
@@ -51,11 +55,11 @@ function FirstPart() {
         </Styled.IntroText>
 
         <Link
+          href={STORE_LINK}
           className={isHovered ? 'hovered' : ''}
           onMouseEnter={() => setIsHovered(true)}
           onMouseLeave={() => setIsHovered(false)}
-          to="scrollToInput"
-          smooth={true}
+          target="_blank"
         >
           <Image src={chromeWebStoreIcon} alt="크롬 웹스토어 아이콘" width={36} height={34} />
           Chrome 웹스토어 바로가기
