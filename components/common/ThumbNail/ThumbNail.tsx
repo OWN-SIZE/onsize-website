@@ -252,6 +252,7 @@ function ThumbNail(props: ThumbNailProps) {
         {!noAddCategory && (
           <Styled.CategoryModalContainer>
             <button
+              className="addCategoryButton"
               onClick={() => {
                 setIsCategoryModalOpen(!isCategoryModalOpen);
                 setIsCategory && setIsCategory(true);
