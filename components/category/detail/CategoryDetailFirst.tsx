@@ -7,7 +7,7 @@ function CategoryDetailFirst() {
   return (
     <Styled.Root>
       <Styled.CountSection>
-        <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" placeholder="blur" priority />
+        <Image src={ClosetIcon} alt="나의 옷장 옷 개수 아이콘" priority />
         <Styled.Count>0</Styled.Count>
       </Styled.CountSection>
       <Styled.BlankLanding>

@@ -167,9 +167,7 @@ function ThumbNail(props: ThumbNailProps) {
             />
             <Styled.SizeContainer className={imgHoveredTarget === data.id ? 'hide' : ''}>
               <span>{data.size}</span>
-              {data.isRecommend && (
-                <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" placeholder="blur" priority />
-              )}
+              {data.isRecommend && <Image src={RecommendedIcon} alt="추천 받은 사이즈 표시" priority />}
             </Styled.SizeContainer>
           </>
         )}
@@ -181,7 +179,6 @@ function ThumbNail(props: ThumbNailProps) {
             width={25}
             height={25}
             alt="고정된 상품 핀 아이콘"
-            placeholder="blur"
             priority
           />
         )}
@@ -264,7 +261,6 @@ function ThumbNail(props: ThumbNailProps) {
                 width={16}
                 height={9}
                 alt="카테고리 추가 버튼 아이콘"
-                placeholder="blur"
                 priority
               />
             </button>
