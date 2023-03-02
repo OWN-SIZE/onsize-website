@@ -1,62 +1,37 @@
-import { ChangeEvent, useState } from 'react';
+import { useState } from 'react';
+import Image from 'next/image';
+import Link from 'next/link';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
-import { usePostEmail } from '@/hooks/queries/welcome';
+import { chromeWebStoreIcon } from '@/assets/icon';
+import { Landing3rdImg } from '@/assets/img';
 
 function ThirdPart() {
-  const [emailValue, setEmail] = useState('');
-  const [isEmail, setIsEmail] = useState(false);
-  const [isSubmitted, setIsSubmitted] = useState(false);
-
-  const CheckEmail = (emailValue: string) => {
-    const regularExpression =
-      /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
-    regularExpression.test(String(emailValue));
-
-    if (regularExpression.test(String(emailValue).toLowerCase())) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
-  const handleOnChange = (e: ChangeEvent<HTMLInputElement>) => {
-    setEmail(e.currentTarget.value);
-    if (CheckEmail(e.currentTarget.value)) setIsEmail(true);
-    else setIsEmail(false);
-  };
-
-  const { mutate: postEmail } = usePostEmail();
-  const handleOnClick = () => {
-    postEmail({ email: emailValue });
-    setIsSubmitted(true);
-  };
+  const [isHovered, setIsHovered] = useState(false);
+  const STORE_LINK =
+    'https://chrome.google.com/webstore/detail/%EC%98%A8%EC%82%AC%EC%9D%B4%EC%A6%88-ownsize/bnidejblffigjfdilnppamoabdpdhmfh?hl=ko&authuser=1';
 
   return (
     <Styled.Root>
-      <Styled.Container id="scrollToInput">
-        {!isSubmitted ? (
-          <Styled.Section>
-            <Styled.H1>
-              <span className="ownsizeText">OWNSIZE</span>가 준비되면 가장 먼저 알려드릴게요
-            </Styled.H1>
-            <Styled.EmailContainer>
-              <Styled.EmailLabel>Email</Styled.EmailLabel>
-              <Styled.EmailInput type="email" value={emailValue} onChange={handleOnChange} required />
-            </Styled.EmailContainer>
-            <Styled.submitButton
-              type="button"
-              className={isEmail ? 'active' : 'inactive'}
-              disabled={isEmail ? false : true}
-              onClick={handleOnClick}
-            >
-              신청하기
-            </Styled.submitButton>
-          </Styled.Section>
-        ) : (
-          <Styled.SubmitFinished>사전 신청이 완료됐어요!</Styled.SubmitFinished>
-        )}
+      <Styled.Container>
+        <Styled.H1>
+          클릭 한 번으로 찾는 내 사이즈! <br />
+          지금 시작하세요
+        </Styled.H1>
+
+        <Link
+          href={STORE_LINK}
+          className={isHovered ? 'hovered' : ''}
+          onMouseEnter={() => setIsHovered(true)}
+          onMouseLeave={() => setIsHovered(false)}
+          target="_blank"
+        >
+          <Image src={chromeWebStoreIcon} alt="크롬 웹스토어 아이콘" width={36} height={34} />
+          Chrome 웹스토어 바로가기
+        </Link>
+
+        <Image src={Landing3rdImg} alt="배경 이미지" width={1081} height={572} />
       </Styled.Container>
     </Styled.Root>
   );
@@ -76,13 +51,17 @@ const Styled = {
       width: 100%;
     }
     @media (min-width: 601px) {
-      height: 89.7rem;
+      height: 104.6rem;
       width: 100%;
     }
   `,
   Container: styled.div`
+    position: relative;
+
     display: flex;
-    justify-content: center;
+    flex-direction: column;
+
+    align-items: center;
     background-color: ${theme.colors.black};
 
     width: 100%;
@@ -91,25 +70,60 @@ const Styled = {
       height: 37.6rem;
     }
     @media (min-width: 601px) {
-      height: 87rem;
+      height: 101.9rem;
     }
-  `,
-  Section: styled.div`
-    display: flex;
-    flex-direction: column;
 
-    @media (min-width: 350px) and (max-width: 600px) {
-      width: 33.5rem;
-      height: 27.6rem;
-
-      margin-top: 4.3rem;
-    }
-    @media (min-width: 601px) {
+    & > a {
+      display: flex;
+      justify-content: center;
       align-items: center;
-      height: 100.4rem;
+
+      position: absolute;
+      z-index: 3;
+
+      &.hovered {
+        background-color: ${theme.colors.yellow};
+        box-shadow: 0rem 0.4rem 1.6rem rgba(251, 242, 108, 0.45);
+      }
+      background: ${theme.colors.yellow01};
+
+      & > img {
+        margin-right: 1.5rem;
+      }
+
+      @media (min-width: 350px) and (max-width: 600px) {
+        width: 23.4rem;
+        height: 4.8rem;
+        top: 44.6rem;
+
+        border-radius: 0.5rem;
+        ${theme.fonts.card1};
+      }
+      @media (min-width: 601px) {
+        width: 34.7rem;
+        height: 6.4rem;
+        top: 29.5rem;
+
+        border-radius: 2rem;
+
+        font-family: 'Noto Sans KR';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.8rem;
+        line-height: 2.5rem;
+      }
+
+      cursor: pointer;
+    }
+
+    & > img {
+      margin-top: auto;
     }
   `,
+
   H1: styled.h1`
+    text-align: center;
+
     color: ${theme.colors.yellow01};
     @media (min-width: 350px) and (max-width: 600px) {
       width: 21rem;
@@ -119,141 +133,15 @@ const Styled = {
       font-weight: 700;
       font-size: 2rem;
       line-height: 3.2rem;
-
-      & > .ownsizeText {
-        font-family: 'Arial';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 2rem;
-        line-height: 3.8rem;
-      }
     }
     @media (min-width: 601px) {
-      margin-top: 14.5rem;
+      margin-top: 14rem;
 
       font-family: 'Noto Sans KR';
       font-style: normal;
       font-weight: 700;
-      font-size: 4rem;
-      line-height: 4.6rem;
-
-      & > .ownsizeText {
-        font-family: 'Arial';
-        font-style: normal;
-        font-weight: 700;
-        font-size: 4rem;
-        line-height: 4.6rem;
-      }
-    }
-  `,
-  EmailContainer: styled.div`
-    @media (min-width: 350px) and (max-width: 600px) {
-      width: 33.5rem;
-      height: 8.5rem;
-
-      margin-top: 4.2rem;
-    }
-    @media (min-width: 601px) {
-      width: 93rem;
-      height: 22rem;
-
-      margin-top: 11rem;
-    }
-  `,
-  EmailLabel: styled.label`
-    color: ${theme.colors.yellow01};
-    @media (min-width: 350px) and (max-width: 600px) {
-      ${theme.fonts.body2_DSB};
-    }
-    @media (min-width: 601px) {
-      font-family: 'Noto Sans';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 3.8rem;
-      line-height: 5.2rem;
-    }
-  `,
-  EmailInput: styled.input`
-    display: flex;
-    align-items: center;
-
-    background: rgba(255, 255, 255, 0.1);
-    border: none;
-    color: ${theme.colors.lightGrey};
-    &:focus {
-      outline: none;
-    }
-    @media (min-width: 350px) and (max-width: 600px) {
-      ${theme.fonts.body4};
-
-      width: 100%;
-      margin-top: 2rem;
-      padding: 0 1.4rem;
-      border-radius: 0.5rem;
-    }
-    @media (min-width: 601px) {
-      font-family: 'Noto Sans';
-      font-style: normal;
-      font-weight: 500;
-      font-size: 3.8rem;
-      line-height: 5.2rem;
-
-      width: 100%;
-      height: 10.8rem;
-      border-radius: 1rem;
-      margin-top: 6rem;
-      padding: 0 3.6rem;
-    }
-  `,
-  submitButton: styled.button`
-    ${theme.fonts.body2_DSB};
-    margin: 0 auto;
-    &.inactive {
-      background: none;
-      color: ${theme.colors.yellow01};
-      border: 0.1rem solid ${theme.colors.yellow01};
-    }
-    &.active {
-      color: ${theme.colors.black};
-      background-color: ${theme.colors.yellow01};
-      border: none;
-    }
-    @media (min-width: 350px) and (max-width: 600px) {
-      ${theme.fonts.body2_DSB};
-      margin-top: 4.2rem;
-      width: 9.9rem;
-      height: 4.2rem;
-      border-radius: 0.5rem;
-    }
-    @media (min-width: 601px) {
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 600;
-      font-size: 3.8rem;
-      line-height: 5.2rem;
-
-      margin-top: 11.8rem;
-      width: 23.9rem;
-      height: 10.8rem;
-      border-radius: 1rem;
-    }
-  `,
-  SubmitFinished: styled.div`
-    color: ${theme.colors.yellow01};
-    margin: auto 0;
-    @media (min-width: 350px) and (max-width: 600px) {
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 2rem;
-      line-height: 3.8rem;
-    }
-    @media (min-width: 601px) {
-      font-family: 'Arial';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 4rem;
-      line-height: 4.6rem;
+      font-size: 4.4rem;
+      line-height: 6rem;
     }
   `,
 };
