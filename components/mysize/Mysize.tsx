@@ -44,10 +44,10 @@ export default function Mysize() {
   const [isTopClicked, setIsTopClicked] = useState(true);
   const [clickedMeasure, setClickedMeasure] = useState('단면');
   const [emptyClothesType, setEmptyClothesType] = useState('없음');
+  const [isInitialValueWidth, setIsInitialValueWidth] = useState(true);
 
   //데이터 패칭
-  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure);
-
+  const { allMysize } = useFetchMysize(isTopClicked, clickedMeasure, isAlertActive);
   const onClickMeasure = (measure: string) => {
     setClickedMeasure(measure);
   };
@@ -84,10 +84,11 @@ export default function Mysize() {
         });
       }
     }
-  }, [allMysize, emptyClothesType]);
+  }, [allMysize, isAlertActive]);
 
   useEffect(() => {
     if (allMysize) {
+
       const { bottom } = allMysize;
       const { top } = allMysize;
 
@@ -112,19 +113,24 @@ export default function Mysize() {
         waist === null
       ) {
         setEmptyClothesType('하의');
-      }
-      if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
+      } else if (topLength === null && shoulder === null && chest === null && isWidthOfTop === null) {
         setEmptyClothesType('상의');
+      } else {
+        setEmptyClothesType('없음');
       }
 
       if (isTopClicked && isWidthOfTop && clickedMeasure === '둘레') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest * 2 });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop && clickedMeasure === '단면') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '단면') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest / 2 });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked && isWidthOfTop === false && clickedMeasure === '둘레') {
         setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '둘레') {
         setData({
           총장: bottomLength,
@@ -133,8 +139,10 @@ export default function Mysize() {
           허벅지: thigh * 2,
           밑단: hem * 2,
         });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked === false && isWidthOfBottom && clickedMeasure === '단면') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '단면') {
         setData({
           총장: bottomLength,
@@ -143,21 +151,26 @@ export default function Mysize() {
           허벅지: thigh / 2,
           밑단: hem / 2,
         });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom === false && clickedMeasure === '둘레') {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(false);
       } else if (isTopClicked === false && isWidthOfBottom === null) {
         setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setIsInitialValueWidth(true);
       } else if (isTopClicked && isWidthOfTop === null) {
-        setData({ 총장: bottomLength, 밑위: rise, 허리: waist, 허벅지: thigh, 밑단: hem });
+        setData({ 총장: topLength, '어깨 너비': shoulder, 가슴: chest });
+        setIsInitialValueWidth(true);
       }
     }
-  }, [allMysize, isTopClicked, clickedMeasure]);
+  }, [allMysize, isTopClicked, clickedMeasure, isAlertActive, emptyClothesType]);
+
 
   return (
     <Styled.Root>
       <Styled.TitleBar>
         <Styled.TopSize onClick={() => changeBorderColor('상의')} color={topColor}>
-          <p>상의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>상의</p>
           {emptyClothesType === '상의' ? null : (
             <Image
               src={isTopClicked ? TopBottomClicked : TopBottomUnclicked}
@@ -166,10 +179,18 @@ export default function Mysize() {
               height={32}
             />
           )}
+          {emptyClothesType === '상의' ? (
+        <Styled.TopRequestModalContainer>
+          <Styled.TopRequestModal>
+            상의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
+          </Styled.TopRequestModal>
+          <Styled.TopModalTriangle />
+        </Styled.TopRequestModalContainer>
+      ) : null}
         </Styled.TopSize>
         <Styled.Blank></Styled.Blank>
         <Styled.BottomSize onClick={() => changeBorderColor('하의')} color={bottomColor}>
-          <p>하의</p>
+          <p color={isTopClicked ?  theme.colors.gray550 :  theme.colors.gray300 }>하의</p>
           {emptyClothesType === '하의' ? (
             <Styled.CheckBlank></Styled.CheckBlank>
           ) : (
@@ -180,6 +201,14 @@ export default function Mysize() {
               height={32}
             />
           )}
+          {emptyClothesType === '하의' ? (
+        <Styled.BottomRequestModalContainer>
+          <Styled.BottomModalTriangle />
+          <Styled.BottomRequestModal>
+            하의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
+          </Styled.BottomRequestModal>
+        </Styled.BottomRequestModalContainer>
+      ) : null}
         </Styled.BottomSize>
         <Styled.SaveButtonContainer></Styled.SaveButtonContainer>
       </Styled.TitleBar>
@@ -194,27 +223,14 @@ export default function Mysize() {
           onClickMeasure={onClickMeasure}
           data={data}
           isTopClicked={isTopClicked}
+          emptyClothesType={emptyClothesType}
+          isInitialValueWidth={isInitialValueWidth}
         >
           <Styled.SaveButton onClick={handleClick} type="submit">
             저장
           </Styled.SaveButton>
         </SizeForm>
       </Styled.SizeFormContainer>
-      {emptyClothesType === '상의' ? (
-        <Styled.TopRequestModalContainer>
-          <Styled.TopRequestModal>
-            상의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
-          </Styled.TopRequestModal>
-          <Styled.TopModalTriangle />
-        </Styled.TopRequestModalContainer>
-      ) : emptyClothesType === '하의' ? (
-        <Styled.BottomRequestModalContainer>
-          <Styled.BottomModalTriangle />
-          <Styled.BottomRequestModal>
-            하의 사이즈 추천을 위해 <br /> 사이즈를 입력해 주세요
-          </Styled.BottomRequestModal>
-        </Styled.BottomRequestModalContainer>
-      ) : null}
       {isOpenToast && (
         <Styled.ToastContainer>
           <Toast message={message} width="32.9" />
@@ -245,6 +261,7 @@ const Styled = {
       margin-left: 1rem;
       margin-right: 1.4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
     }
   `,
   Blank: styled.div`
@@ -258,9 +275,14 @@ const Styled = {
     border-bottom: 0.4rem solid ${(props) => props.color};
     display: flex;
     & > p {
+      min-width: 4.8rem;
       margin-left: 1rem;
-      margin-right: 1.4rem;
+      margin-right: 4rem;
       cursor: pointer;
+      color: ${(props) => props.color};
+    }
+    & > img {
+      margin-left: -2.6rem;
     }
   `,
   SaveButtonContainer: styled.div`
@@ -288,9 +310,6 @@ const Styled = {
     margin-top: 7.4rem;
   `,
   BottomRequestModalContainer: styled.div`
-    position: fixed;
-    top: 35.5rem;
-    margin-left: 27.6rem;
     width: 13.5rem;
     height: 4.8rem;
     display: flex;
