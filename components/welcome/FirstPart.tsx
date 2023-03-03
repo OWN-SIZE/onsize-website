@@ -241,7 +241,7 @@ const Styled = {
 
     @media (min-width: 601px) and (max-width: 1054px) {
       width: 60rem;
-      top: 64.9rem;
+      top: 62.9rem;
 
       text-align: center;
 
