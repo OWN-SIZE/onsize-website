@@ -83,10 +83,10 @@ function SizeInput(props: InputProps) {
           step="0.1"
           value={inputValue}
           {...register(inputKey, {
-            required: true,
+            required: `아직 모든 사이즈 값을 입력하지 않은 것 같아요!\n사이즈를 다시 한 번 입력해주세요.`,
             validate: (value) =>
               value < valid.min || value > valid.max
-                ? `${label}은(는) 최소 ${valid.min}부터 최대 ${valid.max}까지 입력할 수 있습니다.`
+                ? `${label}은(는) 최소 ${valid.min}부터 최대 ${valid.max}까지 입력할 수 있습니다.\n다시 입력해주세요.`
                 : true,
           })}
           onBlur={(e) => e.currentTarget.value && setValue(inputKey, parseFloat(e.currentTarget.value).toFixed(1))}

@@ -15,8 +15,8 @@ export const userIdState = atom({
   effects_UNSTABLE: [persistAtom],
 });
 
-export const isRegisterState = atom({
-  key: 'isRegister',
-  default: null,
+export const isAlreadyUserState = atom<'pending' | 'done'>({
+  key: 'isAlreadyUserState',
+  default: 'pending',
   effects_UNSTABLE: [persistAtom],
 });

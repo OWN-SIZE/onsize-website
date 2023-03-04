@@ -3,7 +3,7 @@ import { LoginMouseImg, SizeGuideImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { isRegisterState } from 'states/user';
+import { isAlreadyUserState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -22,7 +22,7 @@ function RegisterLanding() {
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
   const [isTip, setIsTip] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
-  const [, setIsRegister] = useRecoilState(isRegisterState);
+  const [, setUserState] = useRecoilState(isAlreadyUserState);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,6 +40,8 @@ function RegisterLanding() {
   const onClickSize = () => {
     if (progress === 3) {
       // 서버에 데이터 넘기고 home으로 이동
+      setUserState('done');
+      router.push('/home');
     } else if (isNextActive) {
       setProgress((prev) => prev + 1);
       setIsNextActive(false);
@@ -48,8 +50,7 @@ function RegisterLanding() {
 
   const onClickNextButton = () => {
     if (skip) {
-      localStorage.setItem('isRegister', 'true');
-      setIsRegister(true);
+      setUserState('done');
       router.push('/home');
     } else {
       setIsAlertActive(true);
@@ -61,8 +62,6 @@ function RegisterLanding() {
       setProgress(progress + 1);
       setIsNextActive(false);
     } else {
-      localStorage.setItem('isRegister', 'true');
-      setIsRegister(true);
       router.push('/home');
     }
   };
@@ -121,7 +120,7 @@ function RegisterLanding() {
             formType={selectedOption === '하의' ? '하의' : '상의'}
             setIsSubmitActive={setIsNextActive}
             onSuccessSubmit={onSuccessSubmit}
-            isOption={selectedOption === '상/하의' ? false : true}
+            isOption={false}
           >
             <NextButton isActive={isNextActive} onClick={onClickNextButton} />
           </SizeForm>
