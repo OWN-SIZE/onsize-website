@@ -11,7 +11,6 @@ function Alert(props: AlertProps) {
   const { message, setIsActive } = props;
 
   const disableClick = () => {
-    //(document.activeElement as HTMLElement).blur();
     document.getElementById('__next')?.classList.add('non-clickable');
   };
   const enableClick = () => {
@@ -25,8 +24,6 @@ function Alert(props: AlertProps) {
   return (
     <Styled.Root>
       {message}
-      <br />
-      다시 입력해 주세요.
       <Styled.Button onClick={() => setIsActive(false)}>확인</Styled.Button>
     </Styled.Root>
   );
@@ -52,6 +49,7 @@ const Styled = {
     border-radius: 0.5rem;
     color: ${theme.colors.black};
     ${theme.fonts.caption};
+    white-space: pre-wrap;
     z-index: 10;
   `,
   Button: styled.button`
