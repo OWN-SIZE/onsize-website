@@ -4,16 +4,20 @@ import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { isAlreadyUserState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
 import { lottieMapper } from '@/components/common/modal/LottieModal';
 import LottiePlayer from '@/components/common/modal/LottiePlayer';
 import { useAuth } from '@/hooks/business/user';
+import useRedirect from '@/hooks/business/useRedirect';
 import Layout from 'components/common/Layout';
 
 function Login() {
   const { authLogin } = useAuth();
+  const { isLoading } = useRedirect();
   const router = useRouter();
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
@@ -39,7 +43,9 @@ function Login() {
     }
   };
 
-  return (
+  return isLoading ? (
+    <></>
+  ) : (
     <Layout noHeader noMenuBar noFooter>
       <Styled.Root>
         <Styled.Header>

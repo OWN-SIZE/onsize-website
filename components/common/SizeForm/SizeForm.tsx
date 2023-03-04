@@ -1,5 +1,7 @@
-import React, { ReactNode, use, useEffect, useState } from 'react';
+import React, { ReactNode, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
+import { useRecoilState } from 'recoil';
+import { isAlreadyUserState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
@@ -206,7 +208,7 @@ export default function SizeForm(props: FormProps) {
     } else {
       setSkip && setSkip(false);
     }
-  }, [progress]);
+  }, [progress, isOption]);
 
   const sendMeasureValue = (measure: string) => {
     onClickMeasure && onClickMeasure(measure);
@@ -217,11 +219,10 @@ export default function SizeForm(props: FormProps) {
     if (isInitialValueWidth) {
       setMeasure('단면');
       sendMeasureValue('단면');
-    } else if(isInitialValueWidth === false){
+    } else if (isInitialValueWidth === false) {
       setMeasure('둘레');
       sendMeasureValue('둘레');
-    } 
-    else {
+    } else {
       setMeasure('단면');
       sendMeasureValue('단면');
     }
