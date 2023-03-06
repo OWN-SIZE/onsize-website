@@ -2,8 +2,6 @@ import React, { useEffect, useState } from 'react';
 import { LoginMouseImg, SizeGuideImg } from 'assets/img';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useRecoilState } from 'recoil';
-import { isAlreadyUserState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -22,7 +20,6 @@ function RegisterLanding() {
   const [isAlertActive, setIsAlertActive] = useState<boolean>(false);
   const [isTip, setIsTip] = useState<boolean>(false);
   const [skip, setSkip] = useState<boolean>(false);
-  const [, setUserState] = useRecoilState(isAlreadyUserState);
   const router = useRouter();
 
   useEffect(() => {
@@ -40,7 +37,7 @@ function RegisterLanding() {
   const onClickSize = () => {
     if (progress === 3) {
       // 서버에 데이터 넘기고 home으로 이동
-      setUserState('done');
+      // setUserState('done');
       router.push('/home');
     } else if (isNextActive) {
       setProgress((prev) => prev + 1);
@@ -50,7 +47,7 @@ function RegisterLanding() {
 
   const onClickNextButton = () => {
     if (skip) {
-      setUserState('done');
+      // setUserState('done');
       router.push('/home');
     } else {
       setIsAlertActive(true);
@@ -121,6 +118,7 @@ function RegisterLanding() {
             setIsSubmitActive={setIsNextActive}
             onSuccessSubmit={onSuccessSubmit}
             isOption={false}
+            selectedOption={selectedOption}
           >
             <NextButton isActive={isNextActive} onClick={onClickNextButton} />
           </SizeForm>
@@ -135,6 +133,7 @@ function RegisterLanding() {
             isOption={selectedOption === '상/하의' ? false : true}
             skip={skip}
             setSkip={setSkip}
+            selectedOption={selectedOption}
           >
             <NextButton isActive={isNextActive} onClick={onClickNextButton} />
           </SizeForm>

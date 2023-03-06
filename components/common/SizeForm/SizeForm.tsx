@@ -1,7 +1,5 @@
 import React, { ReactNode, useEffect, useState } from 'react';
 import { FieldValues, SubmitHandler, useForm } from 'react-hook-form';
-import { useRecoilState } from 'recoil';
-import { isAlreadyUserState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 import { BottomSizeInput, TopSizeInput } from 'types/mySize/client';
@@ -35,6 +33,7 @@ interface FormProps {
   isTopClicked?: boolean;
   emptyClothesType?: string;
   isInitialValueWidth?: boolean;
+  selectedOption?: OptionType;
 }
 
 // 상의 총장, 어깨너비
@@ -103,6 +102,7 @@ export default function SizeForm(props: FormProps) {
     isTopClicked,
     emptyClothesType,
     isInitialValueWidth,
+    selectedOption,
   } = props;
   const [measure, setMeasure] = useState<'단면' | '둘레'>('단면');
 
@@ -140,10 +140,11 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfTop = false;
       }
 
-      if (isOption && progress === 2) {
+      if (selectedOption !== '상/하의' && progress === 2) {
         inputData.isAlreadyUser = 'done';
       }
-      if (!isOption && progress === 3) {
+
+      if (progress === 3) {
         inputData.isAlreadyUser = 'done';
       }
 
@@ -170,10 +171,10 @@ export default function SizeForm(props: FormProps) {
         inputData.isWidthOfBottom = false;
       }
 
-      if (isOption && progress === 2) {
+      if (selectedOption !== '상/하의' && progress === 2) {
         inputData.isAlreadyUser = 'done';
       }
-      if (!isOption && progress === 3) {
+      if (progress === 3) {
         inputData.isAlreadyUser = 'done';
       }
 

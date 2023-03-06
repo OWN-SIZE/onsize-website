@@ -4,7 +4,7 @@ import sizeReplacement from 'assets/icon/sizeReplacement.png';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
 import { useRecoilState, useResetRecoilState } from 'recoil';
-import { isAlreadyUserState, tokenState } from 'states/user';
+import { userState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -20,13 +20,21 @@ function MyPageMain() {
   const [isHistoryModalOpen, setIsHistoryModalOpen] = useState(false);
   const [isLeaveModalOpen, setIsLeaveModalOpen] = useState(false);
   const [isButtonActivated, setIsButtonActivated] = useState(true);
-  const [, setUserState] = useRecoilState(isAlreadyUserState);
+  const [user, setUser] = useRecoilState(userState);
+  const resetUserState = useResetRecoilState(userState);
+
+  const resetToken = () => {
+    setUser({
+      ...user,
+      token: '',
+    });
+  };
 
   const onClickHistoryModal = () => {
     setIsHistoryModalOpen(!isHistoryModalOpen);
   };
   const onClickLeaveModal = () => {
-    setUserState('pending');
+    resetUserState();
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
   const onClickCancel = () => {
@@ -52,7 +60,6 @@ function MyPageMain() {
   };
 
   const router = useRouter();
-  const resetToken = useResetRecoilState(tokenState);
   const { userInformation } = useFetchUserInformation();
   const { history } = useFetchMyPageHistory();
 
