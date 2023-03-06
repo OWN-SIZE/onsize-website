@@ -2,7 +2,7 @@ import { PropsWithChildren, useEffect } from 'react';
 import axios, { AxiosRequestConfig } from 'axios';
 import { useRouter } from 'next/router';
 import { useRecoilValue } from 'recoil';
-import { tokenState } from 'states/user';
+import { userState } from 'states/user';
 
 import { useRefresh } from '@/hooks/queries/auth';
 
@@ -29,7 +29,7 @@ export default function createAxios(endpoint: string, config?: AxiosRequestConfi
 
 function AxiosInterceptor({ children }: PropsWithChildren) {
   const router = useRouter();
-  const accessToken = useRecoilValue(tokenState);
+  const { token: accessToken } = useRecoilValue(userState);
   const refresh = useRefresh({ accessToken });
 
   const requestIntercept = client.interceptors.request.use(

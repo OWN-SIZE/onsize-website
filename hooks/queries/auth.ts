@@ -2,7 +2,7 @@ import { useQueryClient } from 'react-query';
 import { AxiosError } from 'axios';
 import { useRouter } from 'next/router';
 import { useResetRecoilState } from 'recoil';
-import { tokenState } from 'states/user';
+import { userState } from 'states/user';
 import { RefreshInput } from 'types/auth/client';
 
 import { fetchRefresh } from '@/apis/auth';
@@ -12,7 +12,11 @@ export const useRefresh = (token: RefreshInput) => {
   const router = useRouter();
   const queryClient = useQueryClient();
   const { reportError } = useErrorBubbling();
-  const resetToken = useResetRecoilState(tokenState);
+  const resetUserState = useResetRecoilState(userState);
+
+  const resetToken = () => {
+    resetUserState();
+  };
 
   const refresh = async () => {
     try {

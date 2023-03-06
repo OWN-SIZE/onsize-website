@@ -1,25 +1,31 @@
-import { useRecoilState, useRecoilValue } from 'recoil';
-import { isAlreadyUserState, tokenState, userIdState } from 'states/user';
+import { useRouter } from 'next/router';
+import { useRecoilState } from 'recoil';
+import { userState } from 'states/user';
 import { AuthInput } from 'types/user/client';
 
 import { useAuthMutation } from '../queries/user';
 
 export const useAuth = () => {
+  const router = useRouter();
   const authMutate = useAuthMutation();
-  const [, setToken] = useRecoilState(tokenState);
-  const [, setUserId] = useRecoilState(userIdState);
-  const userState = useRecoilValue(isAlreadyUserState);
+  const [user, setUser] = useRecoilState(userState);
 
-  const authLogin = (body: AuthInput, onSuccessLogin: (isAlreadyUser: 'pending' | 'done') => void) => {
+  const authLogin = (body: AuthInput) => {
     authMutate.mutate(body, {
       onSuccess({ userId, token, isAlreadyUser }) {
+        if (isAlreadyUser === 'pending') {
+          router.push('/register');
+        } else {
+          router.push('/home');
+        }
+
         localStorage.setItem('userId', `${userId}`);
         localStorage.setItem('token', `${token}`);
-        setToken(token);
-        setUserId(userId);
-
-        // 초기 사이즈 설정 페이지로 이동하기
-        onSuccessLogin(userState);
+        setUser({
+          ...user,
+          token,
+          userId,
+        });
       },
     });
   };

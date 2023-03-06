@@ -3,9 +3,8 @@ import { useGoogleLogin } from '@react-oauth/google';
 import { GoogleLoginImg, OwnSizeLogoImg } from 'assets/img';
 import axios from 'axios';
 import Image from 'next/image';
-import { useRouter } from 'next/router';
 import { useRecoilState } from 'recoil';
-import { isAlreadyUserState } from 'states/user';
+import { userState } from 'states/user';
 import styled from 'styled-components';
 import theme from 'styles/theme';
 
@@ -18,20 +17,14 @@ import Layout from 'components/common/Layout';
 function Login() {
   const { authLogin } = useAuth();
   const { isLoading } = useRedirect();
-  const router = useRouter();
+
   const login = useGoogleLogin({
     onSuccess: async (tokenResponse) => {
       const { data } = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
         headers: { Authorization: `Bearer ${tokenResponse.access_token}` },
       });
 
-      authLogin(data, (isAlreadyUser: 'pending' | 'done') => {
-        if (isAlreadyUser === 'done') {
-          router.push('/home');
-        } else {
-          router.push('/register');
-        }
-      });
+      authLogin(data);
     },
   });
   const [page, setPage] = useState(0);
