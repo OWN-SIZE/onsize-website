@@ -35,7 +35,7 @@ export default function App({ Component, pageProps }: AppProps) {
         <AxiosInterceptor>
           <GoogleOAuthProvider clientId={`${process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID}`}>
             <Head>
-              <title>Own Size</title>
+            <title>온사이즈 OWNSIZE | 옷 사이즈 고민 없는 온라인 쇼핑의 시작</title>
             </Head>
             <Script
               id="gtag-base"
