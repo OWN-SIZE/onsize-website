@@ -33,7 +33,6 @@ class MyDocument extends Document {
     return (
       <Html lang="ko">
         <Head>
-          <title>온사이즈 OWNSIZE | 옷 사이즈 고민 없는 온라인 쇼핑의 시작</title>
           <meta name="viewport" content="initial-scale=1.0,user-scalable=no,maximum-scale=1,width=device-width" />
           <meta name="description" content="옷마다 브랜드마다 모두 다른 사이즈 체계, 온사이즈에서는 나에게 꼭 맞는 사이즈를 1초 만에 알려드려요. 사이즈 추천 받고 위시리스트 저장하고 관리까지 해보세요. 6개의 사이트(무신사, 29cm, 오케이몰, SSENSE, Mr.Porter, w컨셉)에서 1초 만에 나의 옷 사이즈를 알려드려요. 미국 옷 사이즈, 유럽 옷 사이즈, 빅사이즈 등 사이즈를 알기 까다로운 의류에서 이용해 보세요. 옷 사이즈는 재는법, 옷 사이즈표, 위시리스트" />
           <meta name="keywords" content="위시리스트, 옷사이즈, 온라인쇼핑, 미국 옷 사이즈, 유럽 옷 사이즈, 빅사이즈, 옷 사이즈 재는법, 옷 사이즈표" />
