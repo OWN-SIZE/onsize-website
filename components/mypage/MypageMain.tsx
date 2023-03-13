@@ -34,7 +34,6 @@ function MyPageMain() {
     setIsHistoryModalOpen(!isHistoryModalOpen);
   };
   const onClickLeaveModal = () => {
-    resetUserState();
     setIsLeaveModalOpen(!isLeaveModalOpen);
   };
   const onClickCancel = () => {
@@ -55,7 +54,7 @@ function MyPageMain() {
       router.replace('/login');
       localStorage.removeItem('userId');
       localStorage.removeItem('token');
-      resetToken();
+      resetUserState();
     }
   };
 
