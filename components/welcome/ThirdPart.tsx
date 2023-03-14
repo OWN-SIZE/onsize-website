@@ -27,7 +27,7 @@ function ThirdPart() {
           onMouseLeave={() => setIsHovered(false)}
           target="_blank"
         >
-          <Image src={chromeWebStoreIcon} alt="크롬 웹스토어 아이콘" width={36} height={34} priority />
+          <Image src={chromeWebStoreIcon} alt="크롬 웹스토어 아이콘" priority />
           Chrome 웹스토어 바로가기
         </Link>
 
@@ -88,16 +88,31 @@ const Styled = {
       background: ${theme.colors.yellow01};
 
       & > img {
-        margin-right: 1.5rem;
+        @media (min-width: 350px) and (max-width: 600px) {
+          width: 2.4rem;
+          height: 2.3rem;
+
+          margin-right: 1rem;
+        }
+        @media (min-width: 601px) {
+          width: 3.6rem;
+          height: 3.4rem;
+
+          margin-right: 1.5rem;
+        }
       }
 
       @media (min-width: 350px) and (max-width: 600px) {
         width: 23.4rem;
         height: 4.8rem;
-        top: 44.6rem;
+        top: 12.7rem;
 
-        border-radius: 0.5rem;
-        ${theme.fonts.card1};
+        border-radius: 1.3rem;
+        font-family: 'Noto Sans KR';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 1.2rem;
+        line-height: 2.5rem;
       }
       @media (min-width: 601px) {
         width: 34.7rem;
@@ -117,7 +132,15 @@ const Styled = {
     }
 
     & > img {
-      margin-top: auto;
+      @media (min-width: 350px) and (max-width: 600px) {
+        width: 33rem;
+        height: 17.4rem;
+
+        margin-top: auto;
+      }
+      @media (min-width: 601px) {
+        margin-top: auto;
+      }
     }
   `,
 
@@ -126,13 +149,11 @@ const Styled = {
 
     color: ${theme.colors.yellow01};
     @media (min-width: 350px) and (max-width: 600px) {
-      width: 21rem;
+      width: 23rem;
 
-      font-family: 'Noto Sans KR';
-      font-style: normal;
-      font-weight: 700;
-      font-size: 2rem;
-      line-height: 3.2rem;
+      margin-top: 5rem;
+
+      ${theme.fonts.caption1};
     }
     @media (min-width: 601px) {
       margin-top: 14rem;
